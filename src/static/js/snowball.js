@@ -57,7 +57,7 @@ $(function() {
 
 	_print(`Your wallet address: ${App.YOUR_ADDRESS}\n`);
 	_print(`<h3>SnowGlobe - Farming</h3>`)
-	_print(`Step 1: Acquire SUSHI-AVAX LP (PGL) Tokens <a href='${SUSHI_AVAX_POOL_URL}}' target='_blank'>SUSHI-AVAX Liquidity Pool</a>\n`)
+	_print(`Step 1: Acquire SUSHI-AVAX LP (PGL) Tokens <a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>SUSHI-AVAX Liquidity Pool</a>\n`)
 	_print(`SUSHI-AVAX LP (PGL) Token balance: ${currentSUSHIAVAXTokens / 1e18}\n`)
 	_print(`Step 2: Approve SnowGlobe contract to spend your LP tokens`)
 	_print_link(`Approve SUSHI-AVAX LP (PGL) Tokens\n`, approveSUSHI)
@@ -79,7 +79,7 @@ $(function() {
     const SNOB_AVAX_TOKEN = new ethers.Contract(SNOB_AVAX_ADDR, ERC20_ABI, signer)
     const currentSNOBAVAXTokens = await SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
 	_print(`<h3>Snowball - Farming</h3>`)
-	_print(`Step 1: Acquire SNOB-AVAX LP (PGL) Tokens <a href='${SNOB_AVAX_POOL_URL}}' target='_blank'>SNOB-AVAX Liquidity Pool</a>\n`)
+	_print(`Step 1: Acquire SNOB-AVAX LP (PGL) Tokens <a href='${SNOB_AVAX_POOL_URL}' target='_blank'>SNOB-AVAX Liquidity Pool</a>\n`)
 	_print(`SNOB-AVAX LP (PGL) Token balance: ${currentSNOBAVAXTokens / 1e18}\n`)
 	_print(`Step 2: Approve IceQueen contract to spend your LP tokens`)
 	_print_link(`Approve SNOB-AVAX LP (PGL) Tokens\n`, approveSNOB)
