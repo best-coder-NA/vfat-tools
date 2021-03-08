@@ -1173,10 +1173,12 @@ function getUniPrices(tokens, prices, pool)
   prices[pool.address] = { usd : price };
   var staked_tvl = pool.staked * price;
   let stakeTokenTicker = `[${t0.symbol}]-[${t1.symbol}]`;
+  console.log(pool);
   if (pool.is1inch) stakeTokenTicker += " 1INCH LP";
   else if (pool.symbol.includes("LSLP")) stakeTokenTicker += " LSLP";
   else if (pool.symbol.includes("SLP")) stakeTokenTicker += " SLP";
   else if (pool.symbol.includes("Cake")) stakeTokenTicker += " Cake LP";
+  else if (pool.symbol.includes("PGL")) stakeTokenTicker += " PGL LP";
   else stakeTokenTicker += " Uni LP";
   return {
       t0: t0,
@@ -1195,6 +1197,7 @@ function getUniPrices(tokens, prices, pool)
           pool.symbol.includes("SLP") ?  `http://sushiswap.fi/pair/${pool.address}` :
             pool.symbol.includes("Cake") ?  `https://pancakeswap.info/pair/${pool.address}` :  
             chain == "matic" ? `https://info.quickswap.exchange/pair/${pool.address}` :
+            pool.symbol.includes("PGL") ? `https://app.pangolin.exchange/#/add/AVAX/${t0.address}` :
           `http://uniswap.info/pair/${pool.address}`;
         const t0address = t0.symbol == "ETH" ? "ETH" : t0.address;
         const t1address = t1.symbol == "ETH" ? "ETH" : t1.address;
@@ -1213,6 +1216,10 @@ function getUniPrices(tokens, prices, pool)
           [ `https://exchange.sushiswapclassic.org/#/add/${t0address}/${t1address}`,
             `https://exchange.sushiswapclassic.org/#/remove/${t0address}/${t1address}`,
             `https://exchange.sushiswapclassic.org/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` ] :
+        pool.symbol.includes("PGL") ? 
+          [ `https://app.pangolin.exchange/#/add/AVAX/${t0address}`,
+            `https://app.pangolin.exchange/#/remove/AVAX/${t0address}`,
+            `https://app.pangolin.exchange/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` ] :
           [ `https://app.uniswap.org/#/add/${t0address}/${t1address}`,
             `https://app.uniswap.org/#/remove/${t0address}/${t1address}`,
             `https://app.uniswap.org/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` ]
