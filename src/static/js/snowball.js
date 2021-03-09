@@ -43,43 +43,74 @@ $(function() {
 	}
 	const stakeSNOB = async function() {
 		return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 2, SNOB_AVAX_ADDR, App)
-	}                        
+	}
+	const claimPool1 = async function() {
+	  	return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SNOB_AVAX_ADDR, App)
+	}
+	const claimPool2 = async function() {
+	  	return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 2, SNOB_AVAX_ADDR, App)
+	}                                       
 	// const unstake = async function() {
 	//   return chefContract_unstake(chefAbi, chefAddr, poolIndex, App, pendingRewardsFunction)
 	// }      
-	// const claim = async function() {
-	//   return chefContract_claim(chefAbi, chefAddr, poolIndex, App, pendingRewardsFunction, claimFunction)
-	// }
+
+
     const signer = App.provider.getSigner()
 
+    //Tokens
     const SUSHI_AVAX_TOKEN = new ethers.Contract(SUSHI_AVAX_ADDR, ERC20_ABI, signer)
+    const SNOB_AVAX_TOKEN = new ethers.Contract(SNOB_AVAX_ADDR, ERC20_ABI, signer)
+    const SPGL_TOKEN = new ethers.Contract(SPGL_ADDRESS, ERC20_ABI, signer)
+    const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
+
+    //Contracts
+    const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
+
+    //Balances
     const currentSUSHIAVAXTokens = await SUSHI_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const currentSPGLTokens = await SPGL_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const currentSNOBAVAXTokens = await SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const pendingSNOBTokensPool1 = await ICEQUEEN_CONTRACT.pendingSnowball(1, App.YOUR_ADDRESS)
+    const pendingSNOBTokensPool2 = await ICEQUEEN_CONTRACT.pendingSnowball(2, App.YOUR_ADDRESS)
+    const stakedPool1 = await ICEQUEEN_CONTRACT.userInfo(1, App.YOUR_ADDRESS)
+    const stakedPool2 = await ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS)
 
 	_print(`Your wallet address: ${App.YOUR_ADDRESS}\n`);
-	_print(`<h3>SnowGlobe - Farming</h3>`)
-	_print(`Step 1: Acquire SUSHI-AVAX LP (PGL) Tokens <a href='${SUSHI_AVAX_POOL_URL}}' target='_blank'>SUSHI-AVAX Liquidity Pool</a>\n`)
+
+	// balance
+	_print(`<b>Wallet Balances</b>`)
+	_print(`Snowballs in wallet: ${currentSNOBTokens / 1e18}\n`)
+	_print(`<u>Pool 1 - SUSHI-AVAX LP (sPGL)</u>`)
+	_print(`Staked Tokens: ${stakedPool1.amount / 1e18}`)
+	_print(`Pending Snowball Rewards: ${pendingSNOBTokensPool1 / 1e18}`)
+	_print_link(`Claim\n`, claimPool1)
+	_print(`<u>Pool 2 - SNOB-AVAX LP (PGL)</u>`)
+	_print(`Staked Tokens: ${stakedPool2.amount / 1e18}`)
+	_print(`Pending Snowball Rewards: ${pendingSNOBTokensPool2 / 1e18}`)
+	_print_link(`Claim\n\n`, claimPool2)
+
+	//snowglobe staking
+	_print(`<b>SnowGlobe - AVAX-SUSHI Strategy</b>`)
+	_print(`Step 1: Acquire SUSHI-AVAX LP (PGL) Tokens <a href='${SUSHI_AVAX_POOL_URL}}' target='_blank'>SUSHI-AVAX Liquidity Pool</a>`)
 	_print(`SUSHI-AVAX LP (PGL) Token balance: ${currentSUSHIAVAXTokens / 1e18}\n`)
 	_print(`Step 2: Approve SnowGlobe contract to spend your LP tokens`)
 	_print_link(`Approve SUSHI-AVAX LP (PGL) Tokens\n`, approveSUSHI)
 	_print(`Step 3: Deposit your LP tokens in SnowGlobe contract`)
 	_print_link(`Deposit SUSHI-AVAX LP (PGL) Tokens\n\n`, stakeSUSHI)
 
-    const SPGL_TOKEN = new ethers.Contract(SPGL_ADDRESS, ERC20_ABI, signer)
-    const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
-    const currentSPGLTokens = await SPGL_TOKEN.balanceOf(App.YOUR_ADDRESS)
-    const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
-	_print(`<h3>IceQueen - Governance</h3>`)
+	// icequeen staking
+	_print(`<b>IceQueen - Governance</b>`)
 	_print(`Step 1: You must have sPGL tokens from SnowGlobe.`)
 	_print(`sPGL token balance: ${currentSPGLTokens / 1e18}\n`)
 	_print(`Step 2: Approve IceQueen contract to spend your sPGL tokens`)
 	_print_link(`Approve sPGL Tokens\n`, approveSPGL)
 	_print(`Step 3: Deposit your sPGL tokens in IceQueen contract`)
-	_print_link(`Deposit sPGL Tokens\n`, stakeSPGL)
+	_print_link(`Deposit sPGL Tokens\n\n`, stakeSPGL)
 
-    const SNOB_AVAX_TOKEN = new ethers.Contract(SNOB_AVAX_ADDR, ERC20_ABI, signer)
-    const currentSNOBAVAXTokens = await SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
-	_print(`<h3>Snowball - Farming</h3>`)
-	_print(`Step 1: Acquire SNOB-AVAX LP (PGL) Tokens <a href='${SNOB_AVAX_POOL_URL}}' target='_blank'>SNOB-AVAX Liquidity Pool</a>\n`)
+	// snowball staking
+	_print(`<b>Snowball - SNOB-AVAX Strategy</b>`)
+	_print(`Step 1: Acquire SNOB-AVAX LP (PGL) Tokens <a href='${SNOB_AVAX_POOL_URL}}' target='_blank'>SNOB-AVAX Liquidity Pool</a>`)
 	_print(`SNOB-AVAX LP (PGL) Token balance: ${currentSNOBAVAXTokens / 1e18}\n`)
 	_print(`Step 2: Approve IceQueen contract to spend your LP tokens`)
 	_print_link(`Approve SNOB-AVAX LP (PGL) Tokens\n`, approveSNOB)
@@ -105,7 +136,10 @@ const snowglobeContract_approve = async function(chefAbi, chefAddress, stakeToke
   let allow = Promise.resolve()
 
   showLoading()
-  allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
+  if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
+	alert('Already approved')
+  } else {
+  	allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
       .then(function(t) {
         return App.provider.waitForTransaction(t.hash)
       })
@@ -113,6 +147,7 @@ const snowglobeContract_approve = async function(chefAbi, chefAddress, stakeToke
         hideLoading()
         alert('Approval failed')
       })
+  }
 }
 
 const icequeenContract_approve = async function(chefAbi, chefAddress, stakeTokenAddr, App) {
@@ -131,7 +166,10 @@ const icequeenContract_approve = async function(chefAbi, chefAddress, stakeToken
   let allow = Promise.resolve()
 
   showLoading()
-  allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
+  if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
+	alert('Already approved')
+  } else {
+  	allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
       .then(function(t) {
         return App.provider.waitForTransaction(t.hash)
       })
@@ -139,6 +177,8 @@ const icequeenContract_approve = async function(chefAbi, chefAddress, stakeToken
         hideLoading()
         alert('Approval failed')
       })
+  }
+
 }
 
 const snowglobeContract_stake = async function(chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
@@ -166,6 +206,7 @@ const snowglobeContract_stake = async function(chefAbi, chefAddress, poolIndex, 
           .then(function(t) {
             App.provider.waitForTransaction(t.hash).then(function() {
               hideLoading()
+          	  alert('Tokens deposited. Refresh page to see balance.')
             })
           })
           .catch(function() {
@@ -178,7 +219,7 @@ const snowglobeContract_stake = async function(chefAbi, chefAddress, poolIndex, 
         alert('Something went wrong.')
       })
   } else {
-    alert('You have no tokens to stake!!')
+    alert('You have no tokens to stake')
   }
 }
 
@@ -208,6 +249,7 @@ const icequeenContract_stake = async function(chefAbi, chefAddress, poolIndex, s
           .then(function(t) {
             App.provider.waitForTransaction(t.hash).then(function() {
               hideLoading()
+          	  alert('Tokens deposited. Refresh page to see balance.')
             })
           })
           .catch(function() {
@@ -221,5 +263,44 @@ const icequeenContract_stake = async function(chefAbi, chefAddress, poolIndex, s
       })
   } else {
     alert('You have no tokens to stake')
+  }
+}
+
+
+const icequeenContract_claim = async function(chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
+  const signer = App.provider.getSigner()
+  console.log(signer)
+
+  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
+  console.log(STAKING_TOKEN)
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  console.log(CHEF_CONTRACT)
+
+  const pendingRewards = await CHEF_CONTRACT.pendingSnowball(poolIndex, App.YOUR_ADDRESS)
+
+  let allow = Promise.resolve()
+
+  if (pendingRewards / 1e18 == 0) {
+    alert('No rewards to claim')
+  } else {
+    showLoading()
+    allow
+      .then(async function() {
+          CHEF_CONTRACT.withdraw(poolIndex, 1)
+          .then(function(t) {
+            App.provider.waitForTransaction(t.hash).then(function() {
+              hideLoading()
+          	  alert('Rewards claimed. Refresh page for new balance')
+            })
+          })
+          .catch(function() {
+            hideLoading()
+            alert('Something went wrong.')
+          })
+      })
+      .catch(function() {
+        hideLoading()
+        alert('Something went wrong.')
+      })
   }
 }
