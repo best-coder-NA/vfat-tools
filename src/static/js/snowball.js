@@ -77,7 +77,7 @@ $(function() {
     const stakedPool2 = await ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS)
 
 	_print(`Your wallet address: ${App.YOUR_ADDRESS}\n`);
-
+    
 	// balance
 	_print(`<b>Wallet Balances</b>`)
 	_print(`Snowballs in wallet: ${currentSNOBTokens / 1e18}\n`)
@@ -92,7 +92,7 @@ $(function() {
 
 	//snowglobe staking
 	_print(`<b>SnowGlobe - AVAX-SUSHI Strategy</b>`)
-	_print(`Step 1: Acquire SUSHI-AVAX LP (PGL) Tokens <a href='${SUSHI_AVAX_POOL_URL}}' target='_blank'>SUSHI-AVAX Liquidity Pool</a>`)
+	_print(`Step 1: Acquire SUSHI-AVAX LP (PGL) Tokens <a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>SUSHI-AVAX Liquidity Pool</a>`)
 	_print(`SUSHI-AVAX LP (PGL) Token balance: ${currentSUSHIAVAXTokens / 1e18}\n`)
 	_print(`Step 2: Approve SnowGlobe contract to spend your LP tokens`)
 	_print_link(`Approve SUSHI-AVAX LP (PGL) Tokens\n`, approveSUSHI)
@@ -110,7 +110,7 @@ $(function() {
 
 	// snowball staking
 	_print(`<b>Snowball - SNOB-AVAX Strategy</b>`)
-	_print(`Step 1: Acquire SNOB-AVAX LP (PGL) Tokens <a href='${SNOB_AVAX_POOL_URL}}' target='_blank'>SNOB-AVAX Liquidity Pool</a>`)
+	_print(`Step 1: Acquire SNOB-AVAX LP (PGL) Tokens <a href='${SNOB_AVAX_POOL_URL}' target='_blank'>SNOB-AVAX Liquidity Pool</a>`)
 	_print(`SNOB-AVAX LP (PGL) Token balance: ${currentSNOBAVAXTokens / 1e18}\n`)
 	_print(`Step 2: Approve IceQueen contract to spend your LP tokens`)
 	_print_link(`Approve SNOB-AVAX LP (PGL) Tokens\n`, approveSNOB)
@@ -120,6 +120,7 @@ $(function() {
 	_print(`\n`);
     hideLoading();
   }
+
 const snowglobeContract_approve = async function(chefAbi, chefAddress, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
   console.log(signer)
@@ -265,7 +266,6 @@ const icequeenContract_stake = async function(chefAbi, chefAddress, poolIndex, s
     alert('You have no tokens to stake')
   }
 }
-
 
 const icequeenContract_claim = async function(chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
