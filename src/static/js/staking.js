@@ -70,10 +70,19 @@ $(function() {
 	}
 	const claimPool3 = async function() {
 	  	return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 3, SNOB_AVAX_ADDR, App)
-	}                                                 
-	// const unstake = async function() {
-	//   return chefContract_unstake(chefAbi, chefAddr, poolIndex, App, pendingRewardsFunction)
-	// }      
+	}
+
+	const withdrawPool1 = async function() {
+		return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SPGL_SUSHI_ADDRESS, App)
+	}            
+
+	const withdrawPool2 = async function() {
+		return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 2, SNOB_AVAX_ADDR, App)
+	}
+
+	const withdrawPool3 = async function() {
+		return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 3, SPGL_PNG_ADDRESS, App)
+	}                                                     
 
 
     const signer = App.provider.getSigner()
@@ -90,64 +99,77 @@ $(function() {
     const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
 
     //Balances
+
     const currentSUSHIAVAXTokens = await SUSHI_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
-    const currentPNGAVAXTokens = await PNG_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
     const currentSPGLSUSHITokens = await SPGL_SUSHI_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const spglSushiDisplayAmt = currentSPGLSUSHITokens > 1000 ? currentSPGLSUSHITokens / 1e18: 0;
+
+    const currentPNGAVAXTokens = await PNG_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
     const currentSPGLPNGTokens = await SPGL_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const spglPngDisplayAmt = currentSPGLPNGTokens > 1000 ? currentSPGLPNGTokens / 1e18 : 0;
+
     const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
     const currentSNOBAVAXTokens = await SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
+
     const pendingSNOBTokensPool1 = await ICEQUEEN_CONTRACT.pendingSnowball(1, App.YOUR_ADDRESS)
     const pendingSNOBTokensPool2 = await ICEQUEEN_CONTRACT.pendingSnowball(2, App.YOUR_ADDRESS)
     const pendingSNOBTokensPool3 = await ICEQUEEN_CONTRACT.pendingSnowball(3, App.YOUR_ADDRESS)
+
     const stakedPool1 = await ICEQUEEN_CONTRACT.userInfo(1, App.YOUR_ADDRESS)
     const stakedPool2 = await ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS)
 	const stakedPool3 = await ICEQUEEN_CONTRACT.userInfo(3, App.YOUR_ADDRESS)
-	_print(`Your wallet address: ${App.YOUR_ADDRESS}\n`);
 
-	//snowglobe png staking
-	_print(`<b>SnowGlobe - AVAX-PNG (New!)</b>`)
-	_print(`Step 1: Acquire PNG-AVAX LP (PGL) Tokens <a href='${PNG_AVAX_POOL_URL}' target='_blank'>PNG-AVAX Liquidity Pool</a>`)
-	_print(`PNG-AVAX LP (PGL) Token balance: ${currentPNGAVAXTokens / 1e18}\n`)
-	_print(`Step 2: Approve SnowGlobe contract to spend your LP tokens`)
-	_print_link(`Approve PNG-AVAX LP (PGL) Tokens\n`, approvePNG)
-	_print(`Step 3: Deposit your LP tokens in SnowGlobe contract`)
-	_print_link(`Deposit PNG-AVAX LP (PGL) Tokens\n\n`, stakePNG)
+	const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 /  1e18 + pendingSNOBTokensPool3 / 1e18
 
-	// icequeen png staking
-	_print(`<b>IceQueen - AVAX-PNG (New!)</b>`)
-	_print(`Step 1: You must have sPGL (PNG) tokens from SnowGlobe.`)
-	_print(`sPGL token balance: ${currentSPGLPNGTokens > 100 ? currentSPGLPNGTokens / 1e18 : 0}\n`)
-	_print(`Step 2: Approve IceQueen contract to spend your sPGL tokens`)
-	_print_link(`Approve sPGL Tokens\n`, approveSPGLPNG)
-	_print(`Step 3: Deposit your sPGL tokens in IceQueen contract`)
-	_print_link(`Deposit sPGL Tokens\n\n`, stakeSPGLPNG)
+	// balance
+	_print(`<b>Wallet ❄️</b>`)
+	_print(`Address: ${App.YOUR_ADDRESS}`);
+	_print(`Snowballs: ${currentSNOBTokens / 1e18}`)
+	_print(`Pending rewards: ${claimableSnowballs}`)
+	_print(`Total (wallet + pending): ${currentSNOBTokens / 1e18 + claimableSnowballs}\n\n`)
 
-	//snowglobe sushi staking
-	_print(`<b>SnowGlobe - AVAX-SUSHI</b>`)
-	_print(`Step 1: Acquire SUSHI-AVAX LP (PGL) Tokens <a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>SUSHI-AVAX Liquidity Pool</a>`)
-	_print(`SUSHI-AVAX LP (PGL) Token balance: ${currentSUSHIAVAXTokens / 1e18}\n`)
-	_print(`Step 2: Approve SnowGlobe contract to spend your LP tokens`)
-	_print_link(`Approve SUSHI-AVAX LP (PGL) Tokens\n`, approveSUSHI)
-	_print(`Step 3: Deposit your LP tokens in SnowGlobe contract`)
-	_print_link(`Deposit SUSHI-AVAX LP (PGL) Tokens\n\n`, stakeSUSHI)
+	//snowglobes
+	_print(`<b>Snowglobes 🌐</b>`)
+	_print(`Deposit LP tokens into Snowglobes for automatic compounding\n`)
+	_print(`<a href='${PNG_AVAX_POOL_URL}' target='_blank'>AVAX-PNG Pangolin LP</a>`)
+	_print(`Available to deposit: ${currentPNGAVAXTokens / 1e18}`)
+	_print(`Available to withdraw: ${spglPngDisplayAmt}`)
+	_print_link(`Approve`, approvePNG)
+	_print_link(`Deposit\n`, stakePNG)
+	_print(`<a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>AVAX-SUSHI Pangolin LP</a>`)
+	_print(`Available to deposit: ${currentSUSHIAVAXTokens / 1e18}`)
+	_print(`Available to withdraw: ${spglSushiDisplayAmt}`)
+	_print_link(`Approve`, approveSUSHI)
+	_print_link(`Deposit`, stakeSUSHI)
+	_print(`\n`)
 
-	// icequeen sushi staking
-	_print(`<b>IceQueen - AVAX-SUSHI</b>`)
-	_print(`Step 1: You must have sPGL (SUSHI) tokens from SnowGlobe.`)
-	_print(`sPGL token balance: ${currentSPGLSUSHITokens > 100 ? currentSPGLSUSHITokens / 1e18 : 0}\n`)
-	_print(`Step 2: Approve IceQueen contract to spend your sPGL tokens`)
-	_print_link(`Approve sPGL Tokens\n`, approveSPGLSUSHI)
-	_print(`Step 3: Deposit your sPGL tokens in IceQueen contract`)
-	_print_link(`Deposit sPGL Tokens\n\n`, stakeSPGLSUSHI)
-
-	// snowball staking
-	_print(`<b>Snowball - SNOB-AVAX Strategy</b>`)
-	_print(`Step 1: Acquire SNOB-AVAX LP (PGL) Tokens <a href='${SNOB_AVAX_POOL_URL}' target='_blank'>SNOB-AVAX Liquidity Pool</a>`)
-	_print(`SNOB-AVAX LP (PGL) Token balance: ${currentSNOBAVAXTokens / 1e18}\n`)
-	_print(`Step 2: Approve IceQueen contract to spend your LP tokens`)
-	_print_link(`Approve SNOB-AVAX LP (PGL) Tokens\n`, approveSNOB)
-	_print(`Step 3: Deposit your LP tokens in IceQueen contract`)
-	_print_link(`Deposit SNOB-AVAX LP (PGL) Tokens\n\n`, stakeSNOB)
+	//icequeen
+	_print(`<b>IceQueen 👸 - Staking Rewards </b>`)
+	_print(`Deposit Snowglobe tokens (sPGL) into IceQueen to earn Snowball (SNOB) tokens\n`)
+	_print(`<u>Pool 1 - SUSHI-AVAX Snowglobe (sPGL)</u>`)
+	_print(`Available to deposit: ${spglSushiDisplayAmt}`)
+	_print(`Available to withdraw: ${stakedPool1.amount / 1e18}`)
+	_print(`Pending Rewards: ${pendingSNOBTokensPool1 / 1e18}`)
+	_print_link(`Approve`, approveSPGLSUSHI)
+	_print_link(`Deposit`, stakeSPGLSUSHI)
+	_print_link(`Withdraw`, withdrawPool1)
+	_print_link(`Claim\n`, claimPool1)
+	_print(`<a href='${SNOB_AVAX_POOL_URL}'>Pool 2 - SNOB-AVAX LP</a>`)
+	_print(`Available to deposit: ${currentSNOBAVAXTokens / 1e18}`)
+	_print(`Available to withdraw: ${stakedPool2.amount / 1e18}`)
+	_print(`Pending Rewards: ${pendingSNOBTokensPool2 / 1e18}`)
+	_print_link(`Approve`, approveSNOB)
+	_print_link(`Deposit`, stakeSNOB)
+	_print_link(`Withdraw`, withdrawPool2)
+	_print_link(`Claim\n`, claimPool2)
+	_print(`<u>Pool 3 - PNG-AVAX Snowglobe (sPGL)</u>`)
+	_print(`Available to deposit: ${spglPngDisplayAmt}`)
+	_print(`Available to withdraw: ${stakedPool3.amount / 1e18}`)
+	_print(`Pending Rewards: ${pendingSNOBTokensPool3 / 1e18}`)
+	_print_link(`Approve`, approveSPGLPNG)
+	_print_link(`Deposit`, stakeSPGLPNG)
+	_print_link(`Withdraw`, withdrawPool3)
+	_print_link(`Claim\n\n`, claimPool3)
 
 	_print(`\n`);
     hideLoading();
@@ -296,6 +318,40 @@ const icequeenContract_stake = async function(chefAbi, chefAddress, poolIndex, s
       })
   } else {
     alert('You have no tokens to stake')
+  }
+}
+
+const icequeenContract_withdraw = async function(chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
+  const signer = App.provider.getSigner()
+  console.log(signer)
+  const ICEQUEEN_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  const userPoolInfo = await ICEQUEEN_CONTRACT.userInfo(poolIndex, App.YOUR_ADDRESS)
+  console.log(userPoolInfo)
+  const currentTokens = userPoolInfo.amount
+  let allow = Promise.resolve()
+
+  if (currentTokens / 1e18 > 0) {
+    showLoading()
+    allow
+      .then(async function() {
+          ICEQUEEN_CONTRACT.withdraw(poolIndex, currentTokens)
+          .then(function(t) {
+            App.provider.waitForTransaction(t.hash).then(function() {
+              hideLoading()
+          	  alert('Tokens withdraw. Refresh page to see balance.')
+            })
+          })
+          .catch(function() {
+            hideLoading()
+            alert('Something went wrong.')
+          })
+      })
+      .catch(function() {
+        hideLoading()
+        alert('Something went wrong.')
+      })
+  } else {
+    alert('You have no tokens to withdraw')
   }
 }
 
