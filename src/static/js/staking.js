@@ -38,11 +38,17 @@ $(function() {
 	const stakeSUSHI = async function() {
 		return snowglobeContract_stake(SNOWGLOBE_ABI, SNOWGLOBE_SUSHI_ADDR, 1, SUSHI_AVAX_ADDR, App)
 	}
+	const withdrawSUSHI = async function() {
+		return snowglobeContract_withdraw(SNOWGLOBE_ABI, SNOWGLOBE_SUSHI_ADDR, 1, SPGL_SUSHI_ADDRESS, App)
+	}
 	const approvePNG = async function() {
 		return snowglobeContract_approve(PNGAVAX_ABI, SNOWGLOBE_PNG_ADDR, PNG_AVAX_ADDR, App)
 	}
 	const stakePNG = async function() {
 		return snowglobeContract_stake(SNOWGLOBE_ABI, SNOWGLOBE_PNG_ADDR, 1, PNG_AVAX_ADDR, App)
+	}
+	const withdrawPNG = async function() {
+		return snowglobeContract_withdraw(SNOWGLOBE_ABI, SNOWGLOBE_PNG_ADDR, 1, SPGL_PNG_ADDRESS, App)
 	}
 	const approveSPGLSUSHI = async function() {
 		return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_SUSHI_ADDRESS, App)
@@ -125,7 +131,7 @@ $(function() {
 	_print(`<b>Wallet ❄️</b>`)
 	_print(`Address: ${App.YOUR_ADDRESS}`);
 	_print(`Snowballs: ${currentSNOBTokens / 1e18}`)
-	_print(`Pending rewards: ${claimableSnowballs}`)
+	_print(`Pending Snowballs: ${claimableSnowballs}`)
 	_print(`Total (wallet + pending): ${currentSNOBTokens / 1e18 + claimableSnowballs}\n\n`)
 
 	//snowglobes
@@ -135,12 +141,14 @@ $(function() {
 	_print(`Available to deposit: ${currentPNGAVAXTokens / 1e18}`)
 	_print(`Available to withdraw: ${spglPngDisplayAmt}`)
 	_print_link(`Approve`, approvePNG)
-	_print_link(`Deposit\n`, stakePNG)
+	_print_link(`Deposit`, stakePNG)
+	_print_link(`Withdraw\n`, withdrawPNG)
 	_print(`<a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>AVAX-SUSHI Pangolin LP</a>`)
 	_print(`Available to deposit: ${currentSUSHIAVAXTokens / 1e18}`)
 	_print(`Available to withdraw: ${spglSushiDisplayAmt}`)
 	_print_link(`Approve`, approveSUSHI)
 	_print_link(`Deposit`, stakeSUSHI)
+	_print_link(`Withdraw`, withdrawSUSHI)
 	_print(`\n`)
 
 	//icequeen
@@ -149,7 +157,7 @@ $(function() {
 	_print(`<u>Pool 1 - SUSHI-AVAX Snowglobe (sPGL)</u>`)
 	_print(`Available to stake: ${spglSushiDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool1.amount / 1e18}`)
-	_print(`Pending Rewards: ${pendingSNOBTokensPool1 / 1e18}`)
+	_print(`Pending Snowballs: ${pendingSNOBTokensPool1 / 1e18}`)
 	_print_link(`Approve`, approveSPGLSUSHI)
 	_print_link(`Stake`, stakeSPGLSUSHI)
 	_print_link(`Unstake`, withdrawPool1)
@@ -157,7 +165,7 @@ $(function() {
 	_print(`<a href='${SNOB_AVAX_POOL_URL}'>Pool 2 - SNOB-AVAX LP</a>`)
 	_print(`Available to stake: ${currentSNOBAVAXTokens / 1e18}`)
 	_print(`Available to unstake: ${stakedPool2.amount / 1e18}`)
-	_print(`Pending Rewards: ${pendingSNOBTokensPool2 / 1e18}`)
+	_print(`Pending Snowballs: ${pendingSNOBTokensPool2 / 1e18}`)
 	_print_link(`Approve`, approveSNOB)
 	_print_link(`Stake`, stakeSNOB)
 	_print_link(`Unstake`, withdrawPool2)
@@ -165,7 +173,7 @@ $(function() {
 	_print(`<u>Pool 3 - PNG-AVAX Snowglobe (sPGL)</u>`)
 	_print(`Available to stake: ${spglPngDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool3.amount / 1e18}`)
-	_print(`Pending Rewards: ${pendingSNOBTokensPool3 / 1e18}`)
+	_print(`Pending Snowballs: ${pendingSNOBTokensPool3 / 1e18}`)
 	_print_link(`Approve`, approveSPGLPNG)
 	_print_link(`Stake`, stakeSPGLPNG)
 	_print_link(`Unstake`, withdrawPool3)
@@ -275,6 +283,46 @@ const snowglobeContract_stake = async function(chefAbi, chefAddress, poolIndex, 
       })
   } else {
     alert('You have no tokens to stake')
+  }
+}
+
+const snowglobeContract_withdraw = async function(chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
+  const signer = App.provider.getSigner()
+  console.log(signer)
+
+  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
+  console.log(STAKING_TOKEN)
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  console.log(CHEF_CONTRACT)
+
+  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  console.log(currentTokens)
+  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
+  console.log(allowedTokens)
+  let allow = Promise.resolve()
+
+if (currentTokens / 1e18 > 0) {
+    showLoading()
+    allow
+      .then(async function() {
+          CHEF_CONTRACT.withdrawAll()
+          .then(function(t) {
+            App.provider.waitForTransaction(t.hash).then(function() {
+              hideLoading()
+          	  alert('Tokens Withdrawn. Refresh page to see balance.')
+            })
+          })
+          .catch(function() {
+            hideLoading()
+            alert('Something went wrong.')
+          })
+      })
+      .catch(function() {
+        hideLoading()
+        alert('Something went wrong.')
+      })
+  } else {
+    alert('You have no tokens to withdraw')
   }
 }
 
