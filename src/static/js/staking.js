@@ -191,7 +191,7 @@ $(function() {
 
 	//icequeen
 	_print(`<b>IceQueen 👸 - Governance </b>`)
-	_print(`Deposit Snowglobe tokens (sPGL) into IceQueen to recieve governance tokens (SNOB)\n`)
+	_print(`Deposit Snowglobe tokens (sPGL) into IceQueen to receive governance tokens (SNOB)\n`)
 	_print(`<u>Pool 4 - ETH-AVAX Snowglobe (sPGL) - New! 🌟</u>`)
 	_print(`Available to stake: ${spglEthDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool4.amount / 1e18}`)
