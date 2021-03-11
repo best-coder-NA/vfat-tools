@@ -146,6 +146,7 @@ $(function() {
 
     const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
     const currentSNOBAVAXTokens = await SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const snobAvaxDisplayAmt = currentSNOBAVAXTokens > 1000 ? currentSNOBAVAXTokens / 1e18 : 0;
 
     const pendingSNOBTokensPool1 = await ICEQUEEN_CONTRACT.pendingSnowball(1, App.YOUR_ADDRESS)
     const pendingSNOBTokensPool2 = await ICEQUEEN_CONTRACT.pendingSnowball(2, App.YOUR_ADDRESS)
@@ -219,7 +220,7 @@ $(function() {
 	_print_link(`Unstake`, withdrawPool3)
 	_print_link(`Claim\n`, claimPool3)
 	_print(`<a href='${SNOB_AVAX_POOL_URL}'>Pool 2 - SNOB-AVAX LP</a>`)
-	_print(`Available to stake: ${currentSNOBAVAXTokens / 1e18}`)
+	_print(`Available to stake: ${snobAvaxDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool2.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool2 / 1e18}`)
     _print(`Total overall staked: ${totalStakedSNOBAVAX / 1e18}`)
