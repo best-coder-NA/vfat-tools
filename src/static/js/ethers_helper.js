@@ -17,10 +17,26 @@ async function init_ethers() {
       console.error('User denied account access')
     }
     App.provider = new ethers.providers.Web3Provider(window.ethereum)
+
+    // Check provider connected to the right network
+    const network = await App.provider.getNetwork()
+    if (network.chainId != 43114) { // 43114 = chain ID for avalanche mainnet
+      _print("You're on the wrong network!")
+      _print_href("Please refer to this tutorial.", "https://pangolin.exchange/tutorials/getting-started")
+      _print("")
+    }
   }
   // Legacy dapp browsers...
   else if (window.web3) {
     App.provider = new ethers.providers.Web3Provider(window.web3.currentProvider)
+
+    // Check provider connected to the right network
+    const network = await App.provider.getNetwork()
+    if (network.chainId != 43114) { // 43114 = chain ID for avalanche mainnet
+      _print("You're on the wrong network!")
+      _print_href("Please refer to this tutorial.", "https://pangolin.exchange/tutorials/getting-started")
+      _print("")
+    }
   }
   // If no injected web3 instance is detected, fall back to backup node
   else {
@@ -98,7 +114,7 @@ const toFixed = function(num, fixed) {
 
 const start = function(f) {
   f().catch(e => {
-    _print(e)
+    console.log(e)
     console.error(e)
     _print('Oops something went wrong. Try refreshing the page.')
   })
