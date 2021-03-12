@@ -9,13 +9,13 @@
     "dev": "npm run setup-for-dev && npm-run-all --parallel start watch:*",
     "build": "NODE_ENV=production npm-run-all --sequential rmprod copy-to-dist minify:js minify:css prepend-banner hash-filenames minify:html",
     "build:html": "NODE_ENV=development babel-node build-tools/ejs-to-html.mjs",
-    "build:js": "NODE_ENV=development npx webpack -d",
+    "build:js": "NODE_ENV=development npx webpack -w",
     "build:css": "NODE_ENV=development npm run sass && npm run autoprefixer",
     "watch:html": "NODE_ENV=development babel-node build-tools/ejs-to-html.mjs --watch",
-    "watch:js": "NODE_ENV=development npx webpack -w -d --display minimal",
+    "watch:js": "NODE_ENV=development npx webpack -w",
     "watch:css": "NODE_ENV=development npm run sass && node-sass -w -r src/css -o dist/css --source-map true",
     "minify:html": "NODE_ENV=production npm run build:html && babel-node build-tools/minify-html.js",
-    "minify:js": "NODE_ENV=production npx webpack -p",
+    "minify:js": "NODE_ENV=production npx webpack --mode production",
     "minify:css": "NODE_ENV=production npm run build:css && babel-node build-tools/minify-css.js",
     "sass": "node-sass src/css -o dist/css --source-map-embed true",
     "autoprefixer": "postcss dist/css/**/*.css --use autoprefixer -r",
@@ -68,7 +68,8 @@
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "numbro": "^2.3.2",
-    "picturefill": "^3.0.3"
+    "picturefill": "^3.0.3",
+    "postcss": "^8.2.8"
   },
   "browserslist": [
     "last 1 version",
