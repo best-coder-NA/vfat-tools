@@ -232,7 +232,7 @@ $(function() {
     _print(`<a href='${SNOB_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`SNOB allocation weight: 50%`)
     _print(`Total pool size: ${totalStakedSNOBAVAX / 1e18}`)
-    _print(`Your % of pool: ${(stakedPool3.amount / 1e18)/(totalStakedSNOBAVAX / 1e18)*100}%`)
+    _print(`Your % of pool: ${(stakedPool2.amount / 1e18)/(totalStakedSNOBAVAX / 1e18)*100}%`)
 	_print(`Available to stake: ${snobAvaxDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool2.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool2 / 1e18}`)
