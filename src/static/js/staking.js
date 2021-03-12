@@ -1,3 +1,11 @@
+/*!
+* YieldFarming
+* Boilerplate for a Static website using EJS and SASS
+* https://yieldfarming.info
+* @author Jongseung Lim -- https://yieldfarming.info
+* Copyright 2021. MIT Licensed.
+*/
+
 $(function() {
 	consoleInit();
     start(main);
@@ -39,6 +47,25 @@ $(function() {
     const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375"
     const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x1eC206a9dD85625E1940cD2B0c8e14a894D2e9aC"
     const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
+
+    // Last Harvest
+    const SUSHI_AVAX_HARVEST = "119.66 PNG (3/12 8:57 PM UTC)"
+    const PNG_AVAX_HARVEST = "284.87 PNG (3/12 8:57 PM UTC)"
+    const ETH_AVAX_HARVEST = "79.23 PNG (3/12 8:57 PM UTC)"
+
+    // Compounds Per Day
+    const SUSHI_AVAX_COMPOUNDS = 4
+    const PNG_AVAX_COMPOUNDS = 4
+    const ETH_AVAX_COMPOUNDS = 4
+
+    // Gas
+	// Claim: 0.1645 
+	// Swap: 0.075221
+	// Add Liquidity: 0.092299
+	// Deposit into pool: 0.1645
+	// Total: 0.49652 ($13.90)
+    const GAS_PER_COMPOUND = 0.49652
+    const AVAX_PRICE = 28
 
 	const approveSUSHI = async function() {
 		return snowglobeContract_approve(PGL_ABI, SNOWGLOBE_SUSHI_ADDR, SUSHI_AVAX_ADDR, App)
@@ -180,20 +207,31 @@ $(function() {
 
 	//snowglobes
 	_print(`<b>Snowglobes 🌐</b>`)
-	_print(`Deposit LP tokens into Snowglobes for automatic compounding\n`)
+	_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!\n`)
+	_print(`Compound steps: Claim > Swap > Add Liquidity > Deposit`)
+	_print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX (~$${(GAS_PER_COMPOUND * AVAX_PRICE).toFixed(2)} USD)\n`)
 	_print(`<a href='${ETH_AVAX_POOL_URL}' target='_blank'>AVAX-ETH Pangolin LP - New! 🌟</a>`)
+	_print(`Last Harvest: ${ETH_AVAX_HARVEST}`)
+	_print(`Compounds per day: ${ETH_AVAX_COMPOUNDS} `)
+	_print(`Gas saved per day: ${GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS} AVAX (~$${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * AVAX_PRICE).toFixed(2)} USD)`)
 	_print(`Available to deposit: ${currentETHAVAXTokens / 1e18}`)
 	_print(`Available to withdraw: ${spglEthDisplayAmt}`)
 	_print_link(`Approve`, approveETH)
 	_print_link(`Deposit`, stakeETH)
 	_print_link(`Withdraw\n`, withdrawETH)
 	_print(`<a href='${PNG_AVAX_POOL_URL}' target='_blank'>AVAX-PNG Pangolin LP</a>`)
+	_print(`Last Harvest: ${PNG_AVAX_HARVEST}`)
+	_print(`Compounds per day: ${PNG_AVAX_COMPOUNDS} `)
+	_print(`Gas saved per day: ${GAS_PER_COMPOUND * PNG_AVAX_COMPOUNDS} AVAX (~$${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * AVAX_PRICE).toFixed(2)} USD)`)
 	_print(`Available to deposit: ${currentPNGAVAXTokens / 1e18}`)
 	_print(`Available to withdraw: ${spglPngDisplayAmt}`)
 	_print_link(`Approve`, approvePNG)
 	_print_link(`Deposit`, stakePNG)
 	_print_link(`Withdraw\n`, withdrawPNG)
 	_print(`<a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>AVAX-SUSHI Pangolin LP</a>`)
+	_print(`Last Harvest: ${SUSHI_AVAX_HARVEST}`)
+	_print(`Compounds per day: ${SUSHI_AVAX_COMPOUNDS}`)
+	_print(`Gas saved per day: ${GAS_PER_COMPOUND * SUSHI_AVAX_COMPOUNDS} AVAX (~$${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * AVAX_PRICE).toFixed(2)} USD)`)
 	_print(`Available to deposit: ${currentSUSHIAVAXTokens / 1e18}`)
 	_print(`Available to withdraw: ${spglSushiDisplayAmt}`)
 	_print_link(`Approve`, approveSUSHI)
