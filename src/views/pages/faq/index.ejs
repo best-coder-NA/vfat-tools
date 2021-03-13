@@ -52,6 +52,15 @@ That said, Snowball is an experimental protocol. Please only deposit funds you a
 <b>Why can't I connect my wallet?</b>
 Please ensure you have Metamask installed and are configured to use the Avalance Network.
 <a href="https://tradingtoolcrypto.medium.com/how-to-use-metamask-with-avalanche-avax-e5db94d749b" target="_blank">https://tradingtoolcrypto.medium.com/how-to-use-metamask-with-avalanche-avax-e5db94d749b</a>
+
+<b>How do you calculate APR and APY?</b>
+For APR we use the same logic as <a href="https://vfat.tools/avax/png/" target="_blank">https://vfat.tools/avax/png/</a>.
+It takes price of the two tokens in a pair, price of PNG, and PNG emissions rates from Pangolin Exchange into factor.
+
+For APY we use the standard formula A = P(1 + r/n)nt
+Try it yourself here:
+<a href="https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php" target="_blank">https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php</a>
+
 <%- include(`${partials}/scripts`, {scriptname: 'homepage'}); -%>
 </body>
 </html>
