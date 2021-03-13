@@ -49,9 +49,9 @@ $(function() {
     const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
 
     // Last Harvest
-    const SUSHI_AVAX_HARVEST = "3/13 8:39 AM UTC - 90.34 PNG ($437.24)"
-    const PNG_AVAX_HARVEST = "3/13 8:39 AM UTC - 200.07 PNG ($968.33)"
-    const ETH_AVAX_HARVEST = "3/13 8:39 AM UTC - 55.88 PNG ($270.45)"
+    const SUSHI_AVAX_HARVEST = "3/13 7:48 AM UTC - 143.03 PNG ($703.99)"
+    const PNG_AVAX_HARVEST = "3/13 7:48 AM UTC - 316.33 PNG ($1556.34)"
+    const ETH_AVAX_HARVEST = "3/13 7:48 AM UTC - 86.95 PNG ($427.79)"
 
     // Compounds Per Day
     const SUSHI_AVAX_COMPOUNDS = 4
@@ -198,6 +198,12 @@ $(function() {
 
 	const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 /  1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18
 
+	const snobTotalSupply = await SNOB_TOKEN.totalSupply()
+
+	//total supply
+	_print(`Circulating Snowball supply: ${snobTotalSupply / 1e18}`)
+	_print(`Max Snowball supply: 18000000 \n`)
+
 	// balance
 	_print(`<b>Wallet ❄️</b>`)
 	_print(`Address: ${App.YOUR_ADDRESS}`);
@@ -209,9 +215,9 @@ $(function() {
 	_print(`<b>Snowglobes 🌐</b>`)
 	_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
 	_print(`Compound steps: Claim > Swap > Add Liquidity > Deposit\n`)
-	_print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX (~$${(GAS_PER_COMPOUND * AVAX_PRICE).toFixed(2)} USD)`)
-	_print(`Compounds per day: ${ETH_AVAX_COMPOUNDS} `)
-	_print(`Gas saved per day: ${GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS} AVAX (~$${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * AVAX_PRICE).toFixed(2)} USD)\n`)
+	_print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX`)
+	_print(`Compounds per day/week/year: ${ETH_AVAX_COMPOUNDS}/${ETH_AVAX_COMPOUNDS*7}/${ETH_AVAX_COMPOUNDS*365} `)
+	_print(`Gas saved per day/week/year: ${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS).toFixed(1)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 7).toFixed(1)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 365).toFixed(1)} AVAX\n`)
 	_print(`<a href='${ETH_AVAX_POOL_URL}' target='_blank'>AVAX-ETH Pangolin LP - New! 🌟</a>`)
 	_print(`Last Harvest: ${ETH_AVAX_HARVEST}`)
 	_print(`Available to deposit: ${currentETHAVAXTokens / 1e18}`)
