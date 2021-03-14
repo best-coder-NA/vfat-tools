@@ -50,14 +50,14 @@ $(function() {
     const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
 
     // Last Harvest
-    const ETH_AVAX_HARVEST = "3/13 6:58PM UTC - 125.99  PNG ($626.17)"
-    const PNG_AVAX_HARVEST = "3/13 6:58PM UTC - 429.27 PNG ($2,133.47)"
-    const SUSHI_AVAX_HARVEST = "3/13 6:58PM UTC - 198.02 PNG ($984.16)"
+    const ETH_AVAX_HARVEST = "3/14 5:09 AM UTC - 91.40 PNG ($442.37)"
+    const PNG_AVAX_HARVEST = "3/14 5:09 AM UTC - 344.20 PNG ($1,665.92)"
+    const SUSHI_AVAX_HARVEST = "3/14 5:09 AM UTC - 112.63 PNG ($545.12)"
 
     // Compounds Per Day
-    const SUSHI_AVAX_COMPOUNDS = 4
-    const PNG_AVAX_COMPOUNDS = 4
-    const ETH_AVAX_COMPOUNDS = 4
+    const SUSHI_AVAX_COMPOUNDS = 5
+    const PNG_AVAX_COMPOUNDS = 5
+    const ETH_AVAX_COMPOUNDS = 5
 
     // Gas
 	// Claim: 0.1645 
@@ -171,11 +171,13 @@ $(function() {
     const pendingSNOBTokensPool4 = await ICEQUEEN_CONTRACT.pendingSnowball(4, App.YOUR_ADDRESS)
 	const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 /  1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18
     const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    const snowballsPerBlock = await ICEQUEEN_CONTRACT.snowballPerBlock()
 
 
 	//total supply
 	_print(`Circulating Snowball supply: ${snobTotalSupply / 1e18}`)
-	_print(`Max Snowball supply: 18000000 \n`)
+	_print(`Max Snowball supply: 18000000`)
+	_print(`Snowballs per block: ${snowballsPerBlock / 1e18} \n`)
 
 	// balance
 	_print(`<b>Wallet ❄️</b>`)
@@ -202,17 +204,6 @@ $(function() {
     const currentSNOBAVAXTokens = await SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
     const snobAvaxDisplayAmt = currentSNOBAVAXTokens > 1000 ? currentSNOBAVAXTokens / 1e18 : 0;
 
-
-    const stakedPool1 = await ICEQUEEN_CONTRACT.userInfo(1, App.YOUR_ADDRESS)
-    const stakedPool2 = await ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS)
-	const stakedPool3 = await ICEQUEEN_CONTRACT.userInfo(3, App.YOUR_ADDRESS)
-	const stakedPool4 = await ICEQUEEN_CONTRACT.userInfo(4, App.YOUR_ADDRESS)
-
-	// Total staked in each pool
-	const totalStakedSPGLSUSHI = await SPGL_SUSHI_TOKEN.balanceOf(ICEQUEEN_ADDR)
-    const totalStakedSPGLPNG = await SPGL_PNG_TOKEN.balanceOf(ICEQUEEN_ADDR)
-    const totalStakedSPGLETH = await SPGL_ETH_TOKEN.balanceOf(ICEQUEEN_ADDR)
-	const totalStakedSNOBAVAX = await SNOB_AVAX_TOKEN.balanceOf(ICEQUEEN_ADDR)
 	//snowglobes
 	_print(`<b>Snowglobes 🌐</b>`)
 	_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
@@ -287,6 +278,21 @@ $(function() {
 	_print_link(`Withdraw`, withdrawSUSHI)
 	_print(`\n`)
 
+    const stakedPool1 = await ICEQUEEN_CONTRACT.userInfo(1, App.YOUR_ADDRESS)
+    const stakedPool2 = await ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS)
+	const stakedPool3 = await ICEQUEEN_CONTRACT.userInfo(3, App.YOUR_ADDRESS)
+	const stakedPool4 = await ICEQUEEN_CONTRACT.userInfo(4, App.YOUR_ADDRESS)
+
+	// Total staked in each pool
+	const totalStakedSPGLSUSHI = await SPGL_SUSHI_TOKEN.balanceOf(ICEQUEEN_ADDR)
+    const totalStakedSPGLPNG = await SPGL_PNG_TOKEN.balanceOf(ICEQUEEN_ADDR)
+    const totalStakedSPGLETH = await SPGL_ETH_TOKEN.balanceOf(ICEQUEEN_ADDR)
+	const totalStakedSNOBAVAX = await SNOB_AVAX_TOKEN.balanceOf(ICEQUEEN_ADDR)
+
+	const userPool4Percent = (stakedPool4.amount / 1e18)/(totalStakedSPGLETH / 1e18)*100
+	const userPool3Percent = (stakedPool3.amount / 1e18)/(totalStakedSPGLPNG / 1e18)*100
+	const userPool2Percent = (stakedPool2.amount / 1e18)/(totalStakedSNOBAVAX / 1e18)*100
+	const userPool1Percent = (stakedPool1.amount / 1e18)/(totalStakedSPGLSUSHI / 1e18)*100
 
 	//icequeen
 	_print(`<b>IceQueen 👸 - Governance </b>`)
@@ -294,8 +300,10 @@ $(function() {
 	_print(`<u>Pool 4 - ETH-AVAX Snowglobe (sPGL) - New! 🌟</u>`)
 	_print(`<a href='${ETH_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`SNOB allocation weight: 12.5%`)
+	_print(`Snowballs per block: ${snowballsPerBlock * 0.125 / 1e18}`)
     _print(`Total pool size: ${totalStakedSPGLETH / 1e18}`)
-    _print(`Your % of pool: ${(stakedPool4.amount / 1e18)/(totalStakedSPGLETH / 1e18)*100}%`)
+    _print(`Your % of pool: ${userPool4Percent}%`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool4Percent / 1e18}`)
 	_print(`Available to stake: ${spglEthDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool4.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool4 / 1e18}`)
@@ -306,8 +314,10 @@ $(function() {
 	_print(`<u>Pool 3 - PNG-AVAX Snowglobe (sPGL)</u>`)
     _print(`<a href='${PNG_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`SNOB allocation weight: 25%`)
+	_print(`Snowballs per block: ${snowballsPerBlock * 0.25 / 1e18}`)
     _print(`Total pool size: ${totalStakedSPGLPNG / 1e18}`)
-    _print(`Your % of pool: ${(stakedPool3.amount / 1e18)/(totalStakedSPGLPNG / 1e18)*100}%`)
+    _print(`Your % of pool: ${userPool3Percent}%`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool3Percent / 1e18}`)
 	_print(`Available to stake: ${spglPngDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool3.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool3 / 1e18}`)
@@ -315,11 +325,13 @@ $(function() {
 	_print_link(`Stake`, stakeSPGLPNG)
 	_print_link(`Unstake`, withdrawPool3)
 	_print_link(`Claim\n`, claimPool3)
-	_print(`<a href='${SNOB_AVAX_POOL_URL}'>Pool 2 - SNOB-AVAX LP</a>`)
+	_print(`<a href='${SNOB_AVAX_POOL_URL}'>Pool 2 - SNOB-AVAX Pangolin LP</a>`)
     _print(`<a href='${SNOB_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`SNOB allocation weight: 50%`)
+	_print(`Snowballs per block: ${snowballsPerBlock * 0.5 / 1e18}`)
     _print(`Total pool size: ${totalStakedSNOBAVAX / 1e18}`)
-    _print(`Your % of pool: ${(stakedPool2.amount / 1e18)/(totalStakedSNOBAVAX / 1e18)*100}%`)
+    _print(`Your % of pool: ${userPool2Percent}%`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool2Percent / 1e18}`)
 	_print(`Available to stake: ${snobAvaxDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool2.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool2 / 1e18}`)
@@ -330,8 +342,10 @@ $(function() {
 	_print(`<u>Pool 1 - SUSHI-AVAX Snowglobe (sPGL)</u>`)
     _print(`<a href='${SUSHI_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`SNOB allocation weight: 12.5%`)
+	_print(`Snowballs per block: ${snowballsPerBlock * 0.125 / 1e18}`)
     _print(`Total pool size: ${totalStakedSPGLSUSHI / 1e18}`)
-    _print(`Your % of pool: ${(stakedPool1.amount / 1e18)/(totalStakedSPGLSUSHI / 1e18)*100}%`)
+    _print(`Your % of pool: ${userPool1Percent}%`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool1Percent / 1e18}`)
 	_print(`Available to stake: ${spglSushiDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool1.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool1 / 1e18}`)
