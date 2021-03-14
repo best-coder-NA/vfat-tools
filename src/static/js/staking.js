@@ -171,8 +171,9 @@ $(function() {
     const pendingSNOBTokensPool4 = await ICEQUEEN_CONTRACT.pendingSnowball(4, App.YOUR_ADDRESS)
 	const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 /  1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18
     const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
-    const snowballsPerBlock = await ICEQUEEN_CONTRACT.snowballPerBlock()
-
+    const snowballMultiplier = await ICEQUEEN_CONTRACT.BONUS_MULTIPLIER()
+    const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
+    const snowballsPerBlock = snowballMultiplier * blockRate
 
 	//total supply
 	_print(`Circulating Snowball supply: ${snobTotalSupply / 1e18}`)
@@ -303,7 +304,7 @@ $(function() {
 	_print(`Snowballs per block: ${snowballsPerBlock * 0.125 / 1e18}`)
     _print(`Total pool size: ${totalStakedSPGLETH / 1e18}`)
     _print(`Your % of pool: ${userPool4Percent}%`)
-	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool4Percent / 1e18}`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool4Percent / 100 / 1e18}`)
 	_print(`Available to stake: ${spglEthDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool4.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool4 / 1e18}`)
@@ -317,7 +318,7 @@ $(function() {
 	_print(`Snowballs per block: ${snowballsPerBlock * 0.25 / 1e18}`)
     _print(`Total pool size: ${totalStakedSPGLPNG / 1e18}`)
     _print(`Your % of pool: ${userPool3Percent}%`)
-	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool3Percent / 1e18}`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool3Percent / 100 / 1e18}`)
 	_print(`Available to stake: ${spglPngDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool3.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool3 / 1e18}`)
@@ -331,7 +332,7 @@ $(function() {
 	_print(`Snowballs per block: ${snowballsPerBlock * 0.5 / 1e18}`)
     _print(`Total pool size: ${totalStakedSNOBAVAX / 1e18}`)
     _print(`Your % of pool: ${userPool2Percent}%`)
-	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool2Percent / 1e18}`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool2Percent / 100 / 1e18}`)
 	_print(`Available to stake: ${snobAvaxDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool2.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool2 / 1e18}`)
@@ -345,7 +346,7 @@ $(function() {
 	_print(`Snowballs per block: ${snowballsPerBlock * 0.125 / 1e18}`)
     _print(`Total pool size: ${totalStakedSPGLSUSHI / 1e18}`)
     _print(`Your % of pool: ${userPool1Percent}%`)
-	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool1Percent / 1e18}`)
+	_print(`Your Snowballs per block: ${snowballsPerBlock * 0.125 * userPool1Percent / 100 / 1e18}`)
 	_print(`Available to stake: ${spglSushiDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool1.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool1 / 1e18}`)
