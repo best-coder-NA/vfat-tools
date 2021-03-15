@@ -194,7 +194,7 @@ $(function() {
 	_print(`Pending Snowballs: ${claimableSnowballs}`)
 	_print(`Total (wallet + pending): ${currentSNOBTokens / 1e18 + claimableSnowballs}`)
 	_print(`SNOB price: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(2)}</a>`)
-	_print(`Total SNOB value: $${(currentSNOBTokens / 1e18 + claimableSnowballs * snobPrice).toFixed(2)}\n\n`)
+	_print(`Total SNOB value: $${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}\n\n`)
 
 
     //Balances
