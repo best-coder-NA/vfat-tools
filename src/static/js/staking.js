@@ -50,9 +50,9 @@ $(function() {
     const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
 
     // Last Harvest
-    const ETH_AVAX_HARVEST = "3/15 3:05PM UTC - 439.52 ($2,012.12)"
-    const PNG_AVAX_HARVEST = "3/15 3:05PM UTC - 619.83 ($2,837.58)"
-    const SUSHI_AVAX_HARVEST = "3/15 3:05PM UTC - 224.40 ($1,027.30)"
+    const ETH_AVAX_HARVEST = "3/15 7:21PM UTC - 188.76 ($845.61) PNG"
+    const PNG_AVAX_HARVEST = "3/15 7:21PM UTC - 271.71 ($1,217.22) PNG"
+    const SUSHI_AVAX_HARVEST = "3/15 7:21PM UTC - 97.93 ($438.71) PNG"
 
     // Compounds Per Day
     const SUSHI_AVAX_COMPOUNDS = 6
@@ -174,18 +174,28 @@ $(function() {
     const snowballMultiplier = await ICEQUEEN_CONTRACT.BONUS_MULTIPLIER()
     const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
     const snowballsPerBlock = snowballMultiplier * blockRate
+    const blockNumber = await App.provider.getBlockNumber()
+    const prices = await getAvaxPrices();
+    const snobPrice = prices['0xc38f41a296a4493ff429f1238e030924a1542e50'].usd
 
 	//total supply
-	_print(`Circulating Snowball supply: ${snobTotalSupply / 1e18}`)
+	_print(`Circulating Snowball supply: ${(snobTotalSupply/ 1e18).toFixed()}`)
 	_print(`Max Snowball supply: 18000000`)
-	_print(`Snowballs per block: ${snowballsPerBlock / 1e18} \n`)
+	_print(`Snowballs per block: ${snowballsPerBlock / 1e18}`)
+	_print(`Snowballs per day: ${snowballsPerBlock / 1e18 * 15000}`)
+	_print(`Distribution blocks (current/ending): ${blockNumber}/1443700`)
+	_print(`Estimated blocks per day: 15000 \n`)
+
 
 	// balance
 	_print(`<b>Wallet ❄️</b>`)
 	_print(`Address: ${App.YOUR_ADDRESS}`);
 	_print(`Snowballs: ${currentSNOBTokens / 1e18}`)
 	_print(`Pending Snowballs: ${claimableSnowballs}`)
-	_print(`Total (wallet + pending): ${currentSNOBTokens / 1e18 + claimableSnowballs}\n\n`)
+	_print(`Total (wallet + pending): ${currentSNOBTokens / 1e18 + claimableSnowballs}`)
+	_print(`SNOB price: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(2)}</a>`)
+	_print(`Total SNOB value: $${(currentSNOBTokens / 1e18 + claimableSnowballs * snobPrice).toFixed(2)}\n\n`)
+
 
     //Balances
 
@@ -227,7 +237,6 @@ $(function() {
 	]
 
     const tokens = {};
-    const prices = await getAvaxPrices();
 
     const pools = PngStakingContracts.map(c => { return {
         address: c.stakingRewardAddress,
@@ -310,6 +319,8 @@ $(function() {
     _print(`Total pool size: ${totalStakedSPGLETH / 1e18}`)
     _print(`Your % of pool: ${userPool4Percent}%`)
 	_print(`Your Snowballs per block: ${snowballsPerBlock * pool4weight * userPool4Percent / 100 / 1e18}`)
+	_print(`Estimated Snowballs per day*: ${snowballsPerBlock * pool4weight * userPool4Percent / 100 / 1e18 * 15000}`)
+	_print(`Estimated gain per day*: $${(snowballsPerBlock * pool4weight * userPool4Percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}`)
 	_print(`Available to stake: ${spglEthDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool4.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool4 / 1e18}`)
@@ -324,6 +335,8 @@ $(function() {
     _print(`Total pool size: ${totalStakedSPGLPNG / 1e18}`)
     _print(`Your % of pool: ${userPool3Percent}%`)
 	_print(`Your Snowballs per block: ${snowballsPerBlock * pool3weight * userPool3Percent / 100 / 1e18}`)
+	_print(`Estimated Snowballs per day*: ${snowballsPerBlock * pool3weight * userPool3Percent / 100 / 1e18 * 15000}`)
+	_print(`Estimated gain per day*: $${(snowballsPerBlock * pool3weight * userPool3Percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}`)
 	_print(`Available to stake: ${spglPngDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool3.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool3 / 1e18}`)
@@ -338,6 +351,8 @@ $(function() {
     _print(`Total pool size: ${totalStakedSNOBAVAX / 1e18}`)
     _print(`Your % of pool: ${userPool2Percent}%`)
 	_print(`Your Snowballs per block: ${snowballsPerBlock * pool2weight * userPool2Percent / 100 / 1e18}`)
+	_print(`Estimated Snowballs per day*: ${snowballsPerBlock * pool2weight * userPool2Percent / 100 / 1e18 * 15000}`)
+	_print(`Estimated gain per day*: $${(snowballsPerBlock * pool2weight * userPool2Percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}`)
 	_print(`Available to stake: ${snobAvaxDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool2.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool2 / 1e18}`)
@@ -352,6 +367,8 @@ $(function() {
     _print(`Total pool size: ${totalStakedSPGLSUSHI / 1e18}`)
     _print(`Your % of pool: ${userPool1Percent}%`)
 	_print(`Your Snowballs per block: ${snowballsPerBlock * pool1weight * userPool1Percent / 100 / 1e18}`)
+	_print(`Estimated Snowballs per day*: ${snowballsPerBlock * pool1weight * userPool1Percent / 100 / 1e18 * 15000}`)
+	_print(`Estimated gain per day*: $${(snowballsPerBlock * pool1weight * userPool1Percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}`)
 	_print(`Available to stake: ${spglSushiDisplayAmt}`)
 	_print(`Available to unstake: ${stakedPool1.amount / 1e18}`)
 	_print(`Pending Snowballs: ${pendingSNOBTokensPool1 / 1e18}`)
@@ -359,7 +376,7 @@ $(function() {
 	_print_link(`Stake`, stakeSPGLSUSHI)
 	_print_link(`Unstake`, withdrawPool1)
 	_print_link(`Claim\n`, claimPool1)
-	_print(`\n`);
+	_print(`*Estimates based on an average of 15,000 blocks per day\n`)
 
 
     hideLoading();
