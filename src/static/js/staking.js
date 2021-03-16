@@ -52,11 +52,12 @@ $(function() {
     const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375"
     const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x1eC206a9dD85625E1940cD2B0c8e14a894D2e9aC"
     const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
+    const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
 
     // Last Harvest
-    const ETH_AVAX_HARVEST = "3/15 7:21PM UTC - 188.76 ($845.61) PNG"
-    const PNG_AVAX_HARVEST = "3/15 7:21PM UTC - 271.71 ($1,217.22) PNG"
-    const SUSHI_AVAX_HARVEST = "3/15 7:21PM UTC - 97.93 ($438.71) PNG"
+    const ETH_AVAX_HARVEST = "3/16 6:51AM UTC - 69.39 PNG ($280.18)"
+    const PNG_AVAX_HARVEST = "3/16 6:51AM UTC - 101.95 PNG ($450.61)"
+    const SUSHI_AVAX_HARVEST = "3/16 6:51AM UTC - 43.25 PNG ($191.16)"
     const LINK_AVAX_HARVEST = ""
 
     // Compounds Per Day
@@ -287,10 +288,19 @@ $(function() {
 	let link_r = link_apr.yearlyAPR/100
 	let link_annual_apy = 100*(1 + link_r/compounds_per_year)**compounds_per_year
 
+    //Contracts
+    const LINK_CONTRACT = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer)
+	const totalDepositedLINKAVAX = await LINK_CONTRACT.totalSupply()
+    const userLinkDeposited = await LINK_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+	const userLinkPoolPercent = (userLinkDeposited / 1e18)/(totalDepositedLINKAVAX / 1e18)*100
+
 	_print(`<a href='${LINK_AVAX_POOL_URL}' target='_blank'>AVAX-LINK Pangolin LP - New! 🌟</a>`)
+	_print(`<a href='${LINK_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`APR: Day ${link_apr.dailyAPR.toFixed(2)}% Week ${link_apr.weeklyAPR.toFixed(2)}% Year ${link_apr.yearlyAPR.toFixed(2)}%`);
     _print(`APY (compounding): ${link_annual_apy.toFixed(2)}%`);
 	_print(`Last Harvest: ${LINK_AVAX_HARVEST}`)
+	_print(`Total pool size: ${totalDepositedLINKAVAX / 1e18}`)
+	_print(`Your % of pool: ${userLinkPoolPercent}`)
 	_print(`Available to deposit: ${currentLINKAVAXTokens / 1e18}`)
 	_print(`Available to withdraw: ${spglLinkDisplayAmt}`)
 	_print_link(`Approve`, approveLINK)
