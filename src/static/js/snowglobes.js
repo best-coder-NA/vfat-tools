@@ -55,10 +55,10 @@ $(function() {
     const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
 
     // Last Harvest
-    const ETH_AVAX_HARVEST = "3/16 9:58PM UTC - 313.80 PNG ($1,484.27)"
-    const PNG_AVAX_HARVEST = "3/16 9:58PM UTC - 466.20 PNG ($2,205.12)"
-    const SUSHI_AVAX_HARVEST = "3/16 9:58PM UTC - 209.96 PNG ($993.11)"
-    const LINK_AVAX_HARVEST = "3/16 9:58PM UTC - 87.28 PNG ($412.83)"
+    const ETH_AVAX_HARVEST = "3/17 7:56PM UTC - 50.36 PNG ($191.48)"
+    const PNG_AVAX_HARVEST = "3/17 7:56PM UTC"
+    const SUSHI_AVAX_HARVEST = "3/17 7:56PM UTC - 35.33 PNG ($134.37)"
+    const LINK_AVAX_HARVEST = "3/17 7:56PM UTC - 88.83 PNG ($337.68)"
 
     // Compounds Per Day
     const SUSHI_AVAX_COMPOUNDS = 6
