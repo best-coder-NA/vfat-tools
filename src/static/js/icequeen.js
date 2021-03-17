@@ -286,7 +286,9 @@ async function main() {
       _print(`Available Unstake: <b>${options.staked_pool.amount / 1e18}</b>`)
     }
     if ( options.display_amount > 0 ) {
-      _print_link(`Approve`, options.approve)
+      if ( options.staked_pool.amount / 1e18 == 0 ) {
+        _print_link(`Approve`, options.approve)
+      }
       _print_link(`Stake`, options.stake)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
