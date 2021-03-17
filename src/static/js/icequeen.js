@@ -238,108 +238,108 @@ $(function() {
     const currentSNOBAVAXTokens = await SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
     const snobAvaxDisplayAmt = currentSNOBAVAXTokens > 1000 ? currentSNOBAVAXTokens / 1e18 : 0;
 
-	//snowglobes
-	_print(`<b>Snowglobes 🌐</b>`)
-	_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
-	_print(`Compound steps: Claim > Swap > Add Liquidity > Deposit\n`)
-	_print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX`)
-	_print(`Compounds per day/week/year: ${ETH_AVAX_COMPOUNDS}/${ETH_AVAX_COMPOUNDS*7}/${ETH_AVAX_COMPOUNDS*365} `)
-	_print(`Gas saved per day/week/year: ${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 7).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 365).toFixed(2)} AVAX\n`)
+	// //snowglobes
+	// _print(`<b>Snowglobes 🌐</b>`)
+	// _print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
+	// _print(`Compound steps: Claim > Swap > Add Liquidity > Deposit\n`)
+	// _print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX`)
+	// _print(`Compounds per day/week/year: ${ETH_AVAX_COMPOUNDS}/${ETH_AVAX_COMPOUNDS*7}/${ETH_AVAX_COMPOUNDS*365} `)
+	// _print(`Gas saved per day/week/year: ${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 7).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 365).toFixed(2)} AVAX\n`)
 
-	// APR
-	const PngStakingContracts= [
-	    {
-	        stakingRewardAddress: '0xa16381eae6285123c323a665d4d99a6bcfaac307'
-	    },
-	    {
-	        stakingRewardAddress: '0x8fd2755c6ae7252753361991bdcd6ff55bdc01ce'
-	    },
-	    {
-	        stakingRewardAddress: '0x88f26b81c9cae4ea168e31bc6353f493fda29661'
-	    },
-	    {
-	        stakingRewardAddress: '0x7d7ecd4d370384b17dfc1b4155a8410e97841b65'
-	    }
-	]
+	// // APR
+	// const PngStakingContracts= [
+	//     {
+	//         stakingRewardAddress: '0xa16381eae6285123c323a665d4d99a6bcfaac307'
+	//     },
+	//     {
+	//         stakingRewardAddress: '0x8fd2755c6ae7252753361991bdcd6ff55bdc01ce'
+	//     },
+	//     {
+	//         stakingRewardAddress: '0x88f26b81c9cae4ea168e31bc6353f493fda29661'
+	//     },
+	//     {
+	//         stakingRewardAddress: '0x7d7ecd4d370384b17dfc1b4155a8410e97841b65'
+	//     }
+	// ]
 
-    const tokens = {};
+ //    const tokens = {};
 
-    const pools = PngStakingContracts.map(c => { return {
-        address: c.stakingRewardAddress,
-        abi: PNG_STAKING_ABI,
-        stakeTokenFunction: "stakingToken",
-        rewardTokenFunction: "rewardsToken"
-    }})
+ //    const pools = PngStakingContracts.map(c => { return {
+ //        address: c.stakingRewardAddress,
+ //        abi: PNG_STAKING_ABI,
+ //        stakeTokenFunction: "stakingToken",
+ //        rewardTokenFunction: "rewardsToken"
+ //    }})
 
-    let apr_array = await loadMultipleSnowglobePools(App, tokens, prices, pools)
-	const eth_apr = apr_array[0]
-	const png_apr = apr_array[1]
-	const sushi_apr = apr_array[2]
-	const link_apr = apr_array[3]
+ //    let apr_array = await loadMultipleSnowglobePools(App, tokens, prices, pools)
+	// const eth_apr = apr_array[0]
+	// const png_apr = apr_array[1]
+	// const sushi_apr = apr_array[2]
+	// const link_apr = apr_array[3]
 
-	// APY = P(1 + r/n)nt
-	let compounds_per_year = ETH_AVAX_COMPOUNDS * 365
-	let eth_r = eth_apr.yearlyAPR/100
-	let eth_annual_apy = 100*(1 + eth_r/compounds_per_year)**compounds_per_year
-	let png_r = png_apr.yearlyAPR/100
-	let png_annual_apy = 100*(1 + png_r/compounds_per_year)**compounds_per_year
-	let sushi_r = sushi_apr.yearlyAPR/100
-	let sushi_annual_apy = 100*(1 + sushi_r/compounds_per_year)**compounds_per_year
-	let link_r = link_apr.yearlyAPR/100
-	let link_annual_apy = 100*(1 + link_r/compounds_per_year)**compounds_per_year
+	// // APY = P(1 + r/n)nt
+	// let compounds_per_year = ETH_AVAX_COMPOUNDS * 365
+	// let eth_r = eth_apr.yearlyAPR/100
+	// let eth_annual_apy = 100*(1 + eth_r/compounds_per_year)**compounds_per_year
+	// let png_r = png_apr.yearlyAPR/100
+	// let png_annual_apy = 100*(1 + png_r/compounds_per_year)**compounds_per_year
+	// let sushi_r = sushi_apr.yearlyAPR/100
+	// let sushi_annual_apy = 100*(1 + sushi_r/compounds_per_year)**compounds_per_year
+	// let link_r = link_apr.yearlyAPR/100
+	// let link_annual_apy = 100*(1 + link_r/compounds_per_year)**compounds_per_year
 
-    //Contracts
-    const LINK_CONTRACT = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer)
-	const totalDepositedLINKAVAX = await LINK_CONTRACT.totalSupply()
-    const userLinkDeposited = await LINK_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-	const userLinkPoolPercent = (userLinkDeposited / 1e18)/(totalDepositedLINKAVAX / 1e18)*100
+ //    //Contracts
+ //    const LINK_CONTRACT = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer)
+	// const totalDepositedLINKAVAX = await LINK_CONTRACT.totalSupply()
+ //    const userLinkDeposited = await LINK_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+	// const userLinkPoolPercent = (userLinkDeposited / 1e18)/(totalDepositedLINKAVAX / 1e18)*100
 
-	_print(`<a href='${LINK_AVAX_POOL_URL}' target='_blank'>AVAX-LINK Pangolin LP - New! 🌟</a>`)
-	_print(`<a href='${LINK_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
-    _print(`APR: Day ${link_apr.dailyAPR.toFixed(2)}% Week ${link_apr.weeklyAPR.toFixed(2)}% Year ${link_apr.yearlyAPR.toFixed(2)}%`);
-    _print(`APY (compounding): ${link_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${LINK_AVAX_HARVEST}`)
-	_print(`Total pool size: ${totalDepositedLINKAVAX / 1e18}`)
-	_print(`Your % of pool: ${userLinkPoolPercent}`)
-	_print(`PGL Available to deposit: ${currentLINKAVAXTokens / 1e18}`)
-	_print(`sPGL Available to withdraw: ${spglLinkDisplayAmt}`)
-	_print_link(`Approve`, approveLINK)
-	_print_link(`Deposit`, stakeLINK)
-	_print_link(`Withdraw\n`, withdrawLINK)
-	_print(`<a href='${ETH_AVAX_POOL_URL}' target='_blank'>AVAX-ETH Pangolin LP</a>`)
-    _print(`APR: Day ${eth_apr.dailyAPR.toFixed(2)}% Week ${eth_apr.weeklyAPR.toFixed(2)}% Year ${eth_apr.yearlyAPR.toFixed(2)}%`);
-    _print(`APY (compounding): ${eth_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${ETH_AVAX_HARVEST}`)
-	_print(`PGL Available to deposit: ${currentETHAVAXTokens / 1e18}`)
-	_print(`sPGL Available to withdraw: ${spglEthDisplayAmt}`)
-	_print_link(`Approve`, approveETH)
-	_print_link(`Deposit`, stakeETH)
-	_print_link(`Withdraw\n`, withdrawETH)
-	_print(`<a href='${PNG_AVAX_POOL_URL}' target='_blank'>AVAX-PNG Pangolin LP</a>`)
-    _print(`APR: Day ${png_apr.dailyAPR.toFixed(2)}% Week ${png_apr.weeklyAPR.toFixed(2)}% Year ${png_apr.yearlyAPR.toFixed(2)}%`);
-    _print(`APY (compounding): ${png_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${PNG_AVAX_HARVEST} `)
-	_print(`PGL Available to deposit: ${currentPNGAVAXTokens / 1e18}`)
-	_print(`sPGL Available to withdraw: ${spglPngDisplayAmt}`)
-	_print_link(`Approve`, approvePNG)
-	_print_link(`Deposit`, stakePNG)
-	_print_link(`Withdraw\n`, withdrawPNG)
-	_print(`<a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>AVAX-SUSHI Pangolin LP</a>`)
-    _print(`APR: Day ${sushi_apr.dailyAPR.toFixed(2)}% Week ${sushi_apr.weeklyAPR.toFixed(2)}% Year ${sushi_apr.yearlyAPR.toFixed(2)}%`);
-    _print(`APY (compounding): ${sushi_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${SUSHI_AVAX_HARVEST}`)
-	_print(`PGL Available to deposit: ${currentSUSHIAVAXTokens / 1e18}`)
-	_print(`sPGL Available to withdraw: ${spglSushiDisplayAmt}`)
-	_print_link(`Approve`, approveSUSHI)
-	_print_link(`Deposit`, stakeSUSHI)
-	_print_link(`Withdraw`, withdrawSUSHI)
-	_print(`\n`)
+	// _print(`<a href='${LINK_AVAX_POOL_URL}' target='_blank'>AVAX-LINK Pangolin LP - New! 🌟</a>`)
+	// _print(`<a href='${LINK_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
+ //    _print(`APR: Day ${link_apr.dailyAPR.toFixed(2)}% Week ${link_apr.weeklyAPR.toFixed(2)}% Year ${link_apr.yearlyAPR.toFixed(2)}%`);
+ //    _print(`APY (compounding): ${link_annual_apy.toFixed(2)}%`);
+	// _print(`Last Harvest: ${LINK_AVAX_HARVEST}`)
+	// _print(`Total pool size: ${totalDepositedLINKAVAX / 1e18}`)
+	// _print(`Your % of pool: ${userLinkPoolPercent}`)
+	// _print(`PGL Available to deposit: ${currentLINKAVAXTokens / 1e18}`)
+	// _print(`sPGL Available to withdraw: ${spglLinkDisplayAmt}`)
+	// _print_link(`Approve`, approveLINK)
+	// _print_link(`Deposit`, stakeLINK)
+	// _print_link(`Withdraw\n`, withdrawLINK)
+	// _print(`<a href='${ETH_AVAX_POOL_URL}' target='_blank'>AVAX-ETH Pangolin LP</a>`)
+ //    _print(`APR: Day ${eth_apr.dailyAPR.toFixed(2)}% Week ${eth_apr.weeklyAPR.toFixed(2)}% Year ${eth_apr.yearlyAPR.toFixed(2)}%`);
+ //    _print(`APY (compounding): ${eth_annual_apy.toFixed(2)}%`);
+	// _print(`Last Harvest: ${ETH_AVAX_HARVEST}`)
+	// _print(`PGL Available to deposit: ${currentETHAVAXTokens / 1e18}`)
+	// _print(`sPGL Available to withdraw: ${spglEthDisplayAmt}`)
+	// _print_link(`Approve`, approveETH)
+	// _print_link(`Deposit`, stakeETH)
+	// _print_link(`Withdraw\n`, withdrawETH)
+	// _print(`<a href='${PNG_AVAX_POOL_URL}' target='_blank'>AVAX-PNG Pangolin LP</a>`)
+ //    _print(`APR: Day ${png_apr.dailyAPR.toFixed(2)}% Week ${png_apr.weeklyAPR.toFixed(2)}% Year ${png_apr.yearlyAPR.toFixed(2)}%`);
+ //    _print(`APY (compounding): ${png_annual_apy.toFixed(2)}%`);
+	// _print(`Last Harvest: ${PNG_AVAX_HARVEST} `)
+	// _print(`PGL Available to deposit: ${currentPNGAVAXTokens / 1e18}`)
+	// _print(`sPGL Available to withdraw: ${spglPngDisplayAmt}`)
+	// _print_link(`Approve`, approvePNG)
+	// _print_link(`Deposit`, stakePNG)
+	// _print_link(`Withdraw\n`, withdrawPNG)
+	// _print(`<a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>AVAX-SUSHI Pangolin LP</a>`)
+ //    _print(`APR: Day ${sushi_apr.dailyAPR.toFixed(2)}% Week ${sushi_apr.weeklyAPR.toFixed(2)}% Year ${sushi_apr.yearlyAPR.toFixed(2)}%`);
+ //    _print(`APY (compounding): ${sushi_annual_apy.toFixed(2)}%`);
+	// _print(`Last Harvest: ${SUSHI_AVAX_HARVEST}`)
+	// _print(`PGL Available to deposit: ${currentSUSHIAVAXTokens / 1e18}`)
+	// _print(`sPGL Available to withdraw: ${spglSushiDisplayAmt}`)
+	// _print_link(`Approve`, approveSUSHI)
+	// _print_link(`Deposit`, stakeSUSHI)
+	// _print_link(`Withdraw`, withdrawSUSHI)
+	// _print(`\n`)
 
-	_print(`<b>PGL (Pangolin LP) tokens vs sPGL (Snowglobe) tokens</b>`)
-	_print(`When you deposit PGL (Pangolin LP) tokens into a Snowglobe, you will receive sPGL (Snowglobe) tokens`)
-	_print(`When you withdraw sPGL (Snowglobe) tokens, you will recieve PGL (Pangolin LP) tokens`)
-	_print(`sPGL value grows as there are more harvests, which means 1 sPGL is worth more than 1 PGL`)
-	_print(`The amount of PGL tokens withdrawn will be more than you deposited due to compounding from harvests`)
+	// _print(`<b>PGL (Pangolin LP) tokens vs sPGL (Snowglobe) tokens</b>`)
+	// _print(`When you deposit PGL (Pangolin LP) tokens into a Snowglobe, you will receive sPGL (Snowglobe) tokens`)
+	// _print(`When you withdraw sPGL (Snowglobe) tokens, you will recieve PGL (Pangolin LP) tokens`)
+	// _print(`sPGL value grows as there are more harvests, which means 1 sPGL is worth more than 1 PGL`)
+	// _print(`The amount of PGL tokens withdrawn will be more than you deposited due to compounding from harvests`)
 
     const stakedPool1 = await ICEQUEEN_CONTRACT.userInfo(1, App.YOUR_ADDRESS)
     const stakedPool2 = await ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS)
