@@ -17,7 +17,6 @@ async function init_ethers() {
       console.error('User denied account access')
     }
     App.provider = new ethers.providers.Web3Provider(window.ethereum)
-
     // Check provider connected to the right network
     const network = await App.provider.getNetwork()
     if (network.chainId != 43114) { // 43114 = chain ID for avalanche mainnet
@@ -29,7 +28,6 @@ async function init_ethers() {
   // Legacy dapp browsers...
   else if (window.web3) {
     App.provider = new ethers.providers.Web3Provider(window.web3.currentProvider)
-
     // Check provider connected to the right network
     const network = await App.provider.getNetwork()
     if (network.chainId != 43114) { // 43114 = chain ID for avalanche mainnet
@@ -739,6 +737,25 @@ const chefContract_claim = async function(chefAbi, chefAddress, poolIndex, App,
   }
 }
 
+const chefContract_emergencyWithdraw = async function(chefAbi, chefAddress, poolIndex, App) {
+  const signer = App.provider.getSigner()
+
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+
+  const currentStakedAmount = (await CHEF_CONTRACT.userInfo(poolIndex, App.YOUR_ADDRESS)).amount
+
+  if (currentStakedAmount > 0) {
+    showLoading()
+    CHEF_CONTRACT.emergencyWithdraw(poolIndex, {gasLimit: 500000})
+      .then(function(t) {
+        return App.provider.waitForTransaction(t.hash)
+      })
+      .catch(function() {
+        hideLoading()
+      })
+  }
+}
+
 async function getUniPool(app, pool, poolAddress, stakingAddress) {
   const calls = [
     pool.decimals(), pool.token0(), pool.token1(), pool.symbol(), pool.name(),
@@ -1039,6 +1056,7 @@ async function getToken(app, tokenAddress, stakingAddress) {
     return getErc20(app, null, tokenAddress, "")
   }
   const type = window.localStorage.getItem(tokenAddress);
+  //getTokenWeights
   if (type) return getStoredToken(app, tokenAddress, stakingAddress, type);
   try {
     const pool = new ethcall.Contract(tokenAddress, UNI_ABI);
@@ -1189,12 +1207,12 @@ function getUniPrices(tokens, prices, pool)
   prices[pool.address] = { usd : price };
   var staked_tvl = pool.staked * price;
   let stakeTokenTicker = `[${t0.symbol}]-[${t1.symbol}]`;
-  console.log(pool);
   if (pool.is1inch) stakeTokenTicker += " 1INCH LP";
   else if (pool.symbol.includes("LSLP")) stakeTokenTicker += " LSLP";
   else if (pool.symbol.includes("SLP")) stakeTokenTicker += " SLP";
   else if (pool.symbol.includes("Cake")) stakeTokenTicker += " Cake LP";
-  else if (pool.symbol.includes("PGL")) stakeTokenTicker += " PGL LP";
+  else if (pool.name.includes("Value LP")) stakeTokenTicker += " Value LP";
+  else if (pool.symbol.includes("PGL")) stakeTokenTicker += " PGL"
   else stakeTokenTicker += " Uni LP";
   return {
       t0: t0,
@@ -1212,8 +1230,9 @@ function getUniPrices(tokens, prices, pool)
         pool.symbol.includes("LSLP") ? `https://info.linkswap.app/pair/${pool.address}` :
           pool.symbol.includes("SLP") ?  `http://sushiswap.fi/pair/${pool.address}` :
             pool.symbol.includes("Cake") ?  `https://pancakeswap.info/pair/${pool.address}` :  
+            pool.symbol.includes("PGL") ?  `https://info.pangolin.exchange/#/pair/${pool.address}` :  
+            pool.name.includes("Value LP") ?  `https://info.vswap.fi/pool/${pool.address}` :  
             chain == "matic" ? `https://info.quickswap.exchange/pair/${pool.address}` :
-            pool.symbol.includes("PGL") ? `https://app.pangolin.exchange/#/add/AVAX/${t0.address}` :
           `http://uniswap.info/pair/${pool.address}`;
         const t0address = t0.symbol == "ETH" ? "ETH" : t0.address;
         const t1address = t1.symbol == "ETH" ? "ETH" : t1.address;
@@ -1223,22 +1242,87 @@ function getUniPrices(tokens, prices, pool)
           `https://linkswap.app/#/remove/${t0address}/${t1address}`,
           `https://linkswap.app/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}`
         ] :
-        pool.symbol.includes("Cake-LP") ? [
+        pool.symbol.includes("Cake") ? [
           `https://exchange.pancakeswap.finance/#/add/${t0address}/${t1address}`, 
           `https://exchange.pancakeswap.finance/#/remove/${t0address}/${t1address}`, 
           `https://exchange.pancakeswap.finance/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` 
         ] :
-        pool.symbol.includes("SLP") ? 
-          [ `https://exchange.sushiswapclassic.org/#/add/${t0address}/${t1address}`,
-            `https://exchange.sushiswapclassic.org/#/remove/${t0address}/${t1address}`,
-            `https://exchange.sushiswapclassic.org/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` ] :
-        pool.symbol.includes("PGL") ? 
-          [ `https://app.pangolin.exchange/#/add/AVAX/${t0address}`,
-            `https://app.pangolin.exchange/#/remove/AVAX/${t0address}`,
-            `https://app.pangolin.exchange/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` ] :
-          [ `https://app.uniswap.org/#/add/${t0address}/${t1address}`,
-            `https://app.uniswap.org/#/remove/${t0address}/${t1address}`,
-            `https://app.uniswap.org/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` ]
+        pool.name.includes("Value LP") ? [
+          `https://bsc.valuedefi.io/#/add/${t0address}/${t1address}`, 
+          `https://bsc.valuedefi.io/#/remove/${t0address}/${t1address}`, 
+          `https://bsc.valuedefi.io/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` 
+        ] :
+        pool.symbol.includes("PGL") ? [
+          `https://app.pangolin.exchange/#/add/${t0address}/${t1address}`, 
+          `https://app.pangolin.exchange/#/remove/${t0address}/${t1address}`, 
+          `https://app.pangolin.exchange/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` 
+        ] :
+        pool.symbol.includes("SLP") ? [ 
+          `https://exchange.sushiswapclassic.org/#/add/${t0address}/${t1address}`,
+          `https://exchange.sushiswapclassic.org/#/remove/${t0address}/${t1address}`,
+          `https://exchange.sushiswapclassic.org/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` 
+        ] :
+        [ `https://app.uniswap.org/#/add/${t0address}/${t1address}`,
+          `https://app.uniswap.org/#/remove/${t0address}/${t1address}`,
+          `https://app.uniswap.org/#/swap?inputCurrency=${t0address}&outputCurrency=${t1address}` ]
+        const helperHrefs = helperUrls.length == 0 ? "" :
+          ` <a href='${helperUrls[0]}' target='_blank'>[+]</a> <a href='${helperUrls[1]}' target='_blank'>[-]</a> <a href='${helperUrls[2]}' target='_blank'>[<=>]</a>`
+        _print(`<a href='${poolUrl}' target='_blank'>${stakeTokenTicker}</a>${helperHrefs} Price: $${formatMoney(price)} TVL: $${formatMoney(tvl)}`);
+        _print(`${t0.symbol} Price: $${formatMoney(p0)}`)
+        _print(`${t1.symbol} Price: $${formatMoney(p1)}`)
+        _print(`Staked: ${pool.staked.toFixed(4)} ${pool.symbol} ($${formatMoney(staked_tvl)})`);
+      },
+      print_contained_price(userStaked) {
+        var userPct = userStaked / pool.totalSupply;
+        var q0user = userPct * q0;
+        var q1user = userPct * q1;
+        _print(`Your LP tokens comprise of ${q0user.toFixed(4)} ${t0.symbol} + ${q1user.toFixed(4)} ${t1.symbol}`);
+      }
+  }
+}
+
+function getValuePrices(tokens, prices, pool)
+{
+  var t0 = getParameterCaseInsensitive(tokens,pool.token0);
+  var p0 = getParameterCaseInsensitive(prices,pool.token0)?.usd;
+  var t1 = getParameterCaseInsensitive(tokens,pool.token1);
+  var p1 = getParameterCaseInsensitive(prices,pool.token1)?.usd;
+  if (p0 == null && p1 == null) {
+      return undefined;
+  }
+  var q0 = pool.q0 / 10 ** t0.decimals;
+  var q1 = pool.q1 / 10 ** t1.decimals;
+  if (p0 == null)
+  {
+      p0 = q1 * p1 / pool.w1 / q0 * pool.w0;
+      prices[pool.token0] = { usd : p0 };
+  }
+  if (p1 == null)
+  {
+      p1 = q0 * p0 / pool.w0 / q1 * pool.w1;
+      prices[pool.token1] = { usd : p1 };
+  }
+  var tvl = q0 * p0 + q1 * p1;
+  var price = tvl / pool.totalSupply;
+  prices[pool.address] = { usd : price };
+  var staked_tvl = pool.staked * price;
+  let stakeTokenTicker = `[${t0.symbol} ${pool.w0}%]-[${t1.symbol} ${pool.w1}%] Value-LP`;
+  return {
+      t0, p0, q0, w0 : pool.w0,
+      t1, p1, q1, w1 : pool.w1,
+      price: price,
+      tvl : tvl,
+      staked_tvl : staked_tvl,
+      stakeTokenTicker : stakeTokenTicker,
+      print_price() {
+        const poolUrl = `https://info.vswap.fi/pool/${pool.address}` 
+        const t0address = t0.address;
+        const t1address =  t1.address;
+        const helperUrls = [
+          `https://bsc.valuedefi.io/#/add/${pool.address}`, 
+          `https://bsc.valuedefi.io/#/remove/${pool.address}`, 
+          `https://bsc.valuedefi.io/#/vswap?inputCurrency=${t0address}&outputCurrency=${t1address}` 
+        ]
         const helperHrefs = helperUrls.length == 0 ? "" :
           ` <a href='${helperUrls[0]}' target='_blank'>[+]</a> <a href='${helperUrls[1]}' target='_blank'>[-]</a> <a href='${helperUrls[2]}' target='_blank'>[<=>]</a>`
         _print(`<a href='${poolUrl}' target='_blank'>${stakeTokenTicker}</a>${helperHrefs} Price: $${formatMoney(price)} TVL: $${formatMoney(tvl)}`);
@@ -1380,6 +1464,9 @@ function getErc20Prices(prices, pool, chain="eth") {
     case "matic":
       poolUrl=`https://explorer-mainnet.maticvigil.com/address/${pool.address}`;
       break;
+    case "avax":
+      poolUrl=`https://cchain.explorer.avax.network/address/${pool.address}`;
+      break;
   }
   const name = `<a href='${poolUrl}' target='_blank'>${pool.symbol}</a>`;
   return {
@@ -1415,6 +1502,7 @@ function getCurvePrices(prices, pool) {
 }
 
 function getPoolPrices(tokens, prices, pool, chain = "eth") {
+  if (pool.w0 != null) return getValuePrices(tokens, prices, pool);
   if (pool.poolTokens != null) return getBalancerPrices(tokens, prices, pool);
   if (pool.token0 != null) return getUniPrices(tokens, prices, pool);
   if (pool.virtualPrice != null) return getCurvePrices(prices, pool);
@@ -1507,6 +1595,15 @@ function printChefContractLinks(App, chefAbi, chefAddr, poolIndex, poolAddress, 
   _print_link(`Unstake ${userStaked.toFixed(fixedDecimals)} ${stakeTokenTicker}`, unstake)
   _print_link(`Claim ${pendingRewardTokens.toFixed(fixedDecimals)} ${rewardTokenTicker} ($${formatMoney(pendingRewardTokens*rewardTokenPrice)})`, claim)
   _print(`Staking or unstaking also claims rewards.`)
+  if  (chefAddr == "0x0De845955E2bF089012F682fE9bC81dD5f11B372") {
+    const emergencyWithdraw = async function() {
+      return chefContract_emergencyWithdraw(chefAbi, chefAddr, poolIndex, App)
+    }      
+    _print('***')
+    _print_link(`EMERGENCY WITHDRAW ${userStaked.toFixed(fixedDecimals)} ${stakeTokenTicker}`, emergencyWithdraw)  
+    _print('This will forfeit your rewards but retrieve your capital')
+    _print('***')
+  }
   _print(`\n`);
 }
 
@@ -1744,66 +1841,69 @@ async function loadSynthetixPoolInfo(App, tokens, prices, stakingAbi, stakingAdd
 }
 
 async function printSynthetixPool(App, info, chain="eth") {
-    info.poolPrices.print_price(chain);
-    _print(`${info.rewardTokenTicker} Per Week: ${info.weeklyRewards.toFixed(2)} ($${formatMoney(info.usdPerWeek)})`);
-    const weeklyAPR = info.usdPerWeek / info.staked_tvl * 100;
-    const dailyAPR = weeklyAPR / 7;
-    const yearlyAPR = weeklyAPR * 52;
-    _print(`APR: Day ${dailyAPR.toFixed(2)}% Week ${weeklyAPR.toFixed(2)}% Year ${yearlyAPR.toFixed(2)}%`);
-    const userStakedUsd = info.userStaked * info.stakeTokenPrice;
-    const userStakedPct = userStakedUsd / info.staked_tvl * 100;
-    _print(`You are staking ${info.userStaked.toFixed(6)} ${info.stakeTokenTicker} ` +
-           `$${formatMoney(userStakedUsd)} (${userStakedPct.toFixed(2)}% of the pool).`);
-    if (info.userStaked > 0) {
-      info.poolPrices.print_contained_price(info.userStaked);
-        const userWeeklyRewards = userStakedPct * info.weeklyRewards / 100;
-        const userDailyRewards = userWeeklyRewards / 7;
-        const userYearlyRewards = userWeeklyRewards * 52;
-        _print(`Estimated ${info.rewardTokenTicker} earnings:`
-            + ` Day ${userDailyRewards.toFixed(2)} ($${formatMoney(userDailyRewards*info.rewardTokenPrice)})`
-            + ` Week ${userWeeklyRewards.toFixed(2)} ($${formatMoney(userWeeklyRewards*info.rewardTokenPrice)})`
-            + ` Year ${userYearlyRewards.toFixed(2)} ($${formatMoney(userYearlyRewards*info.rewardTokenPrice)})`);
-    }
-    const approveTENDAndStake = async function() {
-      return rewardsContract_stake(info.stakeTokenAddress, info.stakingAddress, App)
-    }
-    const unstake = async function() {
-      return rewardsContract_unstake(info.stakingAddress, App)
-    }
-    const claim = async function() {
-      return rewardsContract_claim(info.stakingAddress, App)
-    }
-    const exit = async function() {
-      return rewardsContract_exit(info.stakingAddress, App)
-    }
-    const revoke = async function() {
-      return rewardsContract_resetApprove(info.stakeTokenAddress, info.stakingAddress, App)
-    }
-    switch (chain) {
-      case "eth":
-        _print(`<a target="_blank" href="https://etherscan.io/address/${info.stakingAddress}#code">Etherscan</a>`);
-        break;
-      case "heco":
-        _print(`<a target="_blank" href="https://bscscan.com/address/${info.stakingAddress}#code">BSC Scan</a>`);
-        break;
-      case "bsc":
-        _print(`<a target="_blank" href="https://scan.hecochain.com/address/${info.stakingAddress}#code">Heco Scan</a>`);
-        break;
-      case "matic":
-        _print(`<a target="_blank" href="https://explorer-mainnet.maticvigil.com/address/${info.stakingAddress}#code">Matic Explorer</a>`);
-        break;
-    }
-    _print_link(`Stake ${info.userUnstaked.toFixed(6)} ${info.stakeTokenTicker}`, approveTENDAndStake)
-    _print_link(`Unstake ${info.userStaked.toFixed(6)} ${info.stakeTokenTicker}`, unstake)
-    _print_link(`Claim ${info.earned.toFixed(6)} ${info.rewardTokenTicker} ($${formatMoney(info.earned*info.rewardTokenPrice)})`, claim)
-    _print_link(`Revoke (set approval to 0)`, revoke)
-    _print_link(`Exit`, exit)
-    _print(`\n`);
+    // info.poolPrices.print_price(chain);
+    // _print(`${info.rewardTokenTicker} Per Week: ${info.weeklyRewards.toFixed(2)} ($${formatMoney(info.usdPerWeek)})`);
+    // const weeklyAPR = info.usdPerWeek / info.staked_tvl * 100;
+    // const dailyAPR = weeklyAPR / 7;
+    // const yearlyAPR = weeklyAPR * 52;
+    // _print(`APR: Day ${dailyAPR.toFixed(2)}% Week ${weeklyAPR.toFixed(2)}% Year ${yearlyAPR.toFixed(2)}%`);
+    // const userStakedUsd = info.userStaked * info.stakeTokenPrice;
+    // const userStakedPct = userStakedUsd / info.staked_tvl * 100;
+    // _print(`You are staking ${info.userStaked.toFixed(6)} ${info.stakeTokenTicker} ` +
+    //        `$${formatMoney(userStakedUsd)} (${userStakedPct.toFixed(2)}% of the pool).`);
+    // if (info.userStaked > 0) {
+    //   info.poolPrices.print_contained_price(info.userStaked);
+    //     const userWeeklyRewards = userStakedPct * info.weeklyRewards / 100;
+    //     const userDailyRewards = userWeeklyRewards / 7;
+    //     const userYearlyRewards = userWeeklyRewards * 52;
+    //     _print(`Estimated ${info.rewardTokenTicker} earnings:`
+    //         + ` Day ${userDailyRewards.toFixed(2)} ($${formatMoney(userDailyRewards*info.rewardTokenPrice)})`
+    //         + ` Week ${userWeeklyRewards.toFixed(2)} ($${formatMoney(userWeeklyRewards*info.rewardTokenPrice)})`
+    //         + ` Year ${userYearlyRewards.toFixed(2)} ($${formatMoney(userYearlyRewards*info.rewardTokenPrice)})`);
+    // }
+    // const approveTENDAndStake = async function() {
+    //   return rewardsContract_stake(info.stakeTokenAddress, info.stakingAddress, App)
+    // }
+    // const unstake = async function() {
+    //   return rewardsContract_unstake(info.stakingAddress, App)
+    // }
+    // const claim = async function() {
+    //   return rewardsContract_claim(info.stakingAddress, App)
+    // }
+    // const exit = async function() {
+    //   return rewardsContract_exit(info.stakingAddress, App)
+    // }
+    // const revoke = async function() {
+    //   return rewardsContract_resetApprove(info.stakeTokenAddress, info.stakingAddress, App)
+    // }
+    // switch (chain) {
+    //   case "eth":
+    //     _print(`<a target="_blank" href="https://etherscan.io/address/${info.stakingAddress}#code">Etherscan</a>`);
+    //     break;
+    //   case "avax":
+    //     _print(`<a target="_blank" href="https://cchain.explorer.avax.network/address/${info.stakingAddress}#code">Explorer</a>`);
+    //     break;
+    //   case "bsc":
+    //     _print(`<a target="_blank" href="https://bscscan.com/address/${info.stakingAddress}#code">BSC Scan</a>`);
+    //     break;
+    //   case "heco":
+    //     _print(`<a target="_blank" href="https://scan.hecochain.com/address/${info.stakingAddress}#code">Heco Scan</a>`);
+    //     break;
+    //   case "matic":
+    //     _print(`<a target="_blank" href="https://explorer-mainnet.maticvigil.com/address/${info.stakingAddress}#code">Matic Explorer</a>`);
+    //     break;
+    // }
+    // _print_link(`Stake ${info.userUnstaked.toFixed(6)} ${info.stakeTokenTicker}`, approveTENDAndStake)
+    // _print_link(`Unstake ${info.userStaked.toFixed(6)} ${info.stakeTokenTicker}`, unstake)
+    // _print_link(`Claim ${info.earned.toFixed(6)} ${info.rewardTokenTicker} ($${formatMoney(info.earned*info.rewardTokenPrice)})`, claim)
+    // _print_link(`Revoke (set approval to 0)`, revoke)
+    // _print_link(`Exit`, exit)
+    // _print(`\n`);
 
     return {
-        staked_tvl: info.poolPrices.staked_tvl,
-        userStaked : userStakedUsd,
-        apr : yearlyAPR
+        staked_tvl: 0,
+        userStaked : 0,
+        apr : 0
     }
 }
 

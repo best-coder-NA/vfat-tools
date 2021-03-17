@@ -105,7 +105,7 @@ $(function() {
 	_print(`Your wallet address: ${App.YOUR_ADDRESS}\n`);
 
 	//snowglobe png staking
-	_print(`<b>SnowGlobe - AVAX-PNG (New!)</b>`)
+	_print(`<b>SnowGlobe - AVAX-PNG</b>`)
 	_print(`Step 1: Acquire PNG-AVAX LP (PGL) Tokens <a href='${PNG_AVAX_POOL_URL}' target='_blank'>PNG-AVAX Liquidity Pool</a>`)
 	_print(`PNG-AVAX LP (PGL) Token balance: ${currentPNGAVAXTokens / 1e18}\n`)
 	_print(`Step 2: Approve SnowGlobe contract to spend your LP tokens`)
@@ -114,7 +114,7 @@ $(function() {
 	_print_link(`Deposit PNG-AVAX LP (PGL) Tokens\n\n`, stakePNG)
 
 	// icequeen png staking
-	_print(`<b>IceQueen - AVAX-PNG (New!)</b>`)
+	_print(`<b>IceQueen - AVAX-PNG</b>`)
 	_print(`Step 1: You must have sPGL (PNG) tokens from SnowGlobe.`)
 	_print(`sPGL token balance: ${currentSPGLPNGTokens > 100 ? currentSPGLPNGTokens / 1e18 : 0}\n`)
 	_print(`Step 2: Approve IceQueen contract to spend your sPGL tokens`)
