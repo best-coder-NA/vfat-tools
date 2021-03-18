@@ -213,13 +213,13 @@ async function main() {
   // balance
   _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`);
   
-  if ( currentSNOBTokens / 1e18 > 0 || laimableSnowballs > 0 ) {
+  if (currentSNOBTokens / 1e18 > 0 || laimableSnowballs > 0) {
     _print(``);
-    _print(`&nbsp;&nbsp;&nbsp;Wallet: ${currentSNOBTokens / 1e18}`)
-    _print(`&nbsp;&nbsp;Pending: ${claimableSnowballs}`)
-    _print(`&nbsp;&nbsp;&nbsp;&nbsp;Total: ${currentSNOBTokens / 1e18 + claimableSnowballs}`)
+    _print(`&nbsp;&nbsp;&nbsp;Wallet:  ${currentSNOBTokens / 1e18}`)
+    _print(`&nbsp;&nbsp;Pending:  ${claimableSnowballs}`)
+    _print(`&nbsp;&nbsp;&nbsp;&nbsp;Total:  ${currentSNOBTokens / 1e18 + claimableSnowballs}`)
     _print(``);
-    _print(`&nbsp;&nbsp;&nbsp;&nbsp;Value:$${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}\n\n`)
+    _print(`&nbsp;&nbsp;&nbsp;&nbsp;Value: $${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}\n\n`)
   }
 
   //Balances
@@ -273,7 +273,7 @@ async function main() {
     _print(`Allocation: <b>${ options.pool_weight * 100}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight / 1e18}</b>`)
     _print(`Pool Size: <b>${ options.total_staked / 1e18}</b>`)
     if ( options.user_pool_percent > 0 ) {
-      _print(`Your Pool Size: <b>${options.user_pool_percent}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18}</b>`)
+      _print(`Account Pool Size: <b>${options.user_pool_percent}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18}</b>`)
       _print(`Estimated Per Day*: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000}</b> Gain Per Day*: $<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}</b>`)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
@@ -286,9 +286,7 @@ async function main() {
       _print(`Available Unstake: <b>${options.staked_pool.amount / 1e18}</b>`)
     }
     if ( options.display_amount > 0 ) {
-      if ( options.staked_pool.amount / 1e18 == 0 ) {
-        _print_link(`Approve`, options.approve)
-      }
+      _print_link(`Approve`, options.approve)
       _print_link(`Stake`, options.stake)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
