@@ -50,7 +50,7 @@ async function main() {
   // TVL URLS
   const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
   const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375"
-  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x1eC206a9dD85625E1940cD2B0c8e14a894D2e9aC"
+  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d"
   const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
 
@@ -200,7 +200,7 @@ async function main() {
 
    //total supply
 
-   _print(`<b>Snowballs</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
+   _print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
 
 
    const cs = `
@@ -304,7 +304,7 @@ async function main() {
     }
   }
   pool({
-    pool_nickname: '⛸️ Tonya Harding (Pool 4)', 
+    pool_nickname: '(Pool 4)', 
     pool_name: 'ETH-AVAX Snowglobe',
     tvl: ETH_AVAX_TVL, 
     pool_weight: pool4weight, 
@@ -320,7 +320,7 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '🎿 Sonny Bono (Pool 3)', 
+    pool_nickname: '(Pool 3)', 
     pool_name: 'PNG-AVAX Snowglobe',
     tvl: PNG_AVAX_TVL, 
     pool_weight: pool3weight, 
@@ -336,8 +336,8 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '🏔️ Rob Hall (Pool 2)', 
-    pool_name: 'SNOB-AVAX Snowglobe',
+    pool_nickname: '(Pool 2)', 
+    pool_name: 'SNOB-AVAX Pangolin LP',
     url: SNOB_AVAX_POOL_URL,
     tvl: SNOB_AVAX_TVL, 
     pool_weight: pool2weight, 
@@ -353,7 +353,7 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '🌬️ JEWEL (Pool 1)',     
+    pool_nickname: '(Pool 1)',     
     pool_name: 'SUSHI-AVAX Snowglobe',
     tvl: SUSHI_AVAX_TVL, 
     pool_weight: pool1weight, 

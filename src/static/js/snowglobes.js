@@ -50,15 +50,15 @@ async function main() {
   // TVL URLS
   const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
   const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375"
-  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x1eC206a9dD85625E1940cD2B0c8e14a894D2e9aC"
+  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d"
   const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
 
   // Last Harvest
-  const ETH_AVAX_HARVEST = "3/16 9:58PM UTC - 313.80 PNG ($1,484.27)"
-  const PNG_AVAX_HARVEST = "3/16 9:58PM UTC - 466.20 PNG ($2,205.12)"
-  const SUSHI_AVAX_HARVEST = "3/16 9:58PM UTC - 209.96 PNG ($993.11)"
-  const LINK_AVAX_HARVEST = "3/16 9:58PM UTC - 87.28 PNG ($412.83)"
+  const ETH_AVAX_HARVEST = "3/18 2:38PM UTC - 331.67 PNG ($1184.63)"
+  const PNG_AVAX_HARVEST = "3/18 2:38PM UTC - 622.80 PNG ($2220.49)"
+  const SUSHI_AVAX_HARVEST = "3/18 2:38PM UTC - 212.62 PNG ($760.00)"
+  const LINK_AVAX_HARVEST = "3/18 2:38PM UTC - 94.74 PNG ($338.89)"
 
   // Compounds Per Day
   const SUSHI_AVAX_COMPOUNDS = 6
@@ -148,7 +148,7 @@ async function main() {
 
    //total supply
 
-   _print(`<b>Snowballs</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
+   _print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
 
 
    const cs = `
