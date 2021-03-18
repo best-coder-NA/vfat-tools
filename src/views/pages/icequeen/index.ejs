@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include(`${partials}/head`); -%>
-
+<script>
+    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+        document.body.classList.add('dark-mode');
+    }
+</script>
 <body>
 <%- include(`${partials}/header_main`); -%>
 <div class="loader--1"></div>
