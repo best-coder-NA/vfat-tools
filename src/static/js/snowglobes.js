@@ -50,15 +50,15 @@ $(function() {
     // TVL URLS
     const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
     const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375"
-    const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x1eC206a9dD85625E1940cD2B0c8e14a894D2e9aC"
+    const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d"
     const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
     const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
 
     // Last Harvest
-    const ETH_AVAX_HARVEST = "3/17 7:56PM UTC - 50.36 PNG ($191.48)"
-    const PNG_AVAX_HARVEST = "3/17 7:56PM UTC"
-    const SUSHI_AVAX_HARVEST = "3/17 7:56PM UTC - 35.33 PNG ($134.37)"
-    const LINK_AVAX_HARVEST = "3/17 7:56PM UTC - 88.83 PNG ($337.68)"
+    const ETH_AVAX_HARVEST = "3/18 4:46AM UTC - 189.15 PNG ($713.78)"
+    const PNG_AVAX_HARVEST = "3/18 4:46AM UTC - 42.44 PNG ($160.29)"
+    const SUSHI_AVAX_HARVEST = "3/18 4:46AM UTC - 137.75 PNG ($519.98)"
+    const LINK_AVAX_HARVEST = "3/18 4:46AM UTC - 55.82 PNG ($210.84)"
 
     // Compounds Per Day
     const SUSHI_AVAX_COMPOUNDS = 6

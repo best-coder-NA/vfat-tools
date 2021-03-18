@@ -1,4 +1,4 @@
-<div>
-<a href="<%= PP %>/">Home</a> - <a href="<%= PP %>/snowglobes/">Snowglobes</a> - <a href="<%= PP %>/icequeen/">IceQueen</a> - <a href="<%= PP %>/faq/">FAQ</a>
+<div class="header-nav">
+<a href="<%= PP %>/">Home</a> - <a href="<%= PP %>/snowglobes/">Snowglobes</a> - <a href="<%= PP %>/icequeen/">IceQueen</a> - <a href="<%= PP %>/faq/">FAQ</a> - <span class="toggle-background" href="#" onclick="document.body.classList.remove('dark-mode');window.localStorage.setItem('snowballDarkmode',false);">☀️ / </span><span class="toggle-background" href="#" onclick="document.body.classList.add('dark-mode');window.localStorage.setItem('snowballDarkmode',true);">🌙</span>
 </div>
 <%- include(`${partials}/quick`); -%>

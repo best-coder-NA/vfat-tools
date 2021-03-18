@@ -9,6 +9,20 @@ body, input {
   font-family: monospace;
 }
 
+
+.dark-mode {
+  background-color:#1B1F32;color:#EEEEEE;
+  a {
+    color:#33A9FF;
+  }
+}
+
+.header-nav {
+  .toggle-background{
+    cursor: pointer;
+  }
+}
+
 .border {
     border-style: solid;
 }
