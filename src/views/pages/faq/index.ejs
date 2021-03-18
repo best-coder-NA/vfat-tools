@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include(`${partials}/head`); -%>
-<script>
-    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
-        document.body.classList.add('dark-mode');
-    }
-</script>
 <body>
 <%- include(`${partials}/header_main`); -%>
-<pre class="container">
-<div style="white-space: pre-wrap;">
+<pre class="container"><div style="white-space: pre-wrap;">
 <h2>FAQ</h2>
 <b><u>Project</u></b>
 
@@ -83,6 +77,6 @@ For APY we use the standard formula A = P(1 + r/n)nt
 Try it yourself here:
 <a href="https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php" target="_blank">https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php</a>
 
-<%- include(`${partials}/scripts`, {scriptname: 'homepage'}); -%>
+<%- include(`${partials}/footer`); -%>
 </body>
 </html>
