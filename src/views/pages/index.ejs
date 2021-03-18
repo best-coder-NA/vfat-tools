@@ -7,40 +7,193 @@
     }
     fetch('https://d2vq5imxja288v.cloudfront.net/total_value_locked.json').then(function (response) {
         return response.json();
-    }).then(function (info) {            
+    }).then(function (info) {
         document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value);
     }).catch(function (err) {
         document.getElementById('tvl').innerHTML = '$16.2M+';
-    });     
+    });
 </script>
 <body>
 <%- include(`${partials}/nav`); -%>
-<pre class="container">
 
-<img src="/home_header.jpg">
-<h2 style="margin-left:100px;">Total Value Locked: <span id="tvl"></span></h2>
+<div class="page-wrapper with-navbar with-transitions" id="particles-js">
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <section id="main">
+                <div class="row mx-auto">
+                    <!-- Main start -->
+                    <div class="col-lg-8">
+                        <div class="content">
+                            <div class="logo"></div>
+                            <h4 class="hero-header">
+                                <strong class="font-weight-medium">➡️ Deposit LP tokens on the <a href="<%= PP %>/snowglobes/" class="title-">Snowglobes</a> page for automatic compounding.</strong>
+                            </h4>
+                            <p class="hero-content">
+                                🍧 Stake Snowglobe (sPGL) tokens on the <a href="<%= PP %>/icequeen/" class="">IceQueen</a> page to earn governance tokens.
+                            </p>
+                            <div class="total-locked px-15 pl-10 py-5 text-extra-letter-spacing text-monospace font-size-12 mb-20" target="_blank" rel="noopener">
+                                <span class="badge badge-pill mr-10  pl-5">
+                                    <strong>Total Value Locked</strong>
+                                </span>
+                                <h2 class="text-primary mr-auto d-block pl-5" id="tvl">Total Value Locked</h2>
 
-Snowball (<b>SNOB</b>): <a target="_blank" href="https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50">Buy</a> - <a target="_blank" href="https://info.pangolin.exchange/#/token/0xc38f41a296a4493ff429f1238e030924a1542e50">https://info.pangolin.exchange/#/token/0xc38f41a296a4493ff429f1238e030924a1542e50</a>
 
-    🧊 Deposit LP tokens on the <b><a href="<%= PP %>/snowglobes/">Snowglobes</a></b> page for automatic compounding.
+                            </div>
+                            <div class="mt-20">
+                                <a href="https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50" class="btn btn-primary btn-lg snob-tokens" target="_blank" role="button">
+                                    Buy $SNOB
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex align-items-center justify-content-center">
+                        <div class="content">
+                            <br>
+                            <div class="launchpad-animation-container">
+                                <div class="rocket-container">
+                                    <img class="rocket animation infinite slow" alt="rocket" src="https://media.discordapp.net/attachments/819644400200187904/821800734176706560/Logo_Favico2x.png?width=320&height=320">
+                                </div>
+                                <div class="propellant-particles-container-row">
+                                    <div class="propellant-particle blue animation infinite fast delay-small"></div>
+                                    <div class="propellant-particle red large animation infinite"></div>
+                                    <div class="propellant-particle yellow animation infinite fast delay-very-small"></div>
+                                </div>
+                                <div class="propellant-particles-container-row">
+                                    <div class="propellant-particle shadow animation infinite fast delay-small"></div>
+                                    <div class="propellant-particle shadow animation infinite fast delay-very-small"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="tokens">
+                <div class="container-lg text-center">
+                    <h2 class="">Tokens</h2>
+                    <div class="row mx-auto p-0 bg-transparent">
+                        <a href="https://info.pangolin.exchange/#/token/0xc38f41a296a4493ff429f1238e030924a1542e50" target="_blank" class="col-sm-6 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Snowball (SNOB)</h6>
+                                  <p class="font-size-12 text-break text-left ">https://info.pangolin.exchange/#/token/0xc38f41a296a4493ff429f1238e030924a1542e50</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="container-lg text-center">
+                    <h2 class="">Contracts</h2>
+                    <div class="row mx-auto p-0 bg-transparent">
+                        <a href="https://cchain.explorer.avax.network/address/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>IceQueen</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0xC38f41A296A4493Ff429F1238e030924A1542e50/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Snowball</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0xC38f41A296A4493Ff429F1238e030924A1542e50/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0xf7B8D9f8a82a7a6dd448398aFC5c77744Bd6cb85/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Controller</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0xf7B8D9f8a82a7a6dd448398aFC5c77744Bd6cb85/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x586554828eE99811A8ef75029351179949762c26/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>SnowGlobe AVAX-ETH</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x586554828eE99811A8ef75029351179949762c26/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x621207093D2e65Bf3aC55dD8Bf0351B980A63815/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>SnowGlobe AVAX-PNG</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x621207093D2e65Bf3aC55dD8Bf0351B980A63815/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x751089F1bf31B13Fa0F0537ae78108088a2253BF/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>SnowGlobe AVAX-SUSHI</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x751089F1bf31B13Fa0F0537ae78108088a2253BF/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x00933c16e06b1d15958317C2793BC54394Ae356C/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>SnowGlobe AVAX-LINK</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x00933c16e06b1d15958317C2793BC54394Ae356C/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Strategy AVAX-ETH</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Strategy AVAX-PNG</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Strategy AVAX-SUSHI</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border rounded border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Strategy AVAX-LINK</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
 
-    🍧 Stake Snowglobe (sPGL) tokens on the <a href="<%= PP %>/icequeen/">IceQueen</a> page to earn governance tokens.
-
-<img height="190" src="globe.gif">
-
-<b>Contracts</b>
-IceQueen: <a target="_blank" href="https://cchain.explorer.avax.network/address/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375/contracts">https://cchain.explorer.avax.network/address/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375/contracts</a>
-Snowball: <a target="_blank" href="https://cchain.explorer.avax.network/address/0xC38f41A296A4493Ff429F1238e030924A1542e50/contracts">https://cchain.explorer.avax.network/address/0xC38f41A296A4493Ff429F1238e030924A1542e50/contracts</a>
-Controller: <a target="_blank" href="https://cchain.explorer.avax.network/address/0xf7B8D9f8a82a7a6dd448398aFC5c77744Bd6cb85/contracts">https://cchain.explorer.avax.network/address/0xf7B8D9f8a82a7a6dd448398aFC5c77744Bd6cb85/contracts</a>
-SnowGlobe AVAX-ETH: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x586554828eE99811A8ef75029351179949762c26/contracts">https://cchain.explorer.avax.network/address/0x586554828eE99811A8ef75029351179949762c26/contracts</a>
-SnowGlobe AVAX-PNG: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x621207093D2e65Bf3aC55dD8Bf0351B980A63815/contracts">https://cchain.explorer.avax.network/address/0x621207093D2e65Bf3aC55dD8Bf0351B980A63815/contracts</a>
-SnowGlobe AVAX-SUSHI: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x751089F1bf31B13Fa0F0537ae78108088a2253BF/contracts">https://cchain.explorer.avax.network/address/0x751089F1bf31B13Fa0F0537ae78108088a2253BF/contracts</a>
-SnowGlobe AVAX-LINK: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x00933c16e06b1d15958317C2793BC54394Ae356C/contracts">https://cchain.explorer.avax.network/address/0x00933c16e06b1d15958317C2793BC54394Ae356C/contracts</a>
-Strategy AVAX-ETH: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts">https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts</a>
-Strategy AVAX-PNG: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d/contracts">https://cchain.explorer.avax.network/address/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d/contracts</a>
-Strategy AVAX-SUSHI: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC/contracts">https://cchain.explorer.avax.network/address/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC/contracts</a>
-Strategy AVAX-LINK: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103/contracts">https://cchain.explorer.avax.network/address/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103/contracts</a>
-</pre>
-<%- include(`${partials}/footer`); -%>
+            </section>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+    </div>
+    <!-- Content particles -->
+    <div id="particles-js"></div>
+    <!-- Content particles end -->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Init Particle JS
+        particlesJS.load(
+            "particles-js",
+            "<%= PP %>/particlesjs-config.json",
+            function() {}
+        );
+    });
+</script>
 </body>
 </html>

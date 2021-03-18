@@ -1,2 +1,30 @@
-
-<a href="<%= PP %>/">Home</a> - <a href="<%= PP %>/snowglobes/">Snowglobes</a> - <a href="<%= PP %>/icequeen/">IceQueen</a> - <a href="<%= PP %>/faq/">FAQ</a> - <span class="toggle-background" href="#" onclick="document.body.classList.remove('dark-mode');window.localStorage.setItem('snowballDarkmode',false);">☀️ / </span><span class="toggle-background" href="#" onclick="document.body.classList.add('dark-mode');window.localStorage.setItem('snowballDarkmode',true);">🌙</span>
+<div class="page-wrapper with-navbar">
+	<nav class="navbar">
+        <span class="navbar-text text-monospace">v0.2</span>
+		<ul class="navbar-nav d-none d-md-flex mx-auto">
+			<li class="nav-item"> <a href="<%= PP %>/" class="nav-link">Home</a> </li>
+			<li class="nav-item"> <a href="<%= PP %>/snowglobes/" class="nav-link">Snowglobes</a> </li>
+			<li class="nav-item"> <a href="<%= PP %>/icequeen/" class="nav-link">IceQueen</a> </li>
+			<li class="nav-item"> <a href="<%= PP %>/faq/" class="nav-link">FAQ</a> </li>
+		</ul>
+		<div class="form-inline d-none d-md-flex">
+			<button class="btn btn-action mr-5" type="button" onclick="snowballDarkmode()" aria-label="Toggle dark mode"> <i class="fa fa-moon-o" aria-hidden="true"></i> </button>
+		</div>
+		<div class="navbar-content d-md-none ml-auto">
+			<div class="dropdown with-arrow">
+				<button class="btn" data-toggle="dropdown" type="button" id="navbar-dropdown-toggle-btn-1"> Menu <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+				<div class="dropdown-menu dropdown-menu-right w-200" aria-labelledby="navbar-dropdown-toggle-btn-1">
+					<a href="<%= PP %>/" class="dropdown-item">Home</a>
+                    <a href="<%= PP %>/snowglobes/" class="dropdown-item">Snowglobes</a>
+                    <a href="<%= PP %>/icequeen/" class="dropdown-item">IceQueen</a>
+                    <a href="<%= PP %>/faq/" class="dropdown-item">FAQ</a>
+					<div class="dropdown-divider"></div>
+					<div class="p-5">
+						<button class="btn btn-action mr-5" type="button" onclick="snowballDarkmode()" aria-label="Toggle dark mode"> <i class="fa fa-moon-o" aria-hidden="true"></i> </button> Dark Mode
+                    </div>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>

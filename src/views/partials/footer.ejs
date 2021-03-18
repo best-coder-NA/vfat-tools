@@ -1,5 +1,46 @@
-<pre id="footer">
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-<a href="https://twitter.com/throwsnowballs" target="_blank">Twitter</a> - <a href="https://discord.gg/T35jZ2hhPZ" target="_blank">Discord</a> - <a href="https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2" target="_blank">Medium</a> - <a href="https://t.me/throwsnowballs" target="_blank">Telegram</a> 
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-</pre>
+<div class="container-lg text-center">
+    <div class="row mx-auto pt-20 pb-20 bg-transparent">
+        <div class="col-md-12 text-center">
+            <ul class="navbar-nav d-none d-md-inline-flex mx-auto">
+                <li class="nav-item p-10">
+                    <a href="https://twitter.com/throwsnowballs" target="_blank" rel="noopener" class="custom-footer-link">
+                        Follow us on <i class="fa fa-twitter" aria-hidden="true"></i> Twitter
+                    </a>
+                </li>
+                <li class="nav-item p-10">
+                    <a href="https://discord.gg/T35jZ2hhPZ" target="_blank" rel="noopener" class="custom-footer-link">
+                        <i class="fa fa-discord" aria-hidden="true"></i> Discord
+                </li>
+                <li class="nav-item p-10">
+                    <a href="https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2" target="_blank" rel="noopener" class="custom-footer-link">
+                        <i class="fa fa-medium" aria-hidden="true"></i> Medium
+                </li>
+                <li class="nav-item p-10">
+                    <a href="https://t.me/throwsnowballs" target="_blank" rel="noopener" class="custom-footer-link">
+                        <i class="fa fa-telegram" aria-hidden="true"></i> Telegram
+                </li>
+
+
+            </ul>
+        </div>
+        <div class="col-md-12 text-center">
+
+        </div>
+    </div>
+</div>
+<script>
+    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+        document.body.classList.add('dark-mode');
+    }
+    function snowballDarkmode(){
+        if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+            document.body.classList.remove("dark-mode"),window.localStorage.setItem("snowballDarkmode",!1);
+
+        }else{
+            document.body.classList.add("dark-mode"),window.localStorage.setItem("snowballDarkmode",!0);
+        }
+
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+
