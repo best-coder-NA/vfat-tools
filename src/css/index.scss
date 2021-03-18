@@ -7,7 +7,7 @@
 
 body, input {
   font-family: monospace;
-  padding: 0 10px 10px 10px;
+  padding: 0 5px 30px 5px;
 }
 
 
@@ -18,11 +18,11 @@ body, input {
   }
 }
 
-.header-nav {
-  .toggle-background{
-    cursor: pointer;
-  }
+
+.toggle-background{
+  cursor: pointer;
 }
+
 
 .border {
     border-style: solid;

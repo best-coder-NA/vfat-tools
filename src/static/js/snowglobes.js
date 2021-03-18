@@ -273,12 +273,18 @@ async function main() {
     if ( options.display_amount > 0 ) {
       _print(`sPGL Withdrawal Available: <b>${options.display_amount}</b>`)
     }
+    let has_options = false;
     if ( options.current_tokens / 1e18 > 0 ) {
+      has_options = true;
       _print_link(`Approve`, options.approve)
       _print_link(`Deposit ${options.current_tokens / 1e18} PGL`, options.stake)
     }
     if ( options.display_amount > 0 ) {
+      has_options = true;
       _print_link(`Withdraw`, options.withdraw) 
+    }
+    if ( !has_options ) {
+      _print(`No PGL/sPGL to Deposit/Withdraw`)
     }
     _print(``)
   }
@@ -339,11 +345,11 @@ async function main() {
   })
   
   const bottom_funnel = `
-  <b>PGL vs sPGL</b>
-    PGL tokens staked in Snowglobes receive sPGL tokens in return
-    Withdrawn sPGL tokens recieve PGL tokens in return
-    sPGL value grows per harvests, 1 sPGL is worth more than 1 PGL    
-  `
+<b>PGL vs sPGL</b>
+* PGL tokens staked in Snowglobes receive sPGL tokens in return
+* Withdrawn sPGL tokens recieve PGL tokens in return
+* sPGL value grows per harvests, 1 sPGL is worth more than 1 PGL    
+`
   _print(bottom_funnel);
 
   hideLoading();
