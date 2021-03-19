@@ -113,11 +113,8 @@ const toFixed = function(num, fixed) {
 const start = function(f) {
   f().catch(e => {
     halfmoon.toggleModal('modal-error')
-    console.log('Eject');
     console.log(e)
     console.error(e)
-    console.log('Eject 2');
-    elem = document.querySelector( '.error' )
     elem.innerHTML = 'Oops something went wrong. Try refreshing the page.'
     //document.querySelector('#modal-error').classList.add('d-block')
 
