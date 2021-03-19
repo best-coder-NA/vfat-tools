@@ -262,7 +262,8 @@ $(function() {
 	//snowglobes
 	_print(`<b>Snowglobes 🌐</b>`)
 	_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
-	_print(`Compound steps: Claim > Swap > Add Liquidity > Deposit\n`)
+	_print(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord\n`)
+	_print(`Compound steps: Claim > Swap > Add Liquidity > Deposit`)
 	_print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX`)
 	_print(`Compounds per day/week/year: ${ETH_AVAX_COMPOUNDS}/${ETH_AVAX_COMPOUNDS*7}/${ETH_AVAX_COMPOUNDS*365} `)
 	_print(`Gas saved per day/week/year: ${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 7).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 365).toFixed(2)} AVAX\n`)
@@ -330,7 +331,6 @@ $(function() {
 	_print(`<a href='${USDT_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`APR: Day ${usdt_apr.dailyAPR.toFixed(2)}% Week ${usdt_apr.weeklyAPR.toFixed(2)}% Year ${link_apr.yearlyAPR.toFixed(2)}%`);
     _print(`APY (compounding): ${link_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${USDT_AVAX_HARVEST}`)
 	_print(`Total pool size: ${totalDepositedUSDTAVAX / 1e18}`)
 	_print(`Your % of pool: ${userUsdtPoolPercent}`)
 	_print(`PGL Available to deposit: ${currentUSDTAVAXTokens / 1e18}`)
@@ -342,7 +342,6 @@ $(function() {
 	_print(`<a href='${LINK_AVAX_TVL}' target='_blank'>Total Value Locked</a>`)
     _print(`APR: Day ${link_apr.dailyAPR.toFixed(2)}% Week ${link_apr.weeklyAPR.toFixed(2)}% Year ${link_apr.yearlyAPR.toFixed(2)}%`);
     _print(`APY (compounding): ${link_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${LINK_AVAX_HARVEST}`)
 	_print(`Total pool size: ${totalDepositedLINKAVAX / 1e18}`)
 	_print(`Your % of pool: ${userLinkPoolPercent}`)
 	_print(`PGL Available to deposit: ${currentLINKAVAXTokens / 1e18}`)
@@ -353,7 +352,6 @@ $(function() {
 	_print(`<a href='${ETH_AVAX_POOL_URL}' target='_blank'>AVAX-ETH Pangolin LP</a>`)
     _print(`APR: Day ${eth_apr.dailyAPR.toFixed(2)}% Week ${eth_apr.weeklyAPR.toFixed(2)}% Year ${eth_apr.yearlyAPR.toFixed(2)}%`);
     _print(`APY (compounding): ${eth_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${ETH_AVAX_HARVEST}`)
 	_print(`PGL Available to deposit: ${currentETHAVAXTokens / 1e18}`)
 	_print(`sPGL Available to withdraw: ${spglEthDisplayAmt}`)
 	_print_link(`Approve`, approveETH)
@@ -362,7 +360,6 @@ $(function() {
 	_print(`<a href='${PNG_AVAX_POOL_URL}' target='_blank'>AVAX-PNG Pangolin LP</a>`)
     _print(`APR: Day ${png_apr.dailyAPR.toFixed(2)}% Week ${png_apr.weeklyAPR.toFixed(2)}% Year ${png_apr.yearlyAPR.toFixed(2)}%`);
     _print(`APY (compounding): ${png_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${PNG_AVAX_HARVEST} `)
 	_print(`PGL Available to deposit: ${currentPNGAVAXTokens / 1e18}`)
 	_print(`sPGL Available to withdraw: ${spglPngDisplayAmt}`)
 	_print_link(`Approve`, approvePNG)
@@ -371,7 +368,6 @@ $(function() {
 	_print(`<a href='${SUSHI_AVAX_POOL_URL}' target='_blank'>AVAX-SUSHI Pangolin LP</a>`)
     _print(`APR: Day ${sushi_apr.dailyAPR.toFixed(2)}% Week ${sushi_apr.weeklyAPR.toFixed(2)}% Year ${sushi_apr.yearlyAPR.toFixed(2)}%`);
     _print(`APY (compounding): ${sushi_annual_apy.toFixed(2)}%`);
-	_print(`Last Harvest: ${SUSHI_AVAX_HARVEST}`)
 	_print(`PGL Available to deposit: ${currentSUSHIAVAXTokens / 1e18}`)
 	_print(`sPGL Available to withdraw: ${spglSushiDisplayAmt}`)
 	_print_link(`Approve`, approveSUSHI)
