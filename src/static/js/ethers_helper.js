@@ -115,9 +115,8 @@ const start = function(f) {
     halfmoon.toggleModal('modal-error')
     console.log(e)
     console.error(e)
+    elem = document.querySelector( '.error' )
     elem.innerHTML = 'Oops something went wrong. Try refreshing the page.'
-    //document.querySelector('#modal-error').classList.add('d-block')
-
   })
 }
 
