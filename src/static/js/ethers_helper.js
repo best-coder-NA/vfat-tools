@@ -116,8 +116,8 @@ const start = function(f) {
     console.error(e)
     elem = document.querySelector( '.error' )
     elem.innerHTML = 'Oops something went wrong. Try refreshing the page.'
-    halfmoon.toggleModal('modal-6')
-    document.querySelector( '.modal-6' ).classList.add('d-block')
+    halfmoon.toggleModal('modal-error')
+    //document.querySelector( '.modal-6' ).classList.add('d-block')
   })
 }
 
