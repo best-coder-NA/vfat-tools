@@ -37,11 +37,9 @@
     </div>
 </div>
 <script>
-    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
-        document.body.classList.add('dark-mode');
-    }
+
     function snowballDarkmode(){
-        if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+        if (window.localStorage.getItem('snowballDarkmode') == 'true' ) {
             document.body.classList.remove("dark-mode"),window.localStorage.setItem("snowballDarkmode",!1);
             var icon = document.querySelector('.styleMode')
             icon.classList.add('fa-moon-o'),icon.classList.remove('fa-sun-o');
@@ -52,6 +50,11 @@
         }
 
     }
+    if (localStorage.getItem("snowballDarkmode") === null) {
+        document.body.classList.add("dark-mode"),window.localStorage.setItem("snowballDarkmode",!0);
+        icon.classList.remove('fa-moon-o'),icon.classList.add('fa-sun-o');
+    }
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
 

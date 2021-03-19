@@ -46,7 +46,7 @@ a:hover {
 
 #main{
     width: 100%;
-    padding-top: 5vh;
+    padding-top: 2vh;
 }
 #tokens{
     width: 100%;
@@ -89,10 +89,12 @@ a:hover {
     cursor: pointer;
 }
 
+.tvl{
+    margin: 0;
+}
 .total-locked{
     border-radius: 1rem;
     color: rgba(255, 255, 255, 0.8);
-    background-color: rgba(255, 255, 255, 0.025);
     text-decoration: none;
 }
 .total-locked:hover{

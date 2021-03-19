@@ -11,14 +11,14 @@
 
 <%- include(`${partials}/wallet_error`); -%>
 
-
-<div class="page-wrapper with-navbar with-transitions" id="particles-js">
+<div class="page-wrapper with-navbar with-transitions">
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
+
             <div id="account-info" class="col-xs-12 col-md-12" style="display: none;">
                 <div class="card br-8 box-shadow-1">
-                    <div  class="row mw-full m-0 p-0 d-flex" rel="noopener">
+                    <div id="particles-js" class="row mw-full m-0 p-0 d-flex" rel="noopener">
                         <div class="col-xs-12 col-md-8 align-items-center">
                             <div class="p-10 w-full m-auto">
                                 <p class="m-0 mt-5 text-muted font-size-12">
@@ -65,4 +65,15 @@
     </div>
 </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Init Particle JS
+        particlesJS.load(
+            "particles-js",
+            "<%= PP %>/particlesjs-config.json",
+            function() {}
+        );
+    });
+</script>
 </html>
