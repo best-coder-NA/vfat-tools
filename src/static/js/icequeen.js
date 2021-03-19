@@ -67,7 +67,7 @@ async function main() {
   const LINK_AVAX_COMPOUNDS = 6
 
   // Gas
-  // Claim: 0.1645 
+  // Claim: 0.1645
   // Swap: 0.075221
   // Add Liquidity: 0.092299
   // Deposit into pool: 0.1645
@@ -209,11 +209,11 @@ async function main() {
     Est Blocks Per Day:   15000
    `
    _print(cs)
- 
+
    // balance
    _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`);
- 
-   if (currentSNOBTokens / 1e18 > 0 || laimableSnowballs > 0) {
+
+   if (currentSNOBTokens / 1e18 > 0 || claimableSnowballs > 0) {
      _print(``);
      _print(`    Wallet:  ${currentSNOBTokens / 1e18}`)
      _print(`   Pending:  ${claimableSnowballs}`)
@@ -277,10 +277,10 @@ async function main() {
       _print(`Estimated Per Day*: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000}</b> Gain Per Day*: $<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}</b>`)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
-      _print(`Pending: <b>${options.pending_tokens / 1e18}</b>`)    
+      _print(`Pending: <b>${options.pending_tokens / 1e18}</b>`)
     }
     if ( options.display_amount > 0 ) {
-      _print(`Available Stake: <b>${options.display_amount}</b>`)  
+      _print(`Available Stake: <b>${options.display_amount}</b>`)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       _print(`Available Unstake: <b>${options.staked_pool.amount / 1e18}</b>`)
@@ -300,16 +300,16 @@ async function main() {
       _print_link(`Claim`, options.claim)
     }
     if ( !has_options ) {
-      _print(`No sPGL to Stake/Withdraw`)      
+      _print(`No sPGL to Stake/Withdraw`)
     }
   }
   pool({
-    pool_nickname: '⛸️ Tonya Harding (Pool 4)', 
+    pool_nickname: '⛸️ Tonya Harding (Pool 4)',
     pool_name: 'ETH-AVAX Snowglobe',
-    tvl: ETH_AVAX_TVL, 
-    pool_weight: pool4weight, 
-    total_staked: totalStakedSPGLETH, 
-    user_pool_percent: userPool4Percent, 
+    tvl: ETH_AVAX_TVL,
+    pool_weight: pool4weight,
+    total_staked: totalStakedSPGLETH,
+    user_pool_percent: userPool4Percent,
     staked_pool: stakedPool4,
     pending_tokens: pendingSNOBTokensPool4,
     display_amount: spglEthDisplayAmt,
@@ -320,12 +320,12 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '🎿 Sonny Bono (Pool 3)', 
+    pool_nickname: '🎿 Sonny Bono (Pool 3)',
     pool_name: 'PNG-AVAX Snowglobe',
-    tvl: PNG_AVAX_TVL, 
-    pool_weight: pool3weight, 
-    total_staked: totalStakedSPGLPNG, 
-    user_pool_percent: userPool3Percent, 
+    tvl: PNG_AVAX_TVL,
+    pool_weight: pool3weight,
+    total_staked: totalStakedSPGLPNG,
+    user_pool_percent: userPool3Percent,
     staked_pool: stakedPool3,
     pending_tokens: pendingSNOBTokensPool3,
     display_amount: spglPngDisplayAmt,
@@ -336,13 +336,13 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '🏔️ Rob Hall (Pool 2)', 
+    pool_nickname: '🏔️ Rob Hall (Pool 2)',
     pool_name: 'SNOB-AVAX Snowglobe',
     url: SNOB_AVAX_POOL_URL,
-    tvl: SNOB_AVAX_TVL, 
-    pool_weight: pool2weight, 
-    total_staked: totalStakedSNOBAVAX, 
-    user_pool_percent: userPool2Percent, 
+    tvl: SNOB_AVAX_TVL,
+    pool_weight: pool2weight,
+    total_staked: totalStakedSNOBAVAX,
+    user_pool_percent: userPool2Percent,
     staked_pool: stakedPool2,
     pending_tokens: pendingSNOBTokensPool2,
     display_amount: snobAvaxDisplayAmt,
@@ -353,12 +353,12 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '🌬️ JEWEL (Pool 1)',     
+    pool_nickname: '🌬️ JEWEL (Pool 1)',
     pool_name: 'SUSHI-AVAX Snowglobe',
-    tvl: SUSHI_AVAX_TVL, 
-    pool_weight: pool1weight, 
-    total_staked: totalStakedSPGLSUSHI, 
-    user_pool_percent: userPool1Percent, 
+    tvl: SUSHI_AVAX_TVL,
+    pool_weight: pool1weight,
+    total_staked: totalStakedSPGLSUSHI,
+    user_pool_percent: userPool1Percent,
     staked_pool: stakedPool1,
     pending_tokens: pendingSNOBTokensPool1,
     display_amount: spglSushiDisplayAmt,
@@ -366,7 +366,7 @@ async function main() {
     stake: stakeSPGLSUSHI,
     unstake: withdrawPool1,
     claim: claimPool1
-  })  
+  })
 
   hideLoading();
 }

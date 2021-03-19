@@ -67,7 +67,7 @@ async function main() {
   const LINK_AVAX_COMPOUNDS = 6
 
   // Gas
-  // Claim: 0.1645 
+  // Claim: 0.1645
   // Swap: 0.075221
   // Add Liquidity: 0.092299
   // Deposit into pool: 0.1645
@@ -157,18 +157,32 @@ async function main() {
     Est Blocks Per Day:   15000
    `
    _print(cs)
- 
+
    // balance
-   _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`);
- 
+   document.getElementById('wallet-address').addEventListener('click', ()=>{
+    navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+    });
+});
+
+   $('#wallet-address').html(`${App.YOUR_ADDRESS}`);
+   /* _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`); */
+
    if (currentSNOBTokens / 1e18 > 0 || laimableSnowballs > 0) {
-     _print(``);
-     _print(`    Wallet:  ${currentSNOBTokens / 1e18}`)
+        $('#account-info').show();
+        $('#value').append(`${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}`);
+        $('#wallet').append(`${currentSNOBTokens / 1e18}`);
+        $('#pending').append(`${claimableSnowballs}`);
+
+
+   /*   _print(`    Wallet:  ${currentSNOBTokens / 1e18}`)
      _print(`   Pending:  ${claimableSnowballs}`)
-     _print(`     Total:  ${currentSNOBTokens / 1e18 + claimableSnowballs}`)
-     _print(``);
+     _print(`     Total:  ${currentSNOBTokens / 1e18 + claimableSnowballs}`) */
+    /*  _print(``);
      _print(`     Value: $<b>${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}</b>`)
-     _print(``);
+     _print(``); */
    }
    //Balances
 
@@ -255,7 +269,7 @@ async function main() {
     _print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
     if ( options.tvl !== 'undefined' ) {
       _print(`<a href='${options.tvl}' target='_blank'>Total Value Locked</a>`)
-      
+
     }
     _print(`APR - Day: <b>${options.apr.dailyAPR.toFixed(2)}</b>% Week: <b>${options.apr.weeklyAPR.toFixed(2)}</b>% Year: <b>${options.apr.yearlyAPR.toFixed(2)}</b>%`);
     _print(`APY (compounding): <b>${options.apy.toFixed(2)}</b>%`);
@@ -281,7 +295,7 @@ async function main() {
     }
     if ( options.display_amount > 0 ) {
       has_options = true;
-      _print_link(`Withdraw`, options.withdraw) 
+      _print_link(`Withdraw`, options.withdraw)
     }
     if ( !has_options ) {
       _print(`No PGL/sPGL to Deposit/Withdraw`)
@@ -343,12 +357,12 @@ async function main() {
     stake: stakeSUSHI,
     withdraw: withdrawSUSHI
   })
-  
+
   const bottom_funnel = `
 <b>PGL vs sPGL</b>
 * PGL tokens staked in Snowglobes receive sPGL tokens in return
 * Withdrawn sPGL tokens recieve PGL tokens in return
-* sPGL value grows per harvests, 1 sPGL is worth more than 1 PGL    
+* sPGL value grows per harvests, 1 sPGL is worth more than 1 PGL
 `
   _print(bottom_funnel);
 

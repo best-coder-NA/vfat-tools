@@ -11,11 +11,13 @@
     --dm-navbar-bg-color: #222741 !important;
     --dm-logo-image: url(../Logo_Light@2x.png);
     --lm-logo-image: url(../Logo_Dark@2x.png);
+    --dm-card-bg-color: #30364e !important;
     --lm-card-box-shadow: #{' rgb(0 0 0 / 10%) 0 7px 25px 0 '};
-
+    --lm-card-box-shadow: #{'rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px, rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px;'} !important;
+    --card-border-radius: 15px !important;
 }
 body, input {
-  font-family: monospace;
+  font-family: 'Encode Sans', sans-serif, monospace;
   padding: 0 5px 30px 5px;
 }
 
@@ -82,9 +84,12 @@ a:hover {
 .border {
     border-style: solid;
 }
+.w-clipboard{
+    cursor: pointer;
+}
 
 .total-locked{
-    border-radius: 2rem;
+    border-radius: 1rem;
     color: rgba(255, 255, 255, 0.8);
     background-color: rgba(255, 255, 255, 0.025);
     text-decoration: none;
