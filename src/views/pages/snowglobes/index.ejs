@@ -8,10 +8,33 @@
 </script>
 <body>
 <%- include(`${partials}/header_main`); -%>
-<div class="loader--1"></div>
-<pre id="log">    
-</pre>
-<%- include(`${partials}/scripts`, {scriptname: 'snowglobes'}); -%>
-<%- include(`${partials}/footer`); -%>
+<div class="modal modal-6" id="modal-6" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <h5 class="modal-title">Connecting to Wallet</h5>
+        <p class="error">
+          
+        </p>
+        <div class="text-right mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
+          <button class="btn mr-5" data-dismiss="modal" type="button">Close</button>
+          <button class="btn btn-primary" data-dismiss="modal" type="button" onclick="location.reload();">Try Again</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="page-wrapper with-navbar with-transitions" id="particles-js">
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <div class="loader--1"></div>
+            <h1 class="error"></h1>
+            
+            <pre id="log">    
+            </pre>
+            
+            <%- include(`${partials}/scripts`, {scriptname: 'snowglobes'}); -%>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+    </div>
 </body>
 </html>
