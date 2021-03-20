@@ -154,27 +154,26 @@ async function main() {
   const blockNumber = await App.provider.getBlockNumber()
   const prices = await getAvaxPrices();
   const snobPrice = prices['0xc38f41a296a4493ff429f1238e030924a1542e50'].usd
+  const marketCapDispay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
 
    //total supply
+	_print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${marketCapDispay}`)
 
-   _print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
-
-
-   const cs = `
-    Circulating Supply: ${(snobTotalSupply / 1e18).toFixed()}       Max: 18000000
-        SNOB Per Block:      ${snowballsPerBlock / 1e18}   Per Day: ${snowballsPerBlock / 1e18 * 15000}
-    Est Blocks Per Day:   15000
-   `
-   _print(cs)
+	const cs = `
+		Circulating Supply: ${(snobTotalSupply / 1e18).toFixed()}       Max: 18000000
+		    SNOB Per Block:      ${snowballsPerBlock / 1e18}   Per Day: ${snowballsPerBlock / 1e18 * 15000}
+		Est Blocks Per Day:   15000
+		`
+	_print(cs)
 
    // balance
-   document.getElementById('wallet-address').addEventListener('click', ()=>{
+ 	document.getElementById('wallet-address').addEventListener('click', ()=>{
     navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
         console.log('Async: Copying to clipboard was successful!');
       }, function(err) {
         console.error('Async: Could not copy text: ', err);
     });
-});
+	});
 
    $('#wallet-address').html(`${App.YOUR_ADDRESS}`);
    /* _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`); */
@@ -212,7 +211,7 @@ async function main() {
   const spglUsdtDisplayAmt = currentSPGLUSDTTokens > 1000 ? currentSPGLUSDTTokens / 1e18 : 0;
 
   //snowglobes
-  _print(`<b>Snowglobes 🌐</b>`)
+  _print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
   _print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
 	_print(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord\n`)
 	_print(`Compound steps: Claim > Swap > Add Liquidity > Deposit`)
@@ -289,7 +288,7 @@ async function main() {
     }
     _print(`APR - Day: <b>${options.apr.dailyAPR.toFixed(2)}</b>% Week: <b>${options.apr.weeklyAPR.toFixed(2)}</b>% Year: <b>${options.apr.yearlyAPR.toFixed(2)}</b>%`);
     _print(`APY (compounding): <b>${options.apy.toFixed(2)}</b>%`);
-    console.log(options.total_deposited)
+
     if ( !isNaN(options.total_deposited) ) {
       _print(`Pool Size: <b>${options.total_deposited / 1e18}</b>`)
     }

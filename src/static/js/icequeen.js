@@ -197,31 +197,56 @@ async function main() {
   const blockNumber = await App.provider.getBlockNumber()
   const prices = await getAvaxPrices();
   const snobPrice = prices['0xc38f41a296a4493ff429f1238e030924a1542e50'].usd
+  const marketCapDispay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
 
    //total supply
+	_print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${marketCapDispay}`)
 
-   _print(`<b>Snowballs</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
-
-
-   const cs = `
-    Circulating Supply: ${(snobTotalSupply / 1e18).toFixed()}       Max: 18000000
-        SNOB Per Block:      ${snowballsPerBlock / 1e18}   Per Day: ${snowballsPerBlock / 1e18 * 15000}
-    Est Blocks Per Day:   15000
-   `
-   _print(cs)
+	const cs = `
+		Circulating Supply: ${(snobTotalSupply / 1e18).toFixed()}       Max: 18000000
+		    SNOB Per Block:      ${snowballsPerBlock / 1e18}   Per Day: ${snowballsPerBlock / 1e18 * 15000}
+		Est Blocks Per Day:   15000
+		`
+	_print(cs)
 
    // balance
-   _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`);
+ 	document.getElementById('wallet-address').addEventListener('click', ()=>{
+    navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+    });
+	});
+
+   $('#wallet-address').html(`${App.YOUR_ADDRESS}`);
+   /* _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`); */
 
    if (currentSNOBTokens / 1e18 > 0 || claimableSnowballs > 0) {
-     _print(``);
-     _print(`    Wallet:  ${currentSNOBTokens / 1e18}`)
-     _print(`   Pending:  ${claimableSnowballs}`)
-     _print(`     Total:  ${currentSNOBTokens / 1e18 + claimableSnowballs}`)
-     _print(``);
-     _print(`     Value: $<b>${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}</b>`)
-     _print(``);
+      $('#account-info').show();
+      $('#value').append(`${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}`);
+      $('#wallet-pending').append(`${(currentSNOBTokens / 1e18 + claimableSnowballs).toFixed(4)}`);
+      $('#wallet').append(`${(currentSNOBTokens / 1e18).toFixed(4)}`);
+      $('#pending').append(`${claimableSnowballs.toFixed(4)}`);
    }
+   // const cs = `
+   //  Circulating Supply: ${(snobTotalSupply / 1e18).toFixed()}       Max: 18000000
+   //      SNOB Per Block:      ${snowballsPerBlock / 1e18}   Per Day: ${snowballsPerBlock / 1e18 * 15000}
+   //  Est Blocks Per Day:   15000
+   // `
+   // _print(cs)
+
+   // // balance
+   // _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`);
+
+   // if (currentSNOBTokens / 1e18 > 0 || claimableSnowballs > 0) {
+   //   _print(``);
+   //   _print(`    Wallet:  ${currentSNOBTokens / 1e18}`)
+   //   _print(`   Pending:  ${claimableSnowballs}`)
+   //   _print(`     Total:  ${currentSNOBTokens / 1e18 + claimableSnowballs}`)
+   //   _print(``);
+   //   _print(`     Value: $<b>${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}</b>`)
+   //   _print(``);
+   // }
    //Balances
 
   const currentSUSHIAVAXTokens = await SUSHI_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
@@ -264,16 +289,109 @@ async function main() {
   const pool2weight = 0.5
   const pool1weight = 0.125
 
-  _print(`<b>IceQueen 👸 - Governance</b>`);
-  _print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day</div>`)
+
+	let res = null;
+  let pool4tvl = null;
+	let pool3tvl = null;
+	let pool2tvl = null;
+	let pool1tvl = null;
+  let pool4tvlDisplay = '';
+	let pool3tvlDisplay = '';
+	let pool2tvlDisplay = '';
+	let pool1tvlDisplay = '';
+  let pool4APR = null;
+	let pool3APR = null;
+	let pool2APR = null;
+	let pool1APR = null;
+	try {
+		res = await $.ajax({
+	      url: 'https://d2vq5imxja288v.cloudfront.net/total_value_locked.json',
+	      type: 'GET',
+	    })
+    	if (res && res.pairs) {
+    		res.pairs.forEach( p => {
+    			if (p.token1.symbol == 'sushi') {
+    				pool1tvl = p.locked_value;
+    				pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+    				pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
+    			} else if (p.token1.symbol == 'snob') {
+    				pool2tvl = p.locked_value;
+    				pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+    				pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
+    			} else if (p.token1.symbol == 'png') {
+    				pool3tvl = p.locked_value;
+    				pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+    				pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
+    			} else if (p.token1.symbol == 'eth') {
+    				pool4tvl = p.locked_value;
+    				pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+    				pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
+    			}
+    		});
+		}
+	}
+	catch(e) {
+	  console.log('could not get tvl');
+	}
+
+		// APR
+	const PngStakingContracts= [
+	    {
+	        stakingRewardAddress: '0xa16381eae6285123c323a665d4d99a6bcfaac307'
+	    },
+	    {
+	        stakingRewardAddress: '0x8fd2755c6ae7252753361991bdcd6ff55bdc01ce'
+	    },
+	    {
+	        stakingRewardAddress: '0x88f26b81c9cae4ea168e31bc6353f493fda29661'
+	    },
+	    {
+	        stakingRewardAddress: '0x7d7ecd4d370384b17dfc1b4155a8410e97841b65'
+	    },
+	    {
+        	stakingRewardAddress: '0x4f019452f51bba0250ec8b69d64282b79fc8bd9f'
+    	}
+	]
+
+  const tokens = {};
+
+  const pools = PngStakingContracts.map(c => { return {
+      address: c.stakingRewardAddress,
+      abi: PNG_STAKING_ABI,
+      stakeTokenFunction: "stakingToken",
+      rewardTokenFunction: "rewardsToken"
+  }})
+
+  let apr_array = await loadMultipleSnowglobePools(App, tokens, prices, pools)
+	const eth_apr = apr_array[0]
+	const png_apr = apr_array[1]
+	const sushi_apr = apr_array[2]
+	const link_apr = apr_array[3]
+	const usdt_apr = apr_array[4]
+
+
+  _print(`<b style="font-size: 20px;"">IceQueen 👸 - Governance</b>`);
+  _print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe</div>`)
 
   function pool(options) {
     _print(``)
-    _print(`<b>${options.pool_nickname}</b> ${options.pool_name} <a href='${options.tvl}' target='_blank'>Total Value Locked</a>`)
+    if (options.url) {
+	    _print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
+    } else {
+	    _print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
+	  }
+    _print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
+  	if (options.icequeen_apr) {
+			_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
+			if (options.snowglobe_apr) {
+				let combinedAPR = options.icequeen_apr + options.snowglobe_apr
+				_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+			}
+		}
     _print(`Allocation: <b>${ options.pool_weight * 100}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight / 1e18}</b>`)
     _print(`Pool Size: <b>${ options.total_staked / 1e18}</b>`)
     if ( options.user_pool_percent > 0 ) {
-      _print(`Account Pool Size: <b>${options.user_pool_percent}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18}</b>`)
+      _print(`Your pool %: <b>${options.user_pool_percent}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18}</b>`)
       _print(`Estimated Per Day*: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000}</b> Gain Per Day*: $<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}</b>`)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
@@ -288,24 +406,25 @@ async function main() {
     let has_options = false
     if ( options.display_amount > 0 ) {
       has_options = true
-      _print_link(`Approve`, options.approve)
-      _print_link(`Stake`, options.stake)
+      _print_button(`Approve`, options.approve)
+      _print_button(`Stake`, options.stake)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       has_options = true
-      _print_link(`Unstake`, options.unstake)
+      _print_button(`Unstake`, options.unstake)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
-      _print_link(`Claim`, options.claim)
+      _print_button(`Claim`, options.claim)
     }
     if ( !has_options ) {
-      _print(`No sPGL to Stake/Withdraw`)
+      _print(`No sPGL to Stake/Withdraw.`)
+      _print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
     }
   }
   pool({
-    pool_nickname: '⛸️ Tonya Harding (Pool 4)',
-    pool_name: 'ETH-AVAX Snowglobe',
+    pool_nickname: '(Pool 4)',
+    pool_name: '💠 ETH-AVAX Snowglobe',
     tvl: ETH_AVAX_TVL,
     pool_weight: pool4weight,
     total_staked: totalStakedSPGLETH,
@@ -316,12 +435,15 @@ async function main() {
     approve: approveSPGLETH,
     stake: stakeSPGLETH,
     unstake: withdrawPool4,
-    claim: claimPool4
+    claim: claimPool4,
+    icequeen_apr: pool4APR,
+    snowglobe_apr: eth_apr.dailyAPR,
+    tvl_display: pool4tvlDisplay
   })
 
   pool({
-    pool_nickname: '🎿 Sonny Bono (Pool 3)',
-    pool_name: 'PNG-AVAX Snowglobe',
+    pool_nickname: '(Pool 3)',
+    pool_name: '🦔 PNG-AVAX sPGL',
     tvl: PNG_AVAX_TVL,
     pool_weight: pool3weight,
     total_staked: totalStakedSPGLPNG,
@@ -332,12 +454,15 @@ async function main() {
     approve: approveSPGLPNG,
     stake: stakeSPGLPNG,
     unstake: withdrawPool3,
-    claim: claimPool3
+    claim: claimPool3,
+    icequeen_apr: pool3APR,
+    snowglobe_apr: png_apr.dailyAPR,
+    tvl_display: pool3tvlDisplay
   })
 
   pool({
-    pool_nickname: '🏔️ Rob Hall (Pool 2)',
-    pool_name: 'SNOB-AVAX Snowglobe',
+    pool_nickname: '(Pool 2)',
+    pool_name: '❄️ SNOB-AVAX Pangolin LP',
     url: SNOB_AVAX_POOL_URL,
     tvl: SNOB_AVAX_TVL,
     pool_weight: pool2weight,
@@ -349,12 +474,15 @@ async function main() {
     approve: approveSNOB,
     stake: stakeSNOB,
     unstake: withdrawPool2,
-    claim: claimPool2
+    claim: claimPool2,
+    icequeen_apr: pool2APR,
+    snowglobe_apr: null,
+    tvl_display: pool2tvlDisplay
   })
 
   pool({
-    pool_nickname: '🌬️ JEWEL (Pool 1)',
-    pool_name: 'SUSHI-AVAX Snowglobe',
+    pool_nickname: '(Pool 1)',
+    pool_name: '🍣 SUSHI-AVAX sPGL',
     tvl: SUSHI_AVAX_TVL,
     pool_weight: pool1weight,
     total_staked: totalStakedSPGLSUSHI,
@@ -365,7 +493,10 @@ async function main() {
     approve: approveSPGLSUSHI,
     stake: stakeSPGLSUSHI,
     unstake: withdrawPool1,
-    claim: claimPool1
+    claim: claimPool1,
+    icequeen_apr: pool1APR,
+    snowglobe_apr: sushi_apr.dailyAPR,
+    tvl_display: pool1tvlDisplay
   })
 
   hideLoading();

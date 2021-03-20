@@ -124,8 +124,8 @@ let logger
 
 const consoleInit = function() {
   logger = document.getElementById('log')
-  _print(new Date().toString())
-  _print('')
+  // _print(new Date().toString())
+  // _print('')
 }
 
 const _print = function(message) {
