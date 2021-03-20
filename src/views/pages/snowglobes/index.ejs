@@ -19,23 +19,26 @@
             <div id="account-info" class="col-xs-12 col-md-12" style="display: none;">
                 <div class="card br-8 box-shadow-1">
                     <div id="particles-js" class="row mw-full m-0 p-0 d-flex" rel="noopener">
-                        <div class="col-xs-12 col-md-8 align-items-center">
+                        <div class="col-xs-12 col-md-6 align-items-center">
                             <div class="p-10 w-full m-auto">
                                 <p class="m-0 mt-5 text-muted font-size-12">
                                     Total SNOB value
                                 </p>
-                                <h3 class="m-0 font-weight-semi-bold text-dark-lm text-light-dm">
+                                <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
                                     <!-- <i class="fa fa-usd ml-5" aria-hidden="true"></i> -->
-                                    $<span id="value" data-toggle="tooltip" data-title="Total value of your Snowballs in USD"></span>
-                                    <span class="font-size-16 font-weight-regular">=
-                                        <span id="wallet" data-toggle="tooltip" data-title="Snowballs now in your wallet"></span> SNOB</span>
+                                    <span class="font-size-16 font-weight-regular">
+                                        <span id="wallet-pending" data-toggle="tooltip" data-title="Snowballs now in your wallet"></span> SNOB</span>
+                                    =$<span class="font-size-16 font-weight-regular" id="value" data-toggle="tooltip" data-title="Total value of your Snowballs in USD"></span>
                                 </h3>
+                                <p class="m-0 mt-5 text-muted font-size-12">
+                                    Wallet: <span id="wallet"></span>
+                                </p>
                                 <p class="m-0 mt-5 text-muted font-size-12">
                                     Pending: <span id="pending"></span>
                                 </p>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-4 align-items-center" >
+                        <div class="col-xs-12 col-md-6 align-items-center" >
                             <div class="w-full m-auto w-clipboard"  data-toggle="tooltip" data-placement="bottom" data-title="Copy your wallet address to clipboard">
                                 <div class="card p-10 w-full m-auto border border-2 snob-tokens">
                                     <div class="d-flex flex-row justify-content-right align-items-center">
@@ -56,7 +59,7 @@
             <div class="loader--1"></div>
             <h1 class="error"></h1>
 
-            <pre id="log">
+            <pre id="log" style="margin-left: 10px;">
             </pre>
 
             <%- include(`${partials}/scripts`, {scriptname: 'snowglobes'}); -%>

@@ -174,6 +174,22 @@ const _print_link = function(message, onclickFunction) {
   })
 }
 
+const _print_button = function(message, onclickFunction) {
+  if (!logger) {
+    logger = document.getElementById('log')
+  }
+
+  const uuid = ID()
+
+  logger.innerHTML += '<button href="#" id=' + uuid + '>' + message + '</button><br />'
+
+  $(document).on('click', '#' + uuid, function() {
+    console.log('clicked')
+    onclickFunction()
+    return false
+  })
+}
+
 const _print_href = function(message, href) {
   if (!logger) {
     logger = document.getElementById('log')

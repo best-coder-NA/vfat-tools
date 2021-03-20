@@ -10,7 +10,8 @@
     }).then(function (info) {
         document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value);
     }).catch(function (err) {
-        document.getElementById('tvl').innerHTML = '$16.2M+';
+        document.getElementById('tvl').innerHTML = '';
+        console.log('could not get tvl');
     });
 </script>
 <body>
@@ -29,16 +30,16 @@
                             <h4 class="hero-header">
                                 <strong class="font-weight-medium">➡️ Deposit LP tokens on the <a href="<%= PP %>/snowglobes/" class="title-">Snowglobes</a> page for automatic compounding.</strong>
                             </h4>
-                            <p class="hero-content">
-                                🍧 Stake Snowglobe (sPGL) tokens on the <a href="<%= PP %>/icequeen/" class="">IceQueen</a> page to earn governance tokens.
-                            </p>
+                            <h4 class="hero-header">
+                                ➡️ Stake Snowglobe (sPGL) tokens on the <a href="<%= PP %>/icequeen/" class="">IceQueen</a> page to earn governance tokens.
+                            </h4>
                             <span class="badge badge-pill p-5 w-150 text-center">
-                                <strong>Total Value Locked</strong>
+                                <strong><a href="https://x-api.snowballfinance.info/tvl" target="_blank">Total Value Locked</a></strong>
                             </span>
                             <div class="d-flex align-items-center total-locked text-extra-letter-spacing text-monospace font-size-12 pt-20 mb-20" target="_blank" rel="noopener">
 
                                 <h2 class="tvl text-primary px-20" id="tvl">...</h2>
-                                <a href="https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50" class="btn btn-primary btn-lg " target="_blank" role="button">
+                                <a href="https://app.pangolin.exchange/#/swap?inputCurrency=avax&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50" class="btn btn-primary btn-lg " target="_blank" role="button">
                                     Buy $SNOB
                                 </a>
 
