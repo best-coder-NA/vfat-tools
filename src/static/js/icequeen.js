@@ -50,7 +50,7 @@ async function main() {
   // TVL URLS
   const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
   const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375"
-  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d"
+  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x1eC206a9dD85625E1940cD2B0c8e14a894D2e9aC"
   const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
 
@@ -67,7 +67,7 @@ async function main() {
   const LINK_AVAX_COMPOUNDS = 6
 
   // Gas
-  // Claim: 0.1645 
+  // Claim: 0.1645
   // Swap: 0.075221
   // Add Liquidity: 0.092299
   // Deposit into pool: 0.1645
@@ -200,7 +200,7 @@ async function main() {
 
    //total supply
 
-   _print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
+   _print(`<b>Snowballs</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${snobTotalSupply / 1e18 * snobPrice}`)
 
 
    const cs = `
@@ -209,11 +209,11 @@ async function main() {
     Est Blocks Per Day:   15000
    `
    _print(cs)
- 
+
    // balance
    _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`);
- 
-   if (currentSNOBTokens / 1e18 > 0 || laimableSnowballs > 0) {
+
+   if (currentSNOBTokens / 1e18 > 0 || claimableSnowballs > 0) {
      _print(``);
      _print(`    Wallet:  ${currentSNOBTokens / 1e18}`)
      _print(`   Pending:  ${claimableSnowballs}`)
@@ -277,10 +277,10 @@ async function main() {
       _print(`Estimated Per Day*: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000}</b> Gain Per Day*: $<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}</b>`)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
-      _print(`Pending: <b>${options.pending_tokens / 1e18}</b>`)    
+      _print(`Pending: <b>${options.pending_tokens / 1e18}</b>`)
     }
     if ( options.display_amount > 0 ) {
-      _print(`Available Stake: <b>${options.display_amount}</b>`)  
+      _print(`Available Stake: <b>${options.display_amount}</b>`)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       _print(`Available Unstake: <b>${options.staked_pool.amount / 1e18}</b>`)
@@ -300,16 +300,16 @@ async function main() {
       _print_link(`Claim`, options.claim)
     }
     if ( !has_options ) {
-      _print(`No sPGL to Stake/Withdraw`)      
+      _print(`No sPGL to Stake/Withdraw`)
     }
   }
   pool({
-    pool_nickname: '(Pool 4)', 
+    pool_nickname: '⛸️ Tonya Harding (Pool 4)',
     pool_name: 'ETH-AVAX Snowglobe',
-    tvl: ETH_AVAX_TVL, 
-    pool_weight: pool4weight, 
-    total_staked: totalStakedSPGLETH, 
-    user_pool_percent: userPool4Percent, 
+    tvl: ETH_AVAX_TVL,
+    pool_weight: pool4weight,
+    total_staked: totalStakedSPGLETH,
+    user_pool_percent: userPool4Percent,
     staked_pool: stakedPool4,
     pending_tokens: pendingSNOBTokensPool4,
     display_amount: spglEthDisplayAmt,
@@ -320,12 +320,12 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '(Pool 3)', 
+    pool_nickname: '🎿 Sonny Bono (Pool 3)',
     pool_name: 'PNG-AVAX Snowglobe',
-    tvl: PNG_AVAX_TVL, 
-    pool_weight: pool3weight, 
-    total_staked: totalStakedSPGLPNG, 
-    user_pool_percent: userPool3Percent, 
+    tvl: PNG_AVAX_TVL,
+    pool_weight: pool3weight,
+    total_staked: totalStakedSPGLPNG,
+    user_pool_percent: userPool3Percent,
     staked_pool: stakedPool3,
     pending_tokens: pendingSNOBTokensPool3,
     display_amount: spglPngDisplayAmt,
@@ -336,13 +336,13 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '(Pool 2)', 
-    pool_name: 'SNOB-AVAX Pangolin LP',
+    pool_nickname: '🏔️ Rob Hall (Pool 2)',
+    pool_name: 'SNOB-AVAX Snowglobe',
     url: SNOB_AVAX_POOL_URL,
-    tvl: SNOB_AVAX_TVL, 
-    pool_weight: pool2weight, 
-    total_staked: totalStakedSNOBAVAX, 
-    user_pool_percent: userPool2Percent, 
+    tvl: SNOB_AVAX_TVL,
+    pool_weight: pool2weight,
+    total_staked: totalStakedSNOBAVAX,
+    user_pool_percent: userPool2Percent,
     staked_pool: stakedPool2,
     pending_tokens: pendingSNOBTokensPool2,
     display_amount: snobAvaxDisplayAmt,
@@ -353,12 +353,12 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '(Pool 1)',     
+    pool_nickname: '🌬️ JEWEL (Pool 1)',
     pool_name: 'SUSHI-AVAX Snowglobe',
-    tvl: SUSHI_AVAX_TVL, 
-    pool_weight: pool1weight, 
-    total_staked: totalStakedSPGLSUSHI, 
-    user_pool_percent: userPool1Percent, 
+    tvl: SUSHI_AVAX_TVL,
+    pool_weight: pool1weight,
+    total_staked: totalStakedSPGLSUSHI,
+    user_pool_percent: userPool1Percent,
     staked_pool: stakedPool1,
     pending_tokens: pendingSNOBTokensPool1,
     display_amount: spglSushiDisplayAmt,
@@ -366,7 +366,7 @@ async function main() {
     stake: stakeSPGLSUSHI,
     unstake: withdrawPool1,
     claim: claimPool1
-  })  
+  })
 
   hideLoading();
 }
