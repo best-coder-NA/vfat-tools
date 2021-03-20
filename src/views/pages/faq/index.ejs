@@ -3,13 +3,17 @@
 <%- include(`${partials}/head`); -%>
 <body>
 <%- include(`${partials}/header_main`); -%>
-<pre class="container"><div style="white-space: pre-wrap;">
-<h2>FAQ</h2>
+<div class="page-wrapper with-navbar with-transitions" id="particles-js">
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <pre style="white-space:pre-wrap">
+<h2 class="text-center">FAQ</h2>
 <b><u>Project</u></b>
 
 <b>What is Snowball Finance?</b>
-Snowball Finance is a yield optimizer on the Avalanche Network.
-<a href="https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2" target="_blank">https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2</a>
+<p>Snowball Finance is a yield optimizer on the Avalanche Network.
+<a href="https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2" target="_blank">https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2</a></p>
 
 <b>Why should I use Snowball Finance?</b>
 Snowball Finance automatically compounds PNG rewards for you multiple times per day, saving on gas and generating higher APY.
@@ -76,7 +80,10 @@ It takes price of the two tokens in a pair, price of PNG, and PNG emissions rate
 For APY we use the standard formula A = P(1 + r/n)nt
 Try it yourself here:
 <a href="https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php" target="_blank">https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php</a>
-
-<%- include(`${partials}/footer`); -%>
+</pre>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+    </div>
+</div>
 </body>
 </html>
