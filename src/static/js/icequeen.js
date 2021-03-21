@@ -388,20 +388,20 @@ async function main() {
 				_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
 			}
 		}
-    _print(`Allocation: <b>${ options.pool_weight * 100}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight / 1e18}</b>`)
-    _print(`Pool Size: <b>${ options.total_staked / 1e18}</b>`)
+    _print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight / 1e18}</b>`)
+    _print(`Pool Size: <b>${ (options.total_staked / 1e18).toFixed(2)}</b>`)
     if ( options.user_pool_percent > 0 ) {
-      _print(`Your pool %: <b>${options.user_pool_percent}%</b> SNOB Per Block: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18}</b>`)
-      _print(`Estimated Per Day*: <b>${snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000}</b> Gain Per Day*: $<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)}</b>`)
+      _print(`Your pool %: <b>${options.user_pool_percent.toFixed(10)}%</b> SNOB Per Block: <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18).toFixed(10)}</b>`)
+      _print(`You are earning <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
-      _print(`Pending: <b>${options.pending_tokens / 1e18}</b>`)
+      _print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b>`)
     }
     if ( options.display_amount > 0 ) {
-      _print(`Available Stake: <b>${options.display_amount}</b>`)
+      _print(`Available Stake: <b>${(options.display_amount).toFixed(6)}</b>`)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
-      _print(`Available Unstake: <b>${options.staked_pool.amount / 1e18}</b>`)
+      _print(`Available Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b>`)
     }
     let has_options = false
     if ( options.display_amount > 0 ) {
