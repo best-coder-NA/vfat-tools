@@ -124,8 +124,8 @@ let logger
 
 const consoleInit = function() {
   logger = document.getElementById('log')
-  _print(new Date().toString())
-  _print('')
+  // _print(new Date().toString())
+  // _print('')
 }
 
 const _print = function(message) {
@@ -166,6 +166,22 @@ const _print_link = function(message, onclickFunction) {
   const uuid = ID()
 
   logger.innerHTML += '<a href="#" id=' + uuid + '>' + message + '</a><br />'
+
+  $(document).on('click', '#' + uuid, function() {
+    console.log('clicked')
+    onclickFunction()
+    return false
+  })
+}
+
+const _print_button = function(message, onclickFunction) {
+  if (!logger) {
+    logger = document.getElementById('log')
+  }
+
+  const uuid = ID()
+
+  logger.innerHTML += '<button href="#" id=' + uuid + '>' + message + '</button><br />'
 
   $(document).on('click', '#' + uuid, function() {
     console.log('clicked')

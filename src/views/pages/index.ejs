@@ -10,7 +10,8 @@
     }).then(function (info) {
         document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value);
     }).catch(function (err) {
-        document.getElementById('tvl').innerHTML = '$16.2M+';
+        document.getElementById('tvl').innerHTML = '';
+        console.log('could not get tvl');
     });
 </script>
 <body>
@@ -27,18 +28,18 @@
                         <div class="content">
                             <div class="logo"></div>
                             <h4 class="hero-header">
-                                <strong class="font-weight-medium">➡️ Deposit LP tokens on the <a href="<%= PP %>/snowglobes/" class="title-">Snowglobes</a> page for automatic compounding.</strong>
+                                <strong class="font-weight-medium">❄️ Deposit LP tokens in <a href="<%= PP %>/snowglobes/" class="title-">Snowglobes</a> for automatic compounding.</strong>
                             </h4>
-                            <p class="hero-content">
-                                🍧 Stake Snowglobe (sPGL) tokens on the <a href="<%= PP %>/icequeen/" class="">IceQueen</a> page to earn governance tokens.
-                            </p>
+                            <h4 class="hero-header">
+                                ❄️ Stake Snowglobe (sPGL) tokens with <a href="<%= PP %>/icequeen/" class="">IceQueen</a> to earn governance tokens.
+                            </h4>
                             <span class="badge badge-pill p-5 w-150 text-center">
-                                <strong>Total Value Locked</strong>
+                                <strong><a href="https://x-api.snowballfinance.info/tvl" target="_blank">Total Value Locked</a></strong>
                             </span>
                             <div class="d-flex align-items-center total-locked text-extra-letter-spacing text-monospace font-size-12 pt-20 mb-20" target="_blank" rel="noopener">
 
                                 <h2 class="tvl text-primary px-20" id="tvl">...</h2>
-                                <a href="https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50" class="btn btn-primary btn-lg " target="_blank" role="button">
+                                <a href="https://app.pangolin.exchange/#/swap?inputCurrency=avax&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50" class="btn btn-primary btn-lg " target="_blank" role="button">
                                     Buy $SNOB
                                 </a>
 
@@ -73,7 +74,7 @@
             </section>
             <section id="tokens">
                 <div class="container-lg text-center">
-                    <h2 class="">Tokens</h2>
+                    <h2 class="">Tokens 🥇</h2>
                     <div class="row mx-auto p-0 bg-transparent">
                         <a href="https://info.pangolin.exchange/#/token/0xc38f41a296a4493ff429f1238e030924a1542e50" target="_blank" class="col-sm-6 pb-4 mx-auto">
                             <div class="card br-25 border border-2 snob-tokens" >
@@ -86,7 +87,7 @@
                     </div>
                 </div>
                 <div class="container-lg text-center">
-                    <h2 class="">Contracts</h2>
+                    <h2 class="">Contracts 📋</h2>
                     <div class="row mx-auto p-0 bg-transparent">
                         <a href="https://cchain.explorer.avax.network/address/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
                             <div class="card br-25 border border-2 snob-tokens" >
@@ -144,6 +145,14 @@
                                 </div>
                             </div>
                         </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>SnowGlobe AVAX-LINK</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605/contracts</p>
+                                </div>
+                            </div>
+                        </a>
                         <a href="https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
                             <div class="card br-25 border border-2 snob-tokens" >
                                 <div class="card-body text-center">
@@ -173,6 +182,14 @@
                                 <div class="card-body text-center">
                                   <h6>Strategy AVAX-LINK</h6>
                                   <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x74db28797957a52a28963f424daf2b10226ba04c/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                  <h6>Strategy AVAX-USDT</h6>
+                                  <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x74db28797957a52a28963f424daf2b10226ba04c/contracts</p>
                                 </div>
                             </div>
                         </a>
