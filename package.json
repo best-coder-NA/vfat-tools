@@ -15,7 +15,7 @@
     "watch:js": "NODE_ENV=development npx webpack -w",
     "watch:css": "NODE_ENV=development npm run sass && node-sass -w -r src/css -o dist/css --source-map true",
     "minify:html": "NODE_ENV=production npm run build:html && babel-node build-tools/minify-html.js",
-    "minify:js": "NODE_ENV=production npx webpack -p",
+    "minify:js": "NODE_ENV=production npx webpack --mode production",
     "minify:css": "NODE_ENV=production npm run build:css && babel-node build-tools/minify-css.js",
     "sass": "node-sass src/css -o dist/css --source-map-embed true",
     "autoprefixer": "postcss dist/css/**/*.css --use autoprefixer -r",
