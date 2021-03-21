@@ -218,7 +218,33 @@ async function main() {
   _print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX`)
   _print(`Compounds per day/week/year: ${ETH_AVAX_COMPOUNDS}/${ETH_AVAX_COMPOUNDS * 7}/${ETH_AVAX_COMPOUNDS * 365} `)
   _print(`Gas saved per day/week/year: ${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 7).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 365).toFixed(2)} AVAX\n`)
+	
+	let res = null;
+  let usdt_tvl = null;
+	let link_tvl = null;
+  let usdt_tvl_display = '';
+	let link_tvl_display = '';
 
+	try {
+		res = await $.ajax({
+	      url: 'https://d2vq5imxja288v.cloudfront.net/total_value_locked.json',
+	      type: 'GET',
+	    })
+    	if (res && res.pairs) {
+    		res.pairs.forEach( p => {
+    			if (p.token1.symbol == 'usdt') {
+    				usdt_tvl = p.locked_value;
+    				usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+    			} else if (p.token1.symbol == 'link') {
+    				link_tvl = p.locked_value;
+    				link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+    			}
+    		});
+		}
+	}
+	catch(e) {
+	  console.log('could not get tvl');
+	}
   // APR
   const PngStakingContracts = [
     {
@@ -282,9 +308,8 @@ async function main() {
   const layout_pool = function(options) {
     _print(``)
     _print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
-    if ( options.tvl !== 'undefined' ) {
-      _print(`<a href='${options.tvl}' target='_blank'>Total Value Locked</a>`)
-
+    if ( options.tvl_display ) {
+      _print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
     }
     _print(`APR - Day: <b>${options.apr.dailyAPR.toFixed(2)}</b>% Week: <b>${options.apr.weeklyAPR.toFixed(2)}</b>% Year: <b>${options.apr.yearlyAPR.toFixed(2)}</b>%`);
     _print(`APY (compounding): <b>${options.apy.toFixed(2)}</b>%`);
@@ -329,7 +354,8 @@ async function main() {
     display_amount: spglUsdtDisplayAmt,
     approve: approveUSDT,
     stake: stakeUSDT,
-    withdraw: withdrawUSDT
+    withdraw: withdrawUSDT,
+    tvl_display: usdt_tvl_display
   })
 
   layout_pool({
@@ -344,7 +370,8 @@ async function main() {
     display_amount: spglLinkDisplayAmt,
     approve: approveLINK,
     stake: stakeLINK,
-    withdraw: withdrawLINK
+    withdraw: withdrawLINK,
+    tvl_display: link_tvl_display
   })
 
   layout_pool({
@@ -356,7 +383,8 @@ async function main() {
     display_amount: spglEthDisplayAmt,
     approve: approveETH,
     stake: stakeETH,
-    withdraw: withdrawETH
+    withdraw: withdrawETH,
+    tvl_display: null
   })
 
   layout_pool({
@@ -368,7 +396,8 @@ async function main() {
     display_amount: spglPngDisplayAmt,
     approve: approvePNG,
     stake: stakePNG,
-    withdraw: withdrawPNG
+    withdraw: withdrawPNG,
+    tvl_display: null
   })
 
   layout_pool({
@@ -380,7 +409,8 @@ async function main() {
     display_amount: spglSushiDisplayAmt,
     approve: approveSUSHI,
     stake: stakeSUSHI,
-    withdraw: withdrawSUSHI
+    withdraw: withdrawSUSHI,
+    tvl_display: null
   })
 
   const bottom_funnel = `

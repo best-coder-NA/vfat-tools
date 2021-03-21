@@ -425,6 +425,7 @@ async function main() {
   pool({
     pool_nickname: '(Pool 4)',
     pool_name: '💠 ETH-AVAX Snowglobe',
+    url: null,
     tvl: ETH_AVAX_TVL,
     pool_weight: pool4weight,
     total_staked: totalStakedSPGLETH,
@@ -444,6 +445,7 @@ async function main() {
   pool({
     pool_nickname: '(Pool 3)',
     pool_name: '🦔 PNG-AVAX sPGL',
+    url: null,
     tvl: PNG_AVAX_TVL,
     pool_weight: pool3weight,
     total_staked: totalStakedSPGLPNG,
@@ -483,6 +485,7 @@ async function main() {
   pool({
     pool_nickname: '(Pool 1)',
     pool_name: '🍣 SUSHI-AVAX sPGL',
+    url: null,
     tvl: SUSHI_AVAX_TVL,
     pool_weight: pool1weight,
     total_staked: totalStakedSPGLSUSHI,
