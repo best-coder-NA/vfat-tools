@@ -5,6 +5,14 @@
     if (window.localStorage.getItem('snowballDarkmode') == 'true') {
         document.body.classList.add('dark-mode');
     }
+    fetch('https://d2vq5imxja288v.cloudfront.net/total_value_locked.json').then(function (response) {
+        return response.json();
+    }).then(function (info) {
+        document.getElementById('tvl').innerHTML = 'Total Value Locked $' + new Intl.NumberFormat('en-US').format(info.locked_value);
+    }).catch(function (err) {
+        document.getElementById('tvl').innerHTML = '';
+        console.log('could not get tvl');
+    });
 </script>
 <body>
 <pre class="container">
@@ -12,9 +20,11 @@
 <a href="<%= PP %>/">Home</a> - <a href="<%= PP %>/snowglobes/">Snowglobes</a> - <a href="<%= PP %>/icequeen/">IceQueen</a> - <a href="<%= PP %>/faq/">FAQ</a> - <span class="toggle-background" href="#" onclick="document.body.classList.remove('dark-mode');window.localStorage.setItem('snowballDarkmode',false);">☀️ / </span><span class="toggle-background" href="#" onclick="document.body.classList.add('dark-mode');window.localStorage.setItem('snowballDarkmode',true);">🌙</span>
 </div>
 
+<h2><a href="https://v2.snowballfinance.info/">Try the new V2 Portal Redesign ➡️</a></h2>
+
 <img height='165' src='https://media.discordapp.net/attachments/818991928951439371/819558822687408138/image1.jpg?width=1260&height=630'>
 
-<h2>Total Value Locked: $15.7M+</h2>
+<h2 id="tvl"></h2>
 
 <b><a target="_blank" href="https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50">Buy $SNOB</a></b>
 
@@ -36,11 +46,12 @@ SnowGlobe AVAX-ETH: <a target="_blank" href="https://cchain.explorer.avax.networ
 SnowGlobe AVAX-PNG: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x621207093D2e65Bf3aC55dD8Bf0351B980A63815/contracts">https://cchain.explorer.avax.network/address/0x621207093D2e65Bf3aC55dD8Bf0351B980A63815/contracts</a>
 SnowGlobe AVAX-SUSHI: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x751089F1bf31B13Fa0F0537ae78108088a2253BF/contracts">https://cchain.explorer.avax.network/address/0x751089F1bf31B13Fa0F0537ae78108088a2253BF/contracts</a>
 SnowGlobe AVAX-LINK: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x00933c16e06b1d15958317C2793BC54394Ae356C/contracts">https://cchain.explorer.avax.network/address/0x00933c16e06b1d15958317C2793BC54394Ae356C/contracts</a>
+SnowGlobe AVAX-USDT: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605/contracts">https://cchain.explorer.avax.network/address/0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605/contracts</a>
 Strategy AVAX-ETH: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts">https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts</a>
 Strategy AVAX-PNG: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d/contracts">https://cchain.explorer.avax.network/address/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d/contracts</a>
 Strategy AVAX-SUSHI: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC/contracts">https://cchain.explorer.avax.network/address/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC/contracts</a>
 Strategy AVAX-LINK: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103/contracts">https://cchain.explorer.avax.network/address/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103/contracts</a>
-
+Strategy AVAX-USDT: <a target="_blank" href="https://cchain.explorer.avax.network/address/0x74dB28797957a52a28963F424dAF2B10226ba04C/contracts">https://cchain.explorer.avax.network/address/0x74dB28797957a52a28963F424dAF2B10226ba04C/contracts</a>
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 <a href="https://twitter.com/throwsnowballs" target="_blank">Twitter</a> - <a href="https://discord.gg/T35jZ2hhPZ" target="_blank">Discord</a> - <a href="https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2" target="_blank">Medium</a> - <a href="https://t.me/throwsnowballs" target="_blank">Telegram</a> - <a href="https://snowballs.gitbook.io/snowball-docs/" target="_blank">Docs</a> 
