@@ -200,33 +200,44 @@ async function main() {
   const marketCapDispay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
 
    //total supply
-	_print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${marketCapDispay}`)
+	/* _print(`<b>Snowball (SNOB)</b>: <a href='https://www.coingecko.com/en/coins/snowball-token' target='_blank'>$${snobPrice.toFixed(3)}</a>   <b>MarketCap</b>: ${marketCapDispay}`) */
 
-	const cs = `
+	/* const cs = `
 		Circulating Supply: ${(snobTotalSupply / 1e18).toFixed()}       Max: 18000000
 		    SNOB Per Block:      ${snowballsPerBlock / 1e18}   Per Day: ${snowballsPerBlock / 1e18 * 15000}
 		Est Blocks Per Day:   15000
 		`
-	_print(cs)
+	_print(cs) */
+    $('#value-market').append(`$${snobPrice.toFixed(3)}`)
+    $('#value-marketcap').append(`${marketCapDispay}`)
+    $('#snob-supply').append(`${(snobTotalSupply / 1e18).toFixed()}`)
+    $('#snob-supply-max').append(`18000000`)
+    $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
+    $('#snob-block-pday').append(`${snowballsPerBlock / 1e18 * 15000}`)
 
-   // balance
- 	document.getElementById('wallet-address').addEventListener('click', ()=>{
+    document.getElementById('wallet-copy').addEventListener('click', ()=>{
     navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
-        console.log('Async: Copying to clipboard was successful!');
+        console.log('Snowball Platform: Copying to clipboard was successful!');
       }, function(err) {
-        console.error('Async: Could not copy text: ', err);
+        console.error('Snowball Platform: Could not copy text: ', err);
     });
 	});
+    let walletAddres = `${App.YOUR_ADDRESS}`;
+   $('#wallet-address').html(`${walletAddres}`);
 
-   $('#wallet-address').html(`${App.YOUR_ADDRESS}`);
-   /* _print(`<b>Wallet ❄️</b> Address: ${App.YOUR_ADDRESS}`); */
 
    if (currentSNOBTokens / 1e18 > 0 || claimableSnowballs > 0) {
       $('#account-info').show();
-      $('#value').append(`${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}`);
-      $('#wallet-pending').append(`${(currentSNOBTokens / 1e18 + claimableSnowballs).toFixed(4)}`);
+      $('#snob-info').show();
+      $('#value-snob').append(`${(currentSNOBTokens / 1e18 + claimableSnowballs).toFixed(4)}`);
+      $('#value-usd').append(`${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}`);
       $('#wallet').append(`${(currentSNOBTokens / 1e18).toFixed(4)}`);
-      $('#pending').append(`${claimableSnowballs.toFixed(4)}`);
+      if (claimableSnowballs > 0) {
+        $('#pending').append(`<ion-icon name="time-outline"></ion-icon> Pending: ${(claimableSnowballs).toFixed(4)}`);
+      }else{
+        $('#pending').append(`<ion-icon name="checkmark-circle" class="text-success"></ion-icon> No pendings`);
+      }
+
    }
    // const cs = `
    //  Circulating Supply: ${(snobTotalSupply / 1e18).toFixed()}       Max: 18000000

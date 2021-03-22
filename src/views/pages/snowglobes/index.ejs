@@ -15,46 +15,87 @@
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
+            <div class="row">
+                <div id="account-info" class="col-xs-12 col-md-8" style="display: none;">
+                    <div class="card br-8 box-shadow-1">
+                        <img class="bg-account-info" src="https://media.discordapp.net/attachments/819644400200187904/823048372717879336/image0.png?width=1200&height=399" alt="">
+                        <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
+                            <div class="col-xs-12 col-md-6 align-items-center">
+                                <div class="p-10 w-full m-auto">
+                                    <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
+                                        <!-- <i class="fa fa-usd ml-5" aria-hidden="true"></i> -->
+                                        <p class="m-0 mt-5 text-muted font-size-12">
+                                            You have
+                                        </p>
+                                        <span class="font-size-18 font-weight-regular" id="value-snob">
+                                            <span class="font-size-18 font-weight-bold" data-toggle="tooltip" data-title="Total Snowballs">
 
-            <div id="account-info" class="col-xs-12 col-md-12" style="display: none;">
-                <div class="card br-8 box-shadow-1">
-                    <div id="particles-js" class="row mw-full m-0 p-0 d-flex" rel="noopener">
-                        <div class="col-xs-12 col-md-6 align-items-center">
-                            <div class="p-10 w-full m-auto">
-                                <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
-                                    <!-- <i class="fa fa-usd ml-5" aria-hidden="true"></i> -->
-                                    <span class="font-size-14 font-weight-regular">
-                                        You have 
-                                        <span class="font-size-16 font-weight-bold" id="wallet-pending" data-toggle="tooltip" data-title="Total Snowballs"></span> SNOB</span>
-                                    ($<span class="font-size-14 font-weight-regular" id="value" data-toggle="tooltip" data-title="Total value of Snowballs in USD"></span>)
-                                </h3>
-                                <p class="m-0 mt-5 text-muted font-size-12">
-                                    Wallet: <span id="wallet"></span>
-                                </p>
-                                <p class="m-0 mt-5 text-muted font-size-12">
-                                    Pending: <span id="pending"></span>
-                                </p>
+                                            </span> SNOB
+                                        </span>
+                                        <span class="font-size-14 font-weight-light"  data-toggle="tooltip" data-title="Total value of Snowballs in USD">($<span id="value-usd"></span> )</span>
+                                    </h3>
+                                    <p class="m-0 text-muted font-size-12">
+                                        <ion-icon name="wallet-outline"></ion-icon> Wallet: <span id="wallet"></span>
+                                    </p>
+                                    <p class="m-0 text-muted font-size-12">
+                                        <span id="pending"></span>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-md-6 align-items-center" >
-                            <div class="w-full m-auto w-clipboard"  data-toggle="tooltip" data-placement="bottom" data-title="Copy your wallet address to clipboard">
-                                <div class="card p-10 w-full m-auto border border-2 snob-tokens">
-                                    <div class="d-flex flex-row justify-content-right align-items-center">
-                                        <div class="mr-10">
-                                            <img src="https://s2.coinmarketcap.com/static/cloud/img/metamask.png?_=4b2fe1d" class="w-25 pull-left" alt="Metamask">
-                                        </div>
-                                        <div id="wallet-address" class="font-size-12 p-2">
+                            <div class="col-xs-12 col-md-6 align-items-center" >
+                                <div class="w-full m-auto w-clipboard" id="wallet-copy" data-toggle="tooltip" data-placement="bottom" data-title="Copy your wallet address to clipboard">
+                                    <div class="card w-300 p-10 m-auto border border-2 bg-transparent snob-tokens">
+                                        <div class="d-flex flex-row justify-content-right align-items-center">
+                                            <div class="mr-10">
+                                                <img src="https://s2.coinmarketcap.com/static/cloud/img/metamask.png?_=4b2fe1d" class="w-25 pull-left" alt="Metamask">
+                                            </div>
+                                            <div id="wallet-address" class="font-size-12 p-2 text-truncate">
 
+                                            </div>
+
+                                            <a href="#" class="ml-5 pointer" aria-hidden="true">
+                                                <ion-icon name="copy-outline"></ion-icon>
+                                            </a>
                                         </div>
-                                        <a href="#" class="fa fa-clipboard ml-5 pointer" aria-hidden="true"></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="snob-info" class="col-xs-12 col-md-4 particles-js" style="display: none;">
+                    <div class="card br-8 box-shadow-1">
+                        <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
+                            <div class="w-full m-auto">
+                                <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
+                                    <!-- <i class="fa fa-usd ml-5" aria-hidden="true"></i> -->
+                                    <span class="font-size-16 font-weight-regular">
+                                        Snowball <span class="badge">SNOB</span> : <span id="value-market"></span>
+                                    </span>
+                                </h3>
+                                <p class="m-0 text-muted font-size-12">
+                                    <ion-icon name="pie-chart-outline"></ion-icon> Marketcap: <span id="value-marketcap"></span>
+                                </p>
+                                <p class="m-0 text-muted font-size-12">
+                                    <ion-icon name="bar-chart-outline"></ion-icon> Circulating Supply: <span id="snob-supply"></span> - Max: <span id="snob-supply-max"></span>
+                                </p>
+                                <p class="m-0 text-muted font-size-12">
+                                    <ion-icon name="layers-outline"></ion-icon> SNOB per Block: <span id="snob-per-block"></span> - Per day: <span id="snob-block-pday"></span>
+                                </p>
+                                <p class="m-0 text-muted font-size-12">
+                                    Est Blocks Per Day: <span id="snob-est-pday">15000 </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="loader--1"></div>
+
+            <div class="loader--1">
+                <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                    <div></div><div></div>
+                    </div></div>
+            </div>
             <h1 class="error"></h1>
 
             <pre id="log" style="margin-left: 10px;">
@@ -66,15 +107,4 @@
     </div>
 </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Init Particle JS
-        particlesJS.load(
-            "particles-js",
-            "<%= PP %>/particlesjs-config.json",
-            function() {}
-        );
-    });
-</script>
 </html>
