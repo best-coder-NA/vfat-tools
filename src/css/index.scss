@@ -5,6 +5,22 @@
 // @import 'footer';
 @import 'print';
 
+@mixin for-phone-only {
+    @media (max-width: 599px) { @content; }
+}
+@mixin for-tablet-portrait-up {
+    @media (min-width: 600px) { @content; }
+}
+@mixin for-tablet-landscape-up {
+    @media (min-width: 900px) { @content; }
+}
+@mixin for-desktop-up {
+    @media (min-width: 1200px) { @content; }
+}
+@mixin for-big-desktop-up {
+    @media (min-width: 1800px) { @content; }
+}
+
 :root {
     --primary-color: #33A9FF !important;
     --dm-base-body-bg-color: #1B1F32 !important;
@@ -42,7 +58,22 @@ body, input {
 a:hover {
     text-decoration: none !important;
 }
+#account-info .card{
+    position: relative;
+    overflow: hidden;
+}
+.bg-account-info{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0.3;
 
+    @include for-phone-only {
+        display: none;
+     }
+}
 #main{
     width: 100%;
     padding-top: 2vh;
@@ -74,12 +105,14 @@ a:hover {
     box-shadow: #{' rgb(0 0 0 / 10%) 0 7px 25px 0 '};
     text-decoration: none !important;
 }
+ion-icon {
+    transform: translate(0%, 10%);
+}
 
 .dark-mode
 .toggle-background{
   cursor: pointer;
 }
-
 
 .border {
     border-style: solid;
@@ -231,17 +264,18 @@ code {
 .loader-home div + div {
   margin-top: 50px;
 }
+.loader--1{
+    width: 100%;
+    text-align: center;
+    height: 70vh;
+}
 .loader--1:before {
   content: '';
-  -webkit-animation: anim1 300ms steps(1, end) infinite;
-  animation: anim1 300ms steps(1, end) infinite;
 }
 
 .loader--2:before {
   content: '';
   color: #122222;
-  -webkit-animation: anim2 700ms steps(1, end) infinite;
-  animation: anim2 700ms steps(1, end) infinite;
 }
 .loader--2:after {
   content: ".loader--2";
@@ -262,8 +296,6 @@ code {
 .loader--3:before {
   content: '';
   color: #122222;
-  -webkit-animation: anim3 700ms steps(1, end) infinite;
-  animation: anim3 700ms steps(1, end) infinite;
 }
 .loader--3:after {
   content: ".loader--3";
@@ -591,5 +623,54 @@ code {
     content: "☴";
   }
 }
+@keyframes ldio-4ixcy4bihgi {
+    0% {
+      top: 94px;
+      left: 94px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 31px;
+      left: 31px;
+      width: 126px;
+      height: 126px;
+      opacity: 0;
+    }
+  }.ldio-4ixcy4bihgi div {
+    position: absolute;
+    border-width: 6px;
+    border-style: solid;
+    opacity: 1;
+    border-radius: 50%;
+    animation: ldio-4ixcy4bihgi 1s cubic-bezier(0,0.2,0.8,1) infinite;
+  }.ldio-4ixcy4bihgi div:nth-child(1) {
+    border-color: #85a2b6;
+    animation-delay: 0s;
+  }
+  .ldio-4ixcy4bihgi div:nth-child(2) {
+    border-color: #bbcedd;
+    animation-delay: -0.5s;
+  }
+  .loadingio-spinner-ripple-0rfeupqpquh {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    overflow: hidden;
+    background: transparent;
+  }
+  .ldio-4ixcy4bihgi {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0; /* see note above */
+  }
+  .ldio-4ixcy4bihgi div { box-sizing: content-box; }
+
+
+
 
 @import "diff.scss";
