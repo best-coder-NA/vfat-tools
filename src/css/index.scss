@@ -142,7 +142,11 @@ ion-icon {
   border: 1px solid #888;
   width: 80%;
 }
-
+.buy-btn{
+  @include for-phone-only {
+    margin-top: 20px;
+ }
+}
 .modal-input {
   width: 100%;
   height: 100%;
@@ -644,14 +648,14 @@ code {
     border-style: solid;
     opacity: 1;
     border-radius: 50%;
-    animation: ldio-4ixcy4bihgi 1s cubic-bezier(0,0.2,0.8,1) infinite;
+    animation: ldio-4ixcy4bihgi 0.7s cubic-bezier(0,0.2,0.8,1) infinite;
   }.ldio-4ixcy4bihgi div:nth-child(1) {
     border-color: #85a2b6;
     animation-delay: 0s;
   }
   .ldio-4ixcy4bihgi div:nth-child(2) {
     border-color: #bbcedd;
-    animation-delay: -0.5s;
+    animation-delay: -0.3s;
   }
   .loadingio-spinner-ripple-0rfeupqpquh {
     width: 200px;
