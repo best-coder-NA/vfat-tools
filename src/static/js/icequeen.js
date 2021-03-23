@@ -38,7 +38,7 @@ async function main() {
   const SPGL_PNG_ADDRESS = "0x621207093D2e65Bf3aC55dD8Bf0351B980A63815";
   const SPGL_ETH_ADDRESS = "0x586554828eE99811A8ef75029351179949762c26";
   const SPGL_LINK_ADDRESS = "0x00933c16e06b1d15958317C2793BC54394Ae356C";
-  const SNOB_ADDRESS = "0xc38f41a296a4493ff429f1238e030924a1542e50";
+  const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
 
   const TOKEN_NAMES = {
     "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7": "AVAX",
@@ -50,7 +50,7 @@ async function main() {
 
   //LP URLs
   const SUSHI_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc";
-  const SNOB_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xc38f41a296a4493ff429f1238e030924a1542e50";
+  const SNOB_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xC38f41A296A4493Ff429F1238e030924A1542e50";
   const PNG_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0x60781c2586d68229fde47564546784ab3faca982";
   const ETH_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15";
   const LINK_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651";
@@ -204,7 +204,7 @@ async function main() {
   const snowballsPerBlock = snowballMultiplier * blockRate
   const blockNumber = await App.provider.getBlockNumber()
   const prices = await getAvaxPrices();
-  const snobPrice = prices['0xc38f41a296a4493ff429f1238e030924a1542e50'] ? prices['0xc38f41a296a4493ff429f1238e030924a1542e50'].usd : 0;
+  const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
   const marketCapDisplay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
 
     $('#value-market').append(`$${snobPrice.toFixed(3)}`)
@@ -234,7 +234,7 @@ async function main() {
       if (claimableSnowballs > 0) {
         $('#pending').append(`<ion-icon name="time-outline"></ion-icon> Pending: ${(claimableSnowballs).toFixed(4)}`);
       }else{
-        $('#pending').append(`<ion-icon name="checkmark-circle" class="text-success"></ion-icon> No pendings`);
+        $('#pending').append(`<ion-icon name="checkmark-circle" class="text-success"></ion-icon> No pending rewards`);
       }
 
    }
@@ -449,7 +449,7 @@ async function main() {
       const token1ValueUSDT_3 = reserve1Owned_3 * t1Price_3;
       const value_3 = token0ValueUSDT_3 + (token1ValueUSDT_3);
       poolShareDisplay_3 = `Your pool share is <b>${ownedPGL_3.toFixed(3)}</b> PGL / <b>${userSPGL_3.toFixed(3)}</b> sPGL (<b>${userPool3Percent.toFixed(6)}%</b>)</b>`
-      stakeDisplay_3 = `Your LP ratio is <b>${reserve0Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_3]} / <b>${reserve1Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_3]} ($<b>${value_3.toFixed(2)}</b> total)***</b>`
+      stakeDisplay_3 = `Your LP Value is <b>${reserve0Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_3]} / <b>${reserve1Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_3]} ($<b>${value_3.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
 
@@ -480,7 +480,7 @@ async function main() {
       const token1ValueUSDT_4 = reserve1Owned_4 * t1Price_4;
       const value_4 = token0ValueUSDT_4 + (token1ValueUSDT_4);
       poolShareDisplay_4 = `Your pool share is <b>${ownedPGL_4.toFixed(3)}</b> PGL / <b>${userSPGL_4.toFixed(3)}</b> sPGL (<b>${userPool4Percent.toFixed(6)}%</b>)</b>`
-      stakeDisplay_4 = `Your LP ratio is <b>${reserve0Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_4]} / <b>${reserve1Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_4]} ($<b>${value_4.toFixed(2)}</b> total)***</b>`
+      stakeDisplay_4 = `Your LP Value is <b>${reserve0Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_4]} / <b>${reserve1Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_4]} ($<b>${value_4.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
 
@@ -520,13 +520,13 @@ async function main() {
       _print(`You are earning <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
-      _print(`Pending Snowballs: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b>`)
+      _print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
     }
     if ( options.display_amount > 0 ) {
-      _print(`Available sPGL to Stake: <b>${(options.display_amount).toFixed(6)}</b>`)
+      _print(`Available to Stake: <b>${(options.display_amount).toFixed(6)}</b> sPGL`)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
-      _print(`Available sPGL to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b>`)
+      _print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> sPGL`)
     }
     let has_options = false
     if ( options.display_amount > 0 ) {
@@ -549,7 +549,7 @@ async function main() {
   }
   pool({
     pool_nickname: '(Pool 4)',
-    pool_name: '💠 ETH-AVAX Snowglobe',
+    pool_name: '💠 ETH-AVAX sPGL',
     url: null,
     tvl: ETH_AVAX_TVL,
     pool_weight: pool4weight,
