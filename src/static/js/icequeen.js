@@ -389,7 +389,7 @@ async function main() {
       const token0ValueUSDT_1 = reserve0Owned_1 * t0Price_1;
       const token1ValueUSDT_1 = reserve1Owned_1 * t1Price_1;
       const value_1 = token0ValueUSDT_1 + (token1ValueUSDT_1);
-      poolShareDisplay_1 = `Your pool share is <b>${ownedPGL_1.toFixed(3)}</b> PGL / <b>${userSPGL_1.toFixed(3)}</b> sPGL (<b>${userPool1Percent.toFixed(6)}%</b>)</b>`
+      poolShareDisplay_1 = `Your pool share is <b>${userSPGL_1.toFixed(3)}</b> sPGL (<b>${ownedPGL_1.toFixed(3)}</b> PGL) - <b>${userPool1Percent.toFixed(6)}%</b>`
       stakeDisplay_1 = `Your LP value is <b>${reserve0Owned_1.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_1]} / <b>${reserve1Owned_1.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_1]} ($<b>${value_1.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
@@ -417,7 +417,7 @@ async function main() {
       const token0ValueUSDT_2 = reserve0Owned_2 * t0Price_2;
       const token1ValueUSDT_2 = reserve1Owned_2 * t1Price_2;
       const value_2 = token0ValueUSDT_2 + (token1ValueUSDT_2);
-      poolShareDisplay_2 = `Your pool share is <b>${ownedPGL_2.toFixed(3)}</b> PGL (<b>${userPool2Percent.toFixed(6)}%</b>)</b>`
+      poolShareDisplay_2 = `Your pool share is <b>${ownedPGL_2.toFixed(3)}</b> PGL - <b>${userPool2Percent.toFixed(6)}%</b></b>`
       stakeDisplay_2 = `Your LP value is <b>${reserve0Owned_2.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_2]} / <b>${reserve1Owned_2.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_2]} ($<b>${value_2.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
@@ -448,7 +448,7 @@ async function main() {
       const token0ValueUSDT_3 = reserve0Owned_3 * t0Price_3;
       const token1ValueUSDT_3 = reserve1Owned_3 * t1Price_3;
       const value_3 = token0ValueUSDT_3 + (token1ValueUSDT_3);
-      poolShareDisplay_3 = `Your pool share is <b>${ownedPGL_3.toFixed(3)}</b> PGL / <b>${userSPGL_3.toFixed(3)}</b> sPGL (<b>${userPool3Percent.toFixed(6)}%</b>)</b>`
+      poolShareDisplay_3 = `Your pool share is <b>${userSPGL_3.toFixed(3)}</b> sPGL (<b>${ownedPGL_3.toFixed(3)}</b> PGL) - <b>${userPool3Percent.toFixed(6)}%</b>`
       stakeDisplay_3 = `Your LP Value is <b>${reserve0Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_3]} / <b>${reserve1Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_3]} ($<b>${value_3.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
@@ -479,7 +479,7 @@ async function main() {
       const token0ValueUSDT_4 = reserve0Owned_4 * t0Price_4;
       const token1ValueUSDT_4 = reserve1Owned_4 * t1Price_4;
       const value_4 = token0ValueUSDT_4 + (token1ValueUSDT_4);
-      poolShareDisplay_4 = `Your pool share is <b>${ownedPGL_4.toFixed(3)}</b> PGL / <b>${userSPGL_4.toFixed(3)}</b> sPGL (<b>${userPool4Percent.toFixed(6)}%</b>)</b>`
+      poolShareDisplay_4 = `Your pool share is <b>${userSPGL_4.toFixed(3)}</b> sPGL (<b>${ownedPGL_4.toFixed(3)}</b> PGL) - <b>${userPool4Percent.toFixed(6)}%</b>`
       stakeDisplay_4 = `Your LP Value is <b>${reserve0Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_4]} / <b>${reserve1Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_4]} ($<b>${value_4.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
@@ -505,7 +505,7 @@ async function main() {
 		}
     _print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
     if (options.total_staked) {
-      _print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL / <b>${ (options.total_staked / 1e18).toLocaleString()}</b> sPGL`)
+      _print(`Pool Size: <b>${ (options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
     } else {
       _print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
     }

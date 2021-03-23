@@ -342,8 +342,8 @@ async function main() {
       const token0ValueUSDT_usdt = reserve0Owned_usdt * t0Price_usdt;
       const token1ValueUSDT_usdt = reserve1Owned_usdt * t1Price_usdt;
       const value_usdt = token0ValueUSDT_usdt + (token1ValueUSDT_usdt);
-      withdrawDisplay_usdt = `<b>${ownedPGL_usdt.toFixed(8)}</b> PGL / <b>${userSPGL_usdt.toFixed(8)}</b> sPGL`;
-      poolShareDisplay_usdt = `Your pool share is ${withdrawDisplay_usdt} (<b>${userUsdtPoolPercent.toFixed(6)}%</b>)</b>`;
+      withdrawDisplay_usdt = `<b>${userSPGL_usdt.toFixed(8)}</b> sPGL (<b>${ownedPGL_usdt.toFixed(8)}</b> PGL)`;
+      poolShareDisplay_usdt = `Your pool share is ${withdrawDisplay_usdt} - <b>${userUsdtPoolPercent.toFixed(6)}%</b>`;
       stakeDisplay_usdt = `Your LP value is <b>${reserve0Owned_usdt.toFixed(5)}</b> ${TOKEN_NAMES[token0Address_usdt]} / <b>${reserve1Owned_usdt.toFixed(5)}</b> ${TOKEN_NAMES[token1Address_usdt]} ($<b>${value_usdt.toFixed(2)}</b>)**</b>`
     }
   } catch { console.log('error calculating PGL value')}
@@ -373,8 +373,8 @@ async function main() {
       const token0ValueUSDT_link = reserve0Owned_link * t0Price_link;
       const token1ValueUSDT_link = reserve1Owned_link * t1Price_link;
       const value_link = token0ValueUSDT_link + (token1ValueUSDT_link);
-      withdrawDisplay_link = `<b>${ownedPGL_link .toFixed(4)}</b> PGL / <b>${userSPGL_link .toFixed(4)}</b> sPGL`;
-      poolShareDisplay_link = `Your pool share is ${withdrawDisplay_link} (<b>${userLinkPoolPercent.toFixed(6)}%</b>)</b>`;
+      withdrawDisplay_link = `<b>${userSPGL_link .toFixed(4)}</b> sPGL (<b>${ownedPGL_link .toFixed(4)}</b> PGL)`;
+      poolShareDisplay_link = `Your pool share is ${withdrawDisplay_link} - <b>${userLinkPoolPercent.toFixed(6)}%</b>`;
       stakeDisplay_link = `Your LP value is <b>${reserve0Owned_link .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_link ]} / <b>${reserve1Owned_link .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_link ]} ($<b>${value_link .toFixed(2)}</b>)**</b>`
     }
   } catch { console.log('error calculating PGL value')}
@@ -406,7 +406,7 @@ async function main() {
     const token0ValueUSDT_eth = reserve0Owned_eth * t0Price_eth;
     const token1ValueUSDT_eth = reserve1Owned_eth * t1Price_eth;
     const value_eth = token0ValueUSDT_eth + (token1ValueUSDT_eth);
-    withdrawDisplay_eth = `<b>${ownedPGL_eth .toFixed(4)}</b> PGL / <b>${userSPGL_eth .toFixed(4)}</b> sPGL`
+    withdrawDisplay_eth = `<b>${userSPGL_eth .toFixed(4)}</b> sPGL (<b>${ownedPGL_eth .toFixed(4)}</b> PGL)`;
     poolShareDisplay_eth = withdrawDisplay_eth;
     stakeDisplay_eth = `Your LP value is <b>${reserve0Owned_eth .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_eth ]} / <b>${reserve1Owned_eth .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_eth ]} ($<b>${value_eth .toFixed(2)}</b>)**</b>`
   }
@@ -438,7 +438,7 @@ async function main() {
     const token0ValueUSDT_png = reserve0Owned_png * t0Price_png;
     const token1ValueUSDT_png = reserve1Owned_png * t1Price_png;
     const value_png = token0ValueUSDT_png + (token1ValueUSDT_png);
-    withdrawDisplay_png = `<b>${ownedPGL_png .toFixed(4)}</b> PGL / <b>${userSPGL_png .toFixed(4)}</b> sPGL`
+    withdrawDisplay_png = `<b>${userSPGL_png .toFixed(4)}</b> sPGL (<b>${ownedPGL_png .toFixed(4)}</b> PGL)`;
     poolShareDisplay_png = withdrawDisplay_png;
     stakeDisplay_png = `Your LP value is <b>${reserve0Owned_png .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_png ]} / <b>${reserve1Owned_png .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_png ]} ($<b>${value_png .toFixed(2)}</b>)**</b>`
   }
@@ -470,7 +470,7 @@ async function main() {
     const token0ValueUSDT_sushi = reserve0Owned_sushi * t0Price_sushi;
     const token1ValueUSDT_sushi = reserve1Owned_sushi * t1Price_sushi;
     const value_sushi = token0ValueUSDT_sushi + (token1ValueUSDT_sushi);
-    withdrawDisplay_sushi = `<b>${ownedPGL_sushi .toFixed(4)}</b> PGL / <b>${userSPGL_sushi .toFixed(4)}</b> sPGL`
+    withdrawDisplay_sushi = `<b>${userSPGL_sushi .toFixed(4)}</b> sPGL (<b>${ownedPGL_sushi .toFixed(4)}</b> PGL)`;
     poolShareDisplay_sushi = withdrawDisplay_sushi;
     stakeDisplay_sushi = `Your LP value is <b>${reserve0Owned_sushi .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_sushi ]} / <b>${reserve1Owned_sushi .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_sushi ]} ($<b>${value_sushi .toFixed(2)}</b>)**</b>`
   }
@@ -486,7 +486,7 @@ async function main() {
     _print(`APY (compounding): <b>${options.apy.toFixed(2)}</b>%`);
 
     if ( !isNaN(options.total_deposited) ) {
-      _print(`Pool Size: <b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL / <b>${(options.total_deposited / 1e18).toLocaleString()}</b> sPGL`)
+      _print(`Pool Size: <b>${(options.total_deposited / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
     }
     if ( options.pool_share_display ) {
       _print(options.pool_share_display);
