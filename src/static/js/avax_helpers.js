@@ -4,7 +4,7 @@ const avaxTokens = [
     { "id": "snowball-token","symbol": "SNOB", "contract": "0xC38f41A296A4493Ff429F1238e030924A1542e50" },
     { "id": "sushi","symbol": "SUSHI", "contract": "0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc" },
     { "id": "ethereum","symbol": "ETH", "contract": "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15" },
-    { "id": "chainlink","symbol": "LINK", "contract": "0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651" },
+    { "id": "chainlink","symbol": "LINK", "contract": "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651" },
     { "id": "tether","symbol": "USDT", "contract": "0xde3A24028580884448a5397872046a019649b084" },
 ]
 

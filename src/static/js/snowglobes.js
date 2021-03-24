@@ -48,7 +48,7 @@ async function main() {
   const SNOB_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xC38f41A296A4493Ff429F1238e030924A1542e50";
   const PNG_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0x60781c2586d68229fde47564546784ab3faca982";
   const ETH_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15";
-  const LINK_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651";
+  const LINK_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651";
   const USDT_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xde3a24028580884448a5397872046a019649b084";
 
   // TVL URLS
@@ -214,10 +214,6 @@ async function main() {
   _print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
   _print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
 	_print(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord\n`)
-	_print(`Compound steps: Claim > Swap > Add Liquidity > Deposit`)
-  _print(`Gas cost of one manual compound: ${GAS_PER_COMPOUND} AVAX`)
-  _print(`Compounds per day/week/year: ${ETH_AVAX_COMPOUNDS}/${ETH_AVAX_COMPOUNDS * 7}/${ETH_AVAX_COMPOUNDS * 365} `)
-  _print(`Gas saved per day/week/year: ${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 7).toFixed(2)}/${(GAS_PER_COMPOUND * ETH_AVAX_COMPOUNDS * 365).toFixed(2)} AVAX\n`)
 
 	let res = null;
   let usdt_tvl = null;
