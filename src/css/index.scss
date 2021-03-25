@@ -31,13 +31,16 @@
     --lm-card-box-shadow: #{' rgb(0 0 0 / 10%) 0 7px 25px 0 '} !important;
     --dm-modal-overlay-bg-color: #{'rgb(0 0 0 / 62%)'}  !important;
     --card-border-radius: 15px !important;
+    --navbar-height: 6.5rem !important;
 }
-body, input {
-  font-family: 'Encode Sans', sans-serif, monospace;
+body{
+  font-family: 'Encode Sans', sans-serif, monospace !important;
   padding: 0 5px 30px 5px;
 }
 
-
+.pointer{
+    cursor: pointer;
+}
 .dark-mode {
   background-color:#1B1F32;
   color:#EEEEEE;
@@ -49,12 +52,14 @@ body, input {
     }
     .logo{
         background: var(--dm-logo-image);
-        width: 30rem;
+        width: 15rem;
         height: 10rem;
         background-size: contain;
         background-repeat: no-repeat;
+        background-position: center;
     }
 }
+
 a:hover {
     text-decoration: none !important;
 }
@@ -84,11 +89,12 @@ a:hover {
 }
 .logo{
     background: var(--lm-logo-image);
-    width: 30rem;
+    width: 15rem;
     height: 10rem;
     background-size: contain;
     background-repeat: no-repeat;
     text-decoration: none !important;
+    background-position: center;
 }
 .snob-tokens{
     transform: translateY(5px);
@@ -228,7 +234,7 @@ ion-icon {
 *, *:before, *:after {
   box-sizing: border-box;
 }
-
+/*
 h1 {
   display: block;
   max-width: 350px;
@@ -236,9 +242,9 @@ h1 {
   font-size: 42px;
   margin: 0 auto;
   margin-bottom: 50px;
-  /* border: 5px solid #191919; */
+border: 5px solid #191919;
   padding: 10px 0;
-}
+} */
 
 code {
   display: block;

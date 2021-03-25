@@ -361,7 +361,7 @@ async function main() {
 	const link_apr = apr_array[3]
 	const usdt_apr = apr_array[4]
 
-  
+
   // PGL & LP values
   //SNOWGLOBE_SUSHI_ADDR
   const snowglobeContract_1 = new ethers.Contract(SNOWGLOBE_SUSHI_ADDR, SNOWGLOBE_ABI, signer);
@@ -484,14 +484,16 @@ async function main() {
     }
   } catch { console.log('error calculating PGL value')}
 
-
-  _print(`<b style="font-size: 20px;"">IceQueen 👸 - Governance</b>`);
-  _print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe<br/>***Estimated LP value based on current token prices</div>`)
+  $('#title').append(`IceQueen 👸 - Governance`);
+  $('#msg1').append(`Estimates based on 15,000 blocks per day`);
+  $('#msg2').append(`Estimated LP value based on current token prices`);
+  //_print(`<b style="font-size: 20px;"">IceQueen 👸 - Governance</b>`);
+  //_print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe<br/>***Estimated LP value based on current token prices</div>`)
 
   function pool(options) {
     _print(``)
     if (options.url) {
-	    _print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
+	    _print(`<b>${options.pool_nickname}!!</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
     } else {
 	    _print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
 	  }

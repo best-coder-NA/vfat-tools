@@ -1,30 +1,38 @@
-<div class="page-wrapper with-navbar">
-	<nav class="navbar">
-        <span class="navbar-text text-monospace">v0.2</span>
-		<ul class="navbar-nav d-none d-md-flex mx-auto">
-			<li class="nav-item"> <a href="<%= PP %>/" class="nav-link">Home</a> </li>
-			<li class="nav-item"> <a href="<%= PP %>/snowglobes/" class="nav-link">Snowglobes</a> </li>
-			<li class="nav-item"> <a href="<%= PP %>/icequeen/" class="nav-link">IceQueen</a> </li>
-			<li class="nav-item"> <a href="<%= PP %>/faq/" class="nav-link">FAQ</a> </li>
-		</ul>
-		<div class="form-inline d-none d-md-flex">
-			<button class="btn btn-action mr-5" type="button" onclick="snowballDarkmode()" aria-label="Toggle dark mode"> <ion-icon name="sunny-outline"></ion-icon></button>
-		</div>
-		<div class="navbar-content d-md-none ml-auto">
-			<div class="dropdown with-arrow">
-				<button class="btn" data-toggle="dropdown" type="button" id="navbar-dropdown-toggle-btn-1"> Menu <i class="fa fa-angle-down" aria-hidden="true"></i>
+<nav class="navbar">
+    <div class="container-lg">
+        <a href="/" class="navbar-brand col">
+            <div class="logo"></div>
+            <span class="badge font-size-12 text-monospace px-5 px-sm-10 ml-10">v0.2</span>
+        </a>
+        <ul class="hidden-sm-and-down navbar-nav col">
+            <li class="nav-item mx-auto"> <a href="<%= PP %>/" class="nav-link">Home</a> </li>
+            <li class="nav-item mx-auto"> <a href="<%= PP %>/snowglobes/" class="nav-link">Snowglobes</a> </li>
+            <li class="nav-item mx-auto"> <a href="<%= PP %>/icequeen/" class="nav-link">IceQueen</a> </li>
+            <li class="nav-item mx-auto"> <a href="<%= PP %>/faq/" class="nav-link">FAQ</a> </li>
+        </ul>
+        <div class="navbar-content col">
+
+            <div class="form-inline d-none d-md-flex ml-auto">
+                <a href="#" class="btn btn-primary" role="button">
+                    <ion-icon name="wallet-outline"></ion-icon> Connect Wallet</a>
+                <button class="btn btn-action mr-5" type="button" onclick="snowballDarkmode()" aria-label="Toggle dark mode"> <ion-icon name="sunny-outline"></ion-icon></button>
+            </div>
+            <div class="dropdown with-arrow hidden-md-and-up ml-auto">
+                <button class="btn navbar-menu-btn" data-toggle="dropdown" type="button" id="navbar-dropdown-toggle-btn" aria-haspopup="true" aria-expanded="false">
+                    <span class="text">Menu</span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
                 </button>
-				<div class="dropdown-menu dropdown-menu-right w-200" aria-labelledby="navbar-dropdown-toggle-btn-1">
-					<a href="<%= PP %>/" class="dropdown-item">Home</a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-toggle-btn">
+                    <a href="<%= PP %>/" class="dropdown-item">Home</a>
                     <a href="<%= PP %>/snowglobes/" class="dropdown-item">Snowglobes</a>
                     <a href="<%= PP %>/icequeen/" class="dropdown-item">IceQueen</a>
                     <a href="<%= PP %>/faq/" class="dropdown-item">FAQ</a>
-					<div class="dropdown-divider"></div>
-					<div class="p-5">
-						<button class="btn btn-action mr-5" type="button" onclick="snowballDarkmode()" aria-label="Toggle dark mode"> <i class="fa fa-moon-o" aria-hidden="true"></i> </button> Dark Mode
+                    <div class="dropdown-divider"></div>
+                    <div class="p-5">
+                        <button class="btn btn-action mr-5" type="button" onclick="snowballDarkmode()" aria-label="Toggle dark mode"> <i class="fa fa-moon-o" aria-hidden="true"></i> </button> Dark Mode
                     </div>
-				</div>
-			</div>
-		</div>
-	</nav>
-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

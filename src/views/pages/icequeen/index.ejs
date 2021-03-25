@@ -7,11 +7,9 @@
     }
 </script>
 <body>
-<%- include(`${partials}/header_main`); -%>
-
-<%- include(`${partials}/wallet_error`); -%>
-
-<div class="page-wrapper with-navbar with-transitions">
+    <div class="page-wrapper with-navbar with-transitions">
+    <%- include(`${partials}/header_main`); -%>
+    <%- include(`${partials}/wallet_error`); -%>
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
@@ -90,6 +88,80 @@
                 </div>
             </div>
 
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4 id="title" class="text-white"></h4>
+                    <p id="msg1" class="m-0 p-0"></p>
+                    <p id="msg2" class="m-0 p-0"></p>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="card border-0 p-10 pl-20 pr-20">
+                            <div class="row">
+                                <!-- <div class="col-md-12">
+                                    <p class="p-0 m-0 ml-5">Pool 1</p>
+                                </div> -->
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <div class="align-items-center d-flex">
+                                        <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png" alt="">
+                                        <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png" alt="">
+                                        <h6 class="pl-10 m-0">ETH-SNOB</h6>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2 d-flex align-items-center">
+                                    <p class="w-100">Total Value Locked</p>
+                                    <span class="badge font-size-12 px-5 px-sm-10 ml-10">v0.2</span>
+                                </div>
+                                <div class="col-md-5 d-flex align-items-center">
+                                    <div class="form-inline w-50">
+                                        <div class="form-group m-0">
+                                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-inline w-50">
+                                        <div class="form-group  pl-20 m-0">
+                                            <p class="m-0 font-size-12 font-weight-light">0.12%</p>
+                                            <p class="m-0 font-size-12 font-weight-light">0.12%</p>
+                                            <p class="m-0 font-size-12 font-weight-light">190.12%</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-1 d-flex align-items-center">
+                                    <ion-icon class="pointer" name="chevron-down-outline"></ion-icon>
+                                </div>
+                            </div>
+                            <div id="details" class="border-top mt-20 pt-10 row" style="display: none;">
+
+                                <div class="col-md-12">
+                                    <p class="p-0 m-0 ml-5 mb-10">Pool 1</p>
+                                </div>
+                                <div class="col">
+                                    <div class="align-items-center d-flex">
+                                        <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png" alt="">
+                                        <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png" alt="">
+                                        <h6 class="pl-10 m-0">ETH-SNOB</h6>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+
+                                        <a class="btn btn-sm">Unstake</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <div class="loader--1">
                 <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
                     <div></div><div></div>
@@ -105,5 +177,10 @@
         </div>
     </div>
 </div>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+  </script>
 </body>
 </html>
