@@ -24,6 +24,7 @@ async function main() {
   const SNOWGLOBE_PNG_ADDR = "0x621207093D2e65Bf3aC55dD8Bf0351B980A63815";
   const SNOWGLOBE_ETH_ADDR = "0x586554828eE99811A8ef75029351179949762c26";
   const SNOWGLOBE_LINK_ADDR = "0x00933c16e06b1d15958317C2793BC54394Ae356C";
+  const SNOWGLOBE_USDT_ADDR = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
 
   //pangolin pairs
@@ -32,12 +33,14 @@ async function main() {
   const PNG_AVAX_ADDR = "0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367";
   const ETH_AVAX_ADDR = "0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65";
   const LINK_AVAX_ADDR = "0xbbc7fff833d27264aac8806389e02f717a5506c9";
+  const USDT_AVAX_ADDR = "0x9EE0a4E21bd333a6bb2ab298194320b8DaA26516";
 
   //tokens
   const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
   const SPGL_PNG_ADDRESS = "0x621207093D2e65Bf3aC55dD8Bf0351B980A63815";
   const SPGL_ETH_ADDRESS = "0x586554828eE99811A8ef75029351179949762c26";
   const SPGL_LINK_ADDRESS = "0x00933c16e06b1d15958317C2793BC54394Ae356C";
+  const SPGL_USDT_ADDRESS = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
 
   const TOKEN_NAMES = {
@@ -46,6 +49,8 @@ async function main() {
     "0xC38f41A296A4493Ff429F1238e030924A1542e50": "SNOB",
     "0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc": "SUSHI",
     "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15": "ETH",
+    "0xde3A24028580884448a5397872046a019649b084": "USDT",
+    "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK"
   }
 
   //LP URLs
@@ -54,6 +59,7 @@ async function main() {
   const PNG_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0x60781c2586d68229fde47564546784ab3faca982";
   const ETH_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15";
   const LINK_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651";
+  const USDT_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xde3a24028580884448a5397872046a019649b084";
 
   // TVL URLS
   const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
@@ -61,27 +67,7 @@ async function main() {
   const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d"
   const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
-
-  // Last Harvest
-  const ETH_AVAX_HARVEST = "3/16 6:51AM UTC - 69.39 PNG ($280.18)"
-  const PNG_AVAX_HARVEST = "3/16 6:51AM UTC - 101.95 PNG ($450.61)"
-  const SUSHI_AVAX_HARVEST = "3/16 6:51AM UTC - 43.25 PNG ($191.16)"
-  const LINK_AVAX_HARVEST = ""
-
-  // Compounds Per Day
-  const SUSHI_AVAX_COMPOUNDS = 6
-  const PNG_AVAX_COMPOUNDS = 6
-  const ETH_AVAX_COMPOUNDS = 6
-  const LINK_AVAX_COMPOUNDS = 6
-
-  // Gas
-  // Claim: 0.1645
-  // Swap: 0.075221
-  // Add Liquidity: 0.092299
-  // Deposit into pool: 0.1645
-  // Total: 0.49652 ($13.90)
-  const GAS_PER_COMPOUND = 0.49652
-  const AVAX_PRICE = 28
+  const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C"
 
   const approveSUSHI = async function () {
     return snowglobeContract_approve(PGL_ABI, SNOWGLOBE_SUSHI_ADDR, SUSHI_AVAX_ADDR, App)
@@ -137,6 +123,12 @@ async function main() {
   const stakeSPGLETH = async function () {
     return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 4, SPGL_ETH_ADDRESS, App)
   }
+  const approveSPGLUSDT = async function () {
+    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_USDT_ADDRESS, App)
+  }
+  const stakeSPGLUSDT = async function () {
+    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SPGL_USDT_ADDRESS, App)
+  }
   const approveSNOB = async function () {
     return icequeenContract_approve(PGL_ABI, ICEQUEEN_ADDR, SNOB_AVAX_ADDR, App)
   }
@@ -155,22 +147,24 @@ async function main() {
   const claimPool4 = async function () {
     return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 4, SNOB_AVAX_ADDR, App)
   }
-
+  const claimPool5 = async function () {
+    return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SNOB_AVAX_ADDR, App)
+  }
   const withdrawPool1 = async function () {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SPGL_SUSHI_ADDRESS, App)
   }
-
   const withdrawPool2 = async function () {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 2, SNOB_AVAX_ADDR, App)
   }
-
   const withdrawPool3 = async function () {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 3, SPGL_PNG_ADDRESS, App)
   }
   const withdrawPool4 = async function () {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 4, SPGL_ETH_ADDRESS, App)
   }
-
+  const withdrawPool5 = async function () {
+    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SPGL_ETH_ADDRESS, App)
+  }
 
   const signer = App.provider.getSigner()
 
@@ -180,11 +174,13 @@ async function main() {
   const ETH_AVAX_TOKEN = new ethers.Contract(ETH_AVAX_ADDR, ERC20_ABI, signer)
   const SNOB_AVAX_TOKEN = new ethers.Contract(SNOB_AVAX_ADDR, ERC20_ABI, signer)
   const LINK_AVAX_TOKEN = new ethers.Contract(LINK_AVAX_ADDR, ERC20_ABI, signer)
+  const USDT_AVAX_TOKEN = new ethers.Contract(USDT_AVAX_ADDR, ERC20_ABI, signer)
 
   const SPGL_SUSHI_TOKEN = new ethers.Contract(SPGL_SUSHI_ADDRESS, ERC20_ABI, signer)
   const SPGL_PNG_TOKEN = new ethers.Contract(SPGL_PNG_ADDRESS, ERC20_ABI, signer)
   const SPGL_ETH_TOKEN = new ethers.Contract(SPGL_ETH_ADDRESS, ERC20_ABI, signer)
   const SPGL_LINK_TOKEN = new ethers.Contract(SPGL_LINK_ADDRESS, ERC20_ABI, signer)
+  const SPGL_USDT_TOKEN = new ethers.Contract(SPGL_USDT_ADDRESS, ERC20_ABI, signer)
 
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
 
@@ -197,7 +193,8 @@ async function main() {
   const pendingSNOBTokensPool2 = await ICEQUEEN_CONTRACT.pendingSnowball(2, App.YOUR_ADDRESS)
   const pendingSNOBTokensPool3 = await ICEQUEEN_CONTRACT.pendingSnowball(3, App.YOUR_ADDRESS)
   const pendingSNOBTokensPool4 = await ICEQUEEN_CONTRACT.pendingSnowball(4, App.YOUR_ADDRESS)
-  const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18
+  const pendingSNOBTokensPool5 = await ICEQUEEN_CONTRACT.pendingSnowball(5, App.YOUR_ADDRESS)
+  const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18 + pendingSNOBTokensPool5 / 1e18
   const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const snowballMultiplier = await ICEQUEEN_CONTRACT.BONUS_MULTIPLIER()
   const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
@@ -253,6 +250,10 @@ async function main() {
   const currentSPGLETHTokens = await SPGL_ETH_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const spglEthDisplayAmt = currentSPGLETHTokens > 1000 ? currentSPGLETHTokens / 1e18 : 0;
 
+  const currentUSDTAVAXTokens = await USDT_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  const currentSPGLUSDTTokens = await SPGL_USDT_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  const spglUsdtDisplayAmt = currentSPGLUSDTTokens > 1000 ? currentSPGLUSDTTokens / 1e18 : 0;
+
   const currentLINKAVAXTokens = await LINK_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const currentSPGLLINKTokens = await SPGL_LINK_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const spglLinkDisplayAmt = currentSPGLLINKTokens > 1000 ? currentSPGLLINKTokens / 1e18 : 0;
@@ -264,33 +265,40 @@ async function main() {
   const stakedPool2 = await ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS)
   const stakedPool3 = await ICEQUEEN_CONTRACT.userInfo(3, App.YOUR_ADDRESS)
   const stakedPool4 = await ICEQUEEN_CONTRACT.userInfo(4, App.YOUR_ADDRESS)
+  const stakedPool5 = await ICEQUEEN_CONTRACT.userInfo(5, App.YOUR_ADDRESS)
 
   // Total staked in each pool
   const totalStakedSPGLSUSHI = await SPGL_SUSHI_TOKEN.balanceOf(ICEQUEEN_ADDR)
   const totalStakedSPGLPNG = await SPGL_PNG_TOKEN.balanceOf(ICEQUEEN_ADDR)
   const totalStakedSPGLETH = await SPGL_ETH_TOKEN.balanceOf(ICEQUEEN_ADDR)
   const totalStakedSNOBAVAX = await SNOB_AVAX_TOKEN.balanceOf(ICEQUEEN_ADDR)
+  const totalStakedSPGLUSDT = await SPGL_USDT_TOKEN.balanceOf(ICEQUEEN_ADDR)
 
+  const userPool5Percent = (stakedPool5.amount / 1e18) / (totalStakedSPGLUSDT / 1e18) * 100
   const userPool4Percent = (stakedPool4.amount / 1e18) / (totalStakedSPGLETH / 1e18) * 100
   const userPool3Percent = (stakedPool3.amount / 1e18) / (totalStakedSPGLPNG / 1e18) * 100
   const userPool2Percent = (stakedPool2.amount / 1e18) / (totalStakedSNOBAVAX / 1e18) * 100
   const userPool1Percent = (stakedPool1.amount / 1e18) / (totalStakedSPGLSUSHI / 1e18) * 100
 
-  const pool4weight = 0.125
+  const pool5weight = 0.05
+  const pool4weight = 0.1
   const pool3weight = 0.25
   const pool2weight = 0.5
-  const pool1weight = 0.125
+  const pool1weight = 0.1
 
 
 	let res = null;
+  let pool5tvl = null;
   let pool4tvl = null;
 	let pool3tvl = null;
 	let pool2tvl = null;
 	let pool1tvl = null;
+  let pool5tvlDisplay = '';
   let pool4tvlDisplay = '';
 	let pool3tvlDisplay = '';
 	let pool2tvlDisplay = '';
 	let pool1tvlDisplay = '';
+  let pool5APR = null;
   let pool4APR = null;
 	let pool3APR = null;
 	let pool2APR = null;
@@ -318,7 +326,11 @@ async function main() {
     				pool4tvl = p.locked_value;
     				pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
     				pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
-    			}
+    			} else if (p.token1.symbol == 'usdt') {
+            pool5tvl = p.locked_value;
+            pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+            pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
+          }
     		});
 		}
 	}
@@ -484,6 +496,36 @@ async function main() {
     }
   } catch { console.log('error calculating PGL value')}
 
+  //SNOWGLOBE_USDT_ADDR
+  const snowglobeContract_5 = new ethers.Contract(SNOWGLOBE_USDT_ADDR, SNOWGLOBE_ABI, signer);
+  let totalPoolPGL_5 = await snowglobeContract_5.balance();
+  let poolShareDisplay_5 = null;
+  let stakeDisplay_5 = null;
+  const userSPGL_5 = stakedPool5.amount / 1e18;
+  try {
+    if (userSPGL_5 > 0) {
+      let totalSPGL_5 = await snowglobeContract_5.totalSupply();
+      let ownedPGL_5 = userSPGL_5 * (totalPoolPGL_5 / 1e18) / (totalSPGL_5 / 1e18);
+      const pglContract_5 = new ethers.Contract(USDT_AVAX_ADDR, PGL_ABI, signer);
+      let totalSupplyPGL_5 = await pglContract_5.totalSupply();
+      totalSupplyPGL_5 = totalSupplyPGL_5 / 1e18;
+      const reserves_5 = await pglContract_5.getReserves();
+      const r0_5 = reserves_5._reserve0 / 1e18
+      const r1_5 = reserves_5._reserve1 / 1e18
+      let reserve0Owned_5 = ownedPGL_5 * (r0_5) / (totalSupplyPGL_5);
+      let reserve1Owned_5 = ownedPGL_5 * (r1_5) / (totalSupplyPGL_5);
+      const token0Address_5 = await pglContract_5.token0();
+      const token1Address_5 = await pglContract_5.token1();
+      const t0Price_5 = prices[token0Address_5] ? prices[token0Address_5].usd : 0
+      const t1Price_5 = prices[token1Address_5] ? prices[token1Address_5].usd : 0
+      const token0ValueUSDT_5 = reserve0Owned_5 * t0Price_5;
+      const token1ValueUSDT_5 = reserve1Owned_5 * t1Price_5;
+      const value_5 = token0ValueUSDT_5 + (token1ValueUSDT_5);
+      poolShareDisplay_5 = `Your pool share is <b>${userSPGL_5.toFixed(6)}</b> sPGL (<b>${ownedPGL_5.toFixed(6)}</b> PGL) - <b>${userPool5Percent.toFixed(6)}%</b>`
+      stakeDisplay_5 = `Your LP Value is <b>${reserve0Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token0Address_5]} / <b>${reserve1Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token1Address_5]} ($<b>${value_5.toFixed(2)}</b>)***</b>`
+    }
+  } catch { console.log('error calculating PGL value')}
+
 
   _print(`<b style="font-size: 20px;"">IceQueen 👸 - Governance</b>`);
   _print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe<br/>***Estimated LP value based on current token prices</div>`)
@@ -547,6 +589,28 @@ async function main() {
       _print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
     }
   }
+  pool({
+    pool_nickname: '(Pool 5)',
+    pool_name: '💵 USDT-AVAX sPGL - New! 🌟',
+    url: null,
+    tvl: USDT_AVAX_TVL,
+    pool_weight: pool5weight,
+    total_staked: totalStakedSPGLUSDT,
+    user_pool_percent: userPool5Percent,
+    staked_pool: stakedPool5,
+    pending_tokens: pendingSNOBTokensPool5,
+    display_amount: spglUsdtDisplayAmt,
+    approve: approveSPGLUSDT,
+    stake: stakeSPGLUSDT,
+    unstake: withdrawPool5,
+    claim: claimPool5,
+    icequeen_apr: pool5APR,
+    snowglobe_apr: usdt_apr.dailyAPR,
+    tvl_display: pool5tvlDisplay,
+    total_pgl: totalPoolPGL_5,
+    pool_share_display: poolShareDisplay_5,
+    stake_display: stakeDisplay_5
+  })
   pool({
     pool_nickname: '(Pool 4)',
     pool_name: '💠 ETH-AVAX sPGL',
