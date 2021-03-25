@@ -16,35 +16,61 @@
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
             <h2 style="margin-left: 40px;">⛰️ Tundra</h2>
-            <div class="card col-xs-8 col-sm-5 col-md-5">
-                <h2 class="content-title">
-                    Add Liquidity
-                </h2>
-                <div class="col-xs-6">
-                    <div class="token-input">
-                        Token 1 - Balance: <span id="token_1_balance"></span>
-                        <a style="display:none" id="token_1_revoke" href="#"> Revoke</a>
-                        <a style="display:none" id="token_1_approve" href="#"> Approve</a>
-                        <input id="token_1_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+            <div class="row">
+                <div class="card col-xs-8 col-sm-5 col-md-5">
+                    <h2 class="content-title">
+                        Add Liquidity
+                    </h2>
+                    <div class="col-xs-6">
+                        <div class="token-input">
+                            Token 1 - Balance: <span class="font-size-14 font-weight-bold" id="token_1_balance"></span>
+                            <a style="display:none" id="token_1_max" href="#"> Max</a>
+                            <a style="display:none" id="token_1_revoke" href="#"> Revoke</a>
+                            <a style="display:none" id="token_1_approve" href="#"> Approve</a>
+                            <input id="token_1_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
 
+                        </div>
+                        <div class="token-input">
+                            Token 2 - Balance: <span class="font-size-14 font-weight-bold" id="token_2_balance"></span>
+                            <a style="display:none" id="token_2_max" href="#"> Max</a>
+                            <a style="display:none" id="token_2_revoke" href="#"> Revoke</a>
+                            <a style="display:none" id="token_2_approve" href="#"> Approve</a>
+                            <input id="token_2_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+                        </div>
+                        <div class="token-input">
+                            Token 3 - Balance: <span class="font-size-14 font-weight-bold" id="token_3_balance"></span>
+                            <a style="display:none" id="token_3_max" href="#"> Max</a>
+                            <a style="display:none" id="token_3_revoke" href="#"> Revoke</a>
+                            <a style="display:none" id="token_3_approve" href="#"> Approve</a>
+                            <input id="token_3_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+                        </div>
+                        <br>
+                        <button id="deposit_btn" class="btn btn-primary" type="button">Deposit</button>
                     </div>
-                    <div class="token-input">
-                        Token 2 - Balance: <span id="token_2_balance"></span>
-                        <a style="display:none" id="token_2_revoke" href="#"> Revoke</a>
-                        <a style="display:none" id="token_2_approve" href="#"> Approve</a>
-                        <input id="token_2_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+                </div>
+                <div class="card col-xs-8 col-sm-5 col-md-5">
+                    <h2 class="content-title">
+                        My Share
+                    </h2>
+                    <div>
+                        <div>
+                            <span class="font-size-18 font-weight-bold" id="withdraw_balance"></span> sUSD
+                            <span class="font-size-18 font-weight-bold float-right" id="pool_percent">%</span>
+                        </div>
+                        <a href="#" class="font-weight-bold" id="withdraw_btn">Remove Liquidity<br></a>
+                        <a style="display: none" href="#" id="revoke_lp_btn"> Revoke<br></a>
+                        <a style="display: none" href="#" id="approve_lp_btn"> Approve<br></a>
                     </div>
-                    <div class="token-input">
-                        Token 3 - Balance: <span id="token_3_balance"></span>
-                        <a style="display:none" id="token_3_revoke" href="#"> Revoke</a>
-                        <a style="display:none" id="token_3_approve" href="#"> Approve</a>
-                        <input id="token_3_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+                    <hr class="my-20"/>
+                    <h2 class="content-title">
+                        Currency Reserves
+                    </h2>
+                    <div>
+                        <div class="my-10">Token 1 <span class="font-size-14 font-weight-bold" id="t1_supply_percentage">%</span><span id="t1_supply" class="float-right font-size-14 font-weight-bold">$</span></div>
+                        <div class="my-10">Token 2 <span class="font-size-14 font-weight-bold" id="t2_supply_percentage">%</span><span id="t2_supply" class="float-right font-size-14 font-weight-bold">$</span></div>
+                        <div class="my-10">Token 3 <span class="font-size-14 font-weight-bold" id="t3_supply_percentage">%</span><span id="t3_supply" class="float-right font-size-14 font-weight-bold">$</span></div>
+                        <div class="my-20 font-size-16">Total<span id="combined_supply" class="font-size-16 font-weight-bold float-right">$</span></div>
                     </div>
-                    <br>
-                    <div>Available Tundra Tokens to withdraw: <span id="withdraw_balance"></span> <a style="display: none" href="#" id="revoke_lp_btn">Revoke</a><a style="display: none" href="#" id="approve_lp_btn">Approve</a></div>
-                    <br>
-                    <button id="deposit_btn" class="btn" type="button">Deposit</button>
-                    <button id="withdraw_btn" class="btn" type="button">Withdraw</button>
                 </div>
             </div>
 

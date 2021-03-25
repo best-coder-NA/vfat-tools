@@ -53,21 +53,48 @@ async function main() {
   const withdrawLP = async function () {
     return tundraContract_withdraw(TUNDRA_ABI, TUNDRA_ADDRESS, T3P_ADDRESS, TUNDRA_ADDRESS, App)
   }
-  //Tokens
-  const STABLE_1_TOKEN = new ethers.Contract(STABLE_1_ADDRESS, ERC20_ABI, signer)
-  const STABLE_2_TOKEN = new ethers.Contract(STABLE_2_ADDRESS, ERC20_ABI, signer)
-  const STABLE_3_TOKEN = new ethers.Contract(STABLE_3_ADDRESS, ERC20_ABI, signer)
-  const T3P_TOKEN = new ethers.Contract(T3P_ADDRESS, ERC20_ABI, signer)
+  // Tokens & contracts
+  const STABLE_1_TOKEN = new ethers.Contract(STABLE_1_ADDRESS, ERC20_ABI, signer);
+  const STABLE_2_TOKEN = new ethers.Contract(STABLE_2_ADDRESS, ERC20_ABI, signer);
+  const STABLE_3_TOKEN = new ethers.Contract(STABLE_3_ADDRESS, ERC20_ABI, signer);
+  const T3P_TOKEN = new ethers.Contract(T3P_ADDRESS, ERC20_ABI, signer);
 
-  // Balances
-  const s1_balance = await STABLE_1_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  const s2_balance = await STABLE_2_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  const s3_balance = await STABLE_3_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  const t3p_balance = await T3P_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  // User Balances
+  const s1_balance = await STABLE_1_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  const s2_balance = await STABLE_2_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  const s3_balance = await STABLE_3_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  const t3p_balance = await T3P_TOKEN.balanceOf(App.YOUR_ADDRESS);
   $('#token_1_balance').html(`${(s1_balance/1e18).toLocaleString()}`);
   $('#token_2_balance').html(`${(s2_balance/1e18).toLocaleString()}`);
   $('#token_3_balance').html(`${(s3_balance/1e18).toLocaleString()}`);
   $('#withdraw_balance').html(`${(t3p_balance/1e18).toLocaleString()}`);
+
+  // supply
+  const s1_supply = await STABLE_1_TOKEN.balanceOf(TUNDRA_ADDRESS);
+  const s2_supply = await STABLE_2_TOKEN.balanceOf(TUNDRA_ADDRESS);
+  const s3_supply = await STABLE_3_TOKEN.balanceOf(TUNDRA_ADDRESS);
+  const combined_supply = s1_supply / 1e18 + s2_supply / 1e18 + s3_supply / 1e18;
+  const s1_supply_percentage = s1_supply / 1e18 / combined_supply * 100;
+  const s2_supply_percentage = s2_supply / 1e18 / combined_supply * 100;
+  const s3_supply_percentage = s3_supply / 1e18 / combined_supply * 100;
+  const t3p_supply = await T3P_TOKEN.totalSupply();
+  const user_percentage = (t3p_balance / 1e18) / (t3p_supply / 1e18) * 100;
+
+  $("#pool_percent").html(`${user_percentage.toLocaleString()}%`);
+  $("#t1_supply").html(`${(s1_supply / 1e18).toLocaleString()}`);
+  $("#t2_supply").html(`${(s2_supply / 1e18).toLocaleString()}`);
+  $("#t3_supply").html(`${(s3_supply / 1e18).toLocaleString()}`);
+  $("#t1_supply_percentage").html(`${s1_supply_percentage.toLocaleString()}%`);
+  $("#t2_supply_percentage").html(`${s2_supply_percentage.toLocaleString()}%`);
+  $("#t3_supply_percentage").html(`${s3_supply_percentage.toLocaleString()}%`);
+  $("#combined_supply").html(`$${combined_supply.toLocaleString()}`);
+  console.log("sUSD Supply:", t3p_supply / 1e18);
+  console.log("Tundra S1 Supply:", s1_supply / 1e18);
+  console.log("Tundra S2 Supply:", s2_supply / 1e18);
+  console.log("Tundra S3 Supply:", s3_supply / 1e18);
+  console.log("Tundra Combined Supply:", combined_supply);
+  console.log("user sUSD Supply:", t3p_balance / 1e18);
+  console.log("user_percentage:", `${user_percentage}`);
 
   // Approvals
   const s1_allowance = await STABLE_1_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
