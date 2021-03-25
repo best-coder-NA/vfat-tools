@@ -72,7 +72,7 @@ async function main() {
   const s2_balance = await STABLE_2_TOKEN.balanceOf(App.YOUR_ADDRESS);
   const s3_balance = await STABLE_3_TOKEN.balanceOf(App.YOUR_ADDRESS);
   const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS);
-  $('#token_1_balance').html(`${(s1_balance/1e18).toLocaleString()}`);
+  $('#token_1_balance').html(`${(s1_balance/1e6).toLocaleString()}`);
   $('#token_2_balance').html(`${(s2_balance/1e18).toLocaleString()}`);
   $('#token_3_balance').html(`${(s3_balance/1e18).toLocaleString()}`);
   $('#withdraw_balance').html(`${(S3D_balance/1e18).toLocaleString()}`);
