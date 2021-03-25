@@ -231,8 +231,8 @@ const tundraContract_deposit = async function (chefAbi, chefAddress, token1, tok
   const s3_input = $("#token_3_input").val();
   //web3.utils.toBN(String(totalSupply) + "0".repeat(decimalPrecision)
   const s1_amount = ethers.BigNumber.from(String(Math.round(s1_input)) + "0".repeat(18));
-  const s2_amount = ethers.BigNumber.from(String(Math.round(s1_input)) + "0".repeat(18));
-  const s3_amount = ethers.BigNumber.from(String(Math.round(s1_input)) + "0".repeat(18));
+  const s2_amount = ethers.BigNumber.from(String(Math.round(s2_input)) + "0".repeat(18));
+  const s3_amount = ethers.BigNumber.from(String(Math.round(s3_input)) + "0".repeat(18));
 
   // validation
   const s1_valid = s1_input > 0 ? (s1_allowance > 0 && s1_balance / 1e18 >= s1_input): true;
@@ -241,7 +241,7 @@ const tundraContract_deposit = async function (chefAbi, chefAddress, token1, tok
   const total = s1_input + s2_input + s3_input;
 
   const minToMint = await CHEF_CONTRACT.calculateTokenAmount(App.YOUR_ADDRESS, [s1_amount, s2_amount, s3_amount], true)
-  const minToMintAmount = ethers.BigNumber.from(String(Math.round(minToMint / 1e18 * 0.5)) + "0".repeat(18))
+  const minToMintAmount = ethers.BigNumber.from(String(Math.round(minToMint / 1e18 * 0.9)) + "0".repeat(18))
   const deadline = Date.now() + 180; //3 minutes
 
   let allow = Promise.resolve()
