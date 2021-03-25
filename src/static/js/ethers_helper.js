@@ -19,7 +19,7 @@ async function init_ethers() {
     App.provider = new ethers.providers.Web3Provider(window.ethereum)
     // Check provider connected to the right network
     const network = await App.provider.getNetwork()
-    if (network.chainId != 43114) { // 43114 = chain ID for avalanche mainnet
+    if (network.chainId != 43114 && network.chainId != 43113) { // 43114, 43113 = chain ID for avalanche mainnet & FUJI testnet
       _print("You're on the wrong network!")
       _print_href("Please refer to this tutorial.", "https://pangolin.exchange/tutorials/getting-started")
       _print("")
@@ -30,7 +30,7 @@ async function init_ethers() {
     App.provider = new ethers.providers.Web3Provider(window.web3.currentProvider)
     // Check provider connected to the right network
     const network = await App.provider.getNetwork()
-    if (network.chainId != 43114) { // 43114 = chain ID for avalanche mainnet
+    if (network.chainId != 43114 && network.chainId != 43113) { // 43114, 43113 = chain ID for avalanche mainnet & FUJI testnet
       _print("You're on the wrong network!")
       _print_href("Please refer to this tutorial.", "https://pangolin.exchange/tutorials/getting-started")
       _print("")

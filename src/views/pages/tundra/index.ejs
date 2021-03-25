@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+        document.body.classList.add('dark-mode');
+    }
+</script>
+<body>
+<%- include(`${partials}/header_main`); -%>
+
+<%- include(`${partials}/wallet_error`); -%>
+
+<div class="page-wrapper with-navbar with-transitions">
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <h2 style="margin-left: 40px;">⛰️ Tundra</h2>
+            <div class="card col-xs-8 col-sm-5 col-md-5">
+                <h2 class="content-title">
+                    Add Liquidity
+                </h2>
+                <div class="col-xs-6">
+                    <div class="token-input">
+                        Token 1 - Balance: <span id="token_1_balance"></span>
+                        <a style="display:none" id="token_1_revoke" href="#"> Revoke</a>
+                        <a style="display:none" id="token_1_approve" href="#"> Approve</a>
+                        <input id="token_1_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+
+                    </div>
+                    <div class="token-input">
+                        Token 2 - Balance: <span id="token_2_balance"></span>
+                        <a style="display:none" id="token_2_revoke" href="#"> Revoke</a>
+                        <a style="display:none" id="token_2_approve" href="#"> Approve</a>
+                        <input id="token_2_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+                    </div>
+                    <div class="token-input">
+                        Token 3 - Balance: <span id="token_3_balance"></span>
+                        <a style="display:none" id="token_3_revoke" href="#"> Revoke</a>
+                        <a style="display:none" id="token_3_approve" href="#"> Approve</a>
+                        <input id="token_3_input" type="number" value="0" min="0" class="form-control" placeholder="Enter amount">
+                    </div>
+                    <br>
+                    <div>Available Tundra Tokens to withdraw: <span id="withdraw_balance"></span> <a style="display: none" href="#" id="revoke_lp_btn">Revoke</a><a style="display: none" href="#" id="approve_lp_btn">Approve</a></div>
+                    <br>
+                    <button id="deposit_btn" class="btn" type="button">Deposit</button>
+                    <button id="withdraw_btn" class="btn" type="button">Withdraw</button>
+                </div>
+            </div>
+
+            <div class="loader--1">
+                <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                        <div></div><div></div>
+                    </div></div>
+            </div>
+            <h1 class="error"></h1>
+
+            <pre id="log" style="margin-left: 10px;">
+            </pre>
+
+            <%- include(`${partials}/scripts`, {scriptname: 'tundra'}); -%>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+    </div>
+</div>
+</body>
+</html>
