@@ -511,7 +511,7 @@ async function main() {
       totalSupplyPGL_5 = totalSupplyPGL_5 / 1e18;
       const reserves_5 = await pglContract_5.getReserves();
       const r0_5 = reserves_5._reserve0 / 1e18
-      const r1_5 = reserves_5._reserve1 / 1e18
+      const r1_5 = reserves_5._reserve1 / 1e6
       let reserve0Owned_5 = ownedPGL_5 * (r0_5) / (totalSupplyPGL_5);
       let reserve1Owned_5 = ownedPGL_5 * (r1_5) / (totalSupplyPGL_5);
       const token0Address_5 = await pglContract_5.token0();
