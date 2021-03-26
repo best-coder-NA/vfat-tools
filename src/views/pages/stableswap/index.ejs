@@ -60,12 +60,50 @@
         </div>
     </div>
 </div>
+<div class="modal" id="modal-2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" role="button" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+            <h5 class="modal-title">You will receive</h5>
+            <div class="col-md-6">
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                    <span class="mr-5">USDT: </span><span style="margin-left: auto" id="token_1_withdraw_amt"></span>
+                </div>
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766">
+                    <span class="mr-5">BUSD: </span><span style="margin-left: auto" id="token_2_withdraw_amt"></span>
+                </div>
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png">
+                    <span class="mr-5">DAI: </span><span style="margin-left: auto" id="token_3_withdraw_amt"></span>
+                </div>
+            </div>
+            <hr class="my-10">
+            <div class="col-md-6">
+                <div class="my-5" style="display: flex">
+                    <span class="mr-5 font-size-14">Max slippage:</span><span style="margin-left: auto">0.1%</span>
+                </div>
+            </div>
+            <hr class="my-10">
+            <div class="font-size-8 font-italic mt-20">
+                Output is estimated. If the price changes by more than the max slippage the transaction will revert.
+            </div>
+            <div class="text-right mt-20">
+                <a href="#" class="btn mr-5" role="button">Close</a>
+                <button id="withdraw_confirm_btn" class="btn btn-primary" type="button">Confirm Withdraw</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="page-wrapper with-navbar with-transitions">
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
-            <h2 style="margin-left: 40px;">⛰️ Tundra</h2>
+            <h2 style="margin-left: 40px;">StableSwap</h2>
             <div class="row font-size-14">
                 <div class="card col-xs-8 col-sm-5 col-md-5">
                     <h2 class="content-title">
@@ -139,7 +177,7 @@
                             <span class="font-size-18 font-weight-bold" id="withdraw_balance"></span> s3D
                             <span class="text-success font-size-16 font-weight-bold float-right" id="pool_percent">%</span>
                         </div>
-                        <a href="#" class="font-weight-bold" id="withdraw_btn">Remove Liquidity<br></a>
+                        <a href="#modal-2" class="font-weight-bold" id="withdraw_btn">Remove Liquidity<br></a>
                         <a style="display: none" href="#" id="revoke_lp_btn"> Revoke<br></a>
                         <a style="display: none" href="#" id="approve_lp_btn"> Approve<br></a>
                     </div>
@@ -174,7 +212,7 @@
             <pre id="log" style="margin-left: 10px;">
             </pre>
 
-            <%- include(`${partials}/scripts`, {scriptname: 'tundra'}); -%>
+            <%- include(`${partials}/scripts`, {scriptname: 'stableswap'}); -%>
             <%- include(`${partials}/footer`); -%>
         </div>
     </div>

@@ -61,9 +61,6 @@ async function main() {
   const withdrawLP = async function () {
     return tundraContract_withdraw(TUNDRA_ABI, TUNDRA_ADDRESS, S3D_ADDRESS, TUNDRA_ADDRESS, App)
   }
-  const updateDepositModal = async function () {
-    return updateDepositModal(TUNDRA_ABI, TUNDRA_ADDRESS, STABLE_1_ADDRESS, STABLE_2_ADDRESS, STABLE_3_ADDRESS, S3D_ADDRESS, TUNDRA_ADDRESS, App)
-  }
   // Tokens & contracts
   const STABLE_1_TOKEN = new ethers.Contract(STABLE_1_ADDRESS, ERC20_ABI, signer);
   const STABLE_2_TOKEN = new ethers.Contract(STABLE_2_ADDRESS, ERC20_ABI, signer);
@@ -155,6 +152,7 @@ async function main() {
   if ((s1_balance + s2_balance + s3_balance) > 0){
     $("#deposit_btn").click(function(){
       loadDepositModal(TUNDRA_CONTRACT, App);
+      $("#deposit_confirm_btn").prop('disabled', false);
     });
     $("#deposit_confirm_btn").click(function(){
       depositStables();
@@ -175,7 +173,11 @@ async function main() {
         revokeLP();
       });
     }
-    $("#withdraw_btn").click(function(){
+    $("#withdraw_btn").click(function() {
+      loadWithdrawModal(TUNDRA_CONTRACT, S3D_TOKEN, App);
+      $("#withdraw_confirm_btn").prop('disabled', false);
+    });
+    $("#withdraw_confirm_btn").click(function(){
       withdrawLP();
     });
   } else {
@@ -183,6 +185,18 @@ async function main() {
   }
 
   hideLoading();
+}
+
+const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
+  const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  // recieving
+  const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, S3D_balance)
+  if (withdrawAmount && withdrawAmount.length == 3) {
+    $("#token_1_withdraw_amt").html((withdrawAmount[0] / 1e6).toLocaleString());
+    $("#token_2_withdraw_amt").html((withdrawAmount[1] / 1e18).toLocaleString());
+    $("#token_3_withdraw_amt").html((withdrawAmount[2] / 1e18).toLocaleString());
+  }
+  console.log("calculateRemoveLiquidity: ", withdrawAmount);
 }
 
 const loadDepositModal = async function(TUNDRA_CONTRACT, App){
@@ -286,6 +300,7 @@ const tundraContract_approve = async function (chefAbi, chefAddress, stakeTokenA
   }
 }
 const tundraContract_deposit = async function (chefAbi, chefAddress, token1, token2, token3, App) {
+  $("#deposit_confirm_btn").prop('disabled', true);
   const signer = App.provider.getSigner()
   console.log(signer)
 
@@ -369,7 +384,18 @@ const tundraContract_withdraw = async function (chefAbi, chefAddress, S3D_token,
 
 
   const minToRemove = await CHEF_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, S3D_balance)
-  //const minToMintAmount = ethers.BigNumber.from(String(Math.round(minToMint / 1e18 * 0.95)) + "0".repeat(18))
+  const minToRemoveAmount = [];
+  if (minToRemove && minToRemove.length == 3) {
+    console.log("minToRemove1:", minToRemove[0] / 1e6);
+    console.log("minToRemove2:", minToRemove[1] / 1e18);
+    console.log("minToRemove3:", minToRemove[2] / 1e18);
+    minToRemoveAmount[0] = minToRemove[0].mul(999).div(1000);
+    minToRemoveAmount[1] = minToRemove[1].mul(999).div(1000);
+    minToRemoveAmount[2] = minToRemove[2].mul(999).div(1000);
+    console.log("minToRemoveAmount1:", minToRemoveAmount[0] / 1e6);
+    console.log("minToRemoveAmount2:", minToRemoveAmount[1] / 1e18);
+    console.log("minToRemoveAmount3:", minToRemoveAmount[2] / 1e18);
+  }
   const deadline = Date.now() + 180; //3 minutes
 
   let allow = Promise.resolve()
@@ -381,7 +407,7 @@ const tundraContract_withdraw = async function (chefAbi, chefAddress, S3D_token,
   } else {
     allow
       .then(async function () {
-        CHEF_CONTRACT.removeLiquidity(S3D_balance, minToRemove, deadline)
+        CHEF_CONTRACT.removeLiquidity(S3D_balance, minToRemoveAmount, deadline)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
               hideLoading()
@@ -390,78 +416,12 @@ const tundraContract_withdraw = async function (chefAbi, chefAddress, S3D_token,
           })
           .catch(function () {
             hideLoading()
-            alert('Something went wrong.')
+            alert('Could not withdraw. Refresh page and try again.')
           })
       })
       .catch(function () {
         hideLoading()
-        alert('Something went wrong.')
+        alert('Could not withdraw. Refresh page and try again.')
       })
-  }
-  const updateDepositModal = async function (chefAbi, chefAddress, token1, token2, token3, tundraToken, App) {
-    const signer = App.provider.getSigner()
-    console.log(signer)
-
-    //Tokens
-    const STABLE_1_TOKEN = new ethers.Contract(token1, ERC20_ABI, signer)
-    const STABLE_2_TOKEN = new ethers.Contract(token2, ERC20_ABI, signer)
-    const STABLE_3_TOKEN = new ethers.Contract(token3, ERC20_ABI, signer)
-
-    // Balances
-    const s1_balance = await STABLE_1_TOKEN.balanceOf(App.YOUR_ADDRESS)
-    const s2_balance = await STABLE_2_TOKEN.balanceOf(App.YOUR_ADDRESS)
-    const s3_balance = await STABLE_3_TOKEN.balanceOf(App.YOUR_ADDRESS)
-
-    // Approvals
-    const s1_allowance = await STABLE_1_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-    const s2_allowance = await STABLE_2_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-    const s3_allowance = await STABLE_3_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-    const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-
-    // inputs
-    const s1_input = $("#token_1_input").val();
-    const s2_input = $("#token_2_input").val();
-    const s3_input = $("#token_3_input").val();
-    //web3.utils.toBN(String(totalSupply) + "0".repeat(decimalPrecision)
-    const s1_amount = ethers.BigNumber.from(String(Math.round(s1_input)) + "0".repeat(6));
-    const s2_amount = ethers.BigNumber.from(String(Math.round(s2_input)) + "0".repeat(18));
-    const s3_amount = ethers.BigNumber.from(String(Math.round(s3_input)) + "0".repeat(18));
-
-    // validation
-    const s1_valid = s1_input > 0 ? (s1_allowance > 0 && s1_balance / 1e6 >= s1_input): true;
-    const s2_valid = s2_input > 0 ? (s2_allowance > 0 && s2_balance / 1e18 >= s2_input) : true;
-    const s3_valid = s3_input > 0 ? (s3_allowance > 0 && s3_balance / 1e18 >= s3_input) : true;
-    const total = s1_input + s2_input + s3_input;
-
-    const minToMint = await CHEF_CONTRACT.calculateTokenAmount(App.YOUR_ADDRESS, [s1_amount, s2_amount, s3_amount], true)
-    const minToMintAmount = ethers.BigNumber.from(String(Math.round(minToMint / 1e18 * 0.9)) + "0".repeat(18))
-    const deadline = Date.now() + 180; //3 minutes
-
-    let allow = Promise.resolve()
-
-    showLoading()
-    if (!s1_valid || !s2_valid|| !s3_valid || total == 0) {
-      alert('Please approve spending first or check your input amounts')
-      hideLoading();
-    } else {
-      allow
-        .then(async function () {
-          CHEF_CONTRACT.addLiquidity([s1_amount, s2_amount, s3_amount], minToMintAmount, deadline)
-            .then(function (t) {
-              App.provider.waitForTransaction(t.hash).then(function () {
-                hideLoading()
-                alert('Tokens deposited. Refresh page to see balance.')
-              })
-            })
-            .catch(function () {
-              hideLoading()
-              alert('Something went wrong.')
-            })
-        })
-        .catch(function () {
-          hideLoading()
-          alert('Something went wrong.')
-        })
-    }
   }
 }
