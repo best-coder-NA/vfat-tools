@@ -491,9 +491,11 @@ async function main() {
   //_print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe<br/>***Estimated LP value based on current token prices</div>`)
 
   function pool(options) {
-    _print(``)
+    _print(`---`)
+
     if (options.url) {
 	    _print(`<b>${options.pool_nickname}!!</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
+
     } else {
 	    _print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
 	  }

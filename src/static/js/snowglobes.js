@@ -407,7 +407,7 @@ async function main() {
     stakeDisplay_eth = `Your LP value is <b>${reserve0Owned_eth .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_eth ]} / <b>${reserve1Owned_eth .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_eth ]} ($<b>${value_eth .toFixed(2)}</b>)**</b>`
   }
   } catch { console.log('error calculating PGL value')}
-  
+
   const snowglobeContract_png = new ethers.Contract(SNOWGLOBE_PNG_ADDR, SNOWGLOBE_ABI, signer);
   const userPngDeposited = await snowglobeContract_png.balanceOf(App.YOUR_ADDRESS)
   let totalPoolPGL_png = await snowglobeContract_png.balance();
@@ -471,7 +471,7 @@ async function main() {
     stakeDisplay_sushi = `Your LP value is <b>${reserve0Owned_sushi .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_sushi ]} / <b>${reserve1Owned_sushi .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_sushi ]} ($<b>${value_sushi .toFixed(2)}</b>)**</b>`
   }
   } catch { console.log('error calculating PGL value')}
-  
+
   const layout_pool = function(options) {
     _print(``)
     _print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
@@ -629,9 +629,11 @@ const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTok
   console.log(allowedTokens)
   let allow = Promise.resolve()
 
-  showLoading()
+  //showLoading()
+  halfmoon.toggleModal('modal-loading')
   if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
     alert('Already approved')
+    halfmoon.toggleModal('modal-loading')
   } else {
     allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
       .then(function (t) {
@@ -640,6 +642,7 @@ const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTok
       .catch(function () {
         hideLoading()
         alert('Approval failed')
+        halfmoon.toggleModal('modal-loading')
       })
   }
 }

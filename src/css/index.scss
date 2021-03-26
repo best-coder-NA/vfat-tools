@@ -21,6 +21,27 @@
     @media (min-width: 1800px) { @content; }
 }
 
+@-ms-keyframes spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(359deg); }
+}
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(359deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(359deg); }
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(359deg);
+    }
+}
+
 :root {
     --primary-color: #33A9FF !important;
     --dm-base-body-bg-color: #1B1F32 !important;
@@ -40,6 +61,25 @@ body{
 
 .pointer{
     cursor: pointer;
+}
+.spin{
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: 950ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin;
+    -moz-animation-duration: 950ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: spin;
+    -ms-animation-duration: 950ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+
+    animation-name: spin;
+    animation-duration: 950ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 .dark-mode {
   background-color:#1B1F32;
@@ -103,7 +143,10 @@ a:hover {
     box-shadow: #{' rgb(0 0 0 / 10%) 0 7px 25px 0 '} !important;
     border-radius: 20px;
 }
-
+.snob-tvl{
+    float:none;
+    margin:auto;
+}
 .snob-tokens:hover{
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
@@ -127,8 +170,8 @@ ion-icon {
     cursor: pointer;
 }
 
-.tvl{
-    margin: 0;
+#pooltokens img:nth-child(2){
+    margin-left: -15px;
 }
 .total-locked{
     border-radius: 1rem;
