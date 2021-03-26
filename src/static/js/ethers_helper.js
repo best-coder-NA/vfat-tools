@@ -1063,7 +1063,7 @@ async function getStoredToken(app, tokenAddress, stakingAddress, type) {
       }
       const [minter] = await app.ethcallProvider.all([crv.minter()]);
       return await getCurveToken(app, crv, tokenAddress, stakingAddress, minter);
-    case "stableswap":
+    case "stablevault":
       const stable = new ethcall.Contract(tokenAddress, STABLESWAP_ABI);
       return await getStableswapToken(app, stable, tokenAddress, stakingAddress);
   }
@@ -1152,7 +1152,7 @@ async function getToken(app, tokenAddress, stakingAddress) {
   try {
     const stable = new ethcall.Contract(tokenAddress, STABLESWAP_ABI);
     const _coin0 = await app.ethcallProvider.all([stable.coins(0)]);
-    window.localStorage.setItem(tokenAddress, "stableswap");
+    window.localStorage.setItem(tokenAddress, "stablevault");
     return await getStableswapToken(app, stable, tokenAddress, stakingAddress);
   }
   catch (err) {
