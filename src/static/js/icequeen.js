@@ -254,10 +254,10 @@ $(function() {
 	const userPool2Percent = (stakedPool2.amount / 1e18)/(totalStakedSNOBAVAX / 1e18)*100
 	const userPool1Percent = (stakedPool1.amount / 1e18)/(totalStakedSPGLSUSHI / 1e18)*100
 
-	const pool4weight = 0.125
+	const pool4weight = 0.1
 	const pool3weight = 0.25
 	const pool2weight = 0.5
-	const pool1weight = 0.125
+	const pool1weight = 0.1
 
 	let res = null;
     let pool4tvl = null;
