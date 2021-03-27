@@ -336,10 +336,10 @@ const tundraContract_deposit = async function (chefAbi, chefAddress, token1, tok
   const total = Number(s1_input) + Number(s2_input) + Number(s3_input);
 
   const slippage = getSlippage();
-  const slippageMultiplier = 100 - slippage;
+  const slippageMultiplier = 1000 - (slippage * 10);
 
   const minToMint = await CHEF_CONTRACT.calculateTokenAmount(App.YOUR_ADDRESS, [s1_amount, s2_amount, s3_amount], true);
-  const minToMintAmount = minToMint.mul(slippageMultiplier).div(100);
+  const minToMintAmount = minToMint.mul(slippageMultiplier).div(1000);
   const deadline = Date.now() + 180; //3 minutes
 
   console.log("minToMint: ", minToMint / 1e18);
