@@ -151,7 +151,12 @@ async function main() {
   const snowballMultiplier = await ICEQUEEN_CONTRACT.BONUS_MULTIPLIER()
   const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
   const snowballsPerBlock = snowballMultiplier * blockRate
-  const blockNumber = await App.provider.getBlockNumber()
+  const blockNumber = await App.provider.getBlockNumber();
+  const currentBlock = await App.provider.getBlock(blockNumber);
+  const yesterdayBlock = await App.provider.getBlock(blockNumber - 15000);
+  const secondsInDay = 86400;
+  const blocks24hrs = ((currentBlock.timestamp - yesterdayBlock.timestamp) / secondsInDay) * 15000;
+
   const prices = await getAvaxPrices();
   const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
   const marketCapDisplay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
@@ -161,6 +166,7 @@ async function main() {
   $('#snob-supply-max').append(`18,000,000`)
   $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
   $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
+  $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
 
   document.getElementById('wallet-copy').addEventListener('click', ()=>{
   navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {

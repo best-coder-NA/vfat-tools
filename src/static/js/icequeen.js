@@ -199,7 +199,12 @@ async function main() {
   const snowballMultiplier = await ICEQUEEN_CONTRACT.BONUS_MULTIPLIER()
   const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
   const snowballsPerBlock = snowballMultiplier * blockRate
-  const blockNumber = await App.provider.getBlockNumber()
+  const blockNumber = await App.provider.getBlockNumber();
+  const currentBlock = await App.provider.getBlock(blockNumber);
+  const yesterdayBlock = await App.provider.getBlock(blockNumber - 15000);
+  const secondsInDay = 86400;
+  const blocks24hrs = ((currentBlock.timestamp - yesterdayBlock.timestamp) / secondsInDay) * 15000;
+
   const prices = await getAvaxPrices();
   const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
   const marketCapDisplay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
@@ -210,6 +215,7 @@ async function main() {
     $('#snob-supply-max').append(`18,000,000`)
     $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
     $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
+    $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
 
     document.getElementById('wallet-copy').addEventListener('click', ()=>{
     navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
@@ -558,8 +564,8 @@ async function main() {
       if (options.stake_display) {
         _print(options.stake_display)
       }
-      //_print(`Your pool %: <b>${options.user_pool_percent.toFixed(10)}%</b> SNOB Per Block: <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18).toFixed(10)}</b>`)
-      _print(`You are earning <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
+      _print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
+      _print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       _print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)

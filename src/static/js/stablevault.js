@@ -89,14 +89,19 @@ async function main() {
   const S3D_supply = await S3D_TOKEN.totalSupply();
   const user_percentage = ((S3D_balance / 1e18) / (S3D_supply / 1e18) * 100) || 0;
 
+  const t1_supply_display = (s1_supply / 1e6).toFixed(2);
+  const t2_supply_display = (s2_supply / 1e18).toFixed(2);
+  const t3_supply_display = (s3_supply / 1e18).toFixed(2);
+  const combined_supply_display = combined_supply.toFixed(2);
+
   $("#pool_percent").html(`${user_percentage.toLocaleString()}%`);
-  $("#t1_supply").html(`${(s1_supply / 1e6).toLocaleString()}`);
-  $("#t2_supply").html(`${(s2_supply / 1e18).toLocaleString()}`);
-  $("#t3_supply").html(`${(s3_supply / 1e18).toLocaleString()}`);
+  $("#t1_supply").html(`${t1_supply_display}`);
+  $("#t2_supply").html(`${t2_supply_display}`);
+  $("#t3_supply").html(`${t3_supply_display}`);
   $("#t1_supply_percentage").html(`${s1_supply_percentage.toLocaleString()}%`);
   $("#t2_supply_percentage").html(`${s2_supply_percentage.toLocaleString()}%`);
   $("#t3_supply_percentage").html(`${s3_supply_percentage.toLocaleString()}%`);
-  $("#combined_supply").html(`$${combined_supply.toLocaleString()}`);
+  $("#combined_supply").html(`$${combined_supply_display}`);
   console.log("sUSD Supply:", S3D_supply / 1e18);
   console.log("Tundra S1 Supply:", s1_supply / 1e6);
   console.log("Tundra S2 Supply:", s2_supply / 1e18);
@@ -208,9 +213,9 @@ const loadDepositModal = async function(TUNDRA_CONTRACT, App){
   $("#token_2_deposit_amt").html(s2_input || 0);
   $("#token_3_deposit_amt").html(s3_input || 0);
   $("#total_deposit_amt").html(Number(s1_input) + Number(s2_input) + Number(s3_input));
-  const s1_amount = ethers.BigNumber.from(String(Math.round(s1_input)) + "0".repeat(6));
-  const s2_amount = ethers.BigNumber.from(String(Math.round(s2_input)) + "0".repeat(18));
-  const s3_amount = ethers.BigNumber.from(String(Math.round(s3_input)) + "0".repeat(18));
+  const s1_amount = ethers.BigNumber.from(String(Math.round(s1_input * 1000)) + "0".repeat(3));
+  const s2_amount = ethers.BigNumber.from(String(Math.round(s2_input * 1000)) + "0".repeat(15));
+  const s3_amount = ethers.BigNumber.from(String(Math.round(s3_input * 1000)) + "0".repeat(15));
 
   // recieving
   const minToMint = await TUNDRA_CONTRACT.calculateTokenAmount(App.YOUR_ADDRESS, [s1_amount, s2_amount, s3_amount], true)
@@ -325,9 +330,9 @@ const tundraContract_deposit = async function (chefAbi, chefAddress, token1, tok
   const s2_input = $("#token_2_input").val();
   const s3_input = $("#token_3_input").val();
   //web3.utils.toBN(String(totalSupply) + "0".repeat(decimalPrecision)
-  const s1_amount = ethers.BigNumber.from(String(Math.round(s1_input)) + "0".repeat(6));
-  const s2_amount = ethers.BigNumber.from(String(Math.round(s2_input)) + "0".repeat(18));
-  const s3_amount = ethers.BigNumber.from(String(Math.round(s3_input)) + "0".repeat(18));
+  const s1_amount = ethers.BigNumber.from(String(Math.round(s1_input * 1000)) + "0".repeat(3));
+  const s2_amount = ethers.BigNumber.from(String(Math.round(s2_input * 1000)) + "0".repeat(15));
+  const s3_amount = ethers.BigNumber.from(String(Math.round(s3_input * 1000)) + "0".repeat(15));
 
   // validation
   const s1_valid = s1_input > 0 ? (s1_allowance > 0 && s1_balance / 1e6 >= s1_input): true;
