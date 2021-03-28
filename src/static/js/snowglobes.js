@@ -153,9 +153,9 @@ async function main() {
   const snowballsPerBlock = snowballMultiplier * blockRate
   const blockNumber = await App.provider.getBlockNumber();
   const currentBlock = await App.provider.getBlock(blockNumber);
-  const yesterdayBlock = await App.provider.getBlock(blockNumber - 15000);
+  const yesterdayBlock = await App.provider.getBlock(blockNumber - 20000);
   const secondsInDay = 86400;
-  const blocks24hrs = (secondsInDay / (currentBlock.timestamp - yesterdayBlock.timestamp)) * 15000;
+  const blocks24hrs = (secondsInDay / (currentBlock.timestamp - yesterdayBlock.timestamp)) * 20000;
 
   const prices = await getAvaxPrices();
   const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
