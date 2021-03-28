@@ -155,7 +155,7 @@ async function main() {
   const currentBlock = await App.provider.getBlock(blockNumber);
   const yesterdayBlock = await App.provider.getBlock(blockNumber - 15000);
   const secondsInDay = 86400;
-  const blocks24hrs = ((currentBlock.timestamp - yesterdayBlock.timestamp) / secondsInDay) * 15000;
+  const blocks24hrs = (secondsInDay / (currentBlock.timestamp - yesterdayBlock.timestamp)) * 15000;
 
   const prices = await getAvaxPrices();
   const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;

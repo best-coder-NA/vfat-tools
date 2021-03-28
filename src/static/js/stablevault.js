@@ -89,10 +89,10 @@ async function main() {
   const S3D_supply = await S3D_TOKEN.totalSupply();
   const user_percentage = ((S3D_balance / 1e18) / (S3D_supply / 1e18) * 100) || 0;
 
-  const t1_supply_display = (s1_supply / 1e6).toFixed(2);
-  const t2_supply_display = (s2_supply / 1e18).toFixed(2);
-  const t3_supply_display = (s3_supply / 1e18).toFixed(2);
-  const combined_supply_display = combined_supply.toFixed(2);
+  const t1_supply_display = new Intl.NumberFormat('en-US').format((s1_supply / 1e6).toFixed(2));
+  const t2_supply_display = new Intl.NumberFormat('en-US').format((s2_supply / 1e18).toFixed(2));
+  const t3_supply_display = new Intl.NumberFormat('en-US').format((s3_supply / 1e18).toFixed(2));
+  const combined_supply_display = new Intl.NumberFormat('en-US').format(combined_supply.toFixed(2));
 
   $("#pool_percent").html(`${user_percentage.toLocaleString()}%`);
   $("#t1_supply").html(`${t1_supply_display}`);
