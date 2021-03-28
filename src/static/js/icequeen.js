@@ -491,7 +491,8 @@ async function main() {
   //_print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe<br/>***Estimated LP value based on current token prices</div>`)
 
   function pool(options) {
-    _print(`---`)
+    //_print(`---`)
+  
 
     if (options.url) {
 	    _print(`<b>${options.pool_nickname}!!</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
@@ -502,9 +503,19 @@ async function main() {
     _print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
   	if (options.icequeen_apr) {
 			_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
+
+      var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
+      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
+      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
+
 			if (options.snowglobe_apr) {
-				let combinedAPR = options.icequeen_apr + options.snowglobe_apr
+				var combinedAPR = options.icequeen_apr + options.snowglobe_apr
 				_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+
+        var cDayAPR = `${combinedAPR.toFixed(2)}%`;
+        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
+        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}%`;
+
 			}
 		}
     _print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
@@ -550,6 +561,118 @@ async function main() {
       _print(`No sPGL to Stake/Withdraw.`)
       _print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
     }
+    if (!has_options){
+      
+      var poolPrint = `<div id="" class="col-md-12">
+      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+          <div class="row">
+              <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                  <div id="pooltokens" class="align-items-center d-flex mx-auto">
+                      <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png" alt="">
+                      <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png" alt="">
+                      <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                  </div>
+              </div>
+              <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                  <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                  <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+              </div>
+              <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                      </div>
+                  </div>
+                  <div class="form-inline w-50 mx-auto mx-md-0">
+                      <div class="form-group m-md-0">
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${cDayAPR}% </p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${cWeekAPR}% </p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${cYearAPR}% </p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                  <p class="m-0 font-size-12"> Pool Size</p>
+                      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.total_staked / 1e18).toLocaleString()} sPGL </span>
+                      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>
+              </div>
+              <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                  <a href="/snowglobes" class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
+              </div>
+
+              <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                  <ion-icon class="pointer" name="chevron-down-outline"></ion-icon>
+              </div>
+          </div>
+          <div id="details" class="border-top mt-20 pt-10 pb-10" style="display: none;">
+              <div class="row">
+                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                      <div class="row">
+                          <p class="w-full text-center">Estimated APR :</p>
+                      </div>
+                      <div class="row">
+                          <div class="form-inline w-50 mx-auto">
+                              <div class="form-group m-md-0">
+                                  <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                  <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                                  <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                              </div>
+                          </div>
+                          <div class="form-inline w-50 mx-auto">
+                              <div class="form-group m-md-0">
+                              <p class="m-0 font-size-12 font-weight-semi-bold">${eDayAPR}% </p>
+                              <p class="m-0 font-size-12 font-weight-semi-bold">${eWeekAPR}%</p>
+                              <p class="m-0 font-size-12 font-weight-semi-bold">${eYearAPR}%</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                      <div class="row">
+                          <p class="w-full text-center">Combined APR :</p>
+                      </div>
+                      <div class="row">
+                          <div class="form-inline w-50 mx-auto">
+                              <div class="form-group m-md-0">
+                                  <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                  <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                                  <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                              </div>
+                          </div>
+                          <div class="form-inline w-50 mx-auto">
+                              <div class="form-group m-md-0">
+                              <p class="m-0 font-size-12 font-weight-semi-bold">${cDayAPR}% </p>
+                              <p class="m-0 font-size-12 font-weight-semi-bold">${cWeekAPR}%</p>
+                              <p class="m-0 font-size-12 font-weight-semi-bold">${cYearAPR}%</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                      <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
+                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.pool_weight * 100)}%</span>
+                      <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
+                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">37,500</span>
+                  </div>
+
+                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+                      <p class="m-0 font-size-16 font-weight-semi-bold">0 sPGL  </p>
+                      <p class="m-0 font-size-12">(No sPGL to Stake/Withdraw) </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>`;
+      $('#snob-pools').append(poolPrint);
+      console.log(poolPrint);
+    }else{
+
+    }
+    
+
   }
   pool({
     pool_nickname: '(Pool 4)',
