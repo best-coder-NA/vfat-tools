@@ -72,11 +72,14 @@ async function main() {
   const s1_balance = await STABLE_1_TOKEN.balanceOf(App.YOUR_ADDRESS);
   const s2_balance = await STABLE_2_TOKEN.balanceOf(App.YOUR_ADDRESS);
   const s3_balance = await STABLE_3_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  const s1_balance_formatted = s1_balance/1e6 > .001 ? (s1_balance/1e6 - .001).toFixed(3) : 0;
+  const s2_balance_formatted = s2_balance/1e18 > .001 ? (s2_balance/1e18 - .001).toFixed(3) : 0;
+  const s3_balance_formatted = s3_balance/1e18 > .001 ? (s3_balance/1e18 - .001).toFixed(3) : 0;
   const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS);
-  $('#token_1_balance').html(`${(s1_balance/1e6).toLocaleString()}`);
-  $('#token_2_balance').html(`${(s2_balance/1e18).toLocaleString()}`);
-  $('#token_3_balance').html(`${(s3_balance/1e18).toLocaleString()}`);
-  $('#withdraw_balance').html(`${(S3D_balance/1e18).toLocaleString()}`);
+  $('#token_1_balance').html(`${s1_balance_formatted}`);
+  $('#token_2_balance').html(`${s2_balance_formatted}`);
+  $('#token_3_balance').html(`${s3_balance_formatted}`);
+  $('#withdraw_balance').html(`${(S3D_balance/1e18).toFixed(3)}`);
 
   // supply
   const s1_supply = await STABLE_1_TOKEN.balanceOf(TUNDRA_ADDRESS);
