@@ -508,6 +508,10 @@ async function main() {
       var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
       var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
 
+      var cDayAPR = eDayAPR;
+      var cWeekAPR = eWeekAPR;
+      var cYearAPR = eYearAPR;
+
 			if (options.snowglobe_apr) {
 				var combinedAPR = options.icequeen_apr + options.snowglobe_apr
 				_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
@@ -521,8 +525,13 @@ async function main() {
     _print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
     if (options.total_staked) {
       _print(`Pool Size: <b>${ (options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
+
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.total_staked / 1e18).toLocaleString()} sPGL </span>
+      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
     } else {
       _print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
+      var poolSize = `
+      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
     }
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
@@ -563,11 +572,11 @@ async function main() {
     }
     if (!has_options){
       
-      var poolPrint = `<div id="" class="col-md-12">
+      var poolPrint = `<div id="${options.pool_nickname}" class="col-md-12">
       <div class="card border-0 p-10 pl-20 pr-20 mt-5">
           <div class="row">
               <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
-                  <div id="pooltokens" class="align-items-center d-flex mx-auto">
+                  <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
                       <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png" alt="">
                       <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png" alt="">
                       <h6 class="pl-10 m-0">${options.pool_name}</h6>
@@ -595,20 +604,19 @@ async function main() {
               </div>
               <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
                   <p class="m-0 font-size-12"> Pool Size</p>
-                      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.total_staked / 1e18).toLocaleString()} sPGL </span>
-                      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>
+                      ${poolSize}
               </div>
               <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
                   <a href="/snowglobes" class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
               </div>
 
-              <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+              <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
                   <ion-icon class="pointer" name="chevron-down-outline"></ion-icon>
               </div>
           </div>
-          <div id="details" class="border-top mt-20 pt-10 pb-10" style="display: none;">
+          <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
               <div class="row">
-                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                  <div class="col-sm-12 col-md-3 align-items-center pb-10">
                       <div class="row">
                           <p class="w-full text-center">Estimated APR :</p>
                       </div>
@@ -629,7 +637,7 @@ async function main() {
                           </div>
                       </div>
                   </div>
-                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                  <div class="col-sm-12 col-md-3 align-items-center pb-10">
                       <div class="row">
                           <p class="w-full text-center">Combined APR :</p>
                       </div>
@@ -650,14 +658,14 @@ async function main() {
                           </div>
                       </div>
                   </div>
-                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                  <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                       <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
                       <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${ (options.pool_weight * 100)}%</span>
                       <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
                       <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">37,500</span>
                   </div>
 
-                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                  <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                       <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
                       <p class="m-0 font-size-16 font-weight-semi-bold">0 sPGL  </p>
                       <p class="m-0 font-size-12">(No sPGL to Stake/Withdraw) </p>
@@ -667,15 +675,16 @@ async function main() {
       </div>
   </div>`;
       $('#snob-pools').append(poolPrint);
-      console.log(poolPrint);
+      
     }else{
 
     }
     
 
   }
+
   pool({
-    pool_nickname: '(Pool 4)',
+    pool_nickname: 'pool-4',
     pool_name: '💠 ETH-AVAX sPGL',
     url: null,
     tvl: ETH_AVAX_TVL,
@@ -698,7 +707,7 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '(Pool 3)',
+    pool_nickname: 'pool-3',
     pool_name: '🦔 PNG-AVAX sPGL',
     url: null,
     tvl: PNG_AVAX_TVL,
@@ -721,7 +730,7 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '(Pool 2)',
+    pool_nickname: 'pool-2',
     pool_name: '❄️ SNOB-AVAX Pangolin LP',
     url: SNOB_AVAX_POOL_URL,
     tvl: SNOB_AVAX_TVL,
@@ -744,7 +753,7 @@ async function main() {
   })
 
   pool({
-    pool_nickname: '(Pool 1)',
+    pool_nickname: 'pool-1',
     pool_name: '🍣 SUSHI-AVAX sPGL',
     url: null,
     tvl: SUSHI_AVAX_TVL,
