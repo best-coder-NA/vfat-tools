@@ -196,6 +196,8 @@ async function main() {
 }
 
 const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
+  $("#withdraw_confirm_btn").show();
+  $("#withdraw_success").hide();
   const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS);
   // recieving
   const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, S3D_balance)
@@ -208,6 +210,8 @@ const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
 }
 
 const loadDepositModal = async function(TUNDRA_CONTRACT, App){
+  $("#deposit_confirm_btn").show();
+  $("#deposit_success").hide();
   // inputs
   const s1_input = $("#token_1_input").val();
   const s2_input = $("#token_2_input").val();
@@ -223,6 +227,23 @@ const loadDepositModal = async function(TUNDRA_CONTRACT, App){
   // recieving
   const minToMint = await TUNDRA_CONTRACT.calculateTokenAmount(App.YOUR_ADDRESS, [s1_amount, s2_amount, s3_amount], true)
   $("#receiving_amt").html((minToMint / 1e18).toFixed(6));
+
+  // premium & fee
+  const totalAmount = Number(s1_input) + Number(s2_input) + Number(s3_input)
+  const difference = minToMint / 1e18 - totalAmount;
+  const premium = (totalAmount > 0 ? difference / totalAmount : 0);
+  console.log("Difference:", (difference).toFixed(8));
+  console.log("Premium:", (premium * 100).toFixed(6));
+  $("#premium_amt").html(`${(premium * 100).toFixed(6)}%`);
+  $("#premium_row").removeClass(`text-success`);
+  $("#premium_row").removeClass(`text-secondary`);
+  if (premium > 0) {
+    $("#premium_label").html(`Discount:`);
+    $("#premium_row").addClass(`text-success`);
+  } else if (premium < 0) {
+    $("#premium_label").html(`Premium:`);
+    $("#premium_row").addClass(`text-secondary`);
+  }
 
   const slippage = getSlippage();
   $("#max_slippage").html(slippage);
@@ -364,8 +385,10 @@ const tundraContract_deposit = async function (chefAbi, chefAddress, token1, tok
         CHEF_CONTRACT.addLiquidity([s1_amount, s2_amount, s3_amount], minToMintAmount, deadline)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
-              hideLoading()
-              alert('Tokens deposited. Refresh page to see balance.')
+              hideLoading();
+              $("#deposit_confirm_btn").hide();
+              $("#deposit_success").show();
+              alert('Tokens deposited. Refresh page to see balance.');
             })
           })
           .catch(function () {
@@ -381,6 +404,7 @@ const tundraContract_deposit = async function (chefAbi, chefAddress, token1, tok
 }
 
 const tundraContract_withdraw = async function (chefAbi, chefAddress, S3D_token, tundra_address, App) {
+  $("#withdraw_confirm_btn").prop('disabled', true);
   const signer = App.provider.getSigner()
   console.log(signer)
 
@@ -418,6 +442,8 @@ const tundraContract_withdraw = async function (chefAbi, chefAddress, S3D_token,
         CHEF_CONTRACT.removeLiquidity(S3D_balance, minToRemoveAmount, deadline)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
+              $("#withdraw_confirm_btn").hide();
+              $("#withdraw_success").show();
               hideLoading()
               alert('Tokens withdrawn. Refresh page to see balance.')
             })

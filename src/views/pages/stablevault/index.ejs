@@ -42,6 +42,9 @@
                 <div class="my-5 font-weight-bold" style="display: flex">
                     <span class="mr-5 font-size-14">s3D:</span><span style="margin-left: auto" id="receiving_amt"></span>
                 </div>
+                <div class="my-5" id="premium_row" style="display: flex">
+                    <span class="mr-5 font-size-14" id="premium_label">Premium/Discount:</span><span style="margin-left: auto" id="premium_amt"></span>
+                </div>
             </div>
             <hr class="my-10">
             <div class="col-md-6">
@@ -56,6 +59,7 @@
             <div class="text-right mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
                 <a href="#" class="btn mr-5" role="button">Close</a>
                 <button id="deposit_confirm_btn" class="btn btn-primary" type="button">Confirm Deposit</button>
+                <span style="display: none;" id="deposit_success">Deposit Successful</span>
             </div>
         </div>
     </div>
@@ -94,6 +98,7 @@
             <div class="text-right mt-20">
                 <a href="#" class="btn mr-5" role="button">Close</a>
                 <button id="withdraw_confirm_btn" class="btn btn-primary" type="button">Confirm Withdraw</button>
+                <span style="display: none;" id="withdraw_success">Withdraw Successful</span>
             </div>
         </div>
     </div>
