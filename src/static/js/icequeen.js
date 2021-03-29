@@ -688,7 +688,7 @@ async function main() {
     } else {
       _print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
     }
-    _print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
+    _print(`TVL: ${options.tvl_display}`)
     if (options.icequeen_apr) {
       _print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
       if (options.snowglobe_apr) {
