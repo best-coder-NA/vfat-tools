@@ -1,4 +1,4 @@
-## snowballfinance.info
+## snowball.network
 
 Bare bones UI for interacting with Snowball Contracts
 
