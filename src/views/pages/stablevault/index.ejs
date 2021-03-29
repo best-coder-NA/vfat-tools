@@ -5,6 +5,16 @@
     if (window.localStorage.getItem('snowballDarkmode') == 'true') {
         document.body.classList.add('dark-mode');
     }
+
+    fetch('https://d2vq5imxja288v.cloudfront.net/total_value_locked.json').then(function (response) {
+      return response.json();
+    }).then(function (info) {
+      let tvl = info.pairs[0].locked;
+      document.getElementById('combined_supply').innerHTML = '$' + new Intl.NumberFormat('en-US').format(tvl);
+    }).catch(function (err) {
+      console.log('could not get tvl');
+    });
+
 </script>
 <body>
 <%- include(`${partials}/header_main`); -%>
@@ -190,6 +200,9 @@
                         <a href="#modal-2" class="font-weight-bold" id="withdraw_btn">Remove Liquidity<br></a>
                         <a style="display: none" href="#" id="revoke_lp_btn"> Revoke<br></a>
                         <a style="display: none" href="#" id="approve_lp_btn"> Approve<br></a>
+                        <div class="font-size-14 mt-5">
+                            <span id="staked_balance"></span> s3D staked
+                        </div>
                     </div>
                     <hr class="my-20"/>
                     <h2 class="content-title">

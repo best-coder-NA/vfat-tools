@@ -42,16 +42,19 @@
         if (window.localStorage.getItem('snowballDarkmode') == 'true' ) {
             document.body.classList.remove("dark-mode"),window.localStorage.setItem("snowballDarkmode",!1);
             var icon = document.querySelector('.styleMode')
-            icon.classList.add('fa-moon-o'),icon.classList.remove('fa-sun-o');
+            if (icon) {
+              icon.classList.add('fa-moon-o'),icon.classList.remove('fa-sun-o');
+            }
         }else{
             document.body.classList.add("dark-mode"),window.localStorage.setItem("snowballDarkmode",!0);
            /*  var icon = document.querySelector('.styleMode')
             icon.classList.remove('fa-moon-o'),icon.classList.add('fa-sun-o'); */
             icon = document.querySelector('.styleMode')
-            icon.attr('name', function(index, attribute){
+            if (icon) {
+              icon.attr('name', function(index, attribute){
                 return attribute == "menu-outline" ? "close-outline" : "menu-outline";
-            });
-
+              });
+            }
         }
 
     }
