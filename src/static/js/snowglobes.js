@@ -74,6 +74,7 @@ async function main() {
   const GAS_PER_COMPOUND = 0.49652
   const AVAX_PRICE = 28
 
+
   const approveSUSHI = async function () {
     return snowglobeContract_approve(PGL_ABI, SNOWGLOBE_SUSHI_ADDR, SUSHI_AVAX_ADDR, App)
   }
@@ -169,6 +170,11 @@ async function main() {
       console.error('Snowball Platform: Could not copy text: ', err);
     });
   });
+
+
+
+
+
   let walletAddres = `${App.YOUR_ADDRESS}`;
   $('#wallet-address').html(`${walletAddres}`);
 
@@ -527,16 +533,20 @@ async function main() {
     let has_options = false;
     if ( options.current_tokens / 1e18 > 0 ) {
       has_options = true;
+      var approve = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approve" type="button"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
+      var deposit = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm deposit" type="button"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
       _print_button(`Approve`, options.approve)
       _print_button(`Deposit`, options.stake)
+    }else{
+
     }
     if ( options.display_amount > 0 ) {
       has_options = true;
       _print_button(`Withdraw`, options.withdraw)
     }
     if ( !has_options ) {
-      _print(`No PGL/sPGL to Deposit/Withdraw`)
-    	_print(`<a href='${options.url}' target='_blank'>Get LP Tokens</a>`)
+        _print(`No PGL/sPGL to Deposit/Withdraw`)
+        _print(`<a href='${options.url}' target='_blank'>Get LP Tokens</a>`)
     }
     _print(``)
 
@@ -571,7 +581,7 @@ async function main() {
                   </div>
               </div>
               ${poolSize}
-              
+
               <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
                   <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
               </div>
@@ -614,17 +624,12 @@ async function main() {
                   </div>
               </div>
               ${poolSize}
-              
+
               ${available}
 
               <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
-                  <button class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get LP tokens</button>
-              </div>
-
-              
-
-              <div onclick="toggleDetails());" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-                  <ion-icon class="pointer" name="chevron-down-outline"></ion-icon>
+                ${approve}
+                ${deposit}
               </div>
           </div>
       </div>
@@ -723,7 +728,7 @@ async function main() {
     apy: sushi_annual_apy,
     current_tokens: currentSUSHIAVAXTokens,
     display_amount: spglSushiDisplayAmt,
-    approve: approveSUSHI,
+    approve: 'approveSUSHI',
     stake: stakeSUSHI,
     withdraw: withdrawSUSHI,
     tvl_display: null,
@@ -734,14 +739,88 @@ async function main() {
   })
   _print('**Estimated LP value based on current token prices')
   const bottom_funnel = `
-<b>PGL vs sPGL</b>
-* PGL tokens staked in Snowglobes receive sPGL receipt tokens in return
-* Withdrawn sPGL tokens recieve PGL tokens in return
-* sPGL amount stays constant, underlying PGL value grows
-`
+    <b>PGL vs sPGL</b>
+    * PGL tokens staked in Snowglobes receive sPGL receipt tokens in return
+    * Withdrawn sPGL tokens recieve PGL tokens in return
+    * sPGL amount stays constant, underlying PGL value grows`
   _print(bottom_funnel);
 
+  $(".approve").click(function(){
+    let fn = $(this).attr("data-btn");
+    switch (fn) {
+        case 'approveSUSHI':
+            approveSUSHI();
+          break;
+        case 'approvePNG ':
+            approvePNG();
+          break;
+        case 'approveETH':
+            approveETH();
+          break;
+        case 'approveLINK ':
+            approveLINK();
+          break;
+        case 'approveUSDT ':
+            approveUSDT();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+  });
+
+
   hideLoading();
+}
+const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
+    $('#snob-title-modal').html('').html(title);
+    $('#snob-message-modal').html('').html(message);
+    //icon = icon ? icon = `<ion-icon name="${icon}"></ion-icon>` : icon = '';
+    if (icon) {
+        if(state){
+            icon = `<ion-icon class="text-${state}" name="${icon}"></ion-icon>`;
+        } else{
+            icon = `<ion-icon name="${icon}"></ion-icon>`;
+        }
+    }else{
+        icon = '';
+    }
+    switch (btn1) {
+        case 'close':
+            btn1 = `<button class="btn mr-5" data-dismiss="modal" type="button">Close</button>`;
+            break;
+        case 'ok':
+            btn1 = `<button class="btn mr-5" data-dismiss="modal" type="button">Ok</button>`;
+            break;
+        case 'reload':
+            btn1 = `<button onclick="location.reload();" class="btn mr-5" data-dismiss="modal" type="button">Reload</button>`;
+            break;
+        default:
+           btn = ``;
+           break;
+    }
+    switch (btn2) {
+        case 'close':
+            btn2 = `<button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>`;
+            break;
+        case 'ok':
+            btn2 = `<button class="btn btn-primary" data-dismiss="modal" type="button">Ok</button>`;
+            break;
+        case 'reload':
+            btn2 = `<button onclick="location.reload();" class="btn btn-primary" data-dismiss="modal" type="button">Reload</button>`;
+            break;
+        default:
+           btn = ``;
+           break;
+    }
+
+    $('#snob-icon-modal').html('').html(`${icon}`);
+    $('#snob-btn-modal').html('').append(btn1).append(btn2);
+    halfmoon.toggleModal('modal-message')
+    if(time){
+        setTimeout(function(){ $('#modal-message').removeClass('show');   }, time);
+    }
+
+
 }
 
 const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
@@ -763,15 +842,18 @@ const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTok
   halfmoon.toggleModal('modal-loading')
   if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
     alert('Already approved')
+    snobMessage(`Connected successfully`, `Already approved . <br>You can use the deposit/withdrawals options`, `checkmark-circle-outline`, `success`, false, `ok`, 4000);
     halfmoon.toggleModal('modal-loading')
   } else {
     allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
       .then(function (t) {
+        halfmoon.toggleModal('modal-loading');
         return App.provider.waitForTransaction(t.hash)
       })
       .catch(function () {
         hideLoading()
-        alert('Approval failed')
+        //alert('Approval failed')
+        snobMessage(`Connecting to metamask`, `Approval failed . Please check your Metamask Wallet`, `close-circle-outline`, `danger`, false, `ok`, 4000);
         halfmoon.toggleModal('modal-loading')
       })
   }
@@ -1004,3 +1086,4 @@ const icequeenContract_claim = async function (chefAbi, chefAddress, poolIndex, 
       })
   }
 }
+

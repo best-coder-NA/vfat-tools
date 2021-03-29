@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="modal" id="modal-loading" tabindex="-1" role="dialog"  data-overlay-dismissal-disabled="true" data-esc-dismissal-disabled="true">
-    <div class="modal-dialog " role="document">
+    <div class="modal-dialog bg-transparent" role="document">
       <div class="modal-content bg-transparent">
         <div class="text-center">
             <div class="loadingio-spinner-ripple-0rfeupqpquh">
@@ -24,6 +24,19 @@
           <button class="btn mr-5" data-dismiss="modal" type="button">Close</button>
           <button class="btn btn-primary" data-dismiss="modal" type="button" onclick="location.reload();">Try Again</button>
         </div> -->
+      </div>
+    </div>
+</div>
+<div class="modal" id="modal-message" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <h6 id="snob-title-modal" class="modal-title">Connecting to Wallet</h6>
+        <div id="snob-icon-modal" class="text-center"></div>
+        <p id="snob-message-modal" class="message p-0 m-0"></p>
+        <div id="snob-btn-modal" class="text-right mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
+          <button class="btn mr-5" data-dismiss="modal" type="button">Close</button>
+          <button class="btn btn-primary" data-dismiss="modal" type="button" onclick="location.reload();">Try Again</button>
+        </div>
       </div>
     </div>
 </div>
