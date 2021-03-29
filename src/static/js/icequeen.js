@@ -129,6 +129,12 @@ async function main() {
   const stakeSPGLUSDT = async function () {
     return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SPGL_USDT_ADDRESS, App)
   }
+  const approveSPGLLINK = async function () {
+    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_LINK_ADDRESS, App)
+  }
+  const stakeSPGLLINK = async function () {
+    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 6, SPGL_LINK_ADDRESS, App)
+  }
   const approveSNOB = async function () {
     return icequeenContract_approve(PGL_ABI, ICEQUEEN_ADDR, SNOB_AVAX_ADDR, App)
   }
@@ -150,6 +156,9 @@ async function main() {
   const claimPool5 = async function () {
     return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SNOB_AVAX_ADDR, App)
   }
+  const claimPool6 = async function () {
+    return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 6, SNOB_AVAX_ADDR, App)
+  }
   const withdrawPool1 = async function () {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SPGL_SUSHI_ADDRESS, App)
   }
@@ -163,7 +172,10 @@ async function main() {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 4, SPGL_ETH_ADDRESS, App)
   }
   const withdrawPool5 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SPGL_ETH_ADDRESS, App)
+    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SPGL_USDT_ADDRESS, App)
+  }
+  const withdrawPool6 = async function () {
+    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 6, SPGL_LINK_ADDRESS, App)
   }
 
   const signer = App.provider.getSigner()
@@ -194,7 +206,8 @@ async function main() {
   const pendingSNOBTokensPool3 = await ICEQUEEN_CONTRACT.pendingSnowball(3, App.YOUR_ADDRESS)
   const pendingSNOBTokensPool4 = await ICEQUEEN_CONTRACT.pendingSnowball(4, App.YOUR_ADDRESS)
   const pendingSNOBTokensPool5 = await ICEQUEEN_CONTRACT.pendingSnowball(5, App.YOUR_ADDRESS)
-  const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18 + pendingSNOBTokensPool5 / 1e18
+  const pendingSNOBTokensPool6 = await ICEQUEEN_CONTRACT.pendingSnowball(6, App.YOUR_ADDRESS)
+  const claimableSnowballs = pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18 + pendingSNOBTokensPool5 / 1e18 + pendingSNOBTokensPool6 / 1e18
   const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const snowballMultiplier = await ICEQUEEN_CONTRACT.BONUS_MULTIPLIER()
   const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
@@ -272,6 +285,7 @@ async function main() {
   const stakedPool3 = await ICEQUEEN_CONTRACT.userInfo(3, App.YOUR_ADDRESS)
   const stakedPool4 = await ICEQUEEN_CONTRACT.userInfo(4, App.YOUR_ADDRESS)
   const stakedPool5 = await ICEQUEEN_CONTRACT.userInfo(5, App.YOUR_ADDRESS)
+  const stakedPool6 = await ICEQUEEN_CONTRACT.userInfo(6, App.YOUR_ADDRESS)
 
   // Total staked in each pool
   const totalStakedSPGLSUSHI = await SPGL_SUSHI_TOKEN.balanceOf(ICEQUEEN_ADDR)
@@ -279,31 +293,37 @@ async function main() {
   const totalStakedSPGLETH = await SPGL_ETH_TOKEN.balanceOf(ICEQUEEN_ADDR)
   const totalStakedSNOBAVAX = await SNOB_AVAX_TOKEN.balanceOf(ICEQUEEN_ADDR)
   const totalStakedSPGLUSDT = await SPGL_USDT_TOKEN.balanceOf(ICEQUEEN_ADDR)
+  const totalStakedSPGLLINK = await SPGL_LINK_TOKEN.balanceOf(ICEQUEEN_ADDR)
 
+  const userPool6Percent = (stakedPool6.amount / 1e18) / (totalStakedSPGLUSDT / 1e18) * 100
   const userPool5Percent = (stakedPool5.amount / 1e18) / (totalStakedSPGLUSDT / 1e18) * 100
   const userPool4Percent = (stakedPool4.amount / 1e18) / (totalStakedSPGLETH / 1e18) * 100
   const userPool3Percent = (stakedPool3.amount / 1e18) / (totalStakedSPGLPNG / 1e18) * 100
   const userPool2Percent = (stakedPool2.amount / 1e18) / (totalStakedSNOBAVAX / 1e18) * 100
   const userPool1Percent = (stakedPool1.amount / 1e18) / (totalStakedSPGLSUSHI / 1e18) * 100
 
+  const pool6weight = 0.08
   const pool5weight = 0.05
-  const pool4weight = 0.1
-  const pool3weight = 0.25
-  const pool2weight = 0.5
-  const pool1weight = 0.1
+  const pool4weight = 0.08
+  const pool3weight = 0.11
+  const pool2weight = 0.40
+  const pool1weight = 0.08
 
 
 	let res = null;
+  let pool6tvl = null;
   let pool5tvl = null;
   let pool4tvl = null;
 	let pool3tvl = null;
 	let pool2tvl = null;
 	let pool1tvl = null;
+  let pool6tvlDisplay = '';
   let pool5tvlDisplay = '';
   let pool4tvlDisplay = '';
 	let pool3tvlDisplay = '';
 	let pool2tvlDisplay = '';
 	let pool1tvlDisplay = '';
+  let pool6APR = null;
   let pool5APR = null;
   let pool4APR = null;
 	let pool3APR = null;
@@ -336,6 +356,10 @@ async function main() {
             pool5tvl = p.locked_value;
             pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
             pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
+          } else if (p.token1.symbol == 'link') {
+            pool6tvl = p.locked_value;
+            pool6tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+            pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
           }
     		});
 		}
@@ -532,6 +556,36 @@ async function main() {
     }
   } catch { console.log('error calculating PGL value')}
 
+  //SNOWGLOBE_LINK_ADDR
+  const snowglobeContract_6 = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer);
+  let totalPoolPGL_6 = await snowglobeContract_6.balance();
+  let poolShareDisplay_6 = null;
+  let stakeDisplay_6 = null;
+  const userSPGL_6 = stakedPool6.amount / 1e18;
+  try {
+    if (userSPGL_6 > 0) {
+      let totalSPGL_6 = await snowglobeContract_6.totalSupply();
+      let ownedPGL_6 = userSPGL_6 * (totalPoolPGL_6 / 1e18) / (totalSPGL_6 / 1e18);
+      const pglContract_6 = new ethers.Contract(LINK_AVAX_ADDR, PGL_ABI, signer);
+      let totalSupplyPGL_6 = await pglContract_6.totalSupply();
+      totalSupplyPGL_6 = totalSupplyPGL_6 / 1e18;
+      const reserves_6 = await pglContract_6.getReserves();
+      const r0_6 = reserves_6._reserve0 / 1e18
+      const r1_6 = reserves_6._reserve1 / 1e6
+      let reserve0Owned_6 = ownedPGL_6 * (r0_6) / (totalSupplyPGL_6);
+      let reserve1Owned_6 = ownedPGL_6 * (r1_6) / (totalSupplyPGL_6);
+      const token0Address_6 = await pglContract_6.token0();
+      const token1Address_6 = await pglContract_6.token1();
+      const t0Price_6 = prices[token0Address_6] ? prices[token0Address_6].usd : 0
+      const t1Price_6 = prices[token1Address_6] ? prices[token1Address_6].usd : 0
+      const token0ValueUSDT_6 = reserve0Owned_6 * t0Price_6;
+      const token1ValueUSDT_6 = reserve1Owned_6 * t1Price_6;
+      const value_6 = token0ValueUSDT_6 + (token1ValueUSDT_6);
+      poolShareDisplay_6 = `Your pool share is <b>${userSPGL_6.toFixed(6)}</b> sPGL (<b>${ownedPGL_6.toFixed(6)}</b> PGL) - <b>${userPool6Percent.toFixed(6)}%</b>`
+      stakeDisplay_6 = `Your LP Value is <b>${reserve0Owned_6.toFixed(6)}</b> ${TOKEN_NAMES[token0Address_6]} / <b>${reserve1Owned_6.toFixed(6)}</b> ${TOKEN_NAMES[token1Address_6]} ($<b>${value_6.toFixed(2)}</b>)***</b>`
+    }
+  } catch { console.log('error calculating PGL value')}
+
 
   _print(`<b style="font-size: 20px;"">IceQueen 👸 - Governance</b>`);
   _print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe<br/>***Estimated LP value based on current token prices</div>`)
@@ -552,8 +606,11 @@ async function main() {
 			}
 		}
     _print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
-    if (options.total_staked) {
-      _print(`Pool Size: <b>${ (options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
+    if (options.total_staked && options.total_pgl) {
+      _print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
+    } else if (options.total_staked) {
+      _print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL`)
+
     } else {
       _print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
     }
@@ -596,8 +653,30 @@ async function main() {
     }
   }
   pool({
+    pool_nickname: '(Pool 6)',
+    pool_name: '🔗 LINK-AVAX sPGL - New! 🌟',
+    url: null,
+    tvl: LINK_AVAX_TVL,
+    pool_weight: pool6weight,
+    total_staked: totalStakedSPGLLINK,
+    user_pool_percent: 0,
+    staked_pool: stakedPool6,
+    pending_tokens: pendingSNOBTokensPool6,
+    display_amount: '',
+    approve: approveSPGLLINK,
+    stake: stakeSPGLLINK,
+    unstake: withdrawPool6,
+    claim: claimPool6,
+    icequeen_apr: pool6APR,
+    snowglobe_apr: link_apr.dailyAPR,
+    tvl_display: pool6tvlDisplay,
+    total_pgl: null,
+    pool_share_display: '',
+    stake_display: ''
+  })
+  pool({
     pool_nickname: '(Pool 5)',
-    pool_name: '💵 USDT-AVAX sPGL - New! 🌟',
+    pool_name: '💵 USDT-AVAX sPGL',
     url: null,
     tvl: USDT_AVAX_TVL,
     pool_weight: pool5weight,
