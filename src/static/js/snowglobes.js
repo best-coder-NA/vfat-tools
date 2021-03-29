@@ -234,12 +234,12 @@ async function main() {
 	    })
     	if (res && res.pairs) {
     		res.pairs.forEach( p => {
-    			if (p.token1.symbol == 'usdt') {
-    				usdt_tvl = p.locked_value;
-    				usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
-    			} else if (p.token1.symbol == 'link') {
-    				link_tvl = p.locked_value;
-    				link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
+    			if (p.token1.token.toLowerCase() == 'usdt') {
+    				usdt_tvl = p.locked;
+    				usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+    			} else if (p.token1.token.toLowerCase() == 'link') {
+    				link_tvl = p.locked;
+    				link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
     			}
     		});
 		}

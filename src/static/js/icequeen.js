@@ -364,30 +364,30 @@ async function main() {
 	    })
     	if (res && res.pairs) {
     		res.pairs.forEach( p => {
-    			if (p.token1.symbol == 'sushi') {
-    				pool1tvl = p.locked_value;
-    				pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
-    				pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
-    			} else if (p.token1.symbol == 'snob') {
-    				pool2tvl = p.locked_value;
-    				pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
-    				pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
-    			} else if (p.token1.symbol == 'png') {
-    				pool3tvl = p.locked_value;
-    				pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
-    				pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
-    			} else if (p.token1.symbol == 'eth') {
-    				pool4tvl = p.locked_value;
-    				pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
-    				pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
-    			} else if (p.token1.symbol == 'usdt') {
-            pool5tvl = p.locked_value;
-            pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
-            pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
-          } else if (p.token1.symbol == 'link') {
-            pool6tvl = p.locked_value;
-            pool6tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked_value)}`
-            pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked_value * 100
+    			if (p.token1.token.toLowerCase() == 'sushi') {
+    				pool1tvl = p.locked;
+    				pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+    				pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked * 100
+    			} else if (p.token1.token.toLowerCase() == 'snob') {
+    				pool2tvl = p.locked;
+    				pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+    				pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked * 100
+    			} else if (p.token1.token.toLowerCase() == 'png') {
+    				pool3tvl = p.locked;
+    				pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+    				pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked * 100
+    			} else if (p.token1.token.toLowerCase() == 'eth') {
+    				pool4tvl = p.locked;
+    				pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+    				pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked * 100
+    			} else if (p.token1.token.toLowerCase() == 'usdt') {
+            pool5tvl = p.locked;
+            pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+            pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked * 100
+          } else if (p.token1.token.toLowerCase() == 'link') {
+            pool6tvl = p.locked;
+            pool6tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+            pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked * 100
           }
     		});
 		}
