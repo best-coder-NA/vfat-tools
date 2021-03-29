@@ -170,8 +170,6 @@ async function main() {
     $("#deposit_confirm_btn").click(function(){
       depositStables();
     });
-  } else {
-    $("#deposit_btn").hide();
   }
 
   if (S3D_balance > 0 ){
