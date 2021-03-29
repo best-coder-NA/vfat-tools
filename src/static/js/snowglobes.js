@@ -211,9 +211,12 @@ async function main() {
   const spglUsdtDisplayAmt = currentSPGLUSDTTokens > 1000 ? (currentSPGLUSDTTokens / 1e18).toFixed(8) : 0;
 
   //snowglobes
-  _print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
+ /*  _print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
   _print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
-	_print(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord\n`)
+	_print(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord\n`) */
+  $('#title').append(`Snowglobes 🌐`);
+  $('#msg1').append(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`);
+  $('#msg2').append(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord`);
 
 	let res = null;
   let usdt_tvl = null;
@@ -474,15 +477,32 @@ async function main() {
 
   const layout_pool = function(options) {
     _print(``)
-    _print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
+   _print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
     if ( options.tvl_display ) {
       _print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
+      var tvl = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5">
+      <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+      <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+      </div>`;
+    }else{
+      var tvl = '';
     }
     _print(`APR - Day: <b>${options.apr.dailyAPR.toFixed(2)}</b>% Week: <b>${options.apr.weeklyAPR.toFixed(2)}</b>% Year: <b>${options.apr.yearlyAPR.toFixed(2)}</b>%`);
     _print(`APY (compounding): <b>${options.apy.toFixed(2)}</b>%`);
-
+    var apy =  `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5">
+    <p class="m-0 font-size-12">APY</p>
+    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.apy.toFixed(2)}%</span>
+    </div>`;
     if ( !isNaN(options.total_deposited) ) {
       _print(`Pool Size: <b>${(options.total_deposited / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
+
+      var poolSize = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5 mx-auto">
+      <p class="m-0 font-size-12"> Pool Size</p><span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_deposited / 1e18).toLocaleString()} sPGL </span>
+      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>
+      </div>`;
+
+    }else{
+      var poolSize = '';
     }
     if ( options.pool_share_display ) {
       _print(options.pool_share_display);
@@ -492,6 +512,14 @@ async function main() {
     }
     if ( options.current_tokens / 1e18 > 0 ) {
       _print(`Deposit Available: <b>${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) }</b> PGL`)
+
+      var available = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) } PGL  </p>
+      <p class="m-0 font-size-12">(Available for deposit) </p>
+  </div>`;
+    }else{
+      var available = '';
     }
     if ( options.display_amount > 0 ) {
       _print(`Withdrawal Available: ${options.withdraw_display}`)
@@ -511,8 +539,102 @@ async function main() {
     	_print(`<a href='${options.url}' target='_blank'>Get LP Tokens</a>`)
     }
     _print(``)
+
+
+    if( !has_options ){
+      var poolPrint = `<div class="col-md-4">
+      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+          <div class="row">
+              <div class="col-sm-12 col-md-12 align-items-center d-flex mb-5 mt-5">
+                  <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                      <img class="border rounded-circle" width="48" src="${options.img1}" alt="${options.pool_name}">
+                      <img class="border rounded-circle" width="48" src="${options.img2}" alt="${options.pool_name}">
+                      <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
+                  </div>
+              </div>
+              ${tvl}
+              ${apy}
+              <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                      </div>
+                  </div>
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.dailyAPR.toFixed(2)}%</p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.weeklyAPR.toFixed(2)}%</p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.yearlyAPR.toFixed(2)}%</p>
+                      </div>
+                  </div>
+              </div>
+              ${poolSize}
+              
+              <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
+                  <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
+              </div>
+
+              <div onclick="toggleDetails());" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                  <ion-icon class="pointer" name="chevron-down-outline"></ion-icon>
+              </div>
+          </div>
+      </div>
+  </div>`;
+    $('#snob-pools').append(poolPrint);
+
+    }else{
+      var poolPrint = `<div class="col-md-4">
+      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+          <div class="row">
+              <div class="col-sm-12 col-md-12 align-items-center d-flex mb-5 mt-5">
+                  <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                      <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png" alt="">
+                      <img width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png" alt="">
+                      <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
+                  </div>
+              </div>
+              ${tvl}
+              ${apy}
+              <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                      </div>
+                  </div>
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.dailyAPR.toFixed(2)}%</p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.weeklyAPR.toFixed(2)}%</p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.yearlyAPR.toFixed(2)}%</p>
+                      </div>
+                  </div>
+              </div>
+              ${poolSize}
+              
+              ${available}
+
+              <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
+                  <button class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get LP tokens</button>
+              </div>
+
+              
+
+              <div onclick="toggleDetails());" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                  <ion-icon class="pointer" name="chevron-down-outline"></ion-icon>
+              </div>
+          </div>
+      </div>
+  </div>`;
+    $('#snob-pools').append(poolPrint);
+    }
   }
   layout_pool({
+    img1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    img2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     url: USDT_AVAX_POOL_URL,
     pool_name: '💵 AVAX-USDT Pangolin LP - New! 🌟',
     tvl: USDT_AVAX_TVL,
@@ -533,6 +655,8 @@ async function main() {
   })
 
   layout_pool({
+    img1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    img2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     url: LINK_AVAX_POOL_URL,
     pool_name: '🔗 AVAX-LINK Pangolin LP',
     tvl: LINK_AVAX_TVL,
@@ -553,6 +677,8 @@ async function main() {
   })
 
   layout_pool({
+    img1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    img2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     url: ETH_AVAX_POOL_URL,
     pool_name: '💠 AVAX-ETH Pangolin LP',
     apr: eth_apr,
@@ -570,6 +696,8 @@ async function main() {
   })
 
   layout_pool({
+    img1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    img2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     url: PNG_AVAX_POOL_URL,
     pool_name: '🦔 AVAX-PNG Pangolin LP',
     apr: png_apr,
@@ -587,6 +715,8 @@ async function main() {
   })
 
   layout_pool({
+    img1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    img2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     url: SUSHI_AVAX_POOL_URL,
     pool_name: '🍣 AVAX-SUSHI Pangolin LP',
     apr: sushi_apr,

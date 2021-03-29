@@ -572,7 +572,7 @@ async function main() {
     }
     if (!has_options){
       
-      var poolPrint = `<div id="${options.pool_nickname}" class="col-md-12">
+      var poolPrint = `<div class="col-md-12">
       <div class="card border-0 p-10 pl-20 pr-20 mt-5">
           <div class="row">
               <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
