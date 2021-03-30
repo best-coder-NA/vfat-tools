@@ -27,6 +27,7 @@ async function main() {
   const STABLE_2_ADDRESS = "0xaEb044650278731Ef3DC244692AB9F64C78FfaEA"
   const STABLE_3_ADDRESS = "0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a"
   const S3D_ADDRESS = "0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4"
+
   const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
 
   const App = await init_ethers();
@@ -81,6 +82,7 @@ async function main() {
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
   const stakedPool7 = await ICEQUEEN_CONTRACT.userInfo(7, App.YOUR_ADDRESS)
   $('#token_1_balance').html(`${s1_balance_formatted}`);
+  $("#from_balance").html(s1_balance_formatted);
   $('#token_2_balance').html(`${s2_balance_formatted}`);
   $('#token_3_balance').html(`${s3_balance_formatted}`);
   $('#withdraw_balance').html(`${(S3D_balance/1e18).toFixed(3)}`);
@@ -127,15 +129,24 @@ async function main() {
   console.log("Token 2 allowance: ", s2_allowance / 1e18);
   console.log("Token 3 allowance: ", s3_allowance / 1e18);
   console.log("S3D allowance: ", S3D_allowance / 1e18);
+
   // approvals
   if (s1_allowance == 0) {
+    $("#approve_swap_btn_usdt").show();
     $("#token_1_approve").show();
     $("#token_1_approve").click(function(){
       approveStable1();
     });
+    $("#approve_swap_btn_usdt").click(function(){
+      approveStable1();
+    });
   } else {
+    $("#revoke_swap_btn_usdt").show();
     $("#token_1_revoke").show();
     $("#token_1_revoke").click(function() {
+      revokeStable1();
+    });
+    $("#revoke_swap_btn_usdt").click(function() {
       revokeStable1();
     });
   }
@@ -144,9 +155,15 @@ async function main() {
     $("#token_2_approve").click(function(){
       approveStable2();
     });
+    $("#approve_swap_btn_busd").click(function(){
+      approveStable2();
+    });
   } else {
     $("#token_2_revoke").show();
     $("#token_2_revoke").click(function() {
+      revokeStable2();
+    });
+    $("#revoke_swap_btn_busd").click(function(){
       revokeStable2();
     });
   }
@@ -155,9 +172,15 @@ async function main() {
     $("#token_3_approve").click(function(){
       approveStable3();
     });
+    $("#approve_swap_btn_dai").click(function(){
+      approveStable3();
+    });
   } else {
     $("#token_3_revoke").show();
     $("#token_3_revoke").click(function() {
+      revokeStable3();
+    });
+    $("#revoke_swap_btn_dai").click(function(){
       revokeStable3();
     });
   }
@@ -195,7 +218,213 @@ async function main() {
     $("#withdraw_btn").hide();
   }
 
+  $("#from_usdt").click(function() {
+    loadFrom(s1_balance_formatted, 'usdt', s1_allowance, TUNDRA_CONTRACT);
+  });
+  $("#from_busd").click(function() {
+    loadFrom(s2_balance_formatted, 'busd', s2_allowance, TUNDRA_CONTRACT);
+  });
+  $("#from_dai").click(function() {
+    loadFrom(s3_balance_formatted, 'dai', s3_allowance, TUNDRA_CONTRACT);
+  });
+
+  $("#to_usdt").click(function() {
+    loadTo('usdt', TUNDRA_CONTRACT);
+  });
+  $("#to_busd").click(function() {
+    loadTo('busd', TUNDRA_CONTRACT);
+  });
+  $("#to_dai").click(function() {
+    loadTo('dai', TUNDRA_CONTRACT);
+  });
+
+  // set defaults
+  $("#swap_input").data("from_token", 'usdt');
+  $("#swap_input").data("to_token", 'busd');
+
+  $("#swap_input").change(function() {
+    let from_token = $("#swap_input").data("from_token");
+    let to_token = $("#swap_input").data("to_token");
+    updateSwapAmount(from_token, to_token, TUNDRA_CONTRACT);
+  });
+
+  $("#swap_input").keyup(function() {
+    let from_token = $("#swap_input").data("from_token");
+    let to_token = $("#swap_input").data("to_token");
+    updateSwapAmount(from_token, to_token, TUNDRA_CONTRACT);
+  });
+
+  $("#swap_btn").click(function(){
+    let from_token = $("#swap_input").data("from_token");
+    let to_token = $("#swap_input").data("to_token");
+    swapTokens(from_token, to_token, TUNDRA_CONTRACT, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS, App);
+  });
+
   hideLoading();
+}
+
+const swapTokens = async function(from_token, to_token, TUNDRA_CONTRACT, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS, App){
+  console.log("from: ", from_token);
+  console.log("to: ", to_token);
+  $("#swap_btn").prop('disabled', true);
+  const swapAmount = $("#swap_input").val();
+  let token1index = null;
+  let token2index = null;
+  let from_decimals = 15;
+  let to_decimals = 1e18;
+  let allowance = 0;
+
+  switch(from_token) {
+    case 'usdt':
+      from_decimals = 3;
+      allowance = await STABLE_1_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+      token1index = 0;
+      break;
+    case 'busd':
+      allowance = await STABLE_2_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+      token1index = 1;
+      break;
+    case 'dai':
+      allowance = await STABLE_3_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+      token1index = 2;
+      break;
+    default:
+      token1index = null;
+  }
+
+  switch(to_token) {
+    case 'usdt':
+      to_decimals = 1e6;
+      token2index = 0;
+      break;
+    case 'busd':
+      token2index = 1;
+      break;
+    case 'dai':
+      token2index = 2;
+      break;
+    default:
+      token2index = null;
+  }
+
+  if (swapAmount && Number(swapAmount) > 0 && token1index != token2index && allowance > 0){
+    const bn_amount = ethers.BigNumber.from(String(Math.round(swapAmount * 1000)) + "0".repeat(from_decimals));
+    const calculatedAmount = await TUNDRA_CONTRACT.calculateSwap(token1index, token2index, bn_amount);
+    const slippage = getSwapSlippage();
+    const slippageMultiplier = 1000 - (slippage * 10);
+    const minAmount = calculatedAmount.mul(slippageMultiplier).div(1000);
+    const deadline = Date.now() + 180; //3 minutes
+    console.log("bn amount:", bn_amount / 1e18);
+    console.log("calculated amount:", calculatedAmount / to_decimals);
+    console.log("minAmount:", calculatedAmount / to_decimals);
+    let allow = Promise.resolve()
+    showLoading()
+    allow
+      .then(async function () {
+        TUNDRA_CONTRACT.swap(token1index, token2index, bn_amount, minAmount, deadline)
+          .then(function (t) {
+            App.provider.waitForTransaction(t.hash).then(function () {
+              hideLoading();
+              $("#swap_btn").prop('disabled', false);
+              alert('Swap successful. Refresh page to see balance.');
+            })
+          })
+          .catch(function () {
+            hideLoading()
+            $("#swap_btn").prop('disabled', false);
+            alert('Could not swap. Check approvals, slippage, and input amount');
+          })
+      })
+      .catch(function () {
+        hideLoading()
+        $("#swap_btn").prop('disabled', false);
+        alert('Could not swap. Check approvals, slippage, and input amount');
+      })
+
+  } else {
+    $("#swap_btn").prop('disabled', false);
+    alert('Could not swap. Check approvals and input amount');
+  }
+}
+
+const updateSwapAmount = async function(from_token, to_token, TUNDRA_CONTRACT){
+  console.log("from: ", from_token);
+  console.log("to: ", to_token);
+  const swapAmount = $("#swap_input").val();
+  let token1index = null;
+  let token2index = null;
+  let from_decimals = 15;
+  let to_decimals = 1e18;
+
+  switch(from_token) {
+    case 'usdt':
+      from_decimals = 3;
+      token1index = 0;
+      break;
+    case 'busd':
+      token1index = 1;
+      break;
+    case 'dai':
+      token1index = 2;
+      break;
+    default:
+      token1index = null;
+  }
+
+  switch(to_token) {
+    case 'usdt':
+      to_decimals = 1e6;
+      token2index = 0;
+      break;
+    case 'busd':
+      token2index = 1;
+      break;
+    case 'dai':
+      token2index = 2;
+      break;
+    default:
+      token2index = null;
+  }
+
+  if (swapAmount && Number(swapAmount) > 0 && token1index != token2index){
+    const bn_amount = ethers.BigNumber.from(String(Math.round(swapAmount * 1000)) + "0".repeat(from_decimals));
+    const calculatedAmount = await TUNDRA_CONTRACT.calculateSwap(token1index, token2index, bn_amount)
+    console.log("calculated amount:", calculatedAmount / to_decimals);
+    $("#swap_calculated").val((calculatedAmount / to_decimals).toFixed(8));
+  } else {
+    $("#swap_calculated").val(0);
+  }
+}
+const loadTo = async function(token, TUNDRA_CONTRACT){
+  $("#to_usdt_button").hide();
+  $("#to_busd_button").hide();
+  $("#to_dai_button").hide();
+  $("#to_" + token + "_button").show();
+  $("#swap_input").data("to_token", token);
+  let from_token = $("#swap_input").data("from_token");
+  updateSwapAmount(from_token, token, TUNDRA_CONTRACT);
+}
+const loadFrom = async function(balance, token, allowance, TUNDRA_CONTRACT){
+  $("#from_usdt_button").hide();
+  $("#from_busd_button").hide();
+  $("#from_dai_button").hide();
+  $("#approve_swap_btn_usdt").hide();
+  $("#revoke_swap_btn_usdt").hide();
+  $("#approve_swap_btn_busd").hide();
+  $("#revoke_swap_btn_busd").hide();
+  $("#approve_swap_btn_dai").hide();
+  $("#revoke_swap_btn_dai").hide();
+
+  $("#from_balance").html(balance);
+  $("#from_" + token + "_button").show();
+  if (allowance > 0) {
+    $("#revoke_swap_btn_" + token).show();
+  } else {
+    $("#approve_swap_btn_" + token).show();
+  }
+  $("#swap_input").data("from_token", token);
+  let to_token = $("#swap_input").data("to_token");
+  updateSwapAmount(token, to_token, TUNDRA_CONTRACT);
 }
 
 const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
@@ -250,6 +479,23 @@ const loadDepositModal = async function(TUNDRA_CONTRACT, App){
 
   const slippage = getSlippage();
   $("#max_slippage").html(slippage);
+}
+
+function getSwapSlippage() {
+  // slippage
+  const radio1checked = $("#swap-radio-1").is(':checked');
+  const radio2checked = $("#swap-radio-2").is(':checked');
+  const radio3checked = $("#swap-radio-3").is(':checked');
+  const customSlippage = $("#swap_custom_slippage").val();
+  let slippage = 1;
+  if (radio1checked) {
+    slippage = 0.1;
+  } else if (radio2checked) {
+    slippage = 1;
+  } else if (radio3checked) {
+    slippage = Number(customSlippage);
+  }
+  return slippage;
 }
 
 function getSlippage() {
