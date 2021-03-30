@@ -419,7 +419,8 @@ async function main() {
       const token0ValueUSDT_1 = reserve0Owned_1 * t0Price_1;
       const token1ValueUSDT_1 = reserve1Owned_1 * t1Price_1;
       const value_1 = token0ValueUSDT_1 + (token1ValueUSDT_1);
-      poolShareDisplay_1 = `Your pool share is <b>${userSPGL_1.toFixed(3)}</b> sPGL (<b>${ownedPGL_1.toFixed(3)}</b> PGL) - <b>${userPool1Percent.toFixed(6)}%</b>`
+      poolShareDisplay_1 = `${userSPGL_1.toFixed(3)} sPGL`
+      poolShareDisplay_1_pgl = `${ownedPGL_1.toFixed(3)} PGL - ${userPool1Percent.toFixed(6)}%`;
       stakeDisplay_1 = `Your LP value is <b>${reserve0Owned_1.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_1]} / <b>${reserve1Owned_1.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_1]} ($<b>${value_1.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
@@ -657,23 +658,27 @@ async function main() {
       _print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> sPGL`)
     }
     let has_options = false
+    approveBtn = '';
+    stakeBtn = '';
+    unstakeBtn = '';
+    claimBtn = '';
     if ( options.display_amount > 0 ) {
       has_options = true
       _print_button(`Approve`, options.approve)
       _print_button(`Stake`, options.stake)
 
-      approveBtn = ``;
-      stakeBtn = ``;
+      approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approve" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
+      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10"><ion-icon name="lock-open-outline"></ion-icon> Stake sPGL</button>`;
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       has_options = true
       _print_button(`Unstake`, options.unstake);
-      unstakeBtn = ``;
+      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>`;
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
       _print_button(`Claim`, options.claim)
-      claimBtn = ``;
+      claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm harvest"><ion-icon name="download-outline"></ion-icon> Harvest SNOB</button>`;
     }
     if ( !has_options ) {
       _print(`No sPGL to Stake/Withdraw.`)
@@ -686,8 +691,8 @@ async function main() {
             <div class="row">
                 <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
                     <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
-                        <img class="border rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                        <img class="border rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
                         <h6 class="pl-10 m-0">${options.pool_name}</h6>
                     </div>
                 </div>
@@ -716,7 +721,7 @@ async function main() {
                         ${poolSize}
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-                    <a href="/snowglobes" class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
+                    <a href="/snowglobes" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
@@ -756,8 +761,8 @@ async function main() {
 
                     <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
-                        <p class="m-0 font-size-16 font-weight-regular">${(options.staked_pool.amount / 1e18).toFixed(6)} sPGL  </p>
-                        <p class="m-0 font-size-12">(Available to Unstake) </p>
+                        <p class="m-0 font-size-16 font-weight-regular">O sPGL </p>
+                        <p class="m-0 font-size-12">(No sPGL to Stake/Withdraw) </p>
                     </div>
                 </div>
             </div>
@@ -771,8 +776,8 @@ async function main() {
             <div class="row">
                 <div class="col-sm-12 col-md-2 align-items-center d-flex pb-10 pb-md-0">
                     <div id="pooltokens" class="align-items-center d-flex mx-auto">
-                    <img class="border rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                    <img class="border rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                    <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                    <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
                     <h6 class="pl-10 m-0">${options.pool_name}</h6>
                     </div>
 
@@ -804,8 +809,8 @@ async function main() {
                     <p class="m-0 font-size-12">(24hr block rate)</p>
                 </div>
                 <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-                    <button class="btn btn-sm mx-10" type="button"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>
-                    <button class="btn btn-sm" type="button"><ion-icon name="download-outline"></ion-icon> Claim SNOB</button>
+                    
+                    
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
@@ -958,6 +963,7 @@ async function main() {
     tvl_display: pool7tvlDisplay,
     total_pgl: null,
     pool_share_display: '',
+    pool_share_display_pgl: '',
     stake_display: ''
   })
   pool({
@@ -982,6 +988,7 @@ async function main() {
     tvl_display: pool6tvlDisplay,
     total_pgl: null,
     pool_share_display: '',
+    pool_share_display_pgl: '',
     stake_display: ''
   })
   pool({
@@ -1006,6 +1013,7 @@ async function main() {
     tvl_display: pool5tvlDisplay,
     total_pgl: totalPoolPGL_5,
     pool_share_display: poolShareDisplay_5,
+    pool_share_display_pgl: poolShareDisplay_5_pgl,
     stake_display: stakeDisplay_5
   })
   pool({
@@ -1030,6 +1038,7 @@ async function main() {
     tvl_display: pool4tvlDisplay,
     total_pgl: totalPoolPGL_4,
     pool_share_display: poolShareDisplay_4,
+    pool_share_display_pgl: poolShareDisplay_4_pgl,
     stake_display: stakeDisplay_4
   })
   pool({
@@ -1054,6 +1063,7 @@ async function main() {
     tvl_display: pool3tvlDisplay,
     total_pgl: totalPoolPGL_3,
     pool_share_display: poolShareDisplay_3,
+    pool_share_display_pgl: poolShareDisplay_3_pgl,
     stake_display: stakeDisplay_3
   })
   pool({
@@ -1078,6 +1088,7 @@ async function main() {
     tvl_display: pool2tvlDisplay,
     total_pgl: totalStakedSNOBAVAX,
     pool_share_display: poolShareDisplay_2,
+    pool_share_display_pgl: poolShareDisplay_2_pgl,
     stake_display: stakeDisplay_2
   })
   pool({
@@ -1102,6 +1113,7 @@ async function main() {
     tvl_display: pool1tvlDisplay,
     total_pgl: totalPoolPGL_1,
     pool_share_display: poolShareDisplay_1,
+    pool_share_display_pgl: poolShareDisplay_1_pgl,
     stake_display: stakeDisplay_1
   })
   hideLoading();

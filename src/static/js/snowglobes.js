@@ -533,8 +533,8 @@ async function main() {
     let has_options = false;
     if ( options.current_tokens / 1e18 > 0 ) {
       has_options = true;
-      var approve = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approve" type="button"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
-      var deposit = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm deposit" type="button"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
+      var approve = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approve"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
+      var deposit = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm deposit"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
       _print_button(`Approve`, options.approve)
       _print_button(`Deposit`, options.stake)
     }else{
@@ -557,8 +557,8 @@ async function main() {
           <div class="row">
               <div class="col-sm-12 col-md-12 align-items-center d-flex mb-5 mt-5">
                   <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
-                      <img class="border rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                      <img class="border rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                      <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                      <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
                       <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
                   </div>
               </div>
@@ -583,12 +583,8 @@ async function main() {
               ${poolSize}
 
               <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
-                  <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm" type="button"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
-              </div>
-
-              <div onclick="toggleDetails());" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-                  <ion-icon class="pointer" name="chevron-down-outline"></ion-icon>
-              </div>
+                  <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
+              </div> 
           </div>
       </div>
   </div>`;
@@ -600,8 +596,8 @@ async function main() {
             <div class="row">
                 <div class="col-sm-12 col-md-12 align-items-center d-flex mb-5 mt-5">
                     <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
-                        <img class="border rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                        <img class="border rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
                         <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
                     </div>
                 </div>
@@ -830,13 +826,13 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
     }
     switch (btn1) {
         case 'close':
-            btn1 = `<button class="btn mr-5" data-dismiss="modal" type="button">Close</button>`;
+            btn1 = `<button class="btn mr-5" data-dismiss="modal">Close</button>`;
             break;
         case 'ok':
-            btn1 = `<button class="btn mr-5" data-dismiss="modal" type="button">Ok</button>`;
+            btn1 = `<button class="btn mr-5" data-dismiss="modal">Ok</button>`;
             break;
         case 'reload':
-            btn1 = `<button onclick="location.reload();" class="btn mr-5" data-dismiss="modal" type="button">Reload</button>`;
+            btn1 = `<button onclick="location.reload();" class="btn mr-5" data-dismiss="modal">Reload</button>`;
             break;
         default:
            btn = ``;
@@ -844,13 +840,13 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
     }
     switch (btn2) {
         case 'close':
-            btn2 = `<button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>`;
+            btn2 = `<button class="btn btn-primary" data-dismiss="modal">Close</button>`;
             break;
         case 'ok':
-            btn2 = `<button class="btn btn-primary" data-dismiss="modal" type="button">Ok</button>`;
+            btn2 = `<button class="btn btn-primary" data-dismiss="modal">Ok</button>`;
             break;
         case 'reload':
-            btn2 = `<button onclick="location.reload();" class="btn btn-primary" data-dismiss="modal" type="button">Reload</button>`;
+            btn2 = `<button onclick="location.reload();" class="btn btn-primary" data-dismiss="modal">Reload</button>`;
             break;
         default:
            btn = ``;
