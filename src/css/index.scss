@@ -36,7 +36,14 @@ body, input {
   //font-family: 'Encode Sans', sans-serif, monospace;
   //padding: 0 5px 30px 5px;
 }
-
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 .token-logo{
   width: 24px;
   height: 24px;

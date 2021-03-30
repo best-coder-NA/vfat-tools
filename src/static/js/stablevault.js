@@ -260,6 +260,32 @@ async function main() {
     swapTokens(from_token, to_token, TUNDRA_CONTRACT, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS, App);
   });
 
+  $("#swap_max").click(function(){
+    let from_token = $("#swap_input").data("from_token");
+    switch(from_token) {
+      case 'usdt':
+        $("#swap_input").val(s1_balance_formatted);
+        break;
+      case 'busd':
+        $("#swap_input").val(s2_balance_formatted);
+        break;
+      case 'dai':
+        $("#swap_input").val(s3_balance_formatted);
+        break;
+      default:
+        break;
+    }
+  });
+  $("#token_1_max").click(function(){
+    $("#token_1_input").val(s1_balance_formatted);
+  });
+  $("#token_2_max").click(function(){
+    $("#token_2_input").val(s2_balance_formatted);
+  });
+  $("#token_3_max").click(function(){
+    $("#token_3_input").val(s3_balance_formatted);
+  });
+
   hideLoading();
 }
 
@@ -403,6 +429,7 @@ const loadTo = async function(token, TUNDRA_CONTRACT){
   $("#swap_input").data("to_token", token);
   let from_token = $("#swap_input").data("from_token");
   updateSwapAmount(from_token, token, TUNDRA_CONTRACT);
+  $("#from_balance").click(); //click something to hide menu
 }
 const loadFrom = async function(balance, token, allowance, TUNDRA_CONTRACT){
   $("#from_usdt_button").hide();
@@ -425,6 +452,7 @@ const loadFrom = async function(balance, token, allowance, TUNDRA_CONTRACT){
   $("#swap_input").data("from_token", token);
   let to_token = $("#swap_input").data("to_token");
   updateSwapAmount(token, to_token, TUNDRA_CONTRACT);
+  $("#from_balance").click(); //click something to hide menu
 }
 
 const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
