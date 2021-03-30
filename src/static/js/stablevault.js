@@ -262,15 +262,19 @@ async function main() {
 
   $("#swap_max").click(function(){
     let from_token = $("#swap_input").data("from_token");
+    let to_token = $("#swap_input").data("to_token");
     switch(from_token) {
       case 'usdt':
         $("#swap_input").val(s1_balance_formatted);
+        updateSwapAmount(from_token, to_token, TUNDRA_CONTRACT);
         break;
       case 'busd':
         $("#swap_input").val(s2_balance_formatted);
+        updateSwapAmount(from_token, to_token, TUNDRA_CONTRACT);
         break;
       case 'dai':
         $("#swap_input").val(s3_balance_formatted);
+        updateSwapAmount(from_token, to_token, TUNDRA_CONTRACT);
         break;
       default:
         break;
