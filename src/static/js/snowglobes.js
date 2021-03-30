@@ -531,18 +531,22 @@ async function main() {
       _print(`Withdrawal Available: ${options.withdraw_display}`)
     }
     let has_options = false;
+    var approveBtn = '';
+    var depositBtn = '';
     if ( options.current_tokens / 1e18 > 0 ) {
       has_options = true;
-      var approve = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approve"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
-      var deposit = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm deposit"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
+      var approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
+      var depositBtn = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm depositBtn"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
       _print_button(`Approve`, options.approve)
       _print_button(`Deposit`, options.stake)
     }else{
 
     }
+    var withdrawBtn = '';
     if ( options.display_amount > 0 ) {
       has_options = true;
       _print_button(`Withdraw`, options.withdraw)
+      var withdrawBtn = `<button data-btn="${options.withdraw}" class="btn btn-primary btn-sm withdrawBtn"><ion-icon name="push-outline"></ion-icon> Withdraw </button>`;
     }
     if ( !has_options ) {
         _print(`No PGL/sPGL to Deposit/Withdraw`)
@@ -584,7 +588,7 @@ async function main() {
 
               <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
                   <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
-              </div> 
+              </div>
           </div>
       </div>
   </div>`;
@@ -622,8 +626,9 @@ async function main() {
                 ${poolSize}
                 ${available}
                 <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
-                  ${approve}
-                  ${deposit}
+                  ${approveBtn}
+                  ${depositBtn}
+                  ${withdrawBtn}
                 </div>
             </div>
         </div>
@@ -739,7 +744,7 @@ async function main() {
     * sPGL amount stays constant, underlying PGL value grows`
   _print(bottom_funnel);
 
-  $(".approve").click(function(){
+  $(".approveBtn").click(function(){
     let fn = $(this).attr("data-btn");
     switch (fn) {
         case 'approveSUSHI':
@@ -762,7 +767,7 @@ async function main() {
       }
   });
 
-  $(".deposit").click(function(){
+  $(".depositBtn").click(function(){
     let fn = $(this).attr("data-btn");
     switch (fn) {
         case 'stakeSUSHI':
@@ -785,7 +790,7 @@ async function main() {
       }
   });
 
-  $(".withdraw").click(function(){
+  $(".withdrawBtn").click(function(){
     let fn = $(this).attr("data-btn");
     switch (fn) {
         case 'withdrawSUSHI':

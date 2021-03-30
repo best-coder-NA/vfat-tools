@@ -397,6 +397,7 @@ async function main() {
   const snowglobeContract_1 = new ethers.Contract(SNOWGLOBE_SUSHI_ADDR, SNOWGLOBE_ABI, signer);
   let totalPoolPGL_1 = await snowglobeContract_1.balance();
   let poolShareDisplay_1 = null;
+  poolShareDisplay_1_pgl = null;
   let stakeDisplay_1 = null;
   const userSPGL_1 = stakedPool1.amount / 1e18;
   try {
@@ -421,10 +422,16 @@ async function main() {
       const value_1 = token0ValueUSDT_1 + (token1ValueUSDT_1);
       poolShareDisplay_1 = `${userSPGL_1.toFixed(3)} sPGL`
       poolShareDisplay_1_pgl = `${ownedPGL_1.toFixed(3)} PGL - ${userPool1Percent.toFixed(6)}%`;
-      stakeDisplay_1 = `Your LP value is <b>${reserve0Owned_1.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_1]} / <b>${reserve1Owned_1.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_1]} ($<b>${value_1.toFixed(2)}</b>)***</b>`
+      //stakeDisplay_1 = `Your LP value is <b></b>  / <b></b>  ($<b>${value_1.toFixed(2)}</b>)***</b>`
+      stakeDisplay_1 = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
+      <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned_1.toFixed(3)} ${TOKEN_NAMES[token0Address_1]} / ${reserve1Owned_1.toFixed(3)} ${TOKEN_NAMES[token1Address_1]}  </p>
+      <p class="m-0 font-size-12">($${value_1.toFixed(2)})***</p>
+  </div>`;
     }
   } catch { console.log('error calculating PGL value')}
   let poolShareDisplay_2 = null;
+  poolShareDisplay_2_pgl = null;
   let stakeDisplay_2 = null;
   const userPGL_2 = stakedPool2.amount / 1e18;
   try {
@@ -447,14 +454,22 @@ async function main() {
       const token0ValueUSDT_2 = reserve0Owned_2 * t0Price_2;
       const token1ValueUSDT_2 = reserve1Owned_2 * t1Price_2;
       const value_2 = token0ValueUSDT_2 + (token1ValueUSDT_2);
-      poolShareDisplay_2 = `Your pool share is <b>${ownedPGL_2.toFixed(3)}</b> PGL - <b>${userPool2Percent.toFixed(6)}%</b></b>`
-      stakeDisplay_2 = `Your LP value is <b>${reserve0Owned_2.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_2]} / <b>${reserve1Owned_2.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_2]} ($<b>${value_2.toFixed(2)}</b>)***</b>`
+      poolShareDisplay_2 = `${userSPGL_2.toFixed(3)} sPGL`
+      poolShareDisplay_2_pgl = `${ownedPGL_2.toFixed(3)} PGL - ${userPool2Percent.toFixed(6)}%`;
+      //stakeDisplay_2 = `Your LP value is <b>${reserve0Owned_2.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_2]} / <b>${reserve1Owned_2.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_2]} ($<b>${value_2.toFixed(2)}</b>)***</b>`;
+
+      stakeDisplay_2 = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
+      <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned_2.toFixed(3)} ${TOKEN_NAMES[token0Address_2]} / ${reserve1Owned_2.toFixed(3)} ${TOKEN_NAMES[token1Address_2]}  </p>
+      <p class="m-0 font-size-12">($${value_2.toFixed(2)})***</p>
+  </div>`;
     }
   } catch { console.log('error calculating PGL value')}
   //SNOWGLOBE_PNG_ADDR
   const snowglobeContract_3 = new ethers.Contract(SNOWGLOBE_PNG_ADDR, SNOWGLOBE_ABI, signer);
   let totalPoolPGL_3 = await snowglobeContract_3.balance();
   let poolShareDisplay_3 = null;
+  let poolShareDisplay_3_pgl = null;
   let stakeDisplay_3 = null;
   const userSPGL_3 = stakedPool3.amount / 1e18;
   try {
@@ -477,14 +492,21 @@ async function main() {
       const token0ValueUSDT_3 = reserve0Owned_3 * t0Price_3;
       const token1ValueUSDT_3 = reserve1Owned_3 * t1Price_3;
       const value_3 = token0ValueUSDT_3 + (token1ValueUSDT_3);
-      poolShareDisplay_3 = `Your pool share is <b>${userSPGL_3.toFixed(3)}</b> sPGL (<b>${ownedPGL_3.toFixed(3)}</b> PGL) - <b>${userPool3Percent.toFixed(6)}%</b>`
-      stakeDisplay_3 = `Your LP Value is <b>${reserve0Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_3]} / <b>${reserve1Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_3]} ($<b>${value_3.toFixed(2)}</b>)***</b>`
+      poolShareDisplay_3 = `${userSPGL_3.toFixed(3)} sPGL`
+      poolShareDisplay_3_pgl = `${ownedPGL_3.toFixed(3)} PGL - ${userPool3Percent.toFixed(6)}%`;
+      //stakeDisplay_3 = `Your LP Value is <b>${reserve0Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_3]} / <b>${reserve1Owned_3.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_3]} ($<b>${value_3.toFixed(2)}</b>)***</b>`
+      stakeDisplay_3 = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
+      <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned_3.toFixed(3)} ${TOKEN_NAMES[token0Address_3]} / ${reserve1Owned_3.toFixed(3)} ${TOKEN_NAMES[token1Address_3]}  </p>
+      <p class="m-0 font-size-12">($${value_3.toFixed(2)})***</p>
+  </div>`;
     }
   } catch { console.log('error calculating PGL value')}
   //SNOWGLOBE_ETH_ADDR
   const snowglobeContract_4 = new ethers.Contract(SNOWGLOBE_ETH_ADDR, SNOWGLOBE_ABI, signer);
   let totalPoolPGL_4 = await snowglobeContract_4.balance();
   let poolShareDisplay_4 = null;
+  let poolShareDisplay_4_pgl = null;
   let stakeDisplay_4 = null;
   const userSPGL_4 = stakedPool4.amount / 1e18;
   try {
@@ -507,14 +529,21 @@ async function main() {
       const token0ValueUSDT_4 = reserve0Owned_4 * t0Price_4;
       const token1ValueUSDT_4 = reserve1Owned_4 * t1Price_4;
       const value_4 = token0ValueUSDT_4 + (token1ValueUSDT_4);
-      poolShareDisplay_4 = `Your pool share is <b>${userSPGL_4.toFixed(3)}</b> sPGL (<b>${ownedPGL_4.toFixed(3)}</b> PGL) - <b>${userPool4Percent.toFixed(6)}%</b>`
-      stakeDisplay_4 = `Your LP Value is <b>${reserve0Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_4]} / <b>${reserve1Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_4]} ($<b>${value_4.toFixed(2)}</b>)***</b>`
+      poolShareDisplay_4 = `${userSPGL_4.toFixed(3)} sPGL`
+      poolShareDisplay_4_pgl = `${ownedPGL_4.toFixed(3)} PGL - ${userPool4Percent.toFixed(6)}%`;
+      //stakeDisplay_4 = `Your LP Value is <b>${reserve0Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token0Address_4]} / <b>${reserve1Owned_4.toFixed(3)}</b> ${TOKEN_NAMES[token1Address_4]} ($<b>${value_4.toFixed(2)}</b>)***</b>`
+      stakeDisplay_4 = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
+      <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned_4.toFixed(3)} ${TOKEN_NAMES[token0Address_4]} / ${reserve1Owned_4.toFixed(3)} ${TOKEN_NAMES[token1Address_4]}  </p>
+      <p class="m-0 font-size-12">($${value_4.toFixed(2)})***</p>
+  </div>`;
     }
   } catch { console.log('error calculating PGL value')}
   //SNOWGLOBE_USDT_ADDR
   const snowglobeContract_5 = new ethers.Contract(SNOWGLOBE_USDT_ADDR, SNOWGLOBE_ABI, signer);
   let totalPoolPGL_5 = await snowglobeContract_5.balance();
   let poolShareDisplay_5 = null;
+  let poolShareDisplay_5_pgl = null;
   let stakeDisplay_5 = null;
   const userSPGL_5 = stakedPool5.amount / 1e18;
   try {
@@ -536,14 +565,21 @@ async function main() {
       const token0ValueUSDT_5 = reserve0Owned_5 * t0Price_5;
       const token1ValueUSDT_5 = reserve1Owned_5 * t1Price_5;
       const value_5 = token0ValueUSDT_5 + (token1ValueUSDT_5);
-      poolShareDisplay_5 = `Your pool share is <b>${userSPGL_5.toFixed(6)}</b> sPGL (<b>${ownedPGL_5.toFixed(6)}</b> PGL) - <b>${userPool5Percent.toFixed(6)}%</b>`
-      stakeDisplay_5 = `Your LP Value is <b>${reserve0Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token0Address_5]} / <b>${reserve1Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token1Address_5]} ($<b>${value_5.toFixed(2)}</b>)***</b>`
+      poolShareDisplay_5 = `${userSPGL_5.toFixed(3)} sPGL`
+      poolShareDisplay_5_pgl = `${ownedPGL_5.toFixed(3)} PGL - ${userPool5Percent.toFixed(6)}%`;
+      //stakeDisplay_5 = `Your LP Value is <b>${reserve0Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token0Address_5]} / <b>${reserve1Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token1Address_5]} ($<b>${value_5.toFixed(2)}</b>)***</b>`
+      stakeDisplay_5 = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
+      <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned_5.toFixed(3)} ${TOKEN_NAMES[token0Address_5]} / ${reserve1Owned_5.toFixed(3)} ${TOKEN_NAMES[token1Address_5]}  </p>
+      <p class="m-0 font-size-12">($${value_5.toFixed(2)})***</p>
+  </div>`;
     }
   } catch { console.log('error calculating PGL value')}
   //SNOWGLOBE_LINK_ADDR
   const snowglobeContract_6 = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer);
   let totalPoolPGL_6 = await snowglobeContract_6.balance();
   let poolShareDisplay_6 = null;
+  let poolShareDisplay_6_pgl = null;
   let stakeDisplay_6 = null;
   const userSPGL_6 = stakedPool6.amount / 1e18;
   try {
@@ -565,8 +601,14 @@ async function main() {
       const token0ValueUSDT_6 = reserve0Owned_6 * t0Price_6;
       const token1ValueUSDT_6 = reserve1Owned_6 * t1Price_6;
       const value_6 = token0ValueUSDT_6 + (token1ValueUSDT_6);
-      poolShareDisplay_6 = `Your pool share is <b>${userSPGL_6.toFixed(6)}</b> sPGL (<b>${ownedPGL_6.toFixed(6)}</b> PGL) - <b>${userPool6Percent.toFixed(6)}%</b>`
-      stakeDisplay_6 = `Your LP Value is <b>${reserve0Owned_6.toFixed(6)}</b> ${TOKEN_NAMES[token0Address_6]} / <b>${reserve1Owned_6.toFixed(6)}</b> ${TOKEN_NAMES[token1Address_6]} ($<b>${value_6.toFixed(2)}</b>)***</b>`
+      poolShareDisplay_6 = `${userSPGL_6.toFixed(3)} sPGL`
+      poolShareDisplay_6_pgl = `${ownedPGL_6.toFixed(3)} PGL - ${userPool6Percent.toFixed(6)}%`;
+      //stakeDisplay_6 = `${reserve0Owned_6.toFixed(6)} ${TOKEN_NAMES[token0Address_6]} / ${reserve1Owned_6.toFixed(6)}</b> ${TOKEN_NAMES[token1Address_6]} ($<b>${value_6.toFixed(2)}</b>)***</b>`;
+      stakeDisplay_6 = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
+      <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned_6.toFixed(3)} ${TOKEN_NAMES[token0Address_6]} / ${reserve1Owned_6.toFixed(3)} ${TOKEN_NAMES[token1Address_6]}  </p>
+      <p class="m-0 font-size-12">($${value_6.toFixed(2)})***</p>
+  </div>`;
     }
   } catch { console.log('error calculating PGL value')}
  // _print(`<b style="font-size: 20px;"">IceQueen 👸 - Governance</b>`);
@@ -638,24 +680,67 @@ async function main() {
       _print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
     }
+    var poolShare = '';
+    var estimatedRate = '';
+    var earning = '';
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
         _print(options.pool_share_display)
+        var poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
+        <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
+        <p class="m-0 font-size-12">${options.pool_share_display_pgl} </p>
+    </div>`;
       }
-      if (options.stake_display) {
+      var stakeDisplay = '';
+      console.log(`Error 1 ${options.stake_display}`);
+      if (options.stake_display ) {
+          console.log(`Error 2 ${options.stake_display}`);
         _print(options.stake_display)
+        stakeDisplay = options.stake_display;
+      }else{
+        stakeDisplay = '';
+        console.log(`Error 3 ${options.stake_display}`);
       }
+
+      console.log(`Error 4 ${options.stake_display}`);
       _print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
       _print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
+
+      var estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+      <p class="m-0 font-size-12"> Estimated Rate</p>
+      <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
+      <p class="m-0 font-size-12">(24hr block rate)</p>
+        </div>`;
+
+        earning = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You are earning</p>
+        <p class="m-0 font-size-16 font-weight-regular">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)} SNOB </p>
+        <p class="m-0 font-size-12">per day ($${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</p>
+        <p class="m-0 font-size-12">(Average block rate)</p>
+
+    </div>`
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       _print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
     }
+    availableStake = '';
     if ( options.display_amount > 0 ) {
       _print(`Available to Stake: <b>${(options.display_amount).toFixed(6)}</b> sPGL`)
+      availableStake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-regular">${(options.display_amount).toFixed(6)} sPGL </p>
+      <p class="m-0 font-size-12">(Available to Stake) </p>
+  </div>`;
     }
+    availableUnstake = '';
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       _print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> sPGL`)
+      availableUnstake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-regular">${(options.staked_pool.amount / 1e18).toFixed(6)} sPGL </p>
+      <p class="m-0 font-size-12">(Available to Unstake) </p>
+  </div>`;
     }
     let has_options = false
     approveBtn = '';
@@ -667,18 +752,18 @@ async function main() {
       _print_button(`Approve`, options.approve)
       _print_button(`Stake`, options.stake)
 
-      approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approve" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
-      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10"><ion-icon name="lock-open-outline"></ion-icon> Stake sPGL</button>`;
+      approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
+      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake sPGL</button>`;
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       has_options = true
       _print_button(`Unstake`, options.unstake);
-      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>`;
+      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>`;
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
       _print_button(`Claim`, options.claim)
-      claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm harvest"><ion-icon name="download-outline"></ion-icon> Harvest SNOB</button>`;
+      claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
     }
     if ( !has_options ) {
       _print(`No sPGL to Stake/Withdraw.`)
@@ -789,9 +874,9 @@ async function main() {
                 <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
                     <div class="form-inline w-50 mx-auto">
                         <div class="form-group m-md-0">
-                            <p class="m-0 font-size-12 font-weight-lighter">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-lighter">Weekly:</p>
-                            <p class="m-0 font-size-12 font-weight-lighter">Yearly:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                         </div>
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
@@ -803,14 +888,12 @@ async function main() {
                     </div>
 
                 </div>
-                <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-                    <p class="m-0 font-size-12"> Estimated Rate</p>
-                    <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
-                    <p class="m-0 font-size-12">(24hr block rate)</p>
-                </div>
+                ${estimatedRate}
                 <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-                    
-                    
+                ${approveBtn}
+                ${stakeBtn}
+                ${unstakeBtn}
+                ${claimBtn}
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
@@ -822,7 +905,7 @@ async function main() {
                 <div class="row">
                     <div class="col-sm-12 col-md-2 align-items-center pb-10">
                         <div class="row text-center">
-                            <p class="font-weight-lighter">Estimated APR :</p>
+                            <p class="font-weight-light">Estimated APR :</p>
                         </div>
                         <div class="row">
                             <div class="form-inline w-50 ">
@@ -850,35 +933,20 @@ async function main() {
                     </div>
                     <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"> Pool Size</p>
-                        <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">246.084,435 sPGL </span>
-                        <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">257.298,991 PGL</span>
+                        ${poolSize}
                     </div>
-                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
-                        <p class="m-0 font-size-16 font-weight-regular">7.828 sPGL  </p>
-                        <p class="m-0 font-size-12">(8.039 PGL) </p>
-
-                    </div>
+                    ${poolShare}
 
                 </div>
                 <div class="row pt-20">
-                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You are earning</p>
-                        <p class="m-0 font-size-16 font-weight-regular">2.39 SNOB </p>
-                        <p class="m-0 font-size-12">per day ($1.12) </p>
+                    ${earning}
 
-                    </div>
-                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
-                        <p class="m-0 font-size-16 font-weight-regular">32.305 PNG / 2.479 AVAX  </p>
-                        <p class="m-0 font-size-12">($142.03)</p>
-
-                    </div>
+                    ${availableStake}
                     <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
-                        <p class="m-0 font-size-16 font-weight-regular">7.827872 sPGL</p>
-
+                        <p class="m-0 font-size-16 font-weight-regular">${(options.pending_tokens / 1e18).toFixed(6)}</p>
                     </div>
+                    ${availableUnstake}
                 </div>
             </div>
         </div>
@@ -905,6 +973,7 @@ async function main() {
     if (options.total_staked) {
       _print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> S3D`)
     }
+    var estimatedRate = '';
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
         _print(options.pool_share_display)
@@ -914,6 +983,12 @@ async function main() {
       }
       _print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
       _print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
+
+      estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+      <p class="m-0 font-size-12"> Estimated Rate</p>
+      <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
+      <p class="m-0 font-size-12">(24hr block rate)</p>
+        </div>`;
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       _print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
@@ -979,10 +1054,10 @@ async function main() {
     staked_pool: stakedPool6,
     pending_tokens: pendingSNOBTokensPool6,
     display_amount: spglLinkDisplayAmt,
-    approve: approveSPGLLINK,
-    stake: stakeSPGLLINK,
-    unstake: withdrawPool6,
-    claim: claimPool6,
+    approve: 'approveSPGLLINK',
+    stake: 'stakeSPGLLINK',
+    unstake: 'withdrawPool6',
+    claim: 'claimPool6',
     icequeen_apr: pool6APR,
     snowglobe_apr: link_apr.dailyAPR,
     tvl_display: pool6tvlDisplay,
@@ -1004,10 +1079,10 @@ async function main() {
     staked_pool: stakedPool5,
     pending_tokens: pendingSNOBTokensPool5,
     display_amount: spglUsdtDisplayAmt,
-    approve: approveSPGLUSDT,
-    stake: stakeSPGLUSDT,
-    unstake: withdrawPool5,
-    claim: claimPool5,
+    approve: 'approveSPGLUSDT',
+    stake: 'stakeSPGLUSDT',
+    unstake: 'withdrawPool5',
+    claim: 'claimPool5',
     icequeen_apr: pool5APR,
     snowglobe_apr: usdt_apr.dailyAPR,
     tvl_display: pool5tvlDisplay,
@@ -1029,10 +1104,10 @@ async function main() {
     staked_pool: stakedPool4,
     pending_tokens: pendingSNOBTokensPool4,
     display_amount: spglEthDisplayAmt,
-    approve: approveSPGLETH,
-    stake: stakeSPGLETH,
-    unstake: withdrawPool4,
-    claim: claimPool4,
+    approve: 'approveSPGLETH',
+    stake: 'stakeSPGLETH',
+    unstake: 'withdrawPool4',
+    claim: 'claimPool4',
     icequeen_apr: pool4APR,
     snowglobe_apr: eth_apr.dailyAPR,
     tvl_display: pool4tvlDisplay,
@@ -1054,10 +1129,10 @@ async function main() {
     staked_pool: stakedPool3,
     pending_tokens: pendingSNOBTokensPool3,
     display_amount: spglPngDisplayAmt,
-    approve: approveSPGLPNG,
-    stake: stakeSPGLPNG,
-    unstake: withdrawPool3,
-    claim: claimPool3,
+    approve: 'approveSPGLPNG',
+    stake: 'stakeSPGLPNG',
+    unstake: 'withdrawPool3',
+    claim: 'claimPool3',
     icequeen_apr: pool3APR,
     snowglobe_apr: png_apr.dailyAPR,
     tvl_display: pool3tvlDisplay,
@@ -1079,10 +1154,10 @@ async function main() {
     staked_pool: stakedPool2,
     pending_tokens: pendingSNOBTokensPool2,
     display_amount: snobAvaxDisplayAmt,
-    approve: approveSNOB,
-    stake: stakeSNOB,
-    unstake: withdrawPool2,
-    claim: claimPool2,
+    approve: 'approveSNOB',
+    stake: 'stakeSNOB',
+    unstake: 'withdrawPool2',
+    claim: 'claimPool2',
     icequeen_apr: pool2APR,
     snowglobe_apr: null,
     tvl_display: pool2tvlDisplay,
@@ -1104,10 +1179,10 @@ async function main() {
     staked_pool: stakedPool1,
     pending_tokens: pendingSNOBTokensPool1,
     display_amount: spglSushiDisplayAmt,
-    approve: approveSPGLSUSHI,
-    stake: stakeSPGLSUSHI,
-    unstake: withdrawPool1,
-    claim: claimPool1,
+    approve: 'approveSPGLSUSHI',
+    stake: 'stakeSPGLSUSHI',
+    unstake: 'withdrawPool1',
+    claim: 'claimPool1',
     icequeen_apr: pool1APR,
     snowglobe_apr: sushi_apr.dailyAPR,
     tvl_display: pool1tvlDisplay,
@@ -1116,6 +1191,152 @@ async function main() {
     pool_share_display_pgl: poolShareDisplay_1_pgl,
     stake_display: stakeDisplay_1
   })
+
+  $(".approveBtn").click(function(){
+    let fn = $(this).attr("data-btn");
+    switch (fn) {
+        case 'approveSPGLSUSHI':
+            approveSPGLSUSHI();
+          break;
+        case 'approveSNOB':
+            approveSNOB();
+          break;
+        case 'approveSPGLPNG':
+            approveSPGLPNG();
+          break;
+        case 'approveSPGLETH':
+            approveSPGLETH();
+          break;
+        case 'approveSPGLUSDT':
+            approveSPGLUSDT();
+          break;
+        case 'approveSPGLLINK':
+            approveSPGLLINK();
+          break;
+        case 'approveS3D':
+            approveS3D();
+        break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+  });
+
+  $(".unstakeBtn").click(function(){
+    let fn = $(this).attr("data-btn");
+    switch (fn) {
+        case 'withdrawPool1':
+            withdrawPool1();
+          break;
+        case 'withdrawPool2':
+            withdrawPool2();
+          break;
+        case 'withdrawPool3':
+            withdrawPool3();
+          break;
+        case 'withdrawPool4':
+            withdrawPool4();
+          break;
+        case 'withdrawPool5':
+            withdrawPool5();
+          break;
+        case 'withdrawPool6':
+            withdrawPool6();
+          break;
+        case 'withdrawPool7':
+            withdrawPool7();
+        break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+  });
+
+  $(".claimBtn").click(function(){
+    let fn = $(this).attr("data-btn");
+    switch (fn) {
+        case 'claimPool1':
+            claimPool1();
+          break;
+        case 'claimPool2':
+            claimPool2();
+          break;
+        case 'claimPool3':
+            claimPool3();
+          break;
+        case 'claimPool4':
+            claimPool4();
+          break;
+        case 'claimPool5':
+            claimPool5();
+          break;
+        case 'claimPool6':
+            claimPool6();
+          break;
+        case 'claimPool7':
+            claimPool7();
+        break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+  });
+
+  $(".approveBtn").click(function(){
+    let fn = $(this).attr("data-btn");
+    switch (fn) {
+        case 'approveSPGLSUSHI':
+            approveSPGLSUSHI();
+          break;
+        case 'approveSNOB':
+            approveSNOB();
+          break;
+        case 'approveSPGLPNG':
+            approveSPGLPNG();
+          break;
+        case 'approveSPGLETH':
+            approveSPGLETH();
+          break;
+        case 'approveSPGLUSDT':
+            approveSPGLUSDT();
+          break;
+        case 'approveSPGLLINK':
+            approveSPGLLINK();
+          break;
+        case 'approveS3D':
+            approveS3D();
+        break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+  });
+
+  $(".stakeBtn").click(function(){
+    let fn = $(this).attr("data-btn");
+    switch (fn) {
+        case 'stakeSPGLSUSHI':
+            stakeSPGLSUSHI();
+          break;
+        case 'stakeSNOB':
+            stakeSNOB();
+          break;
+        case 'stakeSPGLPNG':
+            stakeSPGLPNG();
+          break;
+        case 'stakeSPGLETH':
+            stakeSPGLETH();
+          break;
+        case 'stakeSPGLUSDT':
+            stakeSPGLUSDT();
+          break;
+        case 'stakeSPGLLINK':
+            stakeSPGLLINK();
+          break;
+        case 'stakeS3D':
+            stakeS3D();
+        break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+  });
+
   hideLoading();
 }
 const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
