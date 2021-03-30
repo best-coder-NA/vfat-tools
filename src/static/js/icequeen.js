@@ -734,8 +734,7 @@ async function main() {
       _print_button(`Claim`, options.claim)
     }
     if ( !has_options ) {
-      _print(`No sPGL to Stake/Withdraw.`)
-      _print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
+      _print(`No S3D to Stake/Withdraw. Get S3D from StableVault.`)
     }
   }
 
