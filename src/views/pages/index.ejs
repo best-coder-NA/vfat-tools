@@ -24,7 +24,8 @@
                         <div class="row mx-auto">
                             <!-- Main start -->
                             <div class="col-lg-7">
-                                <div class="content">
+                                <div class="content" data-aos="fade-up"
+                                data-aos-duration="3000">
                                     <div class="hero-header pt-20">
                                         <h1 class="font-weight-semi-bold"> Earn up to 680% more from your liquidy pool tokens</h1>
                                     </div>
@@ -37,7 +38,7 @@
                                     </span>
                                     <div class="d-md-flex align-items-center total-locked text-extra-letter-spacing text-monospace font-size-12 pt-20 mb-20" target="_blank" rel="noopener">
 
-                                        <h2 class="tvl text-primary px-5" id="tvl">...</h2>
+                                        <h2 class="tvl text-primary px-5" id="tvl" data-aos="fade-right">...</h2>
                                         <a href="https://app.pangolin.exchange/#/swap?inputCurrency=avax&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50" class="btn btn-primary btn-lg ml-0 ml-md-20 buy-btn" target="_blank" role="button">
                                             Buy $SNOB
                                         </a>
@@ -213,6 +214,11 @@
                     function() {}
                 );
             });
+        </script>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
         </script>
     </body>
 </html>
