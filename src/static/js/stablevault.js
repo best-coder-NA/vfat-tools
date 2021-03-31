@@ -31,7 +31,9 @@ async function main() {
   const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
 
   const App = await init_ethers();
-  const signer = App.provider.getSigner()
+  const signer = App.provider.getSigner();
+
+  $('#recent-transactions').html('Loading Transactions...');
 
   //functions
   const approveStable1 = async function () {
@@ -288,7 +290,81 @@ async function main() {
     $("#token_3_input").val(s3_balance_formatted);
   });
 
+  loadEvents(App, TUNDRA_CONTRACT);
+
   hideLoading();
+}
+
+const loadEvents = async function (App, TUNDRA_CONTRACT) {
+  $('#recent-transactions').html('');
+  try {
+    let blockNumber = await App.provider.getBlockNumber();
+    let events = [];
+    let attempt = 0;
+    while (events.length < 10 && attempt < 10) {
+      let moreEvents = await TUNDRA_CONTRACT.queryFilter('*', blockNumber - 500, blockNumber);
+      events = events.concat(moreEvents);
+      blockNumber = blockNumber - 501;
+      attempt += 1;
+    }
+    console.log(events);
+    await Promise.all(events.map(async (event) => {
+      let block = await event.getBlock();
+      let timeStamp = new Date(block.timestamp * 1000).toLocaleString();
+      event.timestamp = timeStamp;
+    }));
+    events.sort((a, b) => b.blockNumber - a.blockNumber).forEach(event => {
+      addEventToDom(event, App);
+    })
+  } catch {console.log('could not get events')}
+}
+
+const addEventToDom = async function (event, App) {
+  console.log(`${event.blockNumber}: ${event.timestamp}`);
+  let transactionUrl = `https://cchain.explorer.avax.network/tx/${event.transactionHash}/token-transfers`;
+  let row1 = ``;
+
+  switch(event.event) {
+    case 'AddLiquidity':
+    case 'RemoveLiquidity':
+      let label = event.event == 'RemoveLiquidity' ? 'Remove' : 'Add';
+      let tokenAmounts = event.args.tokenAmounts;
+      let deposits = [];
+      if (tokenAmounts[0] > 0) {
+        let usdt = new Intl.NumberFormat('en-US').format((tokenAmounts[0] / 1e6).toFixed(2));
+        deposits.push(`$${usdt} USDT`);
+      }
+      if (tokenAmounts[1] > 0) {
+        let busd = new Intl.NumberFormat('en-US').format((tokenAmounts[1] / 1e18).toFixed(2));
+        deposits.push(`$${busd} BUSD`);
+      }
+      if (tokenAmounts[2] > 0) {
+        let dai = new Intl.NumberFormat('en-US').format((tokenAmounts[2] / 1e18).toFixed(2));
+        deposits.push(`$${dai} DAI`);
+      }
+      let depositsDisplay = deposits.join(' + ');
+      row1 = `<div><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">`
+      row1 += `${label}:</span> ${depositsDisplay}</a></div>`;
+      break;
+    case 'TokenSwap':
+      let tokenBought = event.args.boughtId;
+      let tokenSold = event.args.soldId;
+      let boughtAmount = event.args.tokensBought;
+      let soldAmount = event.args.tokensSold;
+      let decimalsBought = tokenBought == 0 ? 1e6 : 1e18;
+      let decimalsSold = tokenSold == 0 ? 1e6 : 1e18;
+      let tokenBoughtLabel = tokenBought == 0 ? 'USDT' : tokenBought == 1 ? 'BUSD' : ' DAI';
+      let tokenSoldLabel = tokenSold == 0 ? 'USDT' : tokenSold == 1 ? 'BUSD' : ' DAI';
+      let boughtDisplay = new Intl.NumberFormat('en-US').format((boughtAmount / decimalsBought).toFixed(2));
+      let soldDisplay = new Intl.NumberFormat('en-US').format((soldAmount / decimalsSold).toFixed(2));
+      row1 = `<div><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">Trade:</span> $${soldDisplay} ${tokenSoldLabel} for $${boughtDisplay} ${tokenBoughtLabel}</a></div>`;
+      break;
+    default:
+      break;
+  }
+  let row2 = `<div class="mb-5">${event.timestamp}</div>`;
+  $('#recent-transactions').append(row1);
+  $('#recent-transactions').append(row2);
 }
 
 const swapTokens = async function(from_token, to_token, TUNDRA_CONTRACT, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS, App){

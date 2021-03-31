@@ -581,7 +581,7 @@ async function main() {
       const token0ValueUSDT_5 = reserve0Owned_5 * t0Price_5;
       const token1ValueUSDT_5 = reserve1Owned_5 * t1Price_5;
       const value_5 = token0ValueUSDT_5 + (token1ValueUSDT_5);
-      poolShareDisplay_5 = `Your pool share is <b>${userSPGL_5.toFixed(6)}</b> sPGL (<b>${ownedPGL_5.toFixed(6)}</b> PGL) - <b>${userPool5Percent.toFixed(6)}%</b>`
+      poolShareDisplay_5 = `Your pool share is <b>${userSPGL_5.toFixed(8)}</b> sPGL (<b>${ownedPGL_5.toFixed(8)}</b> PGL) - <b>${userPool5Percent.toFixed(6)}%</b>`
       stakeDisplay_5 = `Your LP Value is <b>${reserve0Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token0Address_5]} / <b>${reserve1Owned_5.toFixed(6)}</b> ${TOKEN_NAMES[token1Address_5]} ($<b>${value_5.toFixed(2)}</b>)***</b>`
     }
   } catch { console.log('error calculating PGL value')}
