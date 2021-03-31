@@ -781,7 +781,7 @@ async function main() {
                         <h6 class="pl-10 m-0">${options.pool_name}</h6>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0">
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
                 </div>
@@ -859,15 +859,14 @@ async function main() {
         var poolPrint = `<div class="col-md-12">
         <div class="card border-0 p-10 pl-20 pr-20 mt-5">
             <div class="row">
-                <div class="col-sm-12 col-md-2 align-items-center d-flex pb-10 pb-md-0">
-                    <div id="pooltokens" class="align-items-center d-flex mx-auto">
-                    <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                    <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
-                    <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                    <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <h6 class="pl-10 m-0">${options.pool_name}</h6>
                     </div>
-
                 </div>
-                <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0">
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
                 </div>
@@ -1020,7 +1019,7 @@ async function main() {
   }
   poolS3D({
     pool_nickname: 'pool-7',
-    pool_name: '🏦 StableVault S3D - New! 🌟',
+    pool_name: 'StableVault S3D 🌟',
     url: null,
     tvl: null,
     pool_weight: pool7weight,
@@ -1045,7 +1044,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     pool_nickname: 'pool-6',
-    pool_name: '🔗 LINK-AVAX sPGL - New! 🌟',
+    pool_name: 'LINK-AVAX sPGL 🌟',
     url: null,
     tvl: LINK_AVAX_TVL,
     pool_weight: pool6weight,
@@ -1070,7 +1069,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     pool_nickname: 'pool-5',
-    pool_name: '💵 USDT-AVAX sPGL',
+    pool_name: 'USDT-AVAX sPGL',
     url: null,
     tvl: USDT_AVAX_TVL,
     pool_weight: pool5weight,
@@ -1095,7 +1094,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     pool_nickname: 'pool-4',
-    pool_name: '💠 ETH-AVAX sPGL',
+    pool_name: 'ETH-AVAX sPGL',
     url: null,
     tvl: ETH_AVAX_TVL,
     pool_weight: pool4weight,
@@ -1120,7 +1119,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     pool_nickname: 'pool-3',
-    pool_name: '🦔 PNG-AVAX sPGL',
+    pool_name: 'PNG-AVAX sPGL',
     url: null,
     tvl: PNG_AVAX_TVL,
     pool_weight: pool3weight,
@@ -1145,7 +1144,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     pool_nickname: 'pool-2',
-    pool_name: '❄️ SNOB-AVAX Pangolin LP',
+    pool_name: 'SNOB-AVAX Pangolin LP',
     url: SNOB_AVAX_POOL_URL,
     tvl: SNOB_AVAX_TVL,
     pool_weight: pool2weight,
@@ -1170,7 +1169,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     pool_nickname: 'pool-1',
-    pool_name: '🍣 SUSHI-AVAX sPGL',
+    pool_name: 'SUSHI-AVAX sPGL',
     url: null,
     tvl: SUSHI_AVAX_TVL,
     pool_weight: pool1weight,

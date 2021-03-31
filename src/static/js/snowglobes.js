@@ -546,7 +546,7 @@ async function main() {
     if ( options.display_amount > 0 ) {
       has_options = true;
       _print_button(`Withdraw`, options.withdraw)
-      var withdrawBtn = `<button data-btn="${options.withdraw}" class="btn btn-primary btn-sm withdrawBtn"><ion-icon name="push-outline"></ion-icon> Withdraw </button>`;
+      var withdrawBtn = `<button data-btn="${options.withdraw}" class="btn btn-success btn-sm withdrawBtn"><ion-icon name="push-outline"></ion-icon> Withdraw </button>`;
     }
     if ( !has_options ) {
         _print(`No PGL/sPGL to Deposit/Withdraw`)
@@ -837,7 +837,7 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
             btn1 = `<button class="btn mr-5" data-dismiss="modal">Ok</button>`;
             break;
         case 'reload':
-            btn1 = `<button onclick="location.reload();" class="btn mr-5" data-dismiss="modal">Reload</button>`;
+            btn1 = `<button onclick="window.location.reload(true);" class="btn mr-5" data-dismiss="modal">Reload</button>`;
             break;
         default:
            btn = ``;
@@ -851,7 +851,7 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
             btn2 = `<button class="btn btn-primary" data-dismiss="modal">Ok</button>`;
             break;
         case 'reload':
-            btn2 = `<button onclick="location.reload();" class="btn btn-primary" data-dismiss="modal">Reload</button>`;
+            btn2 = `<button onclick="window.location.reload(true);" class="btn btn-primary" data-dismiss="modal">Reload</button>`;
             break;
         default:
            btn = ``;
@@ -970,7 +970,7 @@ const snowglobeContract_stake = async function (chefAbi, chefAddress, poolIndex,
               halfmoon.toggleModal('modal-loading')
               //alert('Tokens deposited. Refresh page to see balance.')
               snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ location.reload(); }, 5000);
+              setTimeout(function(){ window.location.reload(true); }, 5000);
             })
           })
           .catch(function () {
@@ -1018,7 +1018,7 @@ const snowglobeContract_withdraw = async function (chefAbi, chefAddress, poolInd
               //hideLoading()
               halfmoon.toggleModal('modal-loading')
               snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ location.reload(); }, 5000);
+              setTimeout(function(){ window.location.reload(true); }, 5000);
 
               //alert('Tokens Withdrawn. Refresh page to see balance.')
             })
