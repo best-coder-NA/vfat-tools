@@ -185,15 +185,13 @@ async function main() {
     });
   }
 
-  if ((s1_balance + s2_balance + s3_balance) > 0){
-    $("#deposit_btn").click(function(){
-      loadDepositModal(TUNDRA_CONTRACT, App);
-      $("#deposit_confirm_btn").prop('disabled', false);
-    });
-    $("#deposit_confirm_btn").click(function(){
-      depositStables();
-    });
-  }
+  $("#deposit_btn").click(function(){
+    loadDepositModal(TUNDRA_CONTRACT, App);
+    $("#deposit_confirm_btn").prop('disabled', false);
+  });
+  $("#deposit_confirm_btn").click(function(){
+    depositStables();
+  });
 
   if (S3D_balance > 0 ){
     if (S3D_allowance == 0){
