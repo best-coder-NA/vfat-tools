@@ -310,7 +310,7 @@ const loadEvents = async function (App, TUNDRA_CONTRACT) {
     console.log(events);
     await Promise.all(events.map(async (event) => {
       let block = await event.getBlock();
-      let timeStamp = new Date(block.timestamp * 1000).toLocaleString();
+      let timeStamp = new Date(block.timestamp * 1000).toLocaleTimeString();
       event.timestamp = timeStamp;
     }));
     events.sort((a, b) => b.blockNumber - a.blockNumber).forEach(event => {
@@ -343,8 +343,8 @@ const addEventToDom = async function (event, App) {
         deposits.push(`$${dai} DAI`);
       }
       let depositsDisplay = deposits.join(' + ');
-      row1 = `<div><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">`
-      row1 += `${label}:</span> ${depositsDisplay}</a></div>`;
+      row1 = `<div class="mb-5"><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">${label}: </span>`
+      row1 += `${depositsDisplay} - ${event.timestamp}</a></div>`;
       break;
     case 'TokenSwap':
       let tokenBought = event.args.boughtId;
@@ -357,14 +357,12 @@ const addEventToDom = async function (event, App) {
       let tokenSoldLabel = tokenSold == 0 ? 'USDT' : tokenSold == 1 ? 'BUSD' : ' DAI';
       let boughtDisplay = new Intl.NumberFormat('en-US').format((boughtAmount / decimalsBought).toFixed(2));
       let soldDisplay = new Intl.NumberFormat('en-US').format((soldAmount / decimalsSold).toFixed(2));
-      row1 = `<div><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">Trade:</span> $${soldDisplay} ${tokenSoldLabel} for $${boughtDisplay} ${tokenBoughtLabel}</a></div>`;
+      row1 = `<div class="mb-5"><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">Trade: </span>$${soldDisplay} ${tokenSoldLabel} for $${boughtDisplay} ${tokenBoughtLabel} - ${event.timestamp}</a></div>`;
       break;
     default:
       break;
   }
-  let row2 = `<div class="mb-5">${event.timestamp}</div>`;
   $('#recent-transactions').append(row1);
-  $('#recent-transactions').append(row2);
 }
 
 const swapTokens = async function(from_token, to_token, TUNDRA_CONTRACT, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS, App){
