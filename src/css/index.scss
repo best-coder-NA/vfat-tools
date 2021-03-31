@@ -139,6 +139,12 @@ a:hover {
     text-decoration: none !important;
     background-position: center;
 }
+.token-logo{
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+  }
 .snob-tokens{
     transform: translateY(5px);
     -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
