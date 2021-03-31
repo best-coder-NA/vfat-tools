@@ -217,13 +217,13 @@ async function main() {
   const spglUsdtDisplayAmt = currentSPGLUSDTTokens > 1000 ? (currentSPGLUSDTTokens / 1e18).toFixed(8) : 0;
 
   //snowglobes
- /*  _print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
-  _print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
-	_print(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord\n`) */
-  $('#title').append(`Snowglobes 🌐`);
+ /*  //_print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
+  //_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
+	//_print(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord\n`) */
+  /* $('#title').append(`Snowglobes 🌐`);
   $('#msg1').append(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`);
   $('#msg2').append(`Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord`);
-
+ */
 	let res = null;
   let usdt_tvl = null;
 	let link_tvl = null;
@@ -482,10 +482,10 @@ async function main() {
   } catch { console.log('error calculating PGL value')}
 
   const layout_pool = function(options) {
-    _print(``)
-   _print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
+    //_print(``)
+   //_print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
     if ( options.tvl_display ) {
-      _print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
+      //_print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
       var tvl = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5">
       <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
       <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
@@ -493,14 +493,14 @@ async function main() {
     }else{
       var tvl = '';
     }
-    _print(`APR - Day: <b>${options.apr.dailyAPR.toFixed(2)}</b>% Week: <b>${options.apr.weeklyAPR.toFixed(2)}</b>% Year: <b>${options.apr.yearlyAPR.toFixed(2)}</b>%`);
-    _print(`APY (compounding): <b>${options.apy.toFixed(2)}</b>%`);
+    //_print(`APR - Day: <b>${options.apr.dailyAPR.toFixed(2)}</b>% Week: <b>${options.apr.weeklyAPR.toFixed(2)}</b>% Year: <b>${options.apr.yearlyAPR.toFixed(2)}</b>%`);
+    //_print(`APY (compounding): <b>${options.apy.toFixed(2)}</b>%`);
     var apy =  `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5">
     <p class="m-0 font-size-12">APY</p>
     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.apy.toFixed(2)}%</span>
     </div>`;
     if ( !isNaN(options.total_deposited) ) {
-      _print(`Pool Size: <b>${(options.total_deposited / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
+      //_print(`Pool Size: <b>${(options.total_deposited / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
 
       var poolSize = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5 mx-auto">
       <p class="m-0 font-size-12"> Pool Size</p><span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_deposited / 1e18).toLocaleString()} sPGL </span>
@@ -511,13 +511,13 @@ async function main() {
       var poolSize = '';
     }
     if ( options.pool_share_display ) {
-      _print(options.pool_share_display);
+      //_print(options.pool_share_display);
     }
     if ( options.stake_display) {
-      _print(options.stake_display);
+      //_print(options.stake_display);
     }
     if ( options.current_tokens / 1e18 > 0 ) {
-      _print(`Deposit Available: <b>${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) }</b> PGL`)
+      //_print(`Deposit Available: <b>${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) }</b> PGL`)
 
       var available = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
       <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
@@ -528,7 +528,7 @@ async function main() {
       var available = '';
     }
     if ( options.display_amount > 0 ) {
-      _print(`Withdrawal Available: ${options.withdraw_display}`)
+      //_print(`Withdrawal Available: ${options.withdraw_display}`)
     }
     let has_options = false;
     var approveBtn = '';
@@ -537,22 +537,22 @@ async function main() {
       has_options = true;
       var approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
       var depositBtn = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm depositBtn"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
-      _print_button(`Approve`, options.approve)
-      _print_button(`Deposit`, options.stake)
+      //_print_button(`Approve`, options.approve)
+      //_print_button(`Deposit`, options.stake)
     }else{
 
     }
     var withdrawBtn = '';
     if ( options.display_amount > 0 ) {
       has_options = true;
-      _print_button(`Withdraw`, options.withdraw)
+      //_print_button(`Withdraw`, options.withdraw)
       var withdrawBtn = `<button data-btn="${options.withdraw}" class="btn btn-success btn-sm withdrawBtn"><ion-icon name="push-outline"></ion-icon> Withdraw </button>`;
     }
     if ( !has_options ) {
-        _print(`No PGL/sPGL to Deposit/Withdraw`)
-        _print(`<a href='${options.url}' target='_blank'>Get LP Tokens</a>`)
+        //_print(`No PGL/sPGL to Deposit/Withdraw`)
+        //_print(`<a href='${options.url}' target='_blank'>Get LP Tokens</a>`)
     }
-    _print(``)
+    //_print(``)
 
 
     if( !has_options ){
@@ -736,13 +736,13 @@ async function main() {
     total_pgl: null,
     withdraw_display: withdrawDisplay_sushi
   })
-  _print('**Estimated LP value based on current token prices')
+  //_print('**Estimated LP value based on current token prices')
   const bottom_funnel = `
     <b>PGL vs sPGL</b>
     * PGL tokens staked in Snowglobes receive sPGL receipt tokens in return
     * Withdrawn sPGL tokens recieve PGL tokens in return
     * sPGL amount stays constant, underlying PGL value grows`
-  _print(bottom_funnel);
+  //_print(bottom_funnel);
 
   $(".approveBtn").click(function(){
     let fn = $(this).attr("data-btn");

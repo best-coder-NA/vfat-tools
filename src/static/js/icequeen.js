@@ -614,20 +614,20 @@ async function main() {
  // _print(`<b style="font-size: 20px;"">IceQueen 👸 - Governance</b>`);
   //_print(`<div style="font-size:smaller;padding: 4px 0 0 20px">*Estimates based on 15,000 blocks per day<br/>**Combined APR includes the APR earned from Snowglobe<br/>***Estimated LP value based on current token prices</div>`)
 
-  $('#title').append(`IceQueen 👸 - Governance`);
-  $('#msg1').append(`Estimates based on 15,000 blocks per day`);
-  $('#msg2').append(`Estimated LP value based on current token prices`);
+  //$('#title').append(`IceQueen 👸 - Governance`);
+  //$('#msg1').append(`Estimates based on 15,000 blocks per day`);
+  //$('#msg2').append(`Estimated LP value based on current token prices`);
 
   function pool(options) {
-    _print(``)
+    //_print(``)
     if (options.url) {
-	    _print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
+	    //_print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
     } else {
-	    _print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
+	    //_print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
 	  }
-    _print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
+    //_print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
   	if (options.icequeen_apr) {
-			_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
+			//_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
 
             var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
             var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
@@ -637,7 +637,7 @@ async function main() {
             var combinedAprDisplay = '';
 			if (options.snowglobe_apr) {
 				let combinedAPR = options.icequeen_apr + options.snowglobe_apr
-				_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+				//_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
 
                 var cDayAPR = `${combinedAPR.toFixed(2)}%`;
                 var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
@@ -666,18 +666,18 @@ async function main() {
             </div>`;
 			}
 		}
-    _print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
+    //_print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
     if (options.total_staked && options.total_pgl) {
-      _print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
+      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
 
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} sPGL </span>
         <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
 
     } else if (options.total_staked) {
-      _print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL`)
+      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL`)
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} sPGL </span>`;
     } else {
-      _print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
+      //_print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
     }
     var poolShare = '';
@@ -685,7 +685,7 @@ async function main() {
     var earning = '';
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
-        _print(options.pool_share_display)
+        //_print(options.pool_share_display)
         var poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
         <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
@@ -693,19 +693,16 @@ async function main() {
     </div>`;
       }
       var stakeDisplay = '';
-      console.log(`Error 1 ${options.stake_display}`);
       if (options.stake_display ) {
-          console.log(`Error 2 ${options.stake_display}`);
-        _print(options.stake_display)
+        //_print(options.stake_display)
         stakeDisplay = options.stake_display;
       }else{
         stakeDisplay = '';
-        console.log(`Error 3 ${options.stake_display}`);
       }
 
       console.log(`Error 4 ${options.stake_display}`);
-      _print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
-      _print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
+      //_print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
+      //_print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
 
       var estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
       <p class="m-0 font-size-12"> Estimated Rate</p>
@@ -722,11 +719,11 @@ async function main() {
     </div>`
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
-      _print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
+      //_print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
     }
     availableStake = '';
     if ( options.display_amount > 0 ) {
-      _print(`Available to Stake: <b>${(options.display_amount).toFixed(6)}</b> sPGL`)
+      //_print(`Available to Stake: <b>${(options.display_amount).toFixed(6)}</b> sPGL`)
       availableStake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
       <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
       <p class="m-0 font-size-16 font-weight-regular">${(options.display_amount).toFixed(6)} sPGL </p>
@@ -735,7 +732,7 @@ async function main() {
     }
     availableUnstake = '';
     if ( options.staked_pool.amount / 1e18 > 0 ) {
-      _print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> sPGL`)
+      //_print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> sPGL`)
       availableUnstake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
       <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
       <p class="m-0 font-size-16 font-weight-regular">${(options.staked_pool.amount / 1e18).toFixed(6)} sPGL </p>
@@ -749,25 +746,24 @@ async function main() {
     claimBtn = '';
     if ( options.display_amount > 0 ) {
       has_options = true
-      _print_button(`Approve`, options.approve)
-      _print_button(`Stake`, options.stake)
-
+      ////_print_button(`Approve`, options.approve)
+      ////_print_button(`Stake`, options.stake)
       approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
       stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake sPGL</button>`;
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       has_options = true
-      _print_button(`Unstake`, options.unstake);
+      ////_print_button(`Unstake`, options.unstake);
       unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>`;
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
-      _print_button(`Claim`, options.claim)
+      ////_print_button(`Claim`, options.claim)
       claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
     }
     if ( !has_options ) {
-      _print(`No sPGL to Stake/Withdraw.`)
-      _print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
+      //_print(`No sPGL to Stake/Withdraw.`)
+      //_print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
     }
     if (!has_options){
 
@@ -801,15 +797,15 @@ async function main() {
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
                     <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
                 </div>
-                <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <a href="/snowglobes" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
                 </div>
 
-                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
                 </div>
             </div>
@@ -853,7 +849,7 @@ async function main() {
             </div>
         </div>
         </div>`;
-        $('#snob-pools').append(poolPrint);
+        $('#snob-pools-unused').append(poolPrint);
       }
       if(has_options){
         var poolPrint = `<div class="col-md-12">
@@ -888,14 +884,14 @@ async function main() {
 
                 </div>
                 ${estimatedRate}
-                <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                 ${approveBtn}
                 ${stakeBtn}
                 ${unstakeBtn}
                 ${claimBtn}
                 </div>
 
-                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
                 </div>
             </div>
@@ -930,7 +926,7 @@ async function main() {
                         <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
                         <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
                     </div>
-                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                    <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
                     </div>
@@ -950,11 +946,11 @@ async function main() {
             </div>
         </div>
     </div>`;
-    $('#snob-pools').append(poolPrint);
+    $('#snob-pools-used').append(poolPrint);
       }
   }
   function poolS3D(options) {
-    _print(``)
+    //_print(``)
     if (options.url) {
       _print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
     } else {
@@ -1001,16 +997,16 @@ async function main() {
     let has_options = false
     if ( options.display_amount > 0 ) {
       has_options = true
-      _print_button(`Approve`, options.approve)
-      _print_button(`Stake`, options.stake)
+      //_print_button(`Approve`, options.approve)
+      //_print_button(`Stake`, options.stake)
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       has_options = true
-      _print_button(`Unstake`, options.unstake)
+      //_print_button(`Unstake`, options.unstake)
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
-      _print_button(`Claim`, options.claim)
+      //_print_button(`Claim`, options.claim)
     }
     if ( !has_options ) {
       _print(`No sPGL to Stake/Withdraw.`)
@@ -1041,8 +1037,8 @@ async function main() {
     stake_display: ''
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     pool_nickname: 'pool-6',
     pool_name: 'LINK-AVAX sPGL 🌟',
     url: null,
@@ -1066,8 +1062,8 @@ async function main() {
     stake_display: ''
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     pool_nickname: 'pool-5',
     pool_name: 'USDT-AVAX sPGL',
     url: null,
@@ -1091,8 +1087,8 @@ async function main() {
     stake_display: stakeDisplay_5
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     pool_nickname: 'pool-4',
     pool_name: 'ETH-AVAX sPGL',
     url: null,
@@ -1116,8 +1112,8 @@ async function main() {
     stake_display: stakeDisplay_4
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     pool_nickname: 'pool-3',
     pool_name: 'PNG-AVAX sPGL',
     url: null,
@@ -1141,8 +1137,8 @@ async function main() {
     stake_display: stakeDisplay_3
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
     pool_nickname: 'pool-2',
     pool_name: 'SNOB-AVAX Pangolin LP',
     url: SNOB_AVAX_POOL_URL,
@@ -1166,8 +1162,8 @@ async function main() {
     stake_display: stakeDisplay_2
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     pool_nickname: 'pool-1',
     pool_name: 'SUSHI-AVAX sPGL',
     url: null,

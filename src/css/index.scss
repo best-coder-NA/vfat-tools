@@ -146,6 +146,9 @@ a:hover {
     box-shadow: #{' rgb(0 0 0 / 10%) 0 7px 25px 0 '} !important;
     border-radius: 20px;
 }
+.snobcard{
+    margin: 2rem 4rem;
+}
 .snob-tvl{
     float:none;
     margin:auto;
@@ -203,6 +206,15 @@ ion-icon {
 .buy-btn{
   @include for-phone-only {
     /* margin-top: 20px; */
+    .medium-widget-article__row{
+        width: 100% !important;
+        display: block;
+        margin: 5px;
+    }
+    .medium-widget-article__row .medium-widget-article__item{
+        display: block;
+        width: 100%;
+    }
  }
 }
 .modal-input {
