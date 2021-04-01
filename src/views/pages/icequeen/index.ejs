@@ -7,17 +7,22 @@
     }
 </script>
 <body>
-<%- include(`${partials}/header_main`); -%>
-
-<%- include(`${partials}/wallet_error`); -%>
-
-<div class="page-wrapper with-navbar with-transitions">
+    <div class="page-wrapper with-navbar with-transitions">
+    <%- include(`${partials}/header_main`); -%>
+    <%- include(`${partials}/wallet_error`); -%>
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
             <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4 id="title" class="">IceQueen 👸 - Governance</h4>
+                    <p id="msg1" class="m-0 p-0">Estimates based on 15,000 blocks per day</p>
+                    <p id="msg2" class="m-0 p-0">Estimated LP value based on current token prices</p>
+                </div>
+            </div>
+            <div class="row">
                 <div id="account-info" class="col-xs-12 col-md-8" style="display: none;">
-                    <div class="card br-8 box-shadow-1">
+                    <div class="snobcard br-8 box-shadow-1">
                         <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
                             <div class="col-xs-12 col-md-6 align-items-center">
                                 <div class="p-10 w-full m-auto">
@@ -26,8 +31,8 @@
                                         <p class="m-0 mt-5 text-muted font-size-12">
                                             You have
                                         </p>
-                                        <span class="font-size-18 font-weight-regular" id="value-snob">
-                                            <span class="font-size-18 font-weight-bold" data-toggle="tooltip" data-title="Total Snowballs">
+                                        <span class="font-size-18 font-weight-regular" >
+                                            <span class="font-size-18 font-weight-bold" id="value-snob" data-toggle="tooltip" data-title="Total Snowballs">
 
                                             </span> SNOB
                                         </span>
@@ -63,7 +68,7 @@
                     </div>
                 </div>
                 <div id="snob-info" class="col-xs-12 col-md-4" style="display: none;">
-                    <div class="card br-8 box-shadow-1">
+                    <div class="snobcard br-8 box-shadow-1">
                         <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
                             <div class="w-full m-auto">
                                 <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
@@ -93,6 +98,17 @@
                 </div>
             </div>
 
+            <!-- POOLS OF ICEQUEEN -->
+            <div class="row">
+                <div id="snob-pools-used" class="w-full">
+
+                </div>
+                <div id="snob-pools-unused" class="w-full">
+
+                </div>
+            </div>
+
+
             <div class="loader--1">
                 <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
                     <div></div><div></div>
@@ -108,5 +124,10 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleDetails(pool){
+        $(`#details-${pool}`).slideToggle();
+    }
+  </script>
 </body>
 </html>

@@ -21,6 +21,27 @@
     @media (min-width: 1800px) { @content; }
 }
 
+@-ms-keyframes spin {
+    from { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(359deg); }
+}
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(359deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(359deg); }
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(359deg);
+    }
+}
+
 :root {
     --primary-color: #33A9FF !important;
     --dm-base-body-bg-color: #1B1F32 !important;
@@ -31,26 +52,35 @@
     --lm-card-box-shadow: #{' rgb(0 0 0 / 10%) 0 7px 25px 0 '} !important;
     --dm-modal-overlay-bg-color: #{'rgb(0 0 0 / 62%)'}  !important;
     --card-border-radius: 15px !important;
+    --navbar-height: 6.5rem !important;
 }
-body, input {
-  //font-family: 'Encode Sans', sans-serif, monospace;
-  //padding: 0 5px 30px 5px;
-}
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-.token-logo{
-  width: 24px;
-  height: 24px;
-  background-color: white;
-  border-radius: 50%;
+body{
+  font-family: 'Encode Sans', sans-serif, monospace !important;
+  padding: 0 5px 30px 5px;
 }
 
+.pointer{
+    cursor: pointer;
+}
+.spin{
+    -webkit-animation-name: spin;
+    -webkit-animation-duration: 950ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spin;
+    -moz-animation-duration: 950ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    -ms-animation-name: spin;
+    -ms-animation-duration: 950ms;
+    -ms-animation-iteration-count: infinite;
+    -ms-animation-timing-function: linear;
+
+    animation-name: spin;
+    animation-duration: 950ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
 .dark-mode {
   background-color:#1B1F32;
   color:#EEEEEE;
@@ -62,11 +92,16 @@ input[type="number"] {
     }
     .logo{
         background: var(--dm-logo-image);
-        width: 30rem;
+        width: 15rem;
         height: 10rem;
         background-size: contain;
         background-repeat: no-repeat;
+        background-position: center;
     }
+}
+
+#snob-icon-modal{
+    font-size: 8rem;
 }
 a:hover {
     text-decoration: none !important;
@@ -97,12 +132,19 @@ a:hover {
 }
 .logo{
     background: var(--lm-logo-image);
-    width: 30rem;
+    width: 15rem;
     height: 10rem;
     background-size: contain;
     background-repeat: no-repeat;
     text-decoration: none !important;
+    background-position: center;
 }
+.token-logo{
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+  }
 .snob-tokens{
     transform: translateY(5px);
     -webkit-transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -110,7 +152,13 @@ a:hover {
     box-shadow: #{' rgb(0 0 0 / 10%) 0 7px 25px 0 '} !important;
     border-radius: 20px;
 }
-
+.snobcard{
+    margin: 2rem 4rem;
+}
+.snob-tvl{
+    float:none;
+    margin:auto;
+}
 .snob-tokens:hover{
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
@@ -134,8 +182,8 @@ ion-icon {
     cursor: pointer;
 }
 
-.tvl{
-    margin: 0;
+#pooltokens img:nth-child(2){
+    margin-left: -15px;
 }
 .total-locked{
     border-radius: 1rem;
@@ -155,9 +203,24 @@ ion-icon {
   border: 1px solid #888;
   width: 80%;
 }
+[data-toggle=tooltip][data-placement=bottom]::after{
+  width: 150px;
+}
+[data-toggle=tooltip]:not([data-placement])::after, [data-toggle=tooltip][data-placement=top]::after{
+  width: 150px;
+}
 .buy-btn{
   @include for-phone-only {
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    .medium-widget-article__row{
+        width: 100% !important;
+        display: block;
+        margin: 5px;
+    }
+    .medium-widget-article__row .medium-widget-article__item{
+        display: block;
+        width: 100%;
+    }
  }
 }
 .modal-input {
@@ -235,7 +298,7 @@ ion-icon {
 *, *:before, *:after {
   box-sizing: border-box;
 }
-
+/*
 h1 {
   display: block;
   max-width: 350px;
@@ -243,9 +306,9 @@ h1 {
   font-size: 42px;
   margin: 0 auto;
   margin-bottom: 50px;
-  /* border: 5px solid #191919; */
+border: 5px solid #191919;
   padding: 10px 0;
-}
+} */
 
 code {
   display: block;
@@ -661,14 +724,14 @@ code {
     border-style: solid;
     opacity: 1;
     border-radius: 50%;
-    animation: ldio-4ixcy4bihgi 0.7s cubic-bezier(0,0.2,0.8,1) infinite;
+    animation: ldio-4ixcy4bihgi 1.5s cubic-bezier(0,0.2,0.8,1) infinite;
   }.ldio-4ixcy4bihgi div:nth-child(1) {
     border-color: #85a2b6;
     animation-delay: 0s;
   }
   .ldio-4ixcy4bihgi div:nth-child(2) {
     border-color: #bbcedd;
-    animation-delay: -0.3s;
+    animation-delay: -0.8s;
   }
   .loadingio-spinner-ripple-0rfeupqpquh {
     width: 200px;
