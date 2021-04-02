@@ -1018,9 +1018,9 @@ async function main() {
         //_print(options.stake_display);
         stakeDisplay = options.stake_display;
       }
-      //_print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
+      _print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
 
-      //_print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
+      _print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
 
       estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
       <p class="m-0 font-size-12"> Estimated Rate</p>
@@ -1078,12 +1078,12 @@ async function main() {
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
-      _print_button(`Claim`, options.claim)
+      //_print_button(`Claim`, options.claim)
       claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
     }
     if ( !has_options ) {
-      _print(`No sPGL to Stake/Withdraw.`)
-      _print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
+      //_print(`No sPGL to Stake/Withdraw.`)
+      //_print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
     }
 
     if( !has_options ){
