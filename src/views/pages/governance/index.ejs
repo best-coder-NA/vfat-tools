@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+  if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+    document.body.classList.add('dark-mode');
+  }
+
+</script>
+<body>
+<%- include(`${partials}/header_main`); -%>
+
+<%- include(`${partials}/wallet_error`); -%>
+
+
+<div class="page-wrapper with-navbar with-transitions">
+    <div class="loader--1">
+        <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                <div></div><div></div>
+            </div></div>
+    </div>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <h2 style="margin-left: 40px;">Governance <ion-icon name="stats-chart-outline"></ion-icon></h2>
+            <div class="row">
+                <div class="card col-xs-12 col-sm-4 col-md-4">
+                    <h2 class="content-title">
+                        Add votes <ion-icon name="paper-plane-outline"></ion-icon>
+                    </h2>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div>
+                                Available SNOB: <span id="available_snob"></span>
+                            </div>
+                            <div>
+                                <a style="display: none;" href="#" id="snob_approve">Approve </a>
+                                <a style="display: none;" href="#" id="snob_revoke">Revoke </a>
+                            </div>
+                            <div class="input-group">
+                                <input id="snob_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">
+                                <div class="input-group-append">
+                                    <button id="snob_max" class="btn" type="button">MAX</button>
+                                </div>
+                            </div>
+                            <div>
+                                Available PGL: <span id="available_pgl"></span>
+                            </div>
+                            <div>
+                                <a style="display: none;" href="#" id="pgl_approve">Approve </a>
+                                <a style="display: none;" href="#" id="pgl_revoke">Revoke </a>
+                            </div>
+                            <div class="input-group">
+                                <input id="pgl_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">
+                                <div class="input-group-append">
+                                    <button id="pgl_max" class="btn" type="button">MAX</button>
+                                </div>
+                            </div>
+                            <div>
+                                <button id="deposit_crystal" class="btn btn-primary" type="button">Deposit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-10">
+                    <div class="mb-10">
+                        <div>Your voting power: <span id="my_votes"></span> Votes</div>
+                        <div><a href="#" id="withdraw_crystal">Withdraw All</a></div>
+                    </div>
+                </div>
+                <div class="card col-xs-12 col-sm-6 col-md-6">
+                    <h2 class="content-title">
+                        Proposals <ion-icon name="archive-outline"></ion-icon>
+                    </h2>
+                    <div class="row">
+                        <details class="collapse-panel w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+                            <summary class="collapse-header">
+                                <div id="proposal_1_row"></div>
+                            </summary>
+                            <div id="proposal_1_content" class="collapse-content">
+                                <button id="proposal_1_for" class="ml-20 btn btn-success" type="button">Vote for</button>
+                                <button id="proposal_1_against" class="btn btn-secondary float-right" type="button">Vote against</button>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div>
+        <h1 class="error"></h1>
+
+
+
+        <%- include(`${partials}/scripts`, {scriptname: 'governance'}); -%>
+
+    </div>
+
+    </div>
+<!--    <%- include(`${partials}/footer`); -%>-->
+</div>
+</body>
+</html>
