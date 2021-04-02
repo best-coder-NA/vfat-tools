@@ -28,7 +28,7 @@
                     <div class="card border-0 p-10 pl-20 pr-20 mt-5">
                         <div class="row">
                             <div class="ml-30 col-sm-12 col-md-12 align-items-center d-flex mb-5 mt-5">
-                                <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                                <div id="pooltokens" class="align-items-center d-flex mx-auto">
                                     <img class="rounded-circle" width="48" src="https://static.wixstatic.com/media/b42590_f0126cced5284de69d4b84e71069fb19~mv2.png/v1/fill/w_295,h_295,al_c,q_85,usm_0.66_1.00_0.01/PefiOriginalLogoPNG_edited.webp">
                                     <img class="rounded-circle" width="48" src="https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png">
                                     <a href="https://app.pangolin.exchange/#/add/0xc38f41a296a4493ff429f1238e030924a1542e50/0xe896cdeaac9615145c0ca09c8cd5c25bced6384c" target="_blank"><h6 class="pl-10 m-0">PEFI-SNOB Pangolin LP</h6></a>
@@ -82,9 +82,11 @@
                                 <p class="m-0 font-size-12">(Available to withdraw) </p>
                             </div>
                             <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
-                                <button id="claimPEFI" class="btn mx-10 btn-primary btn-sm withdrawBtn"><ion-icon name="push-outline" role="img" class="md hydrated" aria-label="push outline"></ion-icon> Claim </button>
-                                <button id="withdrawPEFI" class="btn btn-success btn-sm withdrawBtn"><ion-icon name="push-outline" role="img" class="md hydrated" aria-label="push outline"></ion-icon> Withdraw </button>
+                                <button id="claimPEFI" class="btn mx-10 btn-sm btn-success withdrawBtn"><ion-icon name="push-outline" role="img" class="md hydrated" aria-label="push outline"></ion-icon> Claim </button>
+                                <button id="withdrawPEFI" class="btn btn-primary btn-sm withdrawBtn"><ion-icon name="push-outline" role="img" class="md hydrated" aria-label="push outline"></ion-icon> Withdraw ⚠️ </button>
                             </div>
+                            <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
+                                <div>⚠️ WARNING - Penguin Finance has a 4% withdrawal fee for this pool</div>                            </div>
                             <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
                                 <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline" role="img" class="md hydrated" aria-label="pie chart outline"></ion-icon> You have</p>
                                 <p id="current_pgl" class="m-0 font-size-16 font-weight-semi-bold"><span id="owned_pefi"></span> PEFI  </p>
