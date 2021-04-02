@@ -55,19 +55,30 @@ async function main() {
   //votes
   const CRYSTAL_CONTRACT = new ethers.Contract(CRYSTAL_VAULT_ADDRESS, CRYSTAL_VAULT_ABI, signer);
   const votes = await CRYSTAL_CONTRACT.votes(App.YOUR_ADDRESS);
+  const qVotes = await CRYSTAL_CONTRACT.quadraticVotes(App.YOUR_ADDRESS);
   console.log("votes:", votes / 1e18)
-  $("#my_votes").html((votes / 1e18).toLocaleString())
+  console.log("qVotes:", qVotes / 1e10)
+  $("#my_votes").html((qVotes / 1e10).toLocaleString())
 
   //proposals
   const GOVERNANCE_CONTRACT = new ethers.Contract(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, signer);
-  const proposal0 = await GOVERNANCE_CONTRACT.proposals(0)
-  const proposal1 = await GOVERNANCE_CONTRACT.proposals(1)
-  const proposal2 = await GOVERNANCE_CONTRACT.proposals(2)
-  console.log(proposal0)
-  console.log(proposal1)
-  console.log(proposal2)
-  const proposal1_row = `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${proposal1.id * 1}:</span> ${proposal1.title}</div><div><span class="text-success">For: ${proposal1.forVotes / 1e18}</span><span class="float-right text-secondary">Against: ${proposal1.againstVotes / 1e18}</span></div>`
-  $("#proposal_1_row").html(proposal1_row);
+  const proposal_count = await GOVERNANCE_CONTRACT.proposalCount();
+  for (i = proposal_count - 1; i > -1; i--) {
+    const proposal = await GOVERNANCE_CONTRACT.proposals(i)
+    console.log(proposal)
+    let proposal_html = `<details class="mb-20 collapse-panel w-500 mw-full">`;
+    proposal_html += `<summary class="collapse-header">`;
+    proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${proposal.id * 1}:</span> ${proposal.title}</div><div><span class="text-success">For: ${proposal.forVotes / 1e18}</span><span class="float-right text-secondary">Against: ${proposal.againstVotes / 1e18}</span></div>`
+    proposal_html += `</summary>`;
+    proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
+    proposal_html += `<div class="ml-20 mb-10">(Insert description here)</div>`;
+    proposal_html += `<button id="proposal_${i}_for" class="ml-20 btn btn-success" type="button">Vote for <ion-icon name="thumbs-up-outline"></ion-icon></button>`;
+    proposal_html += `<button id="proposal_${i}_against" class="btn btn-secondary float-right" type="button">Vote against <ion-icon name="thumbs-down-outline"></ion-icon></button>`;
+    proposal_html += `</div>`;
+    proposal_html += `</details>`;
+    $("#proposal_list").append(proposal_html);
+  }
+
   // Approvals
   const snob_allowance = await SNOB_TOKEN.allowance(App.YOUR_ADDRESS, CRYSTAL_VAULT_ADDRESS)
   console.log("snob_allowance:", snob_allowance / 1e18);

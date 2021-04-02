@@ -112,7 +112,7 @@ const toFixed = function(num, fixed) {
 
 const start = function(f) {
   f().catch(e => {
-    halfmoon.toggleModal('modal-error')
+    //halfmoon.toggleModal('modal-error')
     console.log(e)
     console.error(e)
     elem = document.querySelector( '.error' )
