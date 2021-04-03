@@ -2,23 +2,28 @@
 <html lang="en">
 <%- include(`${partials}/head`); -%>
 <script>
-    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
-        document.body.classList.add('dark-mode');
-    }
+  if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+    document.body.classList.add('dark-mode');
+  }
 </script>
 <body>
-<%- include(`${partials}/header_main`); -%>
-
-<%- include(`${partials}/wallet_error`); -%>
-
 <div class="page-wrapper with-navbar with-transitions">
+    <%- include(`${partials}/header_main`); -%>
+    <%- include(`${partials}/wallet_error`); -%>
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
-            <a class="ml-20 mt-10 font-size-10" href="<%= PP %>/compound/">Switch to card view</a>
+            <div class="row">
+                <a class="ml-20 mt-10 font-size-10" href="<%= PP %>/snowglobes/">Switch to text view</a>
+                <div class="col-md-12 text-center">
+                    <h4 id="title" class="">Snowglobes 🌐</h4>
+                    <p id="msg1" class="m-0 p-0">Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!</p>
+                    <p id="msg2" class="m-0 p-0">Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord</p>
+                </div>
+            </div>
             <div class="row">
                 <div id="account-info" class="col-xs-12 col-md-8" style="display: none;">
-                    <div class="card br-8 box-shadow-1">
+                    <div class="snobcard br-8 box-shadow-1">
                         <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
                             <div class="col-xs-12 col-md-6 align-items-center">
                                 <div class="p-10 w-full m-auto">
@@ -27,8 +32,8 @@
                                         <p class="m-0 mt-5 text-muted font-size-12">
                                             You have
                                         </p>
-                                        <span class="font-size-18 font-weight-regular" id="value-snob">
-                                            <span class="font-size-18 font-weight-bold" data-toggle="tooltip" data-title="Total Snowballs">
+                                        <span class="font-size-18 font-weight-regular" >
+                                            <span class="font-size-18 font-weight-bold" id="value-snob" data-toggle="tooltip" data-title="Total Snowballs">
 
                                             </span> SNOB
                                         </span>
@@ -64,7 +69,7 @@
                     </div>
                 </div>
                 <div id="snob-info" class="col-xs-12 col-md-4 particles-js" style="display: none;">
-                    <div class="card br-8 box-shadow-1">
+                    <div class="snobcard br-8 box-shadow-1">
                         <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
                             <div class="w-full m-auto">
                                 <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
@@ -83,20 +88,20 @@
                                     <ion-icon name="layers-outline"></ion-icon> SNOB per Block: <span id="snob-per-block"></span> - Per day: <span id="snob-block-pday"></span>
                                 </p>
                                 <p class="m-0 text-muted font-size-12">
-                                    Est Blocks Per Day: <span id="snob-est-pday">~15,000 </span>
-                                </p>
-                                <p class="m-0 text-muted font-size-12">
-                                    Blocks past 24hrs: <span id="blocks-24-hrs"></span>
+                                    Est Blocks Per Day: <span id="snob-est-pday">15,000 </span>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- POOLS OF ICEQUEEN -->
+            <div id="snob-pools" class="row">
 
+            </div>
             <div class="loader--1">
                 <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
-                    <div></div><div></div>
+                        <div></div><div></div>
                     </div></div>
             </div>
             <h1 class="error"></h1>
@@ -104,7 +109,7 @@
             <pre id="log" style="margin-left: 10px;">
             </pre>
 
-            <%- include(`${partials}/scripts`, {scriptname: 'snowglobes'}); -%>
+            <%- include(`${partials}/scripts`, {scriptname: 'compound'}); -%>
             <%- include(`${partials}/footer`); -%>
         </div>
     </div>
