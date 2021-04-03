@@ -649,7 +649,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     url: USDT_AVAX_POOL_URL,
-    pool_name: '💵 AVAX-USDT Pangolin LP - New! 🌟',
+    pool_name: 'AVAX-USDT Pangolin LP 🌟',
     tvl: USDT_AVAX_TVL,
     apr: usdt_apr,
     apy: usdt_annual_apy,
@@ -671,7 +671,7 @@ async function main() {
     logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     url: LINK_AVAX_POOL_URL,
-    pool_name: '🔗 AVAX-LINK Pangolin LP',
+    pool_name: 'AVAX-LINK Pangolin LP',
     tvl: LINK_AVAX_TVL,
     apr: link_apr,
     apy: link_annual_apy,
@@ -693,7 +693,7 @@ async function main() {
     logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     url: ETH_AVAX_POOL_URL,
-    pool_name: '💠 AVAX-ETH Pangolin LP',
+    pool_name: 'AVAX-ETH Pangolin LP',
     apr: eth_apr,
     apy: eth_annual_apy,
     current_tokens: currentETHAVAXTokens,
@@ -712,7 +712,7 @@ async function main() {
     logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     url: PNG_AVAX_POOL_URL,
-    pool_name: '🦔 AVAX-PNG Pangolin LP',
+    pool_name: 'AVAX-PNG Pangolin LP',
     apr: png_apr,
     apy: png_annual_apy,
     current_tokens: currentPNGAVAXTokens,
@@ -731,7 +731,7 @@ async function main() {
     logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     url: SUSHI_AVAX_POOL_URL,
-    pool_name: '🍣 AVAX-SUSHI Pangolin LP',
+    pool_name: 'AVAX-SUSHI Pangolin LP',
     apr: sushi_apr,
     apy: sushi_annual_apy,
     current_tokens: currentSUSHIAVAXTokens,
@@ -825,57 +825,7 @@ async function main() {
 
   hideLoading();
 }
-const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
-    $('#snob-title-modal').html('').html(title);
-    $('#snob-message-modal').html('').html(message);
-    //icon = icon ? icon = `<ion-icon name="${icon}"></ion-icon>` : icon = '';
-    if (icon) {
-        if(state){
-            icon = `<ion-icon class="text-${state}" name="${icon}"></ion-icon>`;
-        } else{
-            icon = `<ion-icon name="${icon}"></ion-icon>`;
-        }
-    }else{
-        icon = '';
-    }
-    switch (btn1) {
-        case 'close':
-            btn1 = `<button class="btn mr-5" data-dismiss="modal">Close</button>`;
-            break;
-        case 'ok':
-            btn1 = `<button class="btn mr-5" data-dismiss="modal">Ok</button>`;
-            break;
-        case 'reload':
-            btn1 = `<button onclick="window.location.reload(true);" class="btn mr-5" data-dismiss="modal">Reload</button>`;
-            break;
-        default:
-           btn = ``;
-           break;
-    }
-    switch (btn2) {
-        case 'close':
-            btn2 = `<button class="btn btn-primary" data-dismiss="modal">Close</button>`;
-            break;
-        case 'ok':
-            btn2 = `<button class="btn btn-primary" data-dismiss="modal">Ok</button>`;
-            break;
-        case 'reload':
-            btn2 = `<button onclick="window.location.reload(true);" class="btn btn-primary" data-dismiss="modal">Reload</button>`;
-            break;
-        default:
-           btn = ``;
-           break;
-    }
 
-    $('#snob-icon-modal').html('').html(`${icon}`);
-    $('#snob-btn-modal').html('').append(btn1).append(btn2);
-    halfmoon.toggleModal('modal-message')
-    if(time){
-        setTimeout(function(){ $('#modal-message').removeClass('show');   }, time);
-    }
-
-
-}
 
 const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
@@ -996,7 +946,7 @@ const snowglobeContract_stake = async function (chefAbi, chefAddress, poolIndex,
       })
   } else {
     //alert('You have no tokens to stake')
-    snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+    snobMessage(`Oops! Failed`, `Deposit Failed. You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
   }
 }
 
@@ -1047,7 +997,7 @@ const snowglobeContract_withdraw = async function (chefAbi, chefAddress, poolInd
       })
   } else {
     //alert('You have no tokens to withdraw')
-    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
+    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . You have no tokens to withdraw`, `close-circle-outline`, `danger`, false, `ok`, 4000);
   }
 }
 
@@ -1081,13 +1031,15 @@ const icequeenContract_stake = async function (chefAbi, chefAddress, poolIndex, 
               //hideLoading()
               halfmoon.toggleModal('modal-loading')
               snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              setTimeout(function(){ window.location.reload(true); }, 6000);
               //alert('Tokens deposited. Refresh page to see balance.')
             })
           })
           .catch(function () {
             //hideLoading()
             halfmoon.toggleModal('modal-loading')
-            alert('Something went wrong.')
+            //alert('Something went wrong.')
+            snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
           })
       })
       .catch(function () {
@@ -1112,7 +1064,8 @@ const icequeenContract_withdraw = async function (chefAbi, chefAddress, poolInde
   let allow = Promise.resolve()
 
   if (currentTokens / 1e18 > 0) {
-    showLoading()
+    //showLoading()
+    halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
         ICEQUEEN_CONTRACT.withdraw(poolIndex, currentTokens)
@@ -1122,6 +1075,7 @@ const icequeenContract_withdraw = async function (chefAbi, chefAddress, poolInde
               halfmoon.toggleModal('modal-loading')
               //alert('Tokens withdraw. Refresh page to see balance.')
               snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              setTimeout(function(){ window.location.reload(true); }, 6000);
             })
           })
           .catch(function () {
@@ -1157,9 +1111,11 @@ const icequeenContract_claim = async function (chefAbi, chefAddress, poolIndex, 
   let allow = Promise.resolve()
 //onrewards
   if (pendingRewards / 1e18 == 0) {
-    alert('No rewards to claim')
+    //alert('No rewards to claim')
+    snobMessage(`Oops`, `You have no rewards to claim`, `information-circle-outline`, `primary`, false, `ok`, 4000);
   } else {
-    showLoading()
+    //showLoading()
+    halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
         CHEF_CONTRACT.withdraw(poolIndex, 1)
@@ -1167,20 +1123,74 @@ const icequeenContract_claim = async function (chefAbi, chefAddress, poolIndex, 
             App.provider.waitForTransaction(t.hash).then(function () {
               //hideLoading()
               halfmoon.toggleModal('modal-loading')
-              alert('Rewards claimed. Refresh page for new balance')
+              //alert('Rewards claimed. Refresh page for new balance')
+              snobMessage(`Withdrawn Tokens`, `Rewards claimed. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              setTimeout(function(){ window.location.reload(true); }, 6000);
             })
           })
           .catch(function () {
             //hideLoading()
             halfmoon.toggleModal('modal-loading')
-            alert('Something went wrong.')
+            //alert('Something went wrong.')
+            snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
           })
       })
       .catch(function () {
-        //hideLoading()
-        halfmoon.toggleModal('modal-loading')
-        alert('Something went wrong.')
+         //hideLoading()
+         halfmoon.toggleModal('modal-loading')
+         //alert('Something went wrong.')
+         snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   }
 }
+const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
+  $('#snob-title-modal').html('').html(title);
+  $('#snob-message-modal').html('').html(message);
+  //icon = icon ? icon = `<ion-icon name="${icon}"></ion-icon>` : icon = '';
+  if (icon) {
+      if(state){
+          icon = `<ion-icon class="text-${state}" name="${icon}"></ion-icon>`;
+      } else{
+          icon = `<ion-icon name="${icon}"></ion-icon>`;
+      }
+  }else{
+      icon = '';
+  }
+  switch (btn1) {
+      case 'close':
+          btn1 = `<button class="btn mr-5" data-dismiss="modal">Close</button>`;
+          break;
+      case 'ok':
+          btn1 = `<button class="btn mr-5" data-dismiss="modal">Ok</button>`;
+          break;
+      case 'reload':
+          btn1 = `<button onclick="window.location.reload(true);" class="btn mr-5" data-dismiss="modal">Reload</button>`;
+          break;
+      default:
+         btn = ``;
+         break;
+  }
+  switch (btn2) {
+      case 'close':
+          btn2 = `<button class="btn btn-primary" data-dismiss="modal">Close</button>`;
+          break;
+      case 'ok':
+          btn2 = `<button class="btn btn-primary" data-dismiss="modal">Ok</button>`;
+          break;
+      case 'reload':
+          btn2 = `<button onclick="window.location.reload(true);" class="btn btn-primary" data-dismiss="modal">Reload</button>`;
+          break;
+      default:
+         btn = ``;
+         break;
+  }
 
+  $('#snob-icon-modal').html('').html(`${icon}`);
+  $('#snob-btn-modal').html('').append(btn1).append(btn2);
+  halfmoon.toggleModal('modal-message')
+  if(time){
+      setTimeout(function(){ $('#modal-message').removeClass('show');   }, time);
+  }
+
+
+}

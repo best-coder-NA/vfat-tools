@@ -700,7 +700,6 @@ async function main() {
         stakeDisplay = '';
       }
 
-      console.log(`Error 4 ${options.stake_display}`);
       //_print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
       //_print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
 
@@ -715,7 +714,6 @@ async function main() {
         <p class="m-0 font-size-16 font-weight-regular">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)} SNOB </p>
         <p class="m-0 font-size-12">per day ($${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</p>
         <p class="m-0 font-size-12">(Average block rate)</p>
-
     </div>`
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
@@ -951,69 +949,335 @@ async function main() {
   }
   function poolS3D(options) {
     //_print(``)
-    if (options.url) {
+    /* if (options.url) {
       _print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
     } else {
       _print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
-    }
-    _print(`TVL: ${options.tvl_display}`)
+    } */
+    //_print(`TVL: ${options.tvl_display}`)
     if (options.icequeen_apr) {
-      _print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
+      //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
+
+      var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
+      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
+      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
+
+      var combinedAprDisplay = ''
       if (options.snowglobe_apr) {
         let combinedAPR = options.icequeen_apr + options.snowglobe_apr
-        _print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+        //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+
+        var cDayAPR = `${combinedAPR.toFixed(2)}%`;
+        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
+        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}%`;
+
+        var combinedAprDisplay = `<div class="col-sm-12 col-md-3 align-items-center pb-10">
+        <div class="row">
+            <p class="w-full text-center">Combined APR :</p>
+        </div>
+        <div class="row">
+            <div class="form-inline w-50 mx-auto">
+                <div class="form-group m-md-0">
+                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                </div>
+            </div>
+            <div class="form-inline w-50 mx-auto">
+                <div class="form-group m-md-0">
+                <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
+                <p class="m-0 font-size-12 font-weight-regular">${cWeekAPR}%</p>
+                <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}%</p>
+                </div>
+            </div>
+        </div>
+        </div>`;
+
       }
     }
-    _print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
+    //_print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
+
+    poolSize = '';
     if (options.total_staked) {
-      _print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> S3D`)
+      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> S3D`)
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3D </span>`;
     }
     var estimatedRate = '';
+    var poolShare = '';
+    var earning = '';
+    var stakeDisplay = '';
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
-        _print(options.pool_share_display)
+        //_print(options.pool_share_display)
+        poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
+        <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
+        </div>`;
       }
       if (options.stake_display) {
-        _print(options.stake_display)
+        //_print(options.stake_display);
+        stakeDisplay = options.stake_display;
       }
       _print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
+
       _print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
 
       estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
       <p class="m-0 font-size-12"> Estimated Rate</p>
       <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
+      <p class="m-0 font-size-12">per day ($${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</p>
       <p class="m-0 font-size-12">(24hr block rate)</p>
         </div>`;
+
+      earning = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You are earning</p>
+      <p class="m-0 font-size-16 font-weight-regular">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)} SNOB </p>
+      <p class="m-0 font-size-12">per day ($${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</p>
+      <p class="m-0 font-size-12">(Average block rate)</p>
+      </div>`
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
-      _print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
+      //_print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
     }
+    var availableStake = '';
     if ( options.display_amount > 0 ) {
-      _print(`Available to Stake: <b>${(options.display_amount).toFixed(6)}</b> S3D`)
+      //_print(`Available to Stake: <b>${(options.display_amount).toFixed(6)}</b> S3D`)
+
+      availableStake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-regular">${(options.display_amount).toFixed(6)} S3D </p>
+      <p class="m-0 font-size-12">(Available to Stake) </p>
+  </div>`;
     }
+    var availableUnstake = ''
     if ( options.staked_pool.amount / 1e18 > 0 ) {
-      _print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> S3D`)
+      //_print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> S3D`)
+      availableUnstake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-regular">${(options.staked_pool.amount / 1e18).toFixed(6)} S3D </p>
+      <p class="m-0 font-size-12">(Available to Unstake) </p>
+  </div>`;
     }
     let has_options = false
+    approveBtn = '';
+    stakeBtn = '';
+    unstakeBtn = '';
+    claimBtn = '';
     if ( options.display_amount > 0 ) {
       has_options = true
       //_print_button(`Approve`, options.approve)
       //_print_button(`Stake`, options.stake)
+      approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
+      
+      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake sPGL</button>`;
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       has_options = true
       //_print_button(`Unstake`, options.unstake)
+      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>`;
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
       //_print_button(`Claim`, options.claim)
+      claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
     }
     if ( !has_options ) {
-      _print(`No sPGL to Stake/Withdraw.`)
-      _print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
+      //_print(`No sPGL to Stake/Withdraw.`)
+      //_print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
     }
+
+    if( !has_options ){
+      var poolPrint = `<div class="col-md-12">
+        <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                    <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0 ">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
+                        <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                    <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+                </div>
+                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto mx-md-0">
+                        <div class="form-group m-md-0">
+                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}% </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
+                    <p class="m-0 font-size-12"> Pool Size</p>
+                        ${poolSize}
+                </div>
+                <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <a href="/snowglobes" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
+                </div>
+
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
+                </div>
+            </div>
+            <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 align-items-center pb-10">
+                        <div class="row">
+                            <p class="w-full text-center">Estimated APR :</p>
+                        </div>
+                        <div class="row">
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                                </div>
+                            </div>
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                                <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
+                                <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ${combinedAprDisplay}
+                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
+                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
+                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
+                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+                        <p class="m-0 font-size-16 font-weight-regular">O S3D </p>
+                        <p class="m-0 font-size-12">(No S3D to Stake/Withdraw) </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>`;
+        $('#snob-pools-new').append(poolPrint);
+    }
+    if(has_options){
+      var poolPrint = `<div class="col-md-12">
+      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+          <div class="row">
+              <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                  <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0">
+                      <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                      <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                      <img class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
+                      <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                  </div>
+              </div>
+              <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                  <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                  <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+              </div>
+              <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                      </div>
+                  </div>
+                  <div class="form-inline w-50 mx-auto mx-md-0">
+                      <div class="form-group m-md-0">
+                      <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                      <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
+                      <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
+                      </div>
+                  </div>
+
+              </div>
+              ${estimatedRate}
+              <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+              ${approveBtn}
+              ${stakeBtn}
+              ${unstakeBtn}
+              ${claimBtn}
+              </div>
+
+              <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                  <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
+              </div>
+          </div>
+
+          <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
+              <div class="row">
+                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                      <div class="row text-center">
+                          <p class="font-weight-light">Estimated APR :</p>
+                      </div>
+                      <div class="row">
+                          <div class="form-inline w-50 ">
+                              <div class="form-group m-md-0">
+                                  <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                  <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                                  <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                              </div>
+                          </div>
+                          <div class="form-inline w-50 mx-auto">
+                              <div class="form-group m-md-0">
+                              <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                              <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
+                              <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  ${combinedAprDisplay}
+                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                      <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
+                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
+                      <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
+                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
+                  </div>
+                  <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
+                      <p class="m-0 font-size-12"> Pool Size</p>
+                      ${poolSize}
+                  </div>
+                  ${poolShare}
+                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
+                      <p class="m-0 font-size-16 font-weight-regular">${(options.pending_tokens / 1e18).toFixed(6)}</p>
+                  </div>
+
+              </div>
+              <div class="row pt-20">
+                  ${earning}
+
+                  ${availableStake}
+                  
+                  ${availableUnstake}
+              </div>
+          </div>
+      </div>
+  </div>`;
+  $('#snob-pools-new').append(poolPrint);
+    }
+
+
   }
   poolS3D({
+    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
+    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
+    logo_token3 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     pool_nickname: 'pool-7',
     pool_name: 'StableVault S3D 🌟',
     url: null,
@@ -1024,10 +1288,10 @@ async function main() {
     staked_pool: stakedPool7,
     pending_tokens: pendingSNOBTokensPool7,
     display_amount: S3DDisplayAmt,
-    approve: approveS3D,
-    stake: stakeS3D,
-    unstake: withdrawPool7,
-    claim: claimPool7,
+    approve: 'approveS3D',
+    stake: 'stakeS3D',
+    unstake: 'withdrawPool7',
+    claim: 'claimPool7',
     icequeen_apr: pool7APR,
     snowglobe_apr: null,
     tvl_display: pool7tvlDisplay,
@@ -1187,34 +1451,7 @@ async function main() {
     stake_display: stakeDisplay_1
   })
 
-  $(".approveBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-        case 'approveSPGLSUSHI':
-            approveSPGLSUSHI();
-          break;
-        case 'approveSNOB':
-            approveSNOB();
-          break;
-        case 'approveSPGLPNG':
-            approveSPGLPNG();
-          break;
-        case 'approveSPGLETH':
-            approveSPGLETH();
-          break;
-        case 'approveSPGLUSDT':
-            approveSPGLUSDT();
-          break;
-        case 'approveSPGLLINK':
-            approveSPGLLINK();
-          break;
-        case 'approveS3D':
-            approveS3D();
-        break;
-        default:
-          alert('Oops something went wrong. Try refreshing the page.');
-      }
-  });
+ 
 
   $(".unstakeBtn").click(function(){
     let fn = $(this).attr("data-btn");
@@ -1346,20 +1583,28 @@ const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTok
   const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
   console.log(allowedTokens)
   let allow = Promise.resolve()
-  showLoading()
+  //showLoading()
+  halfmoon.toggleModal('modal-loading')
   if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
-    alert('Already approved')
+    //alert('Already approved')
+    halfmoon.toggleModal('modal-loading')
+    snobMessage(`Connected successfully`, `Already approved . <br>You can use the deposit/withdrawals options`, `checkmark-circle-outline`, `success`, false, `ok`, 4000);
+    halfmoon.toggleModal('modal-loading')
   } else {
     allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
       .then(function (t) {
+        halfmoon.toggleModal('modal-loading');
         return App.provider.waitForTransaction(t.hash)
       })
       .catch(function () {
-        hideLoading()
-        alert('Approval failed')
+        //hideLoading()
+        //alert('Approval failed')
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(`Connecting to metamask`, `Approval failed . Please check your Metamask Wallet`, `close-circle-outline`, `danger`, false, `ok`, 4000);
       })
   }
 }
+
 const icequeenContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
   console.log(signer)
@@ -1372,17 +1617,23 @@ const icequeenContract_approve = async function (chefAbi, chefAddress, stakeToke
   const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
   console.log(allowedTokens)
   let allow = Promise.resolve()
-  showLoading()
+  //showLoading()
+  halfmoon.toggleModal('modal-loading')
   if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
-    alert('Already approved')
+    //alert('Already approved')
+    halfmoon.toggleModal('modal-loading')
+    snobMessage(`Connected successfully`, `Already approved . <br>You can use the deposit/withdrawals options`, `checkmark-circle-outline`, `success`, false, `ok`, 4000);
   } else {
     allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
       .then(function (t) {
+        halfmoon.toggleModal('modal-loading')
         return App.provider.waitForTransaction(t.hash)
       })
       .catch(function () {
-        hideLoading()
-        alert('Approval failed')
+        //hideLoading()
+        halfmoon.toggleModal('modal-loading')
+        //alert('Approval failed')
+        snobMessage(`Connecting to metamask`, `Approval failed . Please check your Metamask Wallet`, `close-circle-outline`, `danger`, false, `ok`, 4000);
       })
   }
 }
@@ -1399,29 +1650,39 @@ const snowglobeContract_stake = async function (chefAbi, chefAddress, poolIndex,
   console.log(allowedTokens)
   let allow = Promise.resolve()
   if (allowedTokens / 1e18 == 0) {
-    alert('Please approve spending first')
+    //alert('Please approve spending first')
+    snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
   } else if (currentTokens / 1e18 > 0) {
-    showLoading()
+    //showLoading()
+    halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
         CHEF_CONTRACT.depositAll()
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
               hideLoading()
-              alert('Tokens deposited. Refresh page to see balance.')
+              halfmoon.toggleModal('modal-loading')
+              //alert('Tokens deposited. Refresh page to see balance.')
+              snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              setTimeout(function(){ window.location.reload(true); }, 6000);
             })
           })
           .catch(function () {
-            hideLoading()
-            alert('Something went wrong.')
+            //hideLoading()
+            halfmoon.toggleModal('modal-loading')
+            //alert('Something went wrong.')
+            snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
           })
       })
       .catch(function () {
-        hideLoading()
-        alert('Something went wrong.')
+        //hideLoading()
+        //alert('Something went wrong.')
+        halfmoon.toggleModal('modal-loading')
+        snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   } else {
-    alert('You have no tokens to stake')
+    //alert('You have no tokens to stake')
+    snobMessage(`Oops! Failed`, `Deposit Failed. You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
   }
 }
 const snowglobeContract_withdraw = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
@@ -1437,27 +1698,37 @@ const snowglobeContract_withdraw = async function (chefAbi, chefAddress, poolInd
   console.log(allowedTokens)
   let allow = Promise.resolve()
   if (currentTokens / 1e18 > 0) {
-    showLoading()
+    //showLoading()
+    halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
         CHEF_CONTRACT.withdrawAll()
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
-              hideLoading()
-              alert('Tokens Withdrawn. Refresh page to see balance.')
+              //hideLoading()
+              //alert('Tokens Withdrawn. Refresh page to see balance.')
+
+              halfmoon.toggleModal('modal-loading')
+              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              setTimeout(function(){ window.location.reload(true); }, 6000);
             })
           })
           .catch(function () {
-            hideLoading()
-            alert('Something went wrong.')
+            halfmoon.toggleModal('modal-loading')
+            //hideLoading()
+            snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+            //alert('Something went wrong.')
           })
       })
       .catch(function () {
-        hideLoading()
-        alert('Something went wrong.')
+        halfmoon.toggleModal('modal-loading')
+        //hideLoading()
+        //alert('Something went wrong.')
+        snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   } else {
-    alert('You have no tokens to withdraw')
+    //alert('You have no tokens to withdraw')
+    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . You have no tokens to withdraw`, `close-circle-outline`, `danger`, false, `ok`, 4000);
   }
 }
 const icequeenContract_stake = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
@@ -1473,29 +1744,39 @@ const icequeenContract_stake = async function (chefAbi, chefAddress, poolIndex, 
   console.log(allowedTokens)
   let allow = Promise.resolve()
   if (allowedTokens / 1e18 == 0) {
-    alert('Please approve spending first')
+    //alert('Please approve spending first')
+    snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
   } else if (currentTokens / 1e18 > 0) {
-    showLoading()
+    //showLoading()
+    halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
         CHEF_CONTRACT.deposit(poolIndex, currentTokens)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
-              hideLoading()
-              alert('Tokens deposited. Refresh page to see balance.')
+               //hideLoading()
+               halfmoon.toggleModal('modal-loading')
+               snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+               setTimeout(function(){ window.location.reload(true); }, 6000);
+               //alert('Tokens deposited. Refresh page to see balance.')
             })
           })
           .catch(function () {
-            hideLoading()
-            alert('Something went wrong.')
+           //hideLoading()
+           halfmoon.toggleModal('modal-loading')
+           //alert('Something went wrong.')
+           snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
           })
       })
       .catch(function () {
-        hideLoading()
-        alert('Something went wrong.')
+        //hideLoading()
+        halfmoon.toggleModal('modal-loading')
+        //alert('Something went wrong.')
+        snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   } else {
-    alert('You have no tokens to stake')
+    //alert('You have no tokens to stake')
+    snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
   }
 }
 const icequeenContract_withdraw = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
@@ -1507,27 +1788,36 @@ const icequeenContract_withdraw = async function (chefAbi, chefAddress, poolInde
   const currentTokens = userPoolInfo.amount
   let allow = Promise.resolve()
   if (currentTokens / 1e18 > 0) {
-    showLoading()
+    //showLoading()
+    halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
         ICEQUEEN_CONTRACT.withdraw(poolIndex, currentTokens)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
-              hideLoading()
-              alert('Tokens withdraw. Refresh page to see balance.')
+              //hideLoading()
+              halfmoon.toggleModal('modal-loading')
+              //alert('Tokens withdraw. Refresh page to see balance.')
+              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              setTimeout(function(){ window.location.reload(true); }, 6000);
             })
           })
           .catch(function () {
-            hideLoading()
-            alert('Something went wrong.')
+            //hideLoading()
+            halfmoon.toggleModal('modal-loading')
+            //alert('Something went wrong.')
+            snobMessage(`Oops! Failed`, `Withdrawn Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
           })
       })
       .catch(function () {
-        hideLoading()
-        alert('Something went wrong.')
+        //hideLoading()
+        halfmoon.toggleModal('modal-loading')
+        //alert('Something went wrong.')
+        snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   } else {
-    alert('You have no tokens to withdraw')
+    //alert('You have no tokens to withdraw')
+    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
   }
 }
 const icequeenContract_claim = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
@@ -1540,26 +1830,86 @@ const icequeenContract_claim = async function (chefAbi, chefAddress, poolIndex, 
   const pendingRewards = await CHEF_CONTRACT.pendingSnowball(poolIndex, App.YOUR_ADDRESS)
   let allow = Promise.resolve()
   if (pendingRewards / 1e18 == 0) {
-    alert('No rewards to claim')
+    //alert('No rewards to claim')
+    snobMessage(`Oops`, `You have no rewards to claim`, `information-circle-outline`, `primary`, false, `ok`, 4000);
   } else {
-    showLoading()
+    //showLoading()
+    halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
         CHEF_CONTRACT.withdraw(poolIndex, 1)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
-              hideLoading()
-              alert('Rewards claimed. Refresh page for new balance')
+              //hideLoading()
+              halfmoon.toggleModal('modal-loading')
+              //alert('Rewards claimed. Refresh page for new balance')
+              snobMessage(`Withdrawn Tokens`, `Rewards claimed. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              setTimeout(function(){ window.location.reload(true); }, 6000);
             })
           })
           .catch(function () {
-            hideLoading()
-            alert('Something went wrong.')
+             //hideLoading()
+        halfmoon.toggleModal('modal-loading')
+        //alert('Something went wrong.')
+        snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
           })
       })
       .catch(function () {
-        hideLoading()
-        alert('Something went wrong.')
+         //hideLoading()
+         halfmoon.toggleModal('modal-loading')
+         //alert('Something went wrong.')
+         snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   }
+}
+const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
+  $('#snob-title-modal').html('').html(title);
+  $('#snob-message-modal').html('').html(message);
+  //icon = icon ? icon = `<ion-icon name="${icon}"></ion-icon>` : icon = '';
+  if (icon) {
+      if(state){
+          icon = `<ion-icon class="text-${state}" name="${icon}"></ion-icon>`;
+      } else{
+          icon = `<ion-icon name="${icon}"></ion-icon>`;
+      }
+  }else{
+      icon = '';
+  }
+  switch (btn1) {
+      case 'close':
+          btn1 = `<button class="btn mr-5" data-dismiss="modal">Close</button>`;
+          break;
+      case 'ok':
+          btn1 = `<button class="btn mr-5" data-dismiss="modal">Ok</button>`;
+          break;
+      case 'reload':
+          btn1 = `<button onclick="window.location.reload(true);" class="btn mr-5" data-dismiss="modal">Reload</button>`;
+          break;
+      default:
+         btn = ``;
+         break;
+  }
+  switch (btn2) {
+      case 'close':
+          btn2 = `<button class="btn btn-primary" data-dismiss="modal">Close</button>`;
+          break;
+      case 'ok':
+          btn2 = `<button class="btn btn-primary" data-dismiss="modal">Ok</button>`;
+          break;
+      case 'reload':
+          btn2 = `<button onclick="window.location.reload(true);" class="btn btn-primary" data-dismiss="modal">Reload</button>`;
+          break;
+      default:
+         btn = ``;
+         break;
+  }
+
+  $('#snob-icon-modal').html('').html(`${icon}`);
+  $('#snob-btn-modal').html('').append(btn1).append(btn2);
+  halfmoon.toggleModal('modal-message')
+  if(time){
+      setTimeout(function(){ $('#modal-message').removeClass('show');   }, time);
+  }
+
+
 }
