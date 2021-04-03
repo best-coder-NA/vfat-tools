@@ -800,7 +800,7 @@ async function main() {
                         ${poolSize}
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                    <a href="/snowglobes" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
+                    <a href="/snowglobes" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get sPGL from Snowglobes</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1123,7 +1123,7 @@ async function main() {
                         ${poolSize}
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                    <a href="/snowglobes" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
+                    <a href="/stablevault" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get S3D from StableVault</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1274,6 +1274,335 @@ async function main() {
 
 
   }
+  function poolSNOB(options) {
+    //_print(``)
+    if (options.url) {
+      //_print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
+    } else {
+      //_print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
+    }
+    //_print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
+    if (options.icequeen_apr) {
+      //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
+
+      var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
+      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
+      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
+
+
+      var combinedAprDisplay = '';
+      if (options.snowglobe_apr) {
+        let combinedAPR = options.icequeen_apr + options.snowglobe_apr
+        //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+
+        var cDayAPR = `${combinedAPR.toFixed(2)}%`;
+        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
+        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}%`;
+
+        var combinedAprDisplay = `<div class="col-sm-12 col-md-3 align-items-center pb-10">
+                <div class="row">
+                    <p class="w-full text-center">Combined APR :</p>
+                </div>
+                <div class="row">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                        <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cWeekAPR}%</p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+      }
+    }
+    //_print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
+    if (options.total_staked && options.total_pgl) {
+      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
+
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} PGL </span>
+        <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
+
+    } else if (options.total_staked) {
+      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL`)
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} PGL </span>`;
+    } else {
+      //_print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
+    }
+    var poolShare = '';
+    var estimatedRate = '';
+    var earning = '';
+    if ( options.user_pool_percent > 0 ) {
+      if (options.pool_share_display) {
+        //_print(options.pool_share_display)
+        var poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
+        <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
+        <p class="m-0 font-size-12">${options.pool_share_display_pgl} </p>
+    </div>`;
+      }
+      var stakeDisplay = '';
+      if (options.stake_display ) {
+        //_print(options.stake_display)
+        stakeDisplay = options.stake_display;
+      }else{
+        stakeDisplay = '';
+      }
+
+      //_print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
+      //_print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
+
+      var estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+      <p class="m-0 font-size-12"> Estimated Rate</p>
+      <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
+      <p class="m-0 font-size-12">(24hr block rate)</p>
+        </div>`;
+
+      earning = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You are earning</p>
+        <p class="m-0 font-size-16 font-weight-regular">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)} SNOB </p>
+        <p class="m-0 font-size-12">per day ($${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</p>
+        <p class="m-0 font-size-12">(Average block rate)</p>
+    </div>`
+    }
+    if ( options.pending_tokens / 1e18 > 0 ) {
+      //_print(`Pending: <b>${(options.pending_tokens / 1e18).toFixed(6)}</b> SNOB`)
+    }
+    availableStake = '';
+    if ( options.display_amount > 0 ) {
+      //_print(`Available to Stake: <b>${(options.display_amount).toFixed(6)}</b> sPGL`)
+      availableStake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-regular">${(options.display_amount).toFixed(6)} PGL </p>
+      <p class="m-0 font-size-12">(Available to Stake) </p>
+  </div>`;
+    }
+    availableUnstake = '';
+    if ( options.staked_pool.amount / 1e18 > 0 ) {
+      //_print(`Available to Unstake: <b>${(options.staked_pool.amount / 1e18).toFixed(6)}</b> sPGL`)
+      availableUnstake = `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-regular">${(options.staked_pool.amount / 1e18).toFixed(6)} PGL </p>
+      <p class="m-0 font-size-12">(Available to Unstake) </p>
+  </div>`;
+    }
+    let has_options = false
+    approveBtn = '';
+    stakeBtn = '';
+    unstakeBtn = '';
+    claimBtn = '';
+    if ( options.display_amount > 0 ) {
+      has_options = true
+      ////_print_button(`Approve`, options.approve)
+      ////_print_button(`Stake`, options.stake)
+      approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
+      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake PGL</button>`;
+    }
+    if ( options.staked_pool.amount / 1e18 > 0 ) {
+      has_options = true
+      ////_print_button(`Unstake`, options.unstake);
+      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake PGL</button>`;
+    }
+    if ( options.pending_tokens / 1e18 > 0 ) {
+      has_options = true
+      ////_print_button(`Claim`, options.claim)
+      claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
+    }
+    if ( !has_options ) {
+      //_print(`No sPGL to Stake/Withdraw.`)
+      //_print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
+    }
+    if (!has_options){
+
+      var poolPrint = `<div class="col-md-12">
+        <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                    <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                    <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+                </div>
+                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto mx-md-0">
+                        <div class="form-group m-md-0">
+                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}% </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
+                    <p class="m-0 font-size-12"> Pool Size</p>
+                        ${poolSize}
+                </div>
+                <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <a target="_blank" href="${options.url}" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
+                </div>
+
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
+                </div>
+            </div>
+            <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 align-items-center pb-10">
+                        <div class="row">
+                            <p class="w-full text-center">Estimated APR :</p>
+                        </div>
+                        <div class="row">
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                                </div>
+                            </div>
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                                <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
+                                <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ${combinedAprDisplay}
+                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
+                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
+                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
+                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+                        <p class="m-0 font-size-16 font-weight-regular">O sPGL </p>
+                        <p class="m-0 font-size-12">(No sPGL to Stake/Withdraw) </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>`;
+      $('#snob-pools-unused').append(poolPrint);
+    }
+    if(has_options){
+      var poolPrint = `<div class="col-md-12">
+        <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                    <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                    <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+                </div>
+                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto mx-md-0">
+                        <div class="form-group m-md-0">
+                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
+                        </div>
+                    </div>
+
+                </div>
+                ${estimatedRate}
+                <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                ${approveBtn}
+                ${stakeBtn}
+                ${unstakeBtn}
+                ${claimBtn}
+                </div>
+
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
+                </div>
+            </div>
+
+            <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
+                <div class="row">
+                    <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                        <div class="row text-center">
+                            <p class="font-weight-light">Estimated APR :</p>
+                        </div>
+                        <div class="row">
+                            <div class="form-inline w-50 ">
+                                <div class="form-group m-md-0">
+                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                                </div>
+                            </div>
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                                <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
+                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
+                                <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ${combinedAprDisplay}
+                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
+                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
+                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
+                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
+                    </div>
+                    <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"> Pool Size</p>
+                        ${poolSize}
+                    </div>
+                    ${poolShare}
+
+                </div>
+                <div class="row pt-20">
+                    ${earning}
+
+                    ${availableStake}
+                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
+                        <p class="m-0 font-size-16 font-weight-regular">${(options.pending_tokens / 1e18).toFixed(6)}</p>
+                    </div>
+                    ${availableUnstake}
+                </div>
+            </div>
+        </div>
+    </div>`;
+      $('#snob-pools-used').append(poolPrint);
+    }
+  }
   poolS3D({
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
@@ -1400,7 +1729,7 @@ async function main() {
     pool_share_display_pgl: poolShareDisplay_3_pgl,
     stake_display: stakeDisplay_3
   })
-  pool({
+  poolSNOB({
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
     pool_nickname: 'pool-2',
