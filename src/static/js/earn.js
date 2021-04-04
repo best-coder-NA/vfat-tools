@@ -1006,6 +1006,7 @@ async function main() {
     var poolShare = '';
     var earning = '';
     var stakeDisplay = '';
+    console.log('error : '+options.user_pool_percent)
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
         //_print(options.pool_share_display)
@@ -1613,7 +1614,7 @@ async function main() {
     tvl: null,
     pool_weight: pool7weight,
     total_staked: totalStakedS3D,
-    user_pool_percent: 0,
+    user_pool_percent: userPool7Percent,
     staked_pool: stakedPool7,
     pending_tokens: pendingSNOBTokensPool7,
     display_amount: S3DDisplayAmt,
@@ -1638,7 +1639,7 @@ async function main() {
     tvl: LINK_AVAX_TVL,
     pool_weight: pool6weight,
     total_staked: totalStakedSPGLLINK,
-    user_pool_percent: 0,
+    user_pool_percent: userPool6Percent,
     staked_pool: stakedPool6,
     pending_tokens: pendingSNOBTokensPool6,
     display_amount: spglLinkDisplayAmt,
