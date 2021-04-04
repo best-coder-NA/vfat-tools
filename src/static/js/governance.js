@@ -55,13 +55,28 @@ async function main() {
   const votes = await CRYSTAL_CONTRACT.votes(App.YOUR_ADDRESS);
   const qVotes = await CRYSTAL_CONTRACT.quadraticVotes(App.YOUR_ADDRESS);
   const assetsDeposited = await CRYSTAL_CONTRACT.accounts(App.YOUR_ADDRESS)
+  const isFrozen = await CRYSTAL_CONTRACT.isFrozen(App.YOUR_ADDRESS)
+  const pendingReward = await CRYSTAL_CONTRACT.pendingReward(App.YOUR_ADDRESS)
+  const thawTime = new Date(assetsDeposited.thawTimestamp * 1000).toLocaleString();
   console.log("votes:", votes / 1e18)
   console.log("qVotes:", qVotes / 1e18)
   console.log("PGL deposited:", assetsDeposited.PGL / 1e18)
   console.log("Snowball deposited:", assetsDeposited.snowball / 1e18)
+  console.log("isFrozen:", isFrozen)
+  console.log("pendingReward:", pendingReward)
+  console.log("thawTime:", thawTime)
   $("#my_votes").html((qVotes / 1e18).toLocaleString())
   $("#deposited_snob").html((assetsDeposited.snowball / 1e18).toLocaleString())
   $("#deposited_pgl").html((assetsDeposited.PGL  / 1e18).toLocaleString())
+  if (isFrozen == 1) {
+    $("#withdraw_crystal").hide();
+    $("#withdraw_frozen").show();
+    $("#thaw_time").html(thawTime);
+  }
+  if (assetsDeposited.PGL > 0) {
+    $("#pending_snob").show();
+    $("#pending_snob_amt").html((pendingReward / 1e18).toFixed(4));
+  }
 
   /// @notice Possible states that a proposal may be in
   // enum ProposalState {
@@ -120,6 +135,7 @@ async function main() {
     proposal_html += `</summary>`;
     proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
     if (state == 0 && userVoteStatus == 0) {
+      proposal_html += `<div class="ml-20 mb-10"><ion-icon name="lock-closed-outline"></ion-icon> Voting will lock your deposit for ${duration} hours</span></div>`;
       proposal_html += `<button id="proposal_${i}_for" class="ml-20 btn btn-success" type="button">Vote for <ion-icon name="thumbs-up-outline"></ion-icon></button>`;
       proposal_html += `<button id="proposal_${i}_against" class="btn btn-secondary float-right" type="button">Vote against <ion-icon name="thumbs-down-outline"></ion-icon></button>`;
     } else {
