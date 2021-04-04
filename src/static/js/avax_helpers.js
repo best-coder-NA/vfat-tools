@@ -287,9 +287,9 @@ async function loadAvaxChefContract(App, tokens, prices, chef, chefAddress, chef
   const poolCount = parseInt(await chefContract.poolLength(), 10);
   const totalAllocPoints = await chefContract.totalAllocPoint();
 
-  _print(`Found ${poolCount} pools.\n`)
-
-  _print(`Showing incentivized pools only.\n`);
+  // _print(`Found ${poolCount} pools.\n`)
+  //
+  // _print(`Showing incentivized pools only.\n`);
 
   var tokens = {};
 
@@ -316,10 +316,10 @@ async function loadAvaxChefContract(App, tokens, prices, chef, chefAddress, chef
 
   const poolPrices = poolInfos.map(poolInfo => poolInfo.poolToken ? getPoolPrices(tokens, prices, poolInfo.poolToken, "avax") : undefined);
 
-
-  _print("Finished reading smart contracts.\n");
+  //
+  // _print("Finished reading smart contracts.\n");
     
-  for (i = 0; i < poolCount; i++) {
+  for (i = 3; i < poolCount; i++) {
     if (poolPrices[i]) {
       printChefPool(App, chefAbi, chefAddress, prices, tokens, poolInfos[i], i, poolPrices[i],
         totalAllocPoints, rewardsPerWeek, rewardTokenTicker, rewardTokenAddress,
