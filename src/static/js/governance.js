@@ -37,12 +37,6 @@ async function main() {
   const withdraw_crystal = async function () {
     return crystalVaultContract_withdraw(CRYSTAL_VAULT_ABI, CRYSTAL_VAULT_ADDRESS, App)
   }
-  const governance_vote_for_1 = async function () {
-    return governanceContract_voteFor(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, 1, App)
-  }
-  const governance_vote_against_1 = async function () {
-    return governanceContract_voteAgainst(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, 1, App)
-  }
 
   // balances
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
@@ -68,26 +62,39 @@ async function main() {
   //proposals
   const GOVERNANCE_CONTRACT = new ethers.Contract(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, signer);
   const proposal_count = await GOVERNANCE_CONTRACT.proposalCount();
-  for (i = proposal_count; i > 0; i--) {
+  const quorumVotes = await GOVERNANCE_CONTRACT.quorumVotes();
+  for (let i = proposal_count * 1; i > 0; i--) {
     const proposal = await GOVERNANCE_CONTRACT.proposals(i)
-    const duration = (proposal.votingPeriod / 1e18 / 60 / 60).toFixed(4);
+    const duration = (proposal.votingPeriod / 60 / 60).toFixed(4);
     const startDate = new Date(proposal.startTime * 1000).toLocaleString();
-    const endDate = new Date((proposal.startTime + (proposal.votingPeriod * 1)) * 1000).toLocaleString()
+    const endDate = new Date((proposal.startTime * 1 + proposal.votingPeriod * 1) * 1000).toLocaleString()
     console.log(proposal)
     let proposal_html = `<details class="mb-20 collapse-panel w-500 mw-full">`;
     proposal_html += `<summary class="collapse-header">`;
     proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${proposal.id * 1}:</span> ${proposal.title}</div>`
     proposal_html += `<div><span>Duration: ${duration} hours </span></div>`
-    proposal_html += `<div><span>Start: ${startDate} </span><span>End: ${endDate}</span></div>`
+    proposal_html += `<div><span>Start: ${startDate} </span></div>`
+    proposal_html += `<div><span>End: ${endDate}</span></div>`
+    proposal_html += `<div><span>Votes needed for Quorum: ${quorumVotes * 1}</span></div>`
     proposal_html += `<div><span class="text-success">For: ${proposal.forVotes / 1e18}</span><span class="float-right text-secondary">Against: ${proposal.againstVotes / 1e18}</span></div>`
     proposal_html += `</summary>`;
     proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
+    proposal_html += `<div class="ml-20">Proposer: ${proposal.proposer}</div>`
     proposal_html += `<div class="ml-20 mb-10">(Insert description here)</div>`;
     proposal_html += `<button id="proposal_${i}_for" class="ml-20 btn btn-success" type="button">Vote for <ion-icon name="thumbs-up-outline"></ion-icon></button>`;
     proposal_html += `<button id="proposal_${i}_against" class="btn btn-secondary float-right" type="button">Vote against <ion-icon name="thumbs-down-outline"></ion-icon></button>`;
     proposal_html += `</div>`;
     proposal_html += `</details>`;
     $("#proposal_list").append(proposal_html);
+    //vote
+    console.log("i", i);
+    $(`#proposal_${i}_for`).click(function(){
+      console.log("iclick", i);
+      governanceContract_voteFor(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, i, App)
+    });
+    $(`#proposal_${i}_against`).click(function(){
+      governanceContract_voteAgainst(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, i, App)
+    });
   }
 
   // Approvals
@@ -127,15 +134,6 @@ async function main() {
   $("#withdraw_crystal").click(function(){
     withdraw_crystal();
   });
-
-  //vote
-  $("#proposal_1_for").click(function(){
-    governance_vote_for_1();
-  });
-  $("#proposal_1_against").click(function(){
-    governance_vote_against_1();
-  });
-
 
   hideLoading();
 }
