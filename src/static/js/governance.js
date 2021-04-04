@@ -112,6 +112,15 @@ async function main() {
     });
   }
 
+  // Max
+  // TODO fix decimals bug
+  $("#snob_max").click(function(){
+    $("#snob_input").val(currentSNOBTokens / 1e18)
+  })
+  $("#pgl_max").click(function(){
+    $("#pgl_input").val(currentPGLTokens / 1e18)
+  })
+
   //
   const pgl_allowance = await PGL_TOKEN.allowance(App.YOUR_ADDRESS, CRYSTAL_VAULT_ADDRESS)
   console.log("pgl_allowance:", pgl_allowance / 1e18);
