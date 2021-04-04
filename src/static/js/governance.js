@@ -102,6 +102,7 @@ async function main() {
     const userVoteStatus = userVote[1];
     const userVoteAmount = userVote[2];
     const userVoteDisplay = `${(userVoteAmount / 1e18).toFixed(2)} votes ${userForAgainst == 0 ? 'Against' : 'For'}`;
+    const safeTitle = proposal.title.replace('<', '%3C').replace('>', '%3E');
     console.log(userVote)
     let stateDisplay = '';
     switch (state){
@@ -129,7 +130,7 @@ async function main() {
     console.log(proposal)
     let proposal_html = `<details class="mb-20 collapse-panel w-500 mw-full">`;
     proposal_html += `<summary class="collapse-header">`;
-    proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${proposal.id * 1}:</span> ${proposal.title}</div>`
+    proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${proposal.id * 1}:</span> ${safeTitle}</div>`
     proposal_html += `<div><span>Status: ${stateDisplay}</span></div>`
     proposal_html += `<div class="font-size-16"><span class="text-success">For: ${(proposal.forVotes / 1e18).toFixed(2)}</span><span class="float-right text-secondary">Against: ${(proposal.againstVotes / 1e18).toFixed(2)}</span></div>`
     proposal_html += `</summary>`;
