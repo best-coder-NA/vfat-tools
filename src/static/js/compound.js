@@ -643,7 +643,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     url: USDT_AVAX_POOL_URL,
-    pool_name: 'AVAX-USDT Pangolin LP 🌟',
+    pool_name: 'AVAX-USDT Pangolin LP',
     tvl: USDT_AVAX_TVL,
     apr: usdt_apr,
     apy: usdt_annual_apy,
