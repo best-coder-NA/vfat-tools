@@ -1,41 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include(`${partials}/head`); -%>
+<script>
+    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+        document.body.classList.add('dark-mode');
+    }
+</script>
 <body>
 <%- include(`${partials}/header_main`); -%>
-<pre class="container">
-<div>
-<h2>FAQ</h2>
-<b><u>Project</u></b>
-
-<b>What is Snowball Finance?</b>
-Snowball Finance is a yield optimizer on the Avalanche Network.
+<div class="page-wrapper with-navbar with-transitions" id="particles-js">
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <h2 class="text-center">FAQ</h2>
+            <div class="row mx-auto content-item-center">
+                <div class="col-md-5 p-5 mx-auto">
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            What is Snowball Finance?
+                        </summary>
+                        <div class="collapse-content">
+                            Snowball Finance is a yield optimizer on the Avalanche Network.
 <a href="https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2" target="_blank">https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2</a>
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            Why should I use Snowball Finance?
+                        </summary>
+                        <div class="collapse-content">
+                            Snowball Finance automatically compounds PNG rewards for you multiple times per day, saving on gas and generating higher APY.
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            How does auto compounding work in Snowball?
+                        </summary>
+                        <div class="collapse-content">
+                            Deposit your liquidity provider (LP) tokens into the SnowGlobe with the same token as you. After depositing you will receive S tokens, equivalent to the token pair you deposited. The rewards you receive as a LP are reinvested into the token you deposited. Snowball takes a 20% fee of the rewards you receive as a LP. Compounding happens multiple times per day, depending on the pool size.
+                            <br>
+                            Snob tokens received from depositing your S tokens into IceQueen are not compounded.
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            What does Ice Queen do?
+                        </summary>
+                        <div class="collapse-content">
+                            You can send the sPGL tokens that you got from the Snowglobe to the Ice Queen. In return you will get our governance token; “snob”.
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            Who is behind Snowball?
+                        </summary>
+                        <div class="collapse-content">
+                            We are currently anon. Snowball was initiated by <a href="https://twitter.com/AbominableSas" target="_blank">AbominableSasquatch</a>
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            How much gas do I save with auto-compounding?
+                        </summary>
+                        <div class="collapse-content">
+                            Compound steps: Claim > Swap > Add Liquidity > Deposit<br/>
+                            Gas cost of one manual compound: 0.49652 AVAX<br/>
+                            Compounds per day/week/year: 6/42/2190<br/>
+                            Gas saved per day/week/year: 2.98/20.85/1087.38 AVAX
+                        </div>
+                    </details>
 
-<b>Why should I use Snowball Finance?</b>
-Snowball Finance generates higher yields than traditional liquidity by compounding rewards and saving gas.
+                </div>
+                <div class="col-md-5 p-5 mx-auto">
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            What are Snowball (SNOB) tokens?
+                        </summary>
+                        <div class="collapse-content">
+                            The snowballs (snob) are our governance tokens. We are currently working on a governance architecture so that you will be able to have a say in the direction that Snowball will take.
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            How do I earn Snowball (SNOB) tokens?
+                        </summary>
+                        <div class="collapse-content">
+                            Earn Snowball tokens by either depositing sPGL tokens or SNOB-AVAX LP tokens into the IceQueen contract
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            What are the tokenomics?
+                        </summary>
+                        <div class="collapse-content">
+                            <u>Max supply:</u>
+                            <br>
+                            18 million
+                            <br><br>
+                            <u>Distribution schedule:</u>
+                            1st 200k blocks - 5 Million Snowballs
+                            2nd 200k blocks - 4 Million Snowballs
+                            3rd 200k blocks - 3 Million Snowballs
+                            4th 200k blocks - 2 Million Snowballs
+                            5th 200k blocks - 1 Million Snowballs
+                            <br><br>
+                            <u>Allocation:</u>
+                            80% Liquidity Provider Incentive
+                            10% Governance Allocation
+                            8–9.5% DevFund
+                            0.5-2% Pickle Finance Community Airdrop*
+                            <br><br>
+                            <img class="img-fluid" src="../allocation.png">
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            Is this tool safe to use?
+                        </summary>
+                        <div class="collapse-content">
+                            Snowball is a fork of pickle.finance which is audited. Snowball is currently not audited and the plan is to do an audit of the contracts. You can make your own judgement whether you trust the contracts by having a look on <a href=https://github.com/Snowball-Finance/protocol>Github</a>.
+                            <br><br>
+                            The source of this website is also on github: <a href=https://github.com/best-coder-NA/vfat-tools target=_blank>https://github.com/best-coder-NA/vfat-tools</a>
+                            <br><br>
+                            That said, Snowball is an experimental protocol. Please only deposit funds you are okay losing. Yield farming in itself has inherent risks; do your own research.
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            Why can't I connect my wallet?
+                        </summary>
+                        <div class="collapse-content">
+                            WPlease ensure you have Metamask installed and are configured to use the Avalance Network.
+                            <a href=https://tradingtoolcrypto.medium.com/how-to-use-metamask-with-avalanche-avax-e5db94d749b target=_blank>https://tradingtoolcrypto.medium.com/how-to-use-metamask-with-avalanche-avax-e5db94d749b</a>
+                        </div>
+                    </details>
+                    <details class="w-full py-10 collapse-panel mw-full">
+                        <summary class="collapse-header">
+                            How do you calculate APR and APY?
+                        </summary>
+                        <div class="collapse-content">
+                            For APR we use the same logic as <a href="https://vfat.tools/avax/png/" target="_blank">https://vfat.tools/avax/png/</a>.
 
+                            <br><br>
+                            It takes price of the two tokens in a pair, price of PNG, and PNG emissions rates from Pangolin Exchange into factor.
+                            <br><br>
+                            For APY we use the standard formula A = P(1 + r/n)nt
+                            Try it yourself here:
+                            <a href="https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php" target="_blank">https://www.calculatorsoup.com/calculators/financial/compound-interest-calculator.php</a>
+                        </div>
+                    </details>
 
+                </div>
+            </div>
 
-<b><u>Snowball Tokens</u></b>
-
-<b>What are Snowball (SNOB) tokens?</b>
-Snowball (SNOB) is a governance token rewarded to stakers on the protocol.
-
-<b>How do I earn Snowball (SNOB) tokens?</b>
-Earn Snowball tokens by either depositing sPGL tokens or SNOW-AVAX LP tokens into the IceQueen contract
-
-
-
-<b><u>Other</u></b>
-
-<b>Is this tool safe to use?</b>
-This tool has been reviewed by members of the core Snowball Finance team, such as <a href="https://twitter.com/AbominableSas" target="_blank">Abominable Sasquatch</a>
-Source code: <a href="https://github.com/best-coder-NA/vfat-tools" target="_blank">https://github.com/best-coder-NA/vfat-tools</a>
-
-<b>Why can't I connect my wallet?</b>
-Please ensure you have Metamask installed and are configured to use the Avalance Network.
-<a href="https://tradingtoolcrypto.medium.com/how-to-use-metamask-with-avalanche-avax-e5db94d749b" target="_blank">https://tradingtoolcrypto.medium.com/how-to-use-metamask-with-avalanche-avax-e5db94d749b</a>
-<%- include(`${partials}/scripts`, {scriptname: 'homepage'}); -%>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+    </div>
+</div>
 </body>
 </html>

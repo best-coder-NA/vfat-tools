@@ -1,0 +1,68 @@
+<div class="container-lg text-center">
+    <div class="row mx-auto pt-20 pb-20 bg-transparent">
+        <div class="col-md-12 text-center">
+            <ul class="navbar-nav d-none d-md-inline-flex mx-auto">
+                <li class="nav-item p-10">
+                    <a href="https://twitter.com/throwsnowballs" target="_blank" rel="noopener" class="custom-footer-link">
+                        <ion-icon name="logo-twitter"></ion-icon> Twitter
+                    </a>
+                </li>
+                <li class="nav-item p-10">
+                    <a href="https://discord.gg/T35jZ2hhPZ" target="_blank" rel="noopener" class="custom-footer-link">
+                        <ion-icon name="logo-discord"></ion-icon> Discord
+                    </a>
+                </li>
+                <li class="nav-item p-10">
+                    <a href="https://medium.com/snowball-finance/snowball-finance-launce-68554044bdd2" target="_blank" rel="noopener" class="custom-footer-link">
+                        <ion-icon name="logo-medium"></ion-icon> Medium
+                    </a>
+                </li>
+                <li class="nav-item p-10">
+                    <a href="https://t.me/throwsnowballs" target="_blank" rel="noopener" class="custom-footer-link">
+                        <ion-icon name="paper-plane-outline"></ion-icon> Telegram
+                    </a>
+                </li>
+                <li class="nav-item p-10">
+                    <a href="https://snowballs.gitbook.io/snowball-docs/" target="_blank" rel="noopener" class="custom-footer-link">
+                        <ion-icon name="book-outline"></ion-icon> Docs
+                    </a>
+                </li>
+
+
+            </ul>
+        </div>
+        <div class="col-md-12 text-center">
+
+        </div>
+    </div>
+</div>
+<script>
+
+    function snowballDarkmode(){
+        if (window.localStorage.getItem('snowballDarkmode') == 'true' ) {
+            document.body.classList.remove("dark-mode"),window.localStorage.setItem("snowballDarkmode",!1);
+            var icon = document.querySelector('.styleMode')
+            if (icon) {
+              icon.classList.add('fa-moon-o'),icon.classList.remove('fa-sun-o');
+            }
+        }else{
+            document.body.classList.add("dark-mode"),window.localStorage.setItem("snowballDarkmode",!0);
+           /*  var icon = document.querySelector('.styleMode')
+            icon.classList.remove('fa-moon-o'),icon.classList.add('fa-sun-o'); */
+            icon = document.querySelector('.styleMode')
+            if (icon) {
+              icon.attr('name', function(index, attribute){
+                return attribute == "menu-outline" ? "close-outline" : "menu-outline";
+              });
+            }
+        }
+
+    }
+    if (localStorage.getItem("snowballDarkmode") === null) {
+        document.body.classList.add("dark-mode"),window.localStorage.setItem("snowballDarkmode",!0);
+        icon.classList.remove('fa-moon-o'),icon.classList.add('fa-sun-o');
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+

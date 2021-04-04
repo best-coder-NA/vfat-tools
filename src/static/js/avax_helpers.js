@@ -1,6 +1,11 @@
 const avaxTokens = [ 
-    { "id": "avalanche","symbol": "AVAX","contract": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7" },
+    { "id": "avalanche-2","symbol": "AVAX","contract": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7" },
     { "id": "pangolin","symbol": "PNG", "contract": "0x60781C2586D68229fde47564546784ab3fACA982" },
+    { "id": "snowball-token","symbol": "SNOB", "contract": "0xC38f41A296A4493Ff429F1238e030924A1542e50" },
+    { "id": "sushi","symbol": "SUSHI", "contract": "0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc" },
+    { "id": "ethereum","symbol": "ETH", "contract": "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15" },
+    { "id": "chainlink","symbol": "LINK", "contract": "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651" },
+    { "id": "tether","symbol": "USDT", "contract": "0xde3A24028580884448a5397872046a019649b084" },
 ]
 
 async function getAvaxPrices() {
@@ -328,7 +333,7 @@ async function loadMultipleAvaxSynthetixPools(App, tokens, prices, pools) {
   const infos = await Promise.all(pools.map(p => 
       loadAvaxSynthetixPoolInfo(App, tokens, prices, p.abi, p.address, p.rewardTokenFunction, p.stakeTokenFunction)));
   for (const i of infos) {
-    let p = await printSynthetixPool(App, i, "avax");
+    let p = await printSnowglobePool(App, i, "avax");
     totalStaked += p.staked_tvl || 0;
     totalUserStaked += p.userStaked || 0;
     if (p.userStaked > 0) {
@@ -337,6 +342,30 @@ async function loadMultipleAvaxSynthetixPools(App, tokens, prices, pools) {
   }
   let totalApr = totalUserStaked == 0 ? 0 : individualAPRs.reduce((x,y)=>x+y, 0) / totalUserStaked;
   return { staked_tvl : totalStaked, totalUserStaked, totalApr };
+}
+
+async function loadMultipleSnowglobePools(App, tokens, prices, pools) {
+  let totalStaked  = 0, totalUserStaked = 0, individualAPRs = [], poolAPRs = [];
+  const infos = await Promise.all(pools.map(p => 
+      loadAvaxSynthetixPoolInfo(App, tokens, prices, p.abi, p.address, p.rewardTokenFunction, p.stakeTokenFunction)));
+  const APRs = []
+  for (const i of infos) {
+    let p = await getSnowglobePoolAPR(App, i, "avax");
+    poolAPRs.push(p)
+  }
+  return poolAPRs;
+}
+
+async function getSnowglobePoolAPR(App, info, chain="eth") {
+    const weeklyAPR = info.usdPerWeek / info.staked_tvl * 100;
+    const dailyAPR = weeklyAPR / 7;
+    const yearlyAPR = weeklyAPR * 52;
+
+    return {
+        weeklyAPR: weeklyAPR,
+        dailyAPR : dailyAPR,
+        yearlyAPR : yearlyAPR
+    }
 }
 
 async function loadMultipleAvaxSynthetixPoolsSequential(App, tokens, prices, pools) {

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+
+<body>
+<%- include(`${partials}/header_main`); -%>
+<div class="loader--1"></div>
+<pre id="log">
+    
+</pre>
+<%- include(`${partials}/scripts`, {scriptname: 'staking'}); -%>
+</body>
+</html>

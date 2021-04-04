@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+  if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+    document.body.classList.add('dark-mode');
+  }
+</script>
+<body>
+<div class="page-wrapper with-navbar with-transitions">
+    <%- include(`${partials}/header_main`); -%>
+    <%- include(`${partials}/wallet_error`); -%>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <div class="row">
+                <a class="ml-20 mt-10 font-size-10" href="<%= PP %>/icequeen/">Switch to text view</a>
+                <div class="col-md-12 text-center">
+                    <h4 id="title" class="">IceQueen 👸 - Governance</h4>
+                    <p id="msg1" class="m-0 p-0">Estimates based on 15,000 blocks per day</p>
+                    <p id="msg2" class="m-0 p-0">Estimated LP value based on current token prices</p>
+                </div>
+            </div>
+            <div class="row">
+                <div id="account-info" class="col-xs-12 col-md-8" style="display: none;">
+                    <div class="snobcard br-8 box-shadow-1">
+                        <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
+                            <div class="col-xs-12 col-md-6 align-items-center">
+                                <div class="p-10 w-full m-auto">
+                                    <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
+                                        <!-- <i class="fa fa-usd ml-5" aria-hidden="true"></i> -->
+                                        <p class="m-0 mt-5 text-muted font-size-12">
+                                            You have
+                                        </p>
+                                        <span class="font-size-18 font-weight-regular" >
+                                            <span class="font-size-18 font-weight-bold" id="value-snob" data-toggle="tooltip" data-title="Total Snowballs">
+
+                                            </span> SNOB
+                                        </span>
+                                        <span class="font-size-14 font-weight-light"  data-toggle="tooltip" data-title="Total value of Snowballs in USD">($<span id="value-usd"></span> )</span>
+                                    </h3>
+                                    <p class="m-0 text-muted font-size-12">
+                                        <ion-icon name="wallet-outline"></ion-icon> Wallet: <span id="wallet"></span>
+                                    </p>
+                                    <p class="m-0 text-muted font-size-12">
+                                        <span id="pending"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 align-items-center" >
+                                <div class="w-full m-auto w-clipboard" id="wallet-copy" data-toggle="tooltip" data-placement="bottom" data-title="Copy your wallet address to clipboard">
+                                    <div class="card w-300 p-10 m-auto border border-2 bg-transparent snob-tokens">
+                                        <div class="d-flex flex-row justify-content-right align-items-center">
+                                            <div class="mr-10">
+                                                <img src="https://s2.coinmarketcap.com/static/cloud/img/metamask.png?_=4b2fe1d" class="w-25 pull-left" alt="Metamask">
+                                            </div>
+                                            <div id="wallet-address" class="font-size-12 p-2 text-truncate">
+
+                                            </div>
+
+                                            <a href="#" class="ml-5 pointer" aria-hidden="true">
+                                                <ion-icon name="copy-outline"></ion-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="snob-info" class="col-xs-12 col-md-4" style="display: none;">
+                    <div class="snobcard br-8 box-shadow-1">
+                        <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
+                            <div class="w-full m-auto">
+                                <h3 class="font-size-16 m-0 font-weight-semi-bold text-dark-lm text-light-dm">
+                                    <!-- <i class="fa fa-usd ml-5" aria-hidden="true"></i> -->
+                                    <span class="font-size-16 font-weight-regular">
+                                        Snowball <span class="badge">SNOB</span> : <span id="value-market"></span>
+                                    </span>
+                                </h3>
+                                <p class="m-0 text-muted font-size-12">
+                                    <ion-icon name="pie-chart-outline"></ion-icon> Marketcap: <span id="value-marketcap"></span>
+                                </p>
+                                <p class="m-0 text-muted font-size-12">
+                                    <ion-icon name="bar-chart-outline"></ion-icon> Circulating Supply: <span id="snob-supply"></span> - Max: <span id="snob-supply-max"></span>
+                                </p>
+                                <p class="m-0 text-muted font-size-12">
+                                    <ion-icon name="layers-outline"></ion-icon> SNOB per Block: <span id="snob-per-block"></span> - Per day: <span id="snob-block-pday"></span>
+                                </p>
+                                <p class="m-0 text-muted font-size-12">
+                                    Est Blocks Per Day: <span id="snob-est-pday">15,000 </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POOLS OF ICEQUEEN -->
+            <div class="row">
+                <div id="snob-pools-used" class="w-full">
+
+                </div>
+                <div id="snob-pools-new" class="w-full">
+
+                </div>
+                <div id="snob-pools-unused" class="w-full">
+
+                </div>
+            </div>
+
+
+            <div class="loader--1">
+                <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                        <div></div><div></div>
+                    </div></div>
+            </div>
+            <h1 class="error"></h1>
+
+            <pre id="log" style="margin-left: 10px;">
+            </pre>
+
+            <%- include(`${partials}/scripts`, {scriptname: 'earn'}); -%>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+    </div>
+</div>
+<script>
+  function toggleDetails(pool){
+    $(`#details-${pool}`).slideToggle();
+  }
+</script>
+</body>
+</html>
