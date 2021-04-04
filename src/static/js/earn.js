@@ -287,7 +287,7 @@ async function main() {
   const totalStakedSPGLLINK = await SPGL_LINK_TOKEN.balanceOf(ICEQUEEN_ADDR)
   const totalStakedS3D = await S3D_TOKEN.balanceOf(ICEQUEEN_ADDR)
   const userPool7Percent = (stakedPool7.amount / 1e18) / (totalStakedS3D / 1e18) * 100
-  const userPool6Percent = (stakedPool6.amount / 1e18) / (totalStakedSPGLUSDT / 1e18) * 100
+  const userPool6Percent = (stakedPool6.amount / 1e18) / (totalStakedSPGLLINK / 1e18) * 100
   const userPool5Percent = (stakedPool5.amount / 1e18) / (totalStakedSPGLUSDT / 1e18) * 100
   const userPool4Percent = (stakedPool4.amount / 1e18) / (totalStakedSPGLETH / 1e18) * 100
   const userPool3Percent = (stakedPool3.amount / 1e18) / (totalStakedSPGLPNG / 1e18) * 100
@@ -593,7 +593,7 @@ async function main() {
       totalSupplyPGL_6 = totalSupplyPGL_6 / 1e18;
       const reserves_6 = await pglContract_6.getReserves();
       const r0_6 = reserves_6._reserve0 / 1e18
-      const r1_6 = reserves_6._reserve1 / 1e6
+      const r1_6 = reserves_6._reserve1 / 1e18
       let reserve0Owned_6 = ownedPGL_6 * (r0_6) / (totalSupplyPGL_6);
       let reserve1Owned_6 = ownedPGL_6 * (r1_6) / (totalSupplyPGL_6);
       const token0Address_6 = await pglContract_6.token0();

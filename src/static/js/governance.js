@@ -10,8 +10,8 @@ async function main() {
   const CRYSTAL_VAULT_ABI = [{"type":"constructor","stateMutability":"nonpayable","inputs":[{"type":"address","name":"_iceQueen","internalType":"address"},{"type":"address","name":"_snowball","internalType":"address"},{"type":"address","name":"_pgl","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"snowball","internalType":"uint256"},{"type":"uint256","name":"PGL","internalType":"uint256"},{"type":"uint256","name":"rewardCredit","internalType":"uint256"},{"type":"uint256","name":"rewardSnapshot","internalType":"uint256"},{"type":"uint256","name":"votes","internalType":"uint256"},{"type":"uint256","name":"thawTimestamp","internalType":"uint256"}],"name":"accounts","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"deposit","inputs":[{"type":"uint256","name":"_amountSnowball","internalType":"uint256"},{"type":"uint256","name":"_amountPGL","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"freeze","inputs":[{"type":"address","name":"_address","internalType":"address"},{"type":"uint256","name":"_duration","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"governance","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IIceQueen"}],"name":"iceQueen","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"isFrozen","inputs":[{"type":"address","name":"_address","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"pendingReward","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IPangolinPair"}],"name":"pgl","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"quadraticVotes","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setGovernance","inputs":[{"type":"address","name":"_governance","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"snowball","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"votes","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"withdrawAll","inputs":[]}]
   const GOVERNANCE_ABI = [{"type":"constructor","stateMutability":"nonpayable","inputs":[{"type":"address","name":"_crystalVault","internalType":"address"},{"type":"address","name":"_governer","internalType":"address"}]},{"type":"event","name":"GovernerAdded","inputs":[{"type":"address","name":"governer","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"GovernerRemoved","inputs":[{"type":"address","name":"governer","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"NewCrystalVault","inputs":[{"type":"address","name":"crystalVault","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"NewProposal","inputs":[{"type":"address","name":"proposer","internalType":"address","indexed":false},{"type":"uint256","name":"proposalId","internalType":"uint256","indexed":false},{"type":"string","name":"title","internalType":"string","indexed":false}],"anonymous":false},{"type":"event","name":"NewVote","inputs":[{"type":"address","name":"voter","internalType":"address","indexed":false},{"type":"uint256","name":"proposalId","internalType":"uint256","indexed":false},{"type":"bool","name":"support","internalType":"bool","indexed":false},{"type":"uint256","name":"votes","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"ProposalExecuted","inputs":[{"type":"address","name":"executor","internalType":"address","indexed":false},{"type":"uint256","name":"proposalId","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"addGoverner","inputs":[{"type":"address","name":"_governer","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract ICrystalVault"}],"name":"crystalVault","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[{"type":"bytes","name":"","internalType":"bytes"}],"name":"execute","inputs":[{"type":"uint256","name":"_proposalId","internalType":"uint256"},{"type":"address","name":"_target","internalType":"address"},{"type":"uint256","name":"_value","internalType":"uint256"},{"type":"bytes","name":"_data","internalType":"bytes"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"executionDelay","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"executionExpiration","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"getVote","inputs":[{"type":"uint256","name":"_proposalId","internalType":"uint256"},{"type":"address","name":"_voter","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"governers","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"minimumVotingPeriod","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"proposalCount","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"proposalThreshold","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"id","internalType":"uint256"},{"type":"string","name":"title","internalType":"string"},{"type":"address","name":"proposer","internalType":"address"},{"type":"address","name":"executor","internalType":"address"},{"type":"uint256","name":"startTime","internalType":"uint256"},{"type":"uint256","name":"votingPeriod","internalType":"uint256"},{"type":"uint256","name":"forVotes","internalType":"uint256"},{"type":"uint256","name":"againstVotes","internalType":"uint256"},{"type":"bytes32","name":"txHash","internalType":"bytes32"}],"name":"proposals","inputs":[{"type":"uint256","name":"","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"propose","inputs":[{"type":"string","name":"_title","internalType":"string"},{"type":"uint256","name":"_votingPeriod","internalType":"uint256"},{"type":"address","name":"_target","internalType":"address"},{"type":"uint256","name":"_value","internalType":"uint256"},{"type":"bytes","name":"_data","internalType":"bytes"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"quorumVotes","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"removeGoverner","inputs":[{"type":"address","name":"_governer","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setCrystalVault","inputs":[{"type":"address","name":"_crystalVault","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setExecutionDelay","inputs":[{"type":"uint256","name":"_seconds","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setExecutionExpiration","inputs":[{"type":"uint256","name":"_seconds","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setMinimumVotingPeriod","inputs":[{"type":"uint256","name":"_seconds","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setProposalThreshold","inputs":[{"type":"uint256","name":"_votes","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setQuorumVotes","inputs":[{"type":"uint256","name":"_votes","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"","internalType":"enum Governance.ProposalState"}],"name":"state","inputs":[{"type":"uint256","name":"proposalId","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"vote","inputs":[{"type":"uint256","name":"_proposalId","internalType":"uint256"},{"type":"bool","name":"_support","internalType":"bool"}]}]
   //FUJI
-  const CRYSTAL_VAULT_ADDRESS = "0xD684FcB37CAC667100EC46Cf38e64d83635d7a4F";
-  const GOVERNANCE_ADDRESS = "0xC86142c5884525964081bA032BCDe883B95312da";
+  const CRYSTAL_VAULT_ADDRESS = "0xBE203f1503C4C3EA5C6C1e187f75b21dA11425EE";
+  const GOVERNANCE_ADDRESS = "0xf763cAB1c43DF2890b2A1DA4d5e3abB8373Af9d0";
   const SNOB_ADDRESS = "0xf319e2f610462f846d6e93f51cdc862eeff2a554";
   const PGL_ADDRESS = "0xf91BD10B18B45262A324883FbDB2Ea21d66ca938";
 
@@ -36,12 +36,6 @@ async function main() {
   }
   const withdraw_crystal = async function () {
     return crystalVaultContract_withdraw(CRYSTAL_VAULT_ABI, CRYSTAL_VAULT_ADDRESS, App)
-  }
-  const governance_vote_for_1 = async function () {
-    return governanceContract_voteFor(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, 1, App)
-  }
-  const governance_vote_against_1 = async function () {
-    return governanceContract_voteAgainst(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, 1, App)
   }
 
   // balances
@@ -68,26 +62,39 @@ async function main() {
   //proposals
   const GOVERNANCE_CONTRACT = new ethers.Contract(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, signer);
   const proposal_count = await GOVERNANCE_CONTRACT.proposalCount();
-  for (i = proposal_count; i > 0; i--) {
+  const quorumVotes = await GOVERNANCE_CONTRACT.quorumVotes();
+  for (let i = proposal_count * 1; i > 0; i--) {
     const proposal = await GOVERNANCE_CONTRACT.proposals(i)
-    const duration = (proposal.votingPeriod / 1e18 / 60 / 60).toFixed(4);
+    const duration = (proposal.votingPeriod / 60 / 60).toFixed(4);
     const startDate = new Date(proposal.startTime * 1000).toLocaleString();
-    const endDate = new Date((proposal.startTime + (proposal.votingPeriod * 1)) * 1000).toLocaleString()
+    const endDate = new Date((proposal.startTime * 1 + proposal.votingPeriod * 1) * 1000).toLocaleString()
     console.log(proposal)
     let proposal_html = `<details class="mb-20 collapse-panel w-500 mw-full">`;
     proposal_html += `<summary class="collapse-header">`;
     proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${proposal.id * 1}:</span> ${proposal.title}</div>`
     proposal_html += `<div><span>Duration: ${duration} hours </span></div>`
-    proposal_html += `<div><span>Start: ${startDate} </span><span>End: ${endDate}</span></div>`
+    proposal_html += `<div><span>Start: ${startDate} </span></div>`
+    proposal_html += `<div><span>End: ${endDate}</span></div>`
+    proposal_html += `<div><span>Votes needed for Quorum: ${quorumVotes * 1}</span></div>`
     proposal_html += `<div><span class="text-success">For: ${proposal.forVotes / 1e18}</span><span class="float-right text-secondary">Against: ${proposal.againstVotes / 1e18}</span></div>`
     proposal_html += `</summary>`;
     proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
+    proposal_html += `<div class="ml-20">Proposer: ${proposal.proposer}</div>`
     proposal_html += `<div class="ml-20 mb-10">(Insert description here)</div>`;
     proposal_html += `<button id="proposal_${i}_for" class="ml-20 btn btn-success" type="button">Vote for <ion-icon name="thumbs-up-outline"></ion-icon></button>`;
     proposal_html += `<button id="proposal_${i}_against" class="btn btn-secondary float-right" type="button">Vote against <ion-icon name="thumbs-down-outline"></ion-icon></button>`;
     proposal_html += `</div>`;
     proposal_html += `</details>`;
     $("#proposal_list").append(proposal_html);
+    //vote
+    console.log("i", i);
+    $(`#proposal_${i}_for`).click(function(){
+      console.log("iclick", i);
+      governanceContract_voteFor(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, i, App)
+    });
+    $(`#proposal_${i}_against`).click(function(){
+      governanceContract_voteAgainst(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, i, App)
+    });
   }
 
   // Approvals
@@ -127,15 +134,6 @@ async function main() {
   $("#withdraw_crystal").click(function(){
     withdraw_crystal();
   });
-
-  //vote
-  $("#proposal_1_for").click(function(){
-    governance_vote_for_1();
-  });
-  $("#proposal_1_against").click(function(){
-    governance_vote_against_1();
-  });
-
 
   hideLoading();
 }
