@@ -935,7 +935,7 @@ async function main() {
                 </div>
                 <div class="row pt-20">
                     ${earning}
-
+                    ${stakeDisplay}
                     ${availableStake}
                     <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
