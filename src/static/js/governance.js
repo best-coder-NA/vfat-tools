@@ -65,7 +65,7 @@ async function main() {
   console.log("isFrozen:", isFrozen)
   console.log("pendingReward:", pendingReward)
   console.log("thawTime:", thawTime)
-  $("#my_votes").html((qVotes / 1e18).toLocaleString())
+  $("#my_votes").html((qVotes / 1e18).toFixed(2).toLocaleString())
   $("#deposited_snob").html((assetsDeposited.snowball / 1e18).toLocaleString())
   $("#deposited_pgl").html((assetsDeposited.PGL  / 1e18).toLocaleString())
   if (isFrozen == 1) {
@@ -93,7 +93,7 @@ async function main() {
   const quorumVotes = await GOVERNANCE_CONTRACT.quorumVotes();
   for (let i = proposal_count * 1; i > 0; i--) {
     const proposal = await GOVERNANCE_CONTRACT.proposals(i)
-    const duration = (proposal.votingPeriod / 60 / 60).toFixed(4);
+    const duration = (proposal.votingPeriod / 60 / 60).toFixed(2);
     const startDate = new Date(proposal.startTime * 1000).toLocaleString();
     const endDate = new Date((proposal.startTime * 1 + proposal.votingPeriod * 1) * 1000).toLocaleString()
     const state = await GOVERNANCE_CONTRACT.state(i)
@@ -101,7 +101,7 @@ async function main() {
     const userForAgainst = userVote[0];
     const userVoteStatus = userVote[1];
     const userVoteAmount = userVote[2];
-    const userVoteDisplay = `${userVoteAmount / 1e18} votes ${userForAgainst == 0 ? 'Against' : 'For'}`;
+    const userVoteDisplay = `${(userVoteAmount / 1e18).toFixed(2)} votes ${userForAgainst == 0 ? 'Against' : 'For'}`;
     console.log(userVote)
     let stateDisplay = '';
     switch (state){
@@ -131,7 +131,7 @@ async function main() {
     proposal_html += `<summary class="collapse-header">`;
     proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${proposal.id * 1}:</span> ${proposal.title}</div>`
     proposal_html += `<div><span>Status: ${stateDisplay}</span></div>`
-    proposal_html += `<div class="font-size-16"><span class="text-success">For: ${proposal.forVotes / 1e18}</span><span class="float-right text-secondary">Against: ${proposal.againstVotes / 1e18}</span></div>`
+    proposal_html += `<div class="font-size-16"><span class="text-success">For: ${(proposal.forVotes / 1e18).toFixed(2)}</span><span class="float-right text-secondary">Against: ${(proposal.againstVotes / 1e18).toFixed(2)}</span></div>`
     proposal_html += `</summary>`;
     proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
     if (state == 0 && userVoteStatus == 0) {
@@ -144,9 +144,10 @@ async function main() {
     proposal_html += `<div class="ml-20 mt-10"><span>Duration: ${duration} hours </span></div>`
     proposal_html += `<div class="ml-20"><span>Start: ${startDate} </span></div>`
     proposal_html += `<div class="ml-20"><span>End: ${endDate}</span></div>`
-    proposal_html += `<div class="ml-20"><span>Votes needed for Quorum: ${quorumVotes * 1}</span></div>`
+    if (state == 0) {
+      proposal_html += `<div class="ml-20"><span>Votes needed for Quorum: ${quorumVotes * 1}</span></div>`
+    }
     proposal_html += `<div class="ml-20">Proposer: ${proposal.proposer}</div>`
-    proposal_html += `<div class="ml-20">(Insert description here)</div>`;
     proposal_html += `</div>`;
     proposal_html += `</details>`;
     $("#proposal_list").append(proposal_html);
