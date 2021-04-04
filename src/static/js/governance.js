@@ -102,7 +102,7 @@ async function main() {
     const userVoteStatus = userVote[1];
     const userVoteAmount = userVote[2];
     const userVoteDisplay = `${(userVoteAmount / 1e18).toFixed(2)} votes ${userForAgainst == 0 ? 'Against' : 'For'}`;
-    const safeTitle = proposal.title.replace('<', '%3C').replace('>', '%3E');
+    const safeTitle = proposal.title.replaceAll('<', '%3C').replaceAll('>', '%3E');
     console.log(userVote)
     let stateDisplay = '';
     switch (state){
