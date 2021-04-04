@@ -293,6 +293,8 @@ async function main() {
   const userPool3Percent = (stakedPool3.amount / 1e18) / (totalStakedSPGLPNG / 1e18) * 100
   const userPool2Percent = (stakedPool2.amount / 1e18) / (totalStakedSNOBAVAX / 1e18) * 100
   const userPool1Percent = (stakedPool1.amount / 1e18) / (totalStakedSPGLSUSHI / 1e18) * 100
+  const poolShareDisplay_7 = `${(stakedPool7.amount / 1e18).toFixed(6)} S3D`;
+
   const pool7weight = 0.20
   const pool6weight = 0.08
   const pool5weight = 0.05
@@ -1006,21 +1008,23 @@ async function main() {
     var poolShare = '';
     var earning = '';
     var stakeDisplay = '';
+    
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
         //_print(options.pool_share_display)
         poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
         <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
+        <p class="m-0 font-size-12">(${options.user_pool_percent.toFixed(6)}%)</p>
         </div>`;
       }
       if (options.stake_display) {
         //_print(options.stake_display);
         stakeDisplay = options.stake_display;
       }
-      _print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
+      //_print(`Estimated rate (average block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * 15000 * snobPrice).toFixed(2)})</b>`)
 
-      _print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
+      //_print(`Estimated rate (24hr block rate): <b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)}</b> SNOB per day ($<b>${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs * snobPrice).toFixed(2)})</b>`)
 
       estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
       <p class="m-0 font-size-12"> Estimated Rate</p>
@@ -1069,12 +1073,12 @@ async function main() {
       //_print_button(`Stake`, options.stake)
       approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
 
-      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake sPGL</button>`;
+      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake S3D</button>`;
     }
     if ( options.staked_pool.amount / 1e18 > 0 ) {
       has_options = true
       //_print_button(`Unstake`, options.unstake)
-      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>`;
+      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake S3D</button>`;
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
@@ -1603,6 +1607,7 @@ async function main() {
       $('#snob-pools-used').append(poolPrint);
     }
   }
+  
   poolS3D({
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
     logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
@@ -1613,7 +1618,7 @@ async function main() {
     tvl: null,
     pool_weight: pool7weight,
     total_staked: totalStakedS3D,
-    user_pool_percent: 0,
+    user_pool_percent: userPool7Percent,
     staked_pool: stakedPool7,
     pending_tokens: pendingSNOBTokensPool7,
     display_amount: S3DDisplayAmt,
@@ -1625,7 +1630,7 @@ async function main() {
     snowglobe_apr: null,
     tvl_display: pool7tvlDisplay,
     total_pgl: null,
-    pool_share_display: '',
+    pool_share_display: poolShareDisplay_7,
     pool_share_display_pgl: '',
     stake_display: ''
   })
@@ -1638,7 +1643,7 @@ async function main() {
     tvl: LINK_AVAX_TVL,
     pool_weight: pool6weight,
     total_staked: totalStakedSPGLLINK,
-    user_pool_percent: 0,
+    user_pool_percent: userPool6Percent,
     staked_pool: stakedPool6,
     pending_tokens: pendingSNOBTokensPool6,
     display_amount: spglLinkDisplayAmt,
