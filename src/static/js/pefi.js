@@ -75,11 +75,11 @@ async function main() {
   console.log("totalPGL:", totalPGL / 1e18);
   console.log("pendingPEFI:", pendingPEFI / 1e18)
   console.log("ownedPEFI:", ownedPEFI / 1e18)
-  $("#pool_size").html((totalPGL / 1e18).toFixed(3))
-  $("#current_pgl").html((currentPGL / 1e18).toFixed(3))
-  $("#staked_pgl").html((stakedPGL.amount / 1e18).toFixed(3))
-  $("#pending_pefi").html((pendingPEFI / 1e18).toFixed(6))
-  $("#owned_pefi").html((ownedPEFI / 1e18).toFixed(6))
+  $("#pool_size").html(totalPGL / 1e18)
+  $("#current_pgl").html(currentPGL / 1e18)
+  $("#staked_pgl").html(stakedPGL.amount / 1e18)
+  $("#pending_pefi").html(pendingPEFI / 1e18)
+  $("#owned_pefi").html(ownedPEFI / 1e18)
 
   hideLoading();
 
