@@ -631,9 +631,9 @@ async function main() {
     if (options.icequeen_apr) {
       //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
 
-      var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
-      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
-      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
+      var eDayAPR = `${options.icequeen_apr.toFixed(2)}`;
+      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}`;
+      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}`;
 
 
       var combinedAprDisplay = '';
