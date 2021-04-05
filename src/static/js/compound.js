@@ -260,6 +260,21 @@ async function main() {
         } else if (p.token1.symbol.toLowerCase() == 'link') {
           link_tvl = p.locked;
           link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'sushi') {
+          sushi_tvl = p.locked;
+          sushi_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'png') {
+          png_tvl = p.locked;
+          png_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'eth') {
+          eth_tvl = p.locked;
+          eth_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'usdt') {
+          usdt_tvl = p.locked;
+          usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'wbtc') {
+          wbtc_tvl = p.locked;
+          wbtc_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
         }
       });
     }
@@ -357,10 +372,11 @@ async function main() {
   let stakeDisplay_usdt = null;
   let withdrawDisplay_usdt = null;
   const userSPGL_usdt = userUsdtDeposited / 1e18;
+  let ownedPGL_usdt = 0;
   try {
     if (userSPGL_usdt > 0) {
       let totalSPGL_usdt = await snowglobeContract_usdt.totalSupply();
-      let ownedPGL_usdt = userSPGL_usdt * (totalPoolPGL_usdt / 1e18) / (totalSPGL_usdt / 1e18);
+      ownedPGL_usdt = userSPGL_usdt * (totalPoolPGL_usdt / 1e18) / (totalSPGL_usdt / 1e18);
       const pglContract_usdt = new ethers.Contract(USDT_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_usdt = await pglContract_usdt.totalSupply();
       totalSupplyPGL_usdt = totalSupplyPGL_usdt / 1e18;
@@ -388,10 +404,11 @@ async function main() {
   let stakeDisplay_link = null;
   let withdrawDisplay_link = null;
   const userSPGL_link = userLinkDeposited / 1e18;
+  let ownedPGL_link = 0;
   try {
     if (userSPGL_link > 0) {
       let totalSPGL_link = await snowglobeContract_link.totalSupply();
-      let ownedPGL_link = userSPGL_link * (totalPoolPGL_link / 1e18) / (totalSPGL_link / 1e18);
+      ownedPGL_link = userSPGL_link * (totalPoolPGL_link / 1e18) / (totalSPGL_link / 1e18);
       const pglContract_link = new ethers.Contract(LINK_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_link = await pglContract_link.totalSupply();
       totalSupplyPGL_link = totalSupplyPGL_link / 1e18;
@@ -421,10 +438,11 @@ async function main() {
   let stakeDisplay_eth = null;
   let withdrawDisplay_eth = null;
   const userSPGL_eth = userEthDeposited / 1e18;
+  let ownedPGL_eth = 0;
   try {
     if (userSPGL_eth > 0) {
       let totalSPGL_eth = await snowglobeContract_eth.totalSupply();
-      let ownedPGL_eth = userSPGL_eth * (totalPoolPGL_eth / 1e18) / (totalSPGL_eth / 1e18);
+      ownedPGL_eth = userSPGL_eth * (totalPoolPGL_eth / 1e18) / (totalSPGL_eth / 1e18);
       const pglContract_eth = new ethers.Contract(ETH_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_eth = await pglContract_eth.totalSupply();
       totalSupplyPGL_eth = totalSupplyPGL_eth / 1e18;
@@ -453,10 +471,11 @@ async function main() {
   let stakeDisplay_png = null;
   let withdrawDisplay_png = null;
   const userSPGL_png = userPngDeposited / 1e18;
+  let ownedPGL_png = 0;
   try {
     if (userSPGL_png > 0) {
       let totalSPGL_png = await snowglobeContract_png.totalSupply();
-      let ownedPGL_png = userSPGL_png * (totalPoolPGL_png / 1e18) / (totalSPGL_png / 1e18);
+      ownedPGL_png = userSPGL_png * (totalPoolPGL_png / 1e18) / (totalSPGL_png / 1e18);
       const pglContract_png = new ethers.Contract(PNG_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_png = await pglContract_png.totalSupply();
       totalSupplyPGL_png = totalSupplyPGL_png / 1e18;
@@ -485,10 +504,11 @@ async function main() {
   let stakeDisplay_sushi = null;
   let withdrawDisplay_sushi = null;
   const userSPGL_sushi = userSushiDeposited / 1e18;
+  let ownedPGL_sushi = 0;
   try {
     if (userSPGL_sushi > 0) {
       let totalSPGL_sushi = await snowglobeContract_sushi.totalSupply();
-      let ownedPGL_sushi = userSPGL_sushi * (totalPoolPGL_sushi / 1e18) / (totalSPGL_sushi / 1e18);
+      ownedPGL_sushi = userSPGL_sushi * (totalPoolPGL_sushi / 1e18) / (totalSPGL_sushi / 1e18);
       const pglContract_sushi = new ethers.Contract(SUSHI_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_sushi = await pglContract_sushi.totalSupply();
       totalSupplyPGL_sushi = totalSupplyPGL_sushi / 1e18;
@@ -517,10 +537,11 @@ async function main() {
   let stakeDisplay_wbtc = null;
   let withdrawDisplay_wbtc = null;
   const userSPGL_wbtc = wbtcDeposited / 1e18;
+  let ownedPGL_wbtc = 0;
   try {
     if (userSPGL_wbtc > 0) {
       let totalSPGL_wbtc = await snowglobeContract_wbtc.totalSupply();
-      let ownedPGL_wbtc = userSPGL_wbtc * (totalPoolPGL_wbtc / 1e18) / (totalSPGL_wbtc / 1e18);
+      ownedPGL_wbtc = userSPGL_wbtc * (totalPoolPGL_wbtc / 1e18) / (totalSPGL_wbtc / 1e18);
       const pglContract_wbtc = new ethers.Contract(WBTC_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_wbtc = await pglContract_wbtc.totalSupply();
       totalSupplyPGL_wbtc = totalSupplyPGL_wbtc / 1e18;
@@ -587,6 +608,17 @@ async function main() {
   </div>`;
     }else{
       var available = '';
+    }
+    if ( options.owned_pgl / 1e18 > 0 ) {
+      //_print(`Deposit Available: <b>${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) }</b> PGL`)
+
+      var withdraw = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.owned_pgl / 1e18) > 0 ? (options.owned_pgl / 1e18) .toFixed(8) : (options.owned_pgl / 1e18) } PGL  </p>
+      <p class="m-0 font-size-12">(Available for withdraw) </p>
+  </div>`;
+    }else{
+      var withdraw = '';
     }
     if ( options.display_amount > 0 ) {
       //_print(`Withdrawal Available: ${options.withdraw_display}`)
@@ -686,6 +718,7 @@ async function main() {
                 </div>
                 ${poolSize}
                 ${available}
+                ${withdraw}
                 <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
                   ${approveBtn}
                   ${depositBtn}
@@ -716,7 +749,8 @@ async function main() {
     pool_share_display: poolShareDisplay_wbtc,
     stake_display: stakeDisplay_wbtc,
     total_pgl: totalPoolPGL_wbtc,
-    withdraw_display: withdrawDisplay_wbtc
+    withdraw_display: withdrawDisplay_wbtc,
+    owned_pgl: wbtcDeposited
   })
   layout_pool({
     logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
@@ -737,7 +771,8 @@ async function main() {
     pool_share_display: poolShareDisplay_usdt,
     stake_display: stakeDisplay_usdt,
     total_pgl: totalPoolPGL_usdt,
-    withdraw_display: withdrawDisplay_usdt
+    withdraw_display: withdrawDisplay_usdt,
+    owned_pgl: ownedPGL_usdt
   })
 
   layout_pool({
@@ -759,7 +794,8 @@ async function main() {
     pool_share_display: poolShareDisplay_link,
     stake_display: stakeDisplay_link,
     total_pgl: totalPoolPGL_link,
-    withdraw_display: withdrawDisplay_link
+    withdraw_display: withdrawDisplay_link,
+    owned_pgl: ownedPGL_link
   })
 
   layout_pool({
@@ -774,11 +810,12 @@ async function main() {
     approve: 'approveETH',
     stake: 'stakeETH',
     withdraw: 'withdrawETH',
-    tvl_display: null,
+    tvl_display: eth_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay_eth,
     total_pgl: null,
-    withdraw_display: withdrawDisplay_eth
+    withdraw_display: withdrawDisplay_eth,
+    owned_pgl: ownedPGL_eth
   })
 
   layout_pool({
@@ -793,11 +830,12 @@ async function main() {
     approve: 'approvePNG',
     stake: 'stakePNG',
     withdraw: 'withdrawPNG',
-    tvl_display: null,
+    tvl_display: png_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay_png,
     total_pgl: null,
-    withdraw_display: withdrawDisplay_png
+    withdraw_display: withdrawDisplay_png,
+    owned_pgl: ownedPGL_png
   })
 
   layout_pool({
@@ -812,11 +850,12 @@ async function main() {
     approve: 'approveSUSHI',
     stake: 'stakeSUSHI',
     withdraw: 'withdrawSUSHI',
-    tvl_display: null,
+    tvl_display: sushi_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay_sushi,
     total_pgl: null,
-    withdraw_display: withdrawDisplay_sushi
+    withdraw_display: withdrawDisplay_sushi,
+    owned_pgl: ownedPGL_sushi
   })
   //_print('**Estimated LP value based on current token prices')
   const bottom_funnel = `
