@@ -361,32 +361,33 @@ async function main() {
 	let pool1APR = null;
 	try {
 		res = await $.ajax({
-	      url: 'https://d2vq5imxja288v.cloudfront.net/total_value_locked.json',
+	      url: 'https://x-api.snowball.network/tvl/snob.json',
 	      type: 'GET',
 	    })
     	if (res && res.pairs) {
+        console.log(res.pairs)
     		res.pairs.forEach( p => {
-    			if (p.token1.token.toLowerCase() == 'sushi') {
+    			if (p.token1.symbol.toLowerCase() == 'sushi') {
     				pool1tvl = p.locked;
     				pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
     				pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.token.toLowerCase() == 'snob') {
+    			} else if (p.token1.symbol.toLowerCase() == 'snob') {
     				pool2tvl = p.locked;
     				pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
     				pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.token.toLowerCase() == 'png') {
+    			} else if (p.token1.symbol.toLowerCase() == 'png') {
     				pool3tvl = p.locked;
     				pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
     				pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.token.toLowerCase() == 'eth') {
+    			} else if (p.token1.symbol.toLowerCase() == 'eth') {
     				pool4tvl = p.locked;
     				pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
     				pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.token.toLowerCase() == 'usdt') {
+    			} else if (p.token1.symbol.toLowerCase() == 'usdt') {
             pool5tvl = p.locked;
             pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
             pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked * 100
-          } else if (p.token1.token.toLowerCase() == 'link') {
+          } else if (p.token1.symbol.toLowerCase() == 'link') {
             pool6tvl = p.locked;
             pool6tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
             pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked * 100
@@ -395,7 +396,7 @@ async function main() {
 		}
 	}
 	catch(e) {
-	  console.log('could not get tvl');
+	  console.log('could not get tvl:', e);
 	}
 
 		// APR
