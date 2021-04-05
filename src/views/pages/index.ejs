@@ -5,7 +5,7 @@
   if (window.localStorage.getItem('snowballDarkmode') == 'true') {
     document.body.classList.add('dark-mode');
   }
-  fetch('https://d2vq5imxja288v.cloudfront.net/total_value_locked.json').then(function (response) {
+  fetch('https://x-api.snowball.network/tvl/snob.json').then(function (response) {
     return response.json();
   }).then(function (info) {
     document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value);
