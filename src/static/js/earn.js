@@ -641,9 +641,9 @@ async function main() {
         let combinedAPR = options.icequeen_apr + options.snowglobe_apr
         //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
 
-        var cDayAPR = `${combinedAPR.toFixed(2)}%`;
-        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
-        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}%`;
+        var cDayAPR = `${combinedAPR.toFixed(2)}`;
+        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}`;
+        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}`;
 
         var combinedAprDisplay = `<div class="col-sm-12 col-md-3 align-items-center pb-10">
                 <div class="row">
