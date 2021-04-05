@@ -247,10 +247,10 @@ async function main() {
     })
     if (res && res.pairs) {
       res.pairs.forEach( p => {
-        if (p.token1.token.toLowerCase() == 'usdt') {
+        if (p.token1.symbol.toLowerCase() == 'usdt') {
           usdt_tvl = p.locked;
           usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.token.toLowerCase() == 'link') {
+        } else if (p.token1.symbol.toLowerCase() == 'link') {
           link_tvl = p.locked;
           link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
         }
