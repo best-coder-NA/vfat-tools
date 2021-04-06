@@ -45,10 +45,12 @@ async function main() {
   // balances
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
   const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  $("#available_snob").html((currentSNOBTokens / 1e18).toLocaleString())
+  const currentSNOBTokens_formatted = currentSNOBTokens/1e18 > .001 ? (currentSNOBTokens/1e18 - .001).toFixed(3) : 0;
+  $("#available_snob").html((currentSNOBTokens_formatted).toLocaleString())
   const PGL_TOKEN = new ethers.Contract(PGL_ADDRESS, ERC20_ABI, signer)
   const currentPGLTokens = await PGL_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  $("#available_pgl").html((currentPGLTokens / 1e18).toLocaleString())
+  const currentPGLTokens_formatted = currentPGLTokens/1e18 > .001 ? (currentPGLTokens/1e18 - .001).toFixed(3) : 0;
+  $("#available_pgl").html((currentPGLTokens_formatted).toLocaleString())
 
   //votes
   const CRYSTAL_CONTRACT = new ethers.Contract(CRYSTAL_VAULT_ADDRESS, CRYSTAL_VAULT_ABI, signer);
@@ -179,12 +181,11 @@ async function main() {
   }
 
   // Max
-  // TODO fix decimals bug
   $("#snob_max").click(function(){
-    $("#snob_input").val((currentSNOBTokens / 1e18).toLocaleString())
+    $("#snob_input").val(currentSNOBTokens_formatted)
   })
   $("#pgl_max").click(function(){
-    $("#pgl_input").val((currentPGLTokens / 1e18).toLocaleString())
+    $("#pgl_input").val(currentPGLTokens_formatted)
   })
 
   //
