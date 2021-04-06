@@ -8,7 +8,7 @@
   fetch('https://x-api.snowball.network/tvl/snob.json').then(function (response) {
     return response.json();
   }).then(function (info) {
-    document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value);
+    document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value.toFixed(0));
   }).catch(function (err) {
     document.getElementById('tvl').innerHTML = '';
     console.log('could not get tvl');
