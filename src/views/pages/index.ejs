@@ -5,10 +5,10 @@
   if (window.localStorage.getItem('snowballDarkmode') == 'true') {
     document.body.classList.add('dark-mode');
   }
-  fetch('https://d2vq5imxja288v.cloudfront.net/total_value_locked.json').then(function (response) {
+  fetch('https://x-api.snowball.network/tvl/snob.json').then(function (response) {
     return response.json();
   }).then(function (info) {
-    document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value);
+    document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value.toFixed(0));
   }).catch(function (err) {
     document.getElementById('tvl').innerHTML = '';
     console.log('could not get tvl');
@@ -30,16 +30,16 @@
                                 <h1 class="font-weight-semi-bold"> Earn more with Snowball</h1>
                             </div>
                             <div class="pt-20">
-                                <p class="font-weight-medium font-size-16 mb-0 mt-10">🏦️ StableVault allows anyone to <b><a href="<%= PP %>/stablevault/">buy and sell</a></b> stablecoins with near-zero fees and virtually no slippage.</p>
-                                <p class="font-weight-medium font-size-16 mb-0 mt-10">💰 Stablecoin holders get industry-leading returns by <b><a href="<%= PP %>/stablevault/">staking assets</a></b> in </p>
-                                <p class="font-weight-medium font-size-16 mb-20 mt-10">❄️ <b><a href="<%= PP %>/compound/">Supercharge your yield-farming</a></b> strategy by using Snowball to compound your rewards automatically.</p>
+                                <p class="font-weight-medium font-size-16 mb-0 mt-10"><img style="vertical-align: text-bottom" width="18px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3D.png"> StableVault allows anyone to <b><a href="<%= PP %>/stablevault/">buy and sell stablecoins</a></b> with near-zero fees and virtually no slippage.</p>
+                                <p class="font-weight-medium font-size-16 mb-0 mt-10">💰 Stablecoin holders get industry-leading returns by <b><a href="<%= PP %>/stablevault/">staking assets in StableVault</a></b>.</p>
+                                <p class="font-weight-medium font-size-16 mb-20 mt-10">❄️ Supercharge your yield-farming strategy by using Snowball to <b><a href="<%= PP %>/compound/">compound your rewards</a></b> automatically.</p>
                             </div>
                             <span class="badge badge-pill p-5 w-150 text-center">
-                                        <strong><a href="https://x-api.snowballfinance.info/tvl" target="_blank">Total Value Locked</a></strong>
+                                        <strong>Total Value Locked</strong>
                                     </span>
                             <div class="d-md-flex align-items-center total-locked text-extra-letter-spacing text-monospace font-size-12 pt-20 mb-20" target="_blank" rel="noopener">
 
-                                <h2 class="tvl text-primary px-5" id="tvl" data-aos="fade-right">...</h2>
+                                <a href="https://x-api.snowball.network/tvl" target="_blank"><h2 class="tvl text-primary px-5" id="tvl" data-aos="fade-right">...</h2></a>
                                 <a href="https://app.pangolin.exchange/#/swap?inputCurrency=avax&outputCurrency=0xc38f41a296a4493ff429f1238e030924a1542e50" class="btn btn-primary btn-lg ml-0 ml-md-20 buy-btn" target="_blank" role="button">
                                     Buy $SNOB
                                 </a>
@@ -176,6 +176,14 @@
                                 </div>
                             </div>
                         </a>
+                        <a href="https://cchain.explorer.avax.network/address/0x39BE35904f52E83137881C0AC71501Edf0180181/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                    <h6>SnowGlobe AVAX-WBTC</h6>
+                                    <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x39BE35904f52E83137881C0AC71501Edf0180181/contracts</p>
+                                </div>
+                            </div>
+                        </a>
                         <a href="https://cchain.explorer.avax.network/address/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
                             <div class="card br-25 border border-2 snob-tokens" >
                                 <div class="card-body text-center">
@@ -213,6 +221,14 @@
                                 <div class="card-body text-center">
                                     <h6>Strategy AVAX-USDT</h6>
                                     <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0x74db28797957a52a28963f424daf2b10226ba04c/contracts</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://cchain.explorer.avax.network/address/0xA362A10Ba6b59eE113FAa00e41E01C0087dd9BA1/contracts" target="_blank" class="col-sm-3 pb-4 mx-auto">
+                            <div class="card br-25 border border-2 snob-tokens" >
+                                <div class="card-body text-center">
+                                    <h6>Strategy AVAX-WBTC</h6>
+                                    <p class="font-size-12 text-break text-left w-md-150 w-sm-full">https://cchain.explorer.avax.network/address/0xA362A10Ba6b59eE113FAa00e41E01C0087dd9BA1/contracts</p>
                                 </div>
                             </div>
                         </a>

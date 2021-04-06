@@ -26,6 +26,7 @@ async function main() {
   const SNOWGLOBE_LINK_ADDR = "0x00933c16e06b1d15958317C2793BC54394Ae356C";
   const SNOWGLOBE_USDT_ADDR = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
+  const SNOWGLOBE_WBTC_ADDR = "0x39BE35904f52E83137881C0AC71501Edf0180181";
 
   //pangolin pairs
   const SUSHI_AVAX_ADDR = "0xd8B262C0676E13100B33590F10564b46eeF652AD";
@@ -34,6 +35,7 @@ async function main() {
   const ETH_AVAX_ADDR = "0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65";
   const LINK_AVAX_ADDR = "0xbbc7fff833d27264aac8806389e02f717a5506c9";
   const USDT_AVAX_ADDR = "0x9EE0a4E21bd333a6bb2ab298194320b8DaA26516";
+  const WBTC_AVAX_ADDR = "0x7a6131110b82dacbb5872c7d352bfe071ea6a17c";
 
   //tokens
   const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
@@ -41,6 +43,7 @@ async function main() {
   const SPGL_ETH_ADDRESS = "0x586554828eE99811A8ef75029351179949762c26";
   const SPGL_LINK_ADDRESS = "0x00933c16e06b1d15958317C2793BC54394Ae356C";
   const SPGL_USDT_ADDRESS = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
+  const SPGL_WBTC_ADDRESS = "0x39BE35904f52E83137881C0AC71501Edf0180181";
   const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
 
   //LP URLs
@@ -50,6 +53,7 @@ async function main() {
   const ETH_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15";
   const LINK_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651";
   const USDT_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xde3a24028580884448a5397872046a019649b084";
+  const WBTC_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab";
 
   // TVL URLS
   const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
@@ -58,22 +62,10 @@ async function main() {
   const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
   const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C"
+  const WBTC_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xA362A10Ba6b59eE113FAa00e41E01C0087dd9BA1"
 
   // Compounds Per Day
-  const SUSHI_AVAX_COMPOUNDS = 6
-  const PNG_AVAX_COMPOUNDS = 6
-  const ETH_AVAX_COMPOUNDS = 6
-  const LINK_AVAX_COMPOUNDS = 6
-  const USDT_AVAX_COMPOUNDS = 6
-  // Gas
-  // Claim: 0.1645
-  // Swap: 0.075221
-  // Add Liquidity: 0.092299
-  // Deposit into pool: 0.1645
-  // Total: 0.49652 ($13.90)
-  const GAS_PER_COMPOUND = 0.49652
-  const AVAX_PRICE = 28
-
+  const DAILY_COMPOUNDS = 6
 
   const approveSUSHI = async function () {
     return snowglobeContract_approve(PGL_ABI, SNOWGLOBE_SUSHI_ADDR, SUSHI_AVAX_ADDR, App)
@@ -120,6 +112,15 @@ async function main() {
   const withdrawUSDT = async function() {
     return snowglobeContract_withdraw(SNOWGLOBE_ABI, SNOWGLOBE_USDT_ADDR, 1, SPGL_USDT_ADDRESS, App)
   }
+  const approveWBTC = async function() {
+    return snowglobeContract_approve(PGL_ABI, SNOWGLOBE_WBTC_ADDR, WBTC_AVAX_ADDR, App)
+  }
+  const stakeWBTC= async function() {
+    return snowglobeContract_stake(SNOWGLOBE_ABI, SNOWGLOBE_WBTC_ADDR, 1, WBTC_AVAX_ADDR, App)
+  }
+  const withdrawWBTC = async function() {
+    return snowglobeContract_withdraw(SNOWGLOBE_ABI, SNOWGLOBE_WBTC_ADDR, 1, SPGL_WBTC_ADDRESS, App)
+  }
   const signer = App.provider.getSigner()
 
   //Tokens
@@ -129,12 +130,14 @@ async function main() {
   const SNOB_AVAX_TOKEN = new ethers.Contract(SNOB_AVAX_ADDR, ERC20_ABI, signer)
   const LINK_AVAX_TOKEN = new ethers.Contract(LINK_AVAX_ADDR, ERC20_ABI, signer)
   const USDT_AVAX_TOKEN = new ethers.Contract(USDT_AVAX_ADDR, ERC20_ABI, signer)
+  const WBTC_AVAX_TOKEN = new ethers.Contract(WBTC_AVAX_ADDR, ERC20_ABI, signer)
 
   const SPGL_SUSHI_TOKEN = new ethers.Contract(SPGL_SUSHI_ADDRESS, ERC20_ABI, signer)
   const SPGL_PNG_TOKEN = new ethers.Contract(SPGL_PNG_ADDRESS, ERC20_ABI, signer)
   const SPGL_ETH_TOKEN = new ethers.Contract(SPGL_ETH_ADDRESS, ERC20_ABI, signer)
   const SPGL_LINK_TOKEN = new ethers.Contract(SPGL_LINK_ADDRESS, ERC20_ABI, signer)
   const SPGL_USDT_TOKEN = new ethers.Contract(SPGL_USDT_ADDRESS, ERC20_ABI, signer)
+  const SPGL_WBTC_TOKEN = new ethers.Contract(SPGL_WBTC_ADDRESS, ERC20_ABI, signer)
 
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
 
@@ -156,6 +159,11 @@ async function main() {
   const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
   const snowballsPerBlock = snowballMultiplier * blockRate
   const blockNumber = await App.provider.getBlockNumber()
+  const currentBlock = await App.provider.getBlock(blockNumber);
+  const yesterdayBlock = await App.provider.getBlock(blockNumber - 15000);
+  const secondsInDay = 86400;
+  const blocks24hrs = (secondsInDay / (currentBlock.timestamp - yesterdayBlock.timestamp)) * 15000;
+
   const prices = await getAvaxPrices();
   const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
   const marketCapDisplay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
@@ -165,6 +173,8 @@ async function main() {
   $('#snob-supply-max').append(`18,000,000`)
   $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
   $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
+  $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
+  $('#distribution_phase').append(`${blockNumber} / 1043700 (${1043700 - blockNumber} blocks left)`);
 
   document.getElementById('wallet-copy').addEventListener('click', ()=>{
     navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
@@ -219,6 +229,10 @@ async function main() {
   const currentSPGLUSDTTokens = await SPGL_USDT_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const spglUsdtDisplayAmt = currentSPGLUSDTTokens > 1000 ? (currentSPGLUSDTTokens / 1e18).toFixed(8) : 0;
 
+  const currentWBTCAVAXTokens = await WBTC_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  const currentSPGLWBTCTokens = await SPGL_WBTC_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  const spglWbtcDisplayAmt = currentSPGLWBTCTokens > 1000 ? (currentSPGLWBTCTokens / 1e18).toFixed(8) : 0;
+
   //snowglobes
   /*  //_print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
    //_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
@@ -232,20 +246,38 @@ async function main() {
   let link_tvl = null;
   let usdt_tvl_display = '';
   let link_tvl_display = '';
-
+  let wbtc_tvl_display = '';
+  let eth_tvl_display = '';
+  let png_tvl_display = '';
+  let sushi_tvl_display = '';
   try {
     res = await $.ajax({
-      url: 'https://d2vq5imxja288v.cloudfront.net/total_value_locked.json',
+      url: 'https://x-api.snowball.network/tvl/snob.json',
       type: 'GET',
     })
     if (res && res.pairs) {
       res.pairs.forEach( p => {
-        if (p.token1.token.toLowerCase() == 'usdt') {
+        if (p.token1.symbol.toLowerCase() == 'usdt') {
           usdt_tvl = p.locked;
           usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.token.toLowerCase() == 'link') {
+        } else if (p.token1.symbol.toLowerCase() == 'link') {
           link_tvl = p.locked;
           link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'sushi') {
+          sushi_tvl = p.locked;
+          sushi_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'png') {
+          png_tvl = p.locked;
+          png_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'eth') {
+          eth_tvl = p.locked;
+          eth_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'usdt') {
+          usdt_tvl = p.locked;
+          usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if (p.token1.symbol.toLowerCase() == 'wbtc') {
+          wbtc_tvl = p.locked;
+          wbtc_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
         }
       });
     }
@@ -269,6 +301,9 @@ async function main() {
     },
     {
       stakingRewardAddress: '0x4f019452f51bba0250ec8b69d64282b79fc8bd9f'
+    },
+    {
+      stakingRewardAddress: '0x01897e996eefff65ae9999c02d1d8d7e9e0c0352'
     }
   ]
 
@@ -289,9 +324,10 @@ async function main() {
   const sushi_apr = apr_array[2]
   const link_apr = apr_array[3]
   const usdt_apr = apr_array[4]
-
+  const wbtc_apr = apr_array[5]
+  
   // APY = P(1 + r/n)nt
-  let compounds_per_year = ETH_AVAX_COMPOUNDS * 365
+  let compounds_per_year = DAILY_COMPOUNDS * 365
   let eth_r = eth_apr.yearlyAPR / 100
   let eth_annual_apy = 100 * (1 + eth_r / compounds_per_year) ** compounds_per_year
   let png_r = png_apr.yearlyAPR / 100
@@ -302,6 +338,8 @@ async function main() {
   let link_annual_apy = 100 * (1 + link_r / compounds_per_year) ** compounds_per_year
   let usdt_r = usdt_apr.yearlyAPR/100
   let usdt_annual_apy = 100*(1 + usdt_r/compounds_per_year)**compounds_per_year
+  let wbtc_r = wbtc_apr.yearlyAPR/100
+  let wbtc_annual_apy = 100*(1 + wbtc_r/compounds_per_year)**compounds_per_year
 
   //Contracts
   const LINK_CONTRACT = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer)
@@ -314,6 +352,11 @@ async function main() {
   const userUsdtDeposited = await USDT_CONTRACT.balanceOf(App.YOUR_ADDRESS)
   const userUsdtPoolPercent = (userUsdtDeposited / 1e18)/(totalDepositedUSDTAVAX / 1e18)*100
 
+  const WBTC_CONTRACT = new ethers.Contract(SNOWGLOBE_WBTC_ADDR, SNOWGLOBE_ABI, signer)
+  const totalDepositedWBTCAVAX = await WBTC_CONTRACT.totalSupply()
+  const userWbtcDeposited = await WBTC_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+  const userWbtcPoolPercent = (userWbtcDeposited / 1e18)/(totalDepositedWBTCAVAX / 1e18)*100
+
   const TOKEN_NAMES = {
     "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7": "AVAX",
     "0x60781C2586D68229fde47564546784ab3fACA982": "PNG",
@@ -321,7 +364,8 @@ async function main() {
     "0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc": "SUSHI",
     "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15": "ETH",
     "0xde3A24028580884448a5397872046a019649b084": "USDT",
-    "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK"
+    "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK",
+    "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC"
   }
 
   // PGL & LP values
@@ -331,10 +375,11 @@ async function main() {
   let stakeDisplay_usdt = null;
   let withdrawDisplay_usdt = null;
   const userSPGL_usdt = userUsdtDeposited / 1e18;
+  let ownedPGL_usdt = 0;
   try {
     if (userSPGL_usdt > 0) {
       let totalSPGL_usdt = await snowglobeContract_usdt.totalSupply();
-      let ownedPGL_usdt = userSPGL_usdt * (totalPoolPGL_usdt / 1e18) / (totalSPGL_usdt / 1e18);
+      ownedPGL_usdt = userSPGL_usdt * (totalPoolPGL_usdt / 1e18) / (totalSPGL_usdt / 1e18);
       const pglContract_usdt = new ethers.Contract(USDT_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_usdt = await pglContract_usdt.totalSupply();
       totalSupplyPGL_usdt = totalSupplyPGL_usdt / 1e18;
@@ -362,10 +407,11 @@ async function main() {
   let stakeDisplay_link = null;
   let withdrawDisplay_link = null;
   const userSPGL_link = userLinkDeposited / 1e18;
+  let ownedPGL_link = 0;
   try {
     if (userSPGL_link > 0) {
       let totalSPGL_link = await snowglobeContract_link.totalSupply();
-      let ownedPGL_link = userSPGL_link * (totalPoolPGL_link / 1e18) / (totalSPGL_link / 1e18);
+      ownedPGL_link = userSPGL_link * (totalPoolPGL_link / 1e18) / (totalSPGL_link / 1e18);
       const pglContract_link = new ethers.Contract(LINK_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_link = await pglContract_link.totalSupply();
       totalSupplyPGL_link = totalSupplyPGL_link / 1e18;
@@ -395,10 +441,11 @@ async function main() {
   let stakeDisplay_eth = null;
   let withdrawDisplay_eth = null;
   const userSPGL_eth = userEthDeposited / 1e18;
+  let ownedPGL_eth = 0;
   try {
     if (userSPGL_eth > 0) {
       let totalSPGL_eth = await snowglobeContract_eth.totalSupply();
-      let ownedPGL_eth = userSPGL_eth * (totalPoolPGL_eth / 1e18) / (totalSPGL_eth / 1e18);
+      ownedPGL_eth = userSPGL_eth * (totalPoolPGL_eth / 1e18) / (totalSPGL_eth / 1e18);
       const pglContract_eth = new ethers.Contract(ETH_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_eth = await pglContract_eth.totalSupply();
       totalSupplyPGL_eth = totalSupplyPGL_eth / 1e18;
@@ -427,10 +474,11 @@ async function main() {
   let stakeDisplay_png = null;
   let withdrawDisplay_png = null;
   const userSPGL_png = userPngDeposited / 1e18;
+  let ownedPGL_png = 0;
   try {
     if (userSPGL_png > 0) {
       let totalSPGL_png = await snowglobeContract_png.totalSupply();
-      let ownedPGL_png = userSPGL_png * (totalPoolPGL_png / 1e18) / (totalSPGL_png / 1e18);
+      ownedPGL_png = userSPGL_png * (totalPoolPGL_png / 1e18) / (totalSPGL_png / 1e18);
       const pglContract_png = new ethers.Contract(PNG_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_png = await pglContract_png.totalSupply();
       totalSupplyPGL_png = totalSupplyPGL_png / 1e18;
@@ -459,10 +507,11 @@ async function main() {
   let stakeDisplay_sushi = null;
   let withdrawDisplay_sushi = null;
   const userSPGL_sushi = userSushiDeposited / 1e18;
+  let ownedPGL_sushi = 0;
   try {
     if (userSPGL_sushi > 0) {
       let totalSPGL_sushi = await snowglobeContract_sushi.totalSupply();
-      let ownedPGL_sushi = userSPGL_sushi * (totalPoolPGL_sushi / 1e18) / (totalSPGL_sushi / 1e18);
+      ownedPGL_sushi = userSPGL_sushi * (totalPoolPGL_sushi / 1e18) / (totalSPGL_sushi / 1e18);
       const pglContract_sushi = new ethers.Contract(SUSHI_AVAX_ADDR, PGL_ABI, signer);
       let totalSupplyPGL_sushi = await pglContract_sushi.totalSupply();
       totalSupplyPGL_sushi = totalSupplyPGL_sushi / 1e18;
@@ -481,6 +530,39 @@ async function main() {
       withdrawDisplay_sushi = `<b>${userSPGL_sushi .toFixed(4)}</b> sPGL (<b>${ownedPGL_sushi .toFixed(4)}</b> PGL)`;
       poolShareDisplay_sushi = withdrawDisplay_sushi;
       stakeDisplay_sushi = `Your LP value is <b>${reserve0Owned_sushi .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_sushi ]} / <b>${reserve1Owned_sushi .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_sushi ]} ($<b>${value_sushi .toFixed(2)}</b>)**</b>`
+    }
+  } catch { console.log('error calculating PGL value')}
+
+  const snowglobeContract_wbtc = new ethers.Contract(SNOWGLOBE_WBTC_ADDR, SNOWGLOBE_ABI, signer);
+  let wbtcDeposited = await snowglobeContract_wbtc.balanceOf(App.YOUR_ADDRESS)
+  let totalPoolPGL_wbtc = await snowglobeContract_wbtc.balance();
+  let poolShareDisplay_wbtc = null;
+  let stakeDisplay_wbtc = null;
+  let withdrawDisplay_wbtc = null;
+  const userSPGL_wbtc = wbtcDeposited / 1e18;
+  let ownedPGL_wbtc = 0;
+  try {
+    if (userSPGL_wbtc > 0) {
+      let totalSPGL_wbtc = await snowglobeContract_wbtc.totalSupply();
+      ownedPGL_wbtc = userSPGL_wbtc * (totalPoolPGL_wbtc / 1e18) / (totalSPGL_wbtc / 1e18);
+      const pglContract_wbtc = new ethers.Contract(WBTC_AVAX_ADDR, PGL_ABI, signer);
+      let totalSupplyPGL_wbtc = await pglContract_wbtc.totalSupply();
+      totalSupplyPGL_wbtc = totalSupplyPGL_wbtc / 1e18;
+      const reserves_wbtc = await pglContract_wbtc.getReserves();
+      const r0_wbtc = reserves_wbtc._reserve0 / 1e18
+      const r1_wbtc = reserves_wbtc._reserve1 / 1e18
+      let reserve0Owned_wbtc = ownedPGL_wbtc * (r0_wbtc) / (totalSupplyPGL_wbtc);
+      let reserve1Owned_wbtc = ownedPGL_wbtc * (r1_wbtc) / (totalSupplyPGL_wbtc);
+      const token0Address_wbtc = await pglContract_wbtc.token0();
+      const token1Address_wbtc = await pglContract_wbtc.token1();
+      const t0Price_wbtc = prices[token0Address_wbtc] ? prices[token0Address_wbtc].usd : 0
+      const t1Price_wbtc = prices[token1Address_wbtc] ? prices[token1Address_wbtc].usd : 0
+      const token0ValueUSDT_wbtc = reserve0Owned_wbtc * t0Price_wbtc;
+      const token1ValueUSDT_wbtc = reserve1Owned_wbtc * t1Price_wbtc;
+      const value_wbtc = token0ValueUSDT_wbtc + (token1ValueUSDT_wbtc);
+      withdrawDisplay_wbtc = `<b>${userSPGL_wbtc .toFixed(4)}</b> sPGL (<b>${ownedPGL_wbtc .toFixed(4)}</b> PGL)`;
+      poolShareDisplay_wbtc = withdrawDisplay_wbtc;
+      stakeDisplay_wbtc = `Your LP value is <b>${reserve0Owned_wbtc .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_wbtc ]} / <b>${reserve1Owned_wbtc .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_wbtc ]} ($<b>${value_wbtc .toFixed(2)}</b>)**</b>`
     }
   } catch { console.log('error calculating PGL value')}
 
@@ -506,8 +588,8 @@ async function main() {
       //_print(`Pool Size: <b>${(options.total_deposited / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
 
       var poolSize = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5 mx-auto">
-      <p class="m-0 font-size-12"> Pool Size</p><span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_deposited / 1e18).toLocaleString()} sPGL </span>
-      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>
+      <p class="m-0 font-size-12"> Pool Size</p><span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_deposited / 1e18) > 1 ? (options.total_deposited / 1e18).toLocaleString() : (options.total_deposited / 1e18).toFixed(8)} sPGL </span>
+      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_pgl / 1e18) > 1 ? (options.total_pgl / 1e18).toLocaleString() : (options.total_pgl / 1e18).toFixed(8)} PGL</span>
       </div>`;
 
     }else{
@@ -524,11 +606,22 @@ async function main() {
 
       var available = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
       <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
-      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) } PGL  </p>
+      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(8) : (options.current_tokens / 1e18) } PGL  </p>
       <p class="m-0 font-size-12">(Available for deposit) </p>
   </div>`;
     }else{
       var available = '';
+    }
+    if ( options.owned_pgl / 1e18 > 0 ) {
+      //_print(`Deposit Available: <b>${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) }</b> PGL`)
+
+      var withdraw = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.owned_pgl / 1e18) > 0 ? (options.owned_pgl / 1e18) .toFixed(8) : (options.owned_pgl / 1e18) } PGL  </p>
+      <p class="m-0 font-size-12">(Available for withdraw) </p>
+  </div>`;
+    }else{
+      var withdraw = '';
     }
     if ( options.display_amount > 0 ) {
       //_print(`Withdrawal Available: ${options.withdraw_display}`)
@@ -628,6 +721,7 @@ async function main() {
                 </div>
                 ${poolSize}
                 ${available}
+                ${withdraw}
                 <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
                   ${approveBtn}
                   ${depositBtn}
@@ -640,8 +734,30 @@ async function main() {
     }
   }
   layout_pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB/logo.png',
+    url: WBTC_AVAX_POOL_URL,
+    pool_name: 'AVAX-WBTC Pangolin LP - New! 🌟',
+    tvl: WBTC_AVAX_TVL,
+    apr: wbtc_apr,
+    apy: wbtc_annual_apy,
+    total_deposited: totalDepositedWBTCAVAX,
+    user_pool_percent: userWbtcPoolPercent,
+    current_tokens: currentWBTCAVAXTokens,
+    display_amount: spglWbtcDisplayAmt,
+    approve: 'approveWBTC',
+    stake: 'stakeWBTC',
+    withdraw: 'withdrawWBTC',
+    tvl_display: wbtc_tvl_display,
+    pool_share_display: poolShareDisplay_wbtc,
+    stake_display: stakeDisplay_wbtc,
+    total_pgl: totalPoolPGL_wbtc,
+    withdraw_display: withdrawDisplay_wbtc,
+    owned_pgl: wbtcDeposited
+  })
+  layout_pool({
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     url: USDT_AVAX_POOL_URL,
     pool_name: 'AVAX-USDT Pangolin LP',
     tvl: USDT_AVAX_TVL,
@@ -658,12 +774,13 @@ async function main() {
     pool_share_display: poolShareDisplay_usdt,
     stake_display: stakeDisplay_usdt,
     total_pgl: totalPoolPGL_usdt,
-    withdraw_display: withdrawDisplay_usdt
+    withdraw_display: withdrawDisplay_usdt,
+    owned_pgl: ownedPGL_usdt
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     url: LINK_AVAX_POOL_URL,
     pool_name: 'AVAX-LINK Pangolin LP',
     tvl: LINK_AVAX_TVL,
@@ -680,12 +797,13 @@ async function main() {
     pool_share_display: poolShareDisplay_link,
     stake_display: stakeDisplay_link,
     total_pgl: totalPoolPGL_link,
-    withdraw_display: withdrawDisplay_link
+    withdraw_display: withdrawDisplay_link,
+    owned_pgl: ownedPGL_link
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     url: ETH_AVAX_POOL_URL,
     pool_name: 'AVAX-ETH Pangolin LP',
     apr: eth_apr,
@@ -695,16 +813,17 @@ async function main() {
     approve: 'approveETH',
     stake: 'stakeETH',
     withdraw: 'withdrawETH',
-    tvl_display: null,
+    tvl_display: eth_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay_eth,
     total_pgl: null,
-    withdraw_display: withdrawDisplay_eth
+    withdraw_display: withdrawDisplay_eth,
+    owned_pgl: ownedPGL_eth
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     url: PNG_AVAX_POOL_URL,
     pool_name: 'AVAX-PNG Pangolin LP',
     apr: png_apr,
@@ -714,16 +833,17 @@ async function main() {
     approve: 'approvePNG',
     stake: 'stakePNG',
     withdraw: 'withdrawPNG',
-    tvl_display: null,
+    tvl_display: png_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay_png,
     total_pgl: null,
-    withdraw_display: withdrawDisplay_png
+    withdraw_display: withdrawDisplay_png,
+    owned_pgl: ownedPGL_png
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     url: SUSHI_AVAX_POOL_URL,
     pool_name: 'AVAX-SUSHI Pangolin LP',
     apr: sushi_apr,
@@ -733,11 +853,12 @@ async function main() {
     approve: 'approveSUSHI',
     stake: 'stakeSUSHI',
     withdraw: 'withdrawSUSHI',
-    tvl_display: null,
+    tvl_display: sushi_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay_sushi,
     total_pgl: null,
-    withdraw_display: withdrawDisplay_sushi
+    withdraw_display: withdrawDisplay_sushi,
+    owned_pgl: ownedPGL_sushi
   })
   //_print('**Estimated LP value based on current token prices')
   const bottom_funnel = `
@@ -765,6 +886,9 @@ async function main() {
       case 'approveUSDT':
         approveUSDT();
         break;
+      case 'approveWBTC':
+        approveWBTC();
+        break;
       default:
         alert('Oops something went wrong. Try refreshing the page.');
     }
@@ -788,6 +912,9 @@ async function main() {
       case 'stakeUSDT':
         stakeUSDT();
         break;
+      case 'stakeWBTC':
+        stakeWBTC();
+        break;
       default:
         alert('Oops something went wrong. Try refreshing the page.');
     }
@@ -810,6 +937,9 @@ async function main() {
         break;
       case 'withdrawUSDT':
         withdrawUSDT();
+        break;
+      case 'withdrawWBTC':
+        withdrawWBTC();
         break;
       default:
         alert('Oops something went wrong. Try refreshing the page.');

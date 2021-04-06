@@ -230,6 +230,8 @@ async function main() {
   $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
   $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
   $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
+  $('#distribution_phase').append(`${blockNumber} / 1043700 (${1043700 - blockNumber} blocks left)`);
+
   document.getElementById('wallet-copy').addEventListener('click', ()=>{
     navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
       console.log('Snowball Platform: Copying to clipboard was successful!');
@@ -326,32 +328,32 @@ async function main() {
   let pool1APR = null;
   try {
     res = await $.ajax({
-      url: 'https://d2vq5imxja288v.cloudfront.net/total_value_locked.json',
+      url: 'https://x-api.snowball.network/tvl/snob.json',
       type: 'GET',
     })
     if (res && res.pairs) {
       res.pairs.forEach( p => {
-        if (p.token1.token.toLowerCase() == 'sushi') {
+        if (p.token1.symbol.toLowerCase() == 'sushi') {
           pool1tvl = p.locked;
           pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
           pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked * 100
-        } else if (p.token1.token.toLowerCase() == 'snob') {
+        } else if (p.token1.symbol.toLowerCase() == 'snob') {
           pool2tvl = p.locked;
           pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
           pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked * 100
-        } else if (p.token1.token.toLowerCase() == 'png') {
+        } else if (p.token1.symbol.toLowerCase() == 'png') {
           pool3tvl = p.locked;
           pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
           pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked * 100
-        } else if (p.token1.token.toLowerCase() == 'eth') {
+        } else if (p.token1.symbol.toLowerCase() == 'eth') {
           pool4tvl = p.locked;
           pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
           pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked * 100
-        } else if (p.token1.token.toLowerCase() == 'usdt') {
+        } else if (p.token1.symbol.toLowerCase() == 'usdt') {
           pool5tvl = p.locked;
           pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
           pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked * 100
-        } else if (p.token1.token.toLowerCase() == 'link') {
+        } else if (p.token1.symbol.toLowerCase() == 'link') {
           pool6tvl = p.locked;
           pool6tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
           pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked * 100
@@ -631,9 +633,9 @@ async function main() {
     if (options.icequeen_apr) {
       //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
 
-      var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
-      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
-      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
+      var eDayAPR = `${options.icequeen_apr.toFixed(2)}`;
+      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}`;
+      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}`;
 
 
       var combinedAprDisplay = '';
@@ -641,9 +643,9 @@ async function main() {
         let combinedAPR = options.icequeen_apr + options.snowglobe_apr
         //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
 
-        var cDayAPR = `${combinedAPR.toFixed(2)}%`;
-        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
-        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}%`;
+        var cDayAPR = `${combinedAPR.toFixed(2)}`;
+        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}`;
+        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}`;
 
         var combinedAprDisplay = `<div class="col-sm-12 col-md-3 align-items-center pb-10">
                 <div class="row">
@@ -802,7 +804,7 @@ async function main() {
                         ${poolSize}
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                    <a href="/snowglobes" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get sPGL from Snowglobes</a>
+                    <a href="/compound" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get sPGL from Snowglobes</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -935,7 +937,7 @@ async function main() {
                 </div>
                 <div class="row pt-20">
                     ${earning}
-                    ${stakeDisplay}
+                    ${stakeDisplay || ''}
                     ${availableStake}
                     <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
@@ -960,18 +962,18 @@ async function main() {
     if (options.icequeen_apr) {
       //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
 
-      var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
-      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
-      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
+      var eDayAPR = `${options.icequeen_apr.toFixed(2)}`;
+      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}`;
+      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}`;
 
       var combinedAprDisplay = ''
       if (options.snowglobe_apr) {
         let combinedAPR = options.icequeen_apr + options.snowglobe_apr
         //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
 
-        var cDayAPR = `${combinedAPR.toFixed(2)}%`;
-        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
-        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}%`;
+        var cDayAPR = `${combinedAPR.toFixed(2)}`;
+        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}`;
+        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}`;
 
         var combinedAprDisplay = `<div class="col-sm-12 col-md-3 align-items-center pb-10">
         <div class="row">
@@ -1087,7 +1089,7 @@ async function main() {
     }
     if ( !has_options ) {
       //_print(`No sPGL to Stake/Withdraw.`)
-      //_print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
+      //_print(`<a href="/compound">Get sPGL from Snowglobes</a>`)
     }
 
     if( !has_options ){
@@ -1289,9 +1291,9 @@ async function main() {
     if (options.icequeen_apr) {
       //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
 
-      var eDayAPR = `${options.icequeen_apr.toFixed(2)}%`;
-      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}%`;
-      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}%`;
+      var eDayAPR = `${options.icequeen_apr.toFixed(2)}`;
+      var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}`;
+      var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}`;
 
 
       var combinedAprDisplay = '';
@@ -1299,9 +1301,9 @@ async function main() {
         let combinedAPR = options.icequeen_apr + options.snowglobe_apr
         //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
 
-        var cDayAPR = `${combinedAPR.toFixed(2)}%`;
-        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}%`;
-        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}%`;
+        var cDayAPR = `${combinedAPR.toFixed(2)}`;
+        var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}`;
+        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}`;
 
         var combinedAprDisplay = `<div class="col-sm-12 col-md-3 align-items-center pb-10">
                 <div class="row">
@@ -1421,7 +1423,7 @@ async function main() {
     }
     if ( !has_options ) {
       //_print(`No sPGL to Stake/Withdraw.`)
-      //_print(`<a href="/snowglobes">Get sPGL from Snowglobes</a>`)
+      //_print(`<a href="/compound">Get sPGL from Snowglobes</a>`)
     }
     if (!has_options){
 
@@ -1609,9 +1611,9 @@ async function main() {
   }
   
   poolS3D({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
-    logo_token3 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
+    logo_token3 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     pool_nickname: 'pool-7',
     pool_name: 'StableVault S3D 🌟',
     url: null,
@@ -1635,8 +1637,8 @@ async function main() {
     stake_display: ''
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     pool_nickname: 'pool-6',
     pool_name: 'LINK-AVAX sPGL 🌟',
     url: null,
@@ -1660,8 +1662,8 @@ async function main() {
     stake_display: ''
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     pool_nickname: 'pool-5',
     pool_name: 'USDT-AVAX sPGL',
     url: null,
@@ -1685,8 +1687,8 @@ async function main() {
     stake_display: stakeDisplay_5
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     pool_nickname: 'pool-4',
     pool_name: 'ETH-AVAX sPGL',
     url: null,
@@ -1710,8 +1712,8 @@ async function main() {
     stake_display: stakeDisplay_4
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     pool_nickname: 'pool-3',
     pool_name: 'PNG-AVAX sPGL',
     url: null,
@@ -1735,8 +1737,8 @@ async function main() {
     stake_display: stakeDisplay_3
   })
   poolSNOB({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
     pool_nickname: 'pool-2',
     pool_name: 'SNOB-AVAX Pangolin LP',
     url: SNOB_AVAX_POOL_URL,
@@ -1760,8 +1762,8 @@ async function main() {
     stake_display: stakeDisplay_2
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     pool_nickname: 'pool-1',
     pool_name: 'SUSHI-AVAX sPGL',
     url: null,
