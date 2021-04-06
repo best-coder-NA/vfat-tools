@@ -146,7 +146,7 @@ async function main() {
     proposal_html += `<div class="ml-20"><span>Start: ${startDate} </span></div>`
     proposal_html += `<div class="ml-20"><span>End: ${endDate}</span></div>`
     if (state == 0) {
-      proposal_html += `<div class="ml-20"><span>Votes needed for Quorum: ${quorumVotes * 1}</span></div>`
+      proposal_html += `<div class="ml-20"><span>Votes needed for Quorum: ${quorumVotes / 1e18}</span></div>`
     }
     proposal_html += `<div class="ml-20">Proposer: ${proposal.proposer}</div>`
     proposal_html += `</div>`;
