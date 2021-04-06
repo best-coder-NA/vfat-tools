@@ -1611,9 +1611,9 @@ async function main() {
   }
   
   poolS3D({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
-    logo_token3 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
+    logo_token3 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     pool_nickname: 'pool-7',
     pool_name: 'StableVault S3D 🌟',
     url: null,
@@ -1637,8 +1637,8 @@ async function main() {
     stake_display: ''
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     pool_nickname: 'pool-6',
     pool_name: 'LINK-AVAX sPGL 🌟',
     url: null,
@@ -1662,8 +1662,8 @@ async function main() {
     stake_display: ''
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     pool_nickname: 'pool-5',
     pool_name: 'USDT-AVAX sPGL',
     url: null,
@@ -1687,8 +1687,8 @@ async function main() {
     stake_display: stakeDisplay_5
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     pool_nickname: 'pool-4',
     pool_name: 'ETH-AVAX sPGL',
     url: null,
@@ -1712,8 +1712,8 @@ async function main() {
     stake_display: stakeDisplay_4
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     pool_nickname: 'pool-3',
     pool_name: 'PNG-AVAX sPGL',
     url: null,
@@ -1737,8 +1737,8 @@ async function main() {
     stake_display: stakeDisplay_3
   })
   poolSNOB({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png',
     pool_nickname: 'pool-2',
     pool_name: 'SNOB-AVAX Pangolin LP',
     url: SNOB_AVAX_POOL_URL,
@@ -1762,8 +1762,8 @@ async function main() {
     stake_display: stakeDisplay_2
   })
   pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     pool_nickname: 'pool-1',
     pool_name: 'SUSHI-AVAX sPGL',
     url: null,

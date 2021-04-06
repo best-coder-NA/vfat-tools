@@ -248,7 +248,7 @@ async function main() {
   let wbtc_tvl_display = '';
   try {
     res = await $.ajax({
-      url: 'https://d2vq5imxja288v.cloudfront.net/total_value_locked.json',
+      url: 'https://x-api.snowball.network/tvl/snob.json',
       type: 'GET',
     })
     if (res && res.pairs) {

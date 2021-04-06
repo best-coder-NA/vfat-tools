@@ -247,9 +247,12 @@ async function main() {
   let usdt_tvl_display = '';
   let link_tvl_display = '';
   let wbtc_tvl_display = '';
+  let eth_tvl_display = '';
+  let png_tvl_display = '';
+  let sushi_tvl_display = '';
   try {
     res = await $.ajax({
-      url: 'https://d2vq5imxja288v.cloudfront.net/total_value_locked.json',
+      url: 'https://x-api.snowball.network/tvl/snob.json',
       type: 'GET',
     })
     if (res && res.pairs) {
@@ -731,7 +734,7 @@ async function main() {
     }
   }
   layout_pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB/logo.png',
     url: WBTC_AVAX_POOL_URL,
     pool_name: 'AVAX-WBTC Pangolin LP - New! 🌟',
@@ -753,8 +756,8 @@ async function main() {
     owned_pgl: wbtcDeposited
   })
   layout_pool({
-    logo_token1 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
+    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
     url: USDT_AVAX_POOL_URL,
     pool_name: 'AVAX-USDT Pangolin LP',
     tvl: USDT_AVAX_TVL,
@@ -776,8 +779,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
     url: LINK_AVAX_POOL_URL,
     pool_name: 'AVAX-LINK Pangolin LP',
     tvl: LINK_AVAX_TVL,
@@ -799,8 +802,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
     url: ETH_AVAX_POOL_URL,
     pool_name: 'AVAX-ETH Pangolin LP',
     apr: eth_apr,
@@ -819,8 +822,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
     url: PNG_AVAX_POOL_URL,
     pool_name: 'AVAX-PNG Pangolin LP',
     apr: png_apr,
@@ -839,8 +842,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowballfinance.info/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
+    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
     url: SUSHI_AVAX_POOL_URL,
     pool_name: 'AVAX-SUSHI Pangolin LP',
     apr: sushi_apr,
