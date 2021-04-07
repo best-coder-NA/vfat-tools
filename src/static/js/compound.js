@@ -329,17 +329,17 @@ async function main() {
   // APY = P(1 + r/n)nt
   let compounds_per_year = DAILY_COMPOUNDS * 365
   let eth_r = eth_apr.yearlyAPR / 100
-  let eth_annual_apy = 100 * (1 + eth_r / compounds_per_year) ** compounds_per_year
+  let eth_annual_apy = 100 * (1 + eth_r / compounds_per_year) ** compounds_per_year - 100
   let png_r = png_apr.yearlyAPR / 100
-  let png_annual_apy = 100 * (1 + png_r / compounds_per_year) ** compounds_per_year
+  let png_annual_apy = 100 * (1 + png_r / compounds_per_year) ** compounds_per_year - 100
   let sushi_r = sushi_apr.yearlyAPR / 100
-  let sushi_annual_apy = 100 * (1 + sushi_r / compounds_per_year) ** compounds_per_year
+  let sushi_annual_apy = 100 * (1 + sushi_r / compounds_per_year) ** compounds_per_year - 100
   let link_r = link_apr.yearlyAPR / 100
-  let link_annual_apy = 100 * (1 + link_r / compounds_per_year) ** compounds_per_year
+  let link_annual_apy = 100 * (1 + link_r / compounds_per_year) ** compounds_per_year - 100
   let usdt_r = usdt_apr.yearlyAPR/100
-  let usdt_annual_apy = 100*(1 + usdt_r/compounds_per_year)**compounds_per_year
+  let usdt_annual_apy = 100*(1 + usdt_r/compounds_per_year)**compounds_per_year - 100
   let wbtc_r = wbtc_apr.yearlyAPR/100
-  let wbtc_annual_apy = 100*(1 + wbtc_r/compounds_per_year)**compounds_per_year
+  let wbtc_annual_apy = 100*(1 + wbtc_r/compounds_per_year)**compounds_per_year - 100
 
   //Contracts
   const LINK_CONTRACT = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer)

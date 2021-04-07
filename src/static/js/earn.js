@@ -463,8 +463,8 @@ async function main() {
       const token1ValueUSDT = reserve1Owned * t1Price;
       const value = token0ValueUSDT + (token1ValueUSDT);
       return [
-        `${userSPGL.toFixed(3)} sPGL`,
-        `${ownedPGL.toFixed(3)} PGL - ${userPool1Percent.toFixed(6)}%`,
+        `${userSPGL > 1 ? userSPGL.toFixed(3) : userSPGL.toFixed(8)} sPGL`,
+        `${ownedPGL > 1 ? ownedPGL.toFixed(3) : ownedPGL.toFixed(8)} PGL - ${userPool1Percent.toFixed(6)}%`,
         `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
           <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
           <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned.toFixed(3)} ${TOKEN_NAMES[token0Address]} / ${reserve1Owned.toFixed(3)} ${TOKEN_NAMES[token1Address]}  </p>
