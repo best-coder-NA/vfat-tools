@@ -6,7 +6,7 @@
         document.body.classList.add('dark-mode');
     }
 
-    fetch('https://d2vq5imxja288v.cloudfront.net/total_value_locked.json').then(function (response) {
+    fetch('https://x-api.snowball.network/tvl/snob.json').then(function (response) {
       return response.json();
     }).then(function (info) {
       let tvl = info.pairs[0].locked;
@@ -124,7 +124,7 @@
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
             <div style="text-align: center">
-                <h2 style="margin-right: 40px">StableVault <img style="vertical-align: text-bottom" width="40px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3D.png"></h2>
+                <h2 style="margin-right: 40px">StableVault <img class="img-fluid" style="vertical-align: text-top" width="40px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3D.png"></h2>
             </div>
             <div class="row">
                 <div class="card col-xs-12 col-sm-5 col-md-5">

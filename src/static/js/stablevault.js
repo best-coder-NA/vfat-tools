@@ -100,6 +100,8 @@ async function main() {
   const s3_supply_percentage = (s3_supply / 1e18 / combined_supply * 100) || 0;
   const S3D_supply = await S3D_TOKEN.totalSupply();
   const user_percentage = ((S3D_balance / 1e18) / (S3D_supply / 1e18) * 100) || 0;
+  const S3D_ratio = combined_supply / (S3D_supply / 1e18);
+  console.log("S3D_ratio:", S3D_ratio);
 
   const t1_supply_display = new Intl.NumberFormat('en-US').format((s1_supply / 1e6).toFixed(2));
   const t2_supply_display = new Intl.NumberFormat('en-US').format((s2_supply / 1e18).toFixed(2));
@@ -188,7 +190,7 @@ async function main() {
   }
 
   $("#deposit_btn").click(function(){
-    loadDepositModal(TUNDRA_CONTRACT, App);
+    loadDepositModal(TUNDRA_CONTRACT, App, S3D_ratio);
     $("#deposit_confirm_btn").prop('disabled', false);
   });
   $("#deposit_confirm_btn").click(function(){
@@ -545,7 +547,7 @@ const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
   console.log("calculateRemoveLiquidity: ", withdrawAmount);
 }
 
-const loadDepositModal = async function(TUNDRA_CONTRACT, App){
+const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3D_ratio){
   $("#deposit_confirm_btn").show();
   $("#deposit_success").hide();
   // inputs
@@ -560,13 +562,15 @@ const loadDepositModal = async function(TUNDRA_CONTRACT, App){
   const s2_amount = ethers.BigNumber.from(String(Math.round(s2_input * 1000)) + "0".repeat(15));
   const s3_amount = ethers.BigNumber.from(String(Math.round(s3_input * 1000)) + "0".repeat(15));
 
+  console.log("S3D_ratio deposit modal:", S3D_ratio);
+
   // recieving
   const minToMint = await TUNDRA_CONTRACT.calculateTokenAmount(App.YOUR_ADDRESS, [s1_amount, s2_amount, s3_amount], true)
   $("#receiving_amt").html((minToMint / 1e18).toFixed(6));
 
   // premium & fee
   const totalAmount = Number(s1_input) + Number(s2_input) + Number(s3_input)
-  const difference = minToMint / 1e18 - totalAmount;
+  const difference = (minToMint / 1e18 * (S3D_ratio || 1)) - totalAmount;
   const premium = (totalAmount > 0 ? difference / totalAmount : 0);
   console.log("Difference:", (difference).toFixed(8));
   console.log("Premium:", (premium * 100).toFixed(6));
