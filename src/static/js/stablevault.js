@@ -190,7 +190,7 @@ async function main() {
   }
 
   $("#deposit_btn").click(function(){
-    loadDepositModal(TUNDRA_CONTRACT, App, S3D_ratio);
+    loadDepositModal(TUNDRA_CONTRACT, App, S3D_ratio, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS);
     $("#deposit_confirm_btn").prop('disabled', false);
   });
   $("#deposit_confirm_btn").click(function(){
@@ -291,6 +291,26 @@ async function main() {
   $("#token_3_max").click(function(){
     $("#token_3_input").val(s3_balance_formatted);
   });
+
+  // $("#remove_liquidity_btn").click(function(){
+  //   $("#add_liquidity_text").hide();
+  //   $("#add_liquidity_card").hide();
+  //   $("#remove_liquidity_btn").hide();
+  //
+  //   $("#add_liquidity_btn").show();
+  //   $("#remove_liquidity_text").show();
+  //   $("#remove_liquidity_card").show();
+  // });
+  //
+  // $("#add_liquidity_btn").click(function(){
+  //   $("#add_liquidity_text").show();
+  //   $("#add_liquidity_card").show();
+  //   $("#remove_liquidity_btn").show();
+  //
+  //   $("#add_liquidity_btn").hide();
+  //   $("#remove_liquidity_text").hide();
+  //   $("#remove_liquidity_card").hide();
+  // });
 
   loadEvents(App, TUNDRA_CONTRACT);
 
@@ -547,7 +567,7 @@ const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
   console.log("calculateRemoveLiquidity: ", withdrawAmount);
 }
 
-const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3D_ratio){
+const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3D_ratio, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS){
   $("#deposit_confirm_btn").show();
   $("#deposit_success").hide();
   // inputs
@@ -587,6 +607,18 @@ const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3D_ratio){
 
   const slippage = getSlippage();
   $("#max_slippage").html(slippage);
+
+  // allowances
+  const s1_allowance = await STABLE_1_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+  const s2_allowance = await STABLE_2_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+  const s3_allowance = await STABLE_3_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+  const s1_valid = s1_amount > 0 ? s1_allowance > 0 : true;
+  const s2_valid = s2_amount > 0 ? s2_allowance > 0 : true;
+  const s3_valid = s3_amount > 0 ? s3_allowance > 0 : true;
+  if (!s1_valid || !s2_valid || !s3_valid) {
+    $("#deposit_approvals_needed").show();
+    $("#deposit_confirm_btn").hide();
+  }
 }
 
 function getSwapSlippage() {
