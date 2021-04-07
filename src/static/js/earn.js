@@ -364,7 +364,7 @@ async function main() {
           pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked * 100;
         }
       });
-      if ( res.locked < 10000000) {
+      if ( res.locked > 8000000) {
         tvl_class = 'tvl-show';
       }      
     }    
