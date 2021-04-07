@@ -402,80 +402,80 @@
                             </div>
                         </details>
                     </div>
-                    <div style="display: none;" id="remove_liquidity_card" class="col-xs-6">
-                        <div class="mb-10">Withdraw percentage (%):<input type="number" min="0" max="100" id="withdraw_percentage" class="ml-20 w-100"></div>
-                        <div class="mb-10">
-                            <div class="custom-radio d-inline-block mr-10"> <!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
-                                <input checked type="radio" name="radio-set-withdraw" id="radio-withdraw-combo" value="0.1">
-                                <label for="radio-withdraw-combo">Combo</label>
-                            </div>
-                            <div class="custom-radio d-inline-block mr-10">
-                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-usdt" value="1">
-                                <label for="radio-withdraw-usdt">USDT</label>
-                            </div>
-                            <div class="custom-radio d-inline-block">
-                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-busd" value="custom">
-                                <label for="radio-withdraw-busd">BUSD</label>
-                            </div>
-                            <div class="custom-radio d-inline-block">
-                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-dai" value="custom">
-                                <label for="radio-withdraw-dai">DAI</label>
-                            </div>
-                        </div>
-                        <div class="token-input">
-                            <div style="display: flex">
-                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
-                                <span class="mr-5">USDT</span>
-                            </div>
-                            <div class="input-group">
-                                <input id="token_1_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">
-                            </div>
-                        </div>
-                        <div class="token-input">
-                            <div style="display: flex">
-                                <img class="token-logo mr-5" src="https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766">
-                                <span class="mr-5">BUSD</span>
-                            </div>
-                            <div class="input-group">
-                                <input id="token_2_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">
-                            </div>
-                        </div>
-                        <div class="token-input">
-                            <div style="display: flex">
-                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png">
-                                <span class="mr-5">DAI</span>
-                            </div>
-                            <div class="input-group">
-                                <input id="token_3_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">
-                            </div>
-                        </div>
-                        <br>
-                        <a href="#" id="withdraw_approve_btn" class="mb-10 font-size-20 btn-block btn btn-success" role="button">Approve S3D</a>
-                        <a href="#" id="withdraw_open_btn" class="font-size-20 btn-block btn btn-primary" role="button">Withdraw</a>
-                        <hr class="my-20"/>
-                        <details class="collapse-panel w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
-                            <summary class="collapse-header">
-                                Advanced Options
-                            </summary>
-                            <div class="collapse-content">
-                                <div>Max Slippage </div>
-                                <!-- Horizontally stacked radio buttons -->
-                                <div class="custom-radio d-inline-block mr-10"> <!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
-                                    <input checked type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-1" value="0.1">
-                                    <label for="radio-withdraw-slippage-1">0.1%</label>
-                                </div>
-                                <div class="custom-radio d-inline-block mr-10">
-                                    <input type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-2" value="1">
-                                    <label for="radio-withdraw-slippage-2">1%</label>
-                                </div>
-                                <div class="custom-radio d-inline-block">
-                                    <input type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-3" value="custom">
-                                    <label for="radio-withdraw-slippage-3">Custom %:</label>
-                                </div>
-                                <input type="number" min="0" max="100" id="custom_withdraw_slippage" class="w-50">
-                            </div>
-                        </details>
-                    </div>
+<!--                    <div style="display: none;" id="remove_liquidity_card" class="col-xs-6">-->
+<!--                        <div class="mb-10">Withdraw percentage (%):<input type="number" min="0" max="100" id="withdraw_percentage" class="ml-20 w-100"></div>-->
+<!--                        <div class="mb-10">-->
+<!--                            <div class="custom-radio d-inline-block mr-10"> &lt;!&ndash; d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) &ndash;&gt;-->
+<!--                                <input checked type="radio" name="radio-set-withdraw" id="radio-withdraw-combo" value="0.1">-->
+<!--                                <label for="radio-withdraw-combo">Combo</label>-->
+<!--                            </div>-->
+<!--                            <div class="custom-radio d-inline-block mr-10">-->
+<!--                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-usdt" value="1">-->
+<!--                                <label for="radio-withdraw-usdt">USDT</label>-->
+<!--                            </div>-->
+<!--                            <div class="custom-radio d-inline-block">-->
+<!--                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-busd" value="custom">-->
+<!--                                <label for="radio-withdraw-busd">BUSD</label>-->
+<!--                            </div>-->
+<!--                            <div class="custom-radio d-inline-block">-->
+<!--                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-dai" value="custom">-->
+<!--                                <label for="radio-withdraw-dai">DAI</label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="token-input">-->
+<!--                            <div style="display: flex">-->
+<!--                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">-->
+<!--                                <span class="mr-5">USDT</span>-->
+<!--                            </div>-->
+<!--                            <div class="input-group">-->
+<!--                                <input id="token_1_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="token-input">-->
+<!--                            <div style="display: flex">-->
+<!--                                <img class="token-logo mr-5" src="https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766">-->
+<!--                                <span class="mr-5">BUSD</span>-->
+<!--                            </div>-->
+<!--                            <div class="input-group">-->
+<!--                                <input id="token_2_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="token-input">-->
+<!--                            <div style="display: flex">-->
+<!--                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png">-->
+<!--                                <span class="mr-5">DAI</span>-->
+<!--                            </div>-->
+<!--                            <div class="input-group">-->
+<!--                                <input id="token_3_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <br>-->
+<!--                        <a href="#" id="withdraw_approve_btn" class="mb-10 font-size-20 btn-block btn btn-success" role="button">Approve S3D</a>-->
+<!--                        <a href="#" id="withdraw_open_btn" class="font-size-20 btn-block btn btn-primary" role="button">Withdraw</a>-->
+<!--                        <hr class="my-20"/>-->
+<!--                        <details class="collapse-panel w-400 mw-full"> &lt;!&ndash; w-400 = width: 40rem (400px), mw-full = max-width: 100% &ndash;&gt;-->
+<!--                            <summary class="collapse-header">-->
+<!--                                Advanced Options-->
+<!--                            </summary>-->
+<!--                            <div class="collapse-content">-->
+<!--                                <div>Max Slippage </div>-->
+<!--                                &lt;!&ndash; Horizontally stacked radio buttons &ndash;&gt;-->
+<!--                                <div class="custom-radio d-inline-block mr-10"> &lt;!&ndash; d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) &ndash;&gt;-->
+<!--                                    <input checked type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-1" value="0.1">-->
+<!--                                    <label for="radio-withdraw-slippage-1">0.1%</label>-->
+<!--                                </div>-->
+<!--                                <div class="custom-radio d-inline-block mr-10">-->
+<!--                                    <input type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-2" value="1">-->
+<!--                                    <label for="radio-withdraw-slippage-2">1%</label>-->
+<!--                                </div>-->
+<!--                                <div class="custom-radio d-inline-block">-->
+<!--                                    <input type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-3" value="custom">-->
+<!--                                    <label for="radio-withdraw-slippage-3">Custom %:</label>-->
+<!--                                </div>-->
+<!--                                <input type="number" min="0" max="100" id="custom_withdraw_slippage" class="w-50">-->
+<!--                            </div>-->
+<!--                        </details>-->
+<!--                    </div>-->
                 </div>
 
             </div>
