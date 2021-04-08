@@ -97,13 +97,13 @@ async function main() {
     const startDate = new Date(proposal.startTime * 1000).toLocaleString();
     const endDate = new Date((proposal.startTime * 1 + proposal.votingPeriod * 1) * 1000).toLocaleString()
     const state = await GOVERNANCE_CONTRACT.state(i)
-    const userVote = await GOVERNANCE_CONTRACT.getVote(i, App.YOUR_ADDRESS)
-    const userForAgainst = userVote[0];
-    const userVoteStatus = userVote[1];
-    const userVoteAmount = userVote[2];
-    const userVoteDisplay = `${(userVoteAmount / 1e18).toFixed(2)} votes ${userForAgainst == 0 ? 'Against' : 'For'}`;
+    // const userVote = await GOVERNANCE_CONTRACT.getVote(i, App.YOUR_ADDRESS)
+    // const userForAgainst = userVote[0];
+    // const userVoteStatus = userVote[1];
+    // const userVoteAmount = userVote[2];
+    // const userVoteDisplay = `${(userVoteAmount / 1e18).toFixed(2)} votes ${userForAgainst == 0 ? 'Against' : 'For'}`;
     const safeTitle = proposal.title.replaceAll('<', '%3C').replaceAll('>', '%3E');
-    console.log(userVote)
+    // console.log(userVote)
     let stateDisplay = '';
     switch (state){
       case 0:
@@ -135,12 +135,12 @@ async function main() {
     proposal_html += `<div class="font-size-16"><span class="text-success">For: ${(proposal.forVotes / 1e18).toFixed(2)}</span><span class="float-right text-secondary">Against: ${(proposal.againstVotes / 1e18).toFixed(2)}</span></div>`
     proposal_html += `</summary>`;
     proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
-    if (state == 0 && userVoteStatus == 0) {
+    if (state == 0) {
       proposal_html += `<div class="ml-20 mb-10"><ion-icon name="lock-closed-outline"></ion-icon> Voting will lock your deposit for ${duration} hours</span></div>`;
       proposal_html += `<button id="proposal_${i}_for" class="ml-20 btn btn-success" type="button">Vote for <ion-icon name="thumbs-up-outline"></ion-icon></button>`;
       proposal_html += `<button id="proposal_${i}_against" class="btn btn-secondary float-right" type="button">Vote against <ion-icon name="thumbs-down-outline"></ion-icon></button>`;
     } else {
-      proposal_html += `<div class="ml-20"><span>Your vote: ${userVoteStatus == 0 ? 'Did not vote' : userVoteDisplay} </span></div>`;
+      // proposal_html += `<div class="ml-20"><span>Your vote: ${userVoteStatus == 0 ? 'Did not vote' : userVoteDisplay} </span></div>`;
     }
     proposal_html += `<div class="ml-20 mt-10"><span>Duration: ${duration} hours </span></div>`
     proposal_html += `<div class="ml-20"><span>Start: ${startDate} </span></div>`
