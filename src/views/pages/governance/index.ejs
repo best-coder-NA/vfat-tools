@@ -26,14 +26,14 @@
             <div class="row">
                 <div class="card col-xs-12 col-sm-4 col-md-4">
                     <div class="row">
-                        <div class="mb-10">
+                        <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
                             <div class="font-size-20 font-weight-bold mb-5">Voting Power <ion-icon name="paper-plane-outline"></ion-icon></div>
                             <div class="font-size-18 mb-10"><span id="my_votes"></span> Votes</div>
                             <div class="font-size-18">Assets deposited:</div>
                             <div><span id="deposited_snob">0</span> SNOB</div>
                             <div><span id="deposited_pgl">0</span> PGL</div>
                             <div style="display: none;" id="pending_snob"><span id="pending_snob_amt">0</span> Pending SNOB</div>
-                            <button id="withdraw_crystal" class="mt-10 btn btn-primary" type="button">Withdraw All</button>
+                            <button id="withdraw_crystal" class="mt-10 font-size-16 btn-block btn btn-primary" type="button">Withdraw All</button>
                             <div style="display: none;" id="withdraw_frozen" class="mt-10"><ion-icon name="lock-closed-outline"></ion-icon> Withdraw is locked until <span id="thaw_time"></span></div>
                         </div>
                     </div>
@@ -45,7 +45,6 @@
                                 Available SNOB: <span id="available_snob"></span>
                             </div>
                             <div>
-                                <a style="display: none;" href="#" id="snob_approve">Approve </a>
                                 <a style="display: none;" href="#" id="snob_revoke">Revoke </a>
                             </div>
                             <div class="input-group">
@@ -58,7 +57,6 @@
                                 Available PGL: <span id="available_pgl"></span>
                             </div>
                             <div>
-                                <a style="display: none;" href="#" id="pgl_approve">Approve </a>
                                 <a style="display: none;" href="#" id="pgl_revoke">Revoke </a>
                             </div>
                             <div class="input-group">
@@ -68,12 +66,26 @@
                                 </div>
                             </div>
                             <div>
-                                <button id="deposit_crystal" class="btn btn-primary" type="button">Deposit</button>
+                                <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="snob_approve">Approve SNOB</button>
+                                <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="pgl_approve">Approve PGL</button>
+                                <button id="deposit_crystal" class="mb-10 font-size-16 btn-block btn btn-primary" type="button">Deposit</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mt-10">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="font-size-16 font-weight-bold mb-5">Staked Funds</div>
+                            <div>
+                                Staked PGL in Pool 2: <span id="staked_pgl"></span>
+                            </div>
+                            <div>
+                                <button id="unstake_pgl" class="my-10 font-size-16 btn-block btn btn-primary" type="button">Unstake</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card col-xs-12 col-sm-6 col-md-6">
+                <div class="card col-xs-10 col-sm-6 col-md-6">
                     <h2 class="content-title">
                         Proposals <ion-icon name="archive-outline"></ion-icon>
                     </h2>
@@ -91,7 +103,9 @@
                     </div>
                 </div>
             </div>
+            <%- include(`${partials}/footer`); -%>
         </div>
+
     <div>
         <h1 class="error"></h1>
 
@@ -100,9 +114,7 @@
         <%- include(`${partials}/scripts`, {scriptname: 'governance'}); -%>
 
     </div>
-
     </div>
-<!--    <%- include(`${partials}/footer`); -%>-->
 </div>
 </body>
 </html>
