@@ -350,8 +350,18 @@
                         </details>
                     </div>
                     <div style="display: none;" id="remove_liquidity_card" class="col-xs-6">
-                        <div class="mb-10">Withdraw percentage (%):<input type="number" min="0" max="100" id="withdraw_percentage" class="ml-20 w-100"></div>
                         <div class="mb-10">
+                            <div>Withdraw percentage (%): <span id="withdraw_percentage_display">0</span></div>
+                            <input style="width: 90%" type="range" min="0" max="100" value="0" class="slider mt-10 mx-10" id="withdraw_percentage">
+                            <div class="mx-10 d-flex">
+                                <div style="width: 13%; text-align:left;">0%</div>
+                                <div style="width: 24%; text-align:center;">25%</div>
+                                <div style="width: 24%; text-align:center;">50%</div>
+                                <div style="width: 24%; text-align:center;">75%</div>
+                                <div style="width: 13%; text-align:right;">100%</div>
+                            </div>
+                        </div>
+                        <div class="mb-10 ml-10">
                             <div class="custom-radio d-inline-block mr-10"> <!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
                                 <input checked type="radio" name="radio-set-withdraw" id="radio-withdraw-combo" value="0.1">
                                 <label for="radio-withdraw-combo">Combo</label>
@@ -360,7 +370,7 @@
                                 <input type="radio" name="radio-set-withdraw" id="radio-withdraw-usdt" value="1">
                                 <label for="radio-withdraw-usdt">USDT</label>
                             </div>
-                            <div class="custom-radio d-inline-block">
+                            <div class="custom-radio d-inline-block mr-10">
                                 <input type="radio" name="radio-set-withdraw" id="radio-withdraw-busd" value="custom">
                                 <label for="radio-withdraw-busd">BUSD</label>
                             </div>
@@ -369,7 +379,8 @@
                                 <label for="radio-withdraw-dai">DAI</label>
                             </div>
                         </div>
-                        <div class="token-input">
+                        <hr/>
+                        <div class="token-input mt-5">
                             <div style="display: flex">
                                 <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
                                 <span class="mr-5">USDT</span>

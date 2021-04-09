@@ -262,10 +262,6 @@ async function main() {
     updateWithdrawAmount(TUNDRA_CONTRACT, S3D_TOKEN, App);
   });
 
-  $("#withdraw_percentage").keyup(function() {
-    updateWithdrawAmount(TUNDRA_CONTRACT, S3D_TOKEN, App);
-  });
-
   $("#swap_max").click(function(){
     let from_token = $("#swap_input").data("from_token");
     let to_token = $("#swap_input").data("to_token");
@@ -323,6 +319,7 @@ async function main() {
 
 const updateWithdrawAmount = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
   const withdrawPercentage = $("#withdraw_percentage").val();
+  $("#withdraw_percentage_display").html(withdrawPercentage);
   const comboChecked = $("#radio-withdraw-combo").is(':checked');
   const usdtChecked = $("#radio-withdraw-usdt").is(':checked');
   const busdChecked = $("#radio-withdraw-busd").is(':checked');
