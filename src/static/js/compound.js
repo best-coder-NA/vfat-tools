@@ -174,7 +174,7 @@ async function main() {
   $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
   $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
   $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
-  $('#distribution_phase').append(`${blockNumber} / 1043700 (${1043700 - blockNumber} blocks left)`);
+  $('#distribution_phase').append(`${blockNumber} / 1243700 (${1243700 - blockNumber} blocks left)`);
 
   document.getElementById('wallet-copy').addEventListener('click', ()=>{
     navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
