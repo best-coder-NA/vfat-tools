@@ -414,6 +414,15 @@ const addEventToDom = async function (event, App) {
       row1 = `<div class="mb-5"><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">${label}: </span>`
       row1 += `${depositsDisplay} - ${event.timestamp}</a></div>`;
       break;
+    case 'RemoveLiquidityOne':
+      let labelRemove = 'Remove';
+      let tokenAmount = event.args.tokensBought;
+      let tokenTypeId = event.args.boughtId;
+      let tokenLabel = tokenTypeId == 0 ? 'USDT' : tokenTypeId == 1 ? 'BUSD' : 'DAI';
+      let decimals = tokenTypeId ==  0 ? 1e6 : 1e18;
+      row1 = `<div class="mb-5"><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">${labelRemove}: </span>`
+      row1 += `$${(tokenAmount / decimals).toFixed(2)} ${tokenLabel} - ${event.timestamp}</a></div>`;
+      break;
     case 'TokenSwap':
       let tokenBought = event.args.boughtId;
       let tokenSold = event.args.soldId;
