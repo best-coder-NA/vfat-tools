@@ -667,9 +667,9 @@ async function main() {
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cWeekAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}% </p>
                         </div>
                     </div>
                 </div>
@@ -752,9 +752,9 @@ async function main() {
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cWeekAPR}%</p>
+                        <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}%</p>
                         </div>
                     </div>
 
@@ -776,7 +776,7 @@ async function main() {
                 <div class="row">
                     <div class="col-sm-12 col-md-2 align-items-center pb-10">
                         <div class="row text-center">
-                            <p class="font-weight-light">Estimated APR :</p>
+                            <p class="font-weight-light">Rewards APR :</p>
                         </div>
                         <div class="row">
                             <div class="form-inline w-50 ">
@@ -955,7 +955,7 @@ async function main() {
                 <div class="row">
                     <div class="col-sm-12 col-md-3 align-items-center pb-10">
                         <div class="row">
-                            <p class="w-full text-center">Estimated APR :</p>
+                            <p class="w-full text-center">Rewards APR :</p>
                         </div>
                         <div class="row">
                             <div class="form-inline w-50 mx-auto">
@@ -1043,7 +1043,7 @@ async function main() {
               <div class="row">
                   <div class="col-sm-12 col-md-2 align-items-center pb-10">
                       <div class="row text-center">
-                          <p class="font-weight-light">Estimated APR :</p>
+                          <p class="font-weight-light">Rewards APR :</p>
                       </div>
                       <div class="row">
                           <div class="form-inline w-50 ">
@@ -1244,7 +1244,7 @@ async function main() {
                 <div class="row">
                     <div class="col-sm-12 col-md-3 align-items-center pb-10">
                         <div class="row">
-                            <p class="w-full text-center">Estimated APR :</p>
+                            <p class="w-full text-center">Rewards APR :</p>
                         </div>
                         <div class="row">
                             <div class="form-inline w-50 mx-auto">
@@ -1331,7 +1331,7 @@ async function main() {
                 <div class="row">
                     <div class="col-sm-12 col-md-2 align-items-center pb-10">
                         <div class="row text-center">
-                            <p class="font-weight-light">Estimated APR :</p>
+                            <p class="font-weight-light">Rewards APR :</p>
                         </div>
                         <div class="row">
                             <div class="form-inline w-50 ">
