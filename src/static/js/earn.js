@@ -210,7 +210,7 @@ async function main() {
 
   // wallet info
   const claimableSnowballs = pendingGovReward / 1e18 + pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18 + pendingSNOBTokensPool5 / 1e18 + pendingSNOBTokensPool6 / 1e18 + pendingSNOBTokensPool7 / 1e18;
-  const snowballsPerBlock = snowballMultiplier * blockRate
+  const snowballsPerBlock = blockRate
   const secondsInDay = 86400;
   
   const blocks24hrs = (secondsInDay / (currentBlock.timestamp - yesterdayBlock.timestamp)) * 20000;
