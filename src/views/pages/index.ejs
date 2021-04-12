@@ -9,7 +9,7 @@
     return response.json();
   }).then(function (info) {
     document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value.toFixed(0));
-    let cents = info.price.toFixed(2).split('.')[1]
+    let cents = ' $0.' + info.price.toFixed(2).split('.')[1];
     document.querySelector('.buy-btn').setAttribute('price', cents);
   }).catch(function (err) {
     document.getElementById('tvl').innerHTML = '';

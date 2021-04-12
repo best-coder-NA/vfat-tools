@@ -147,7 +147,7 @@ h2.tvl {
 }
 
 .buy-btn::after {
-  content: " "attr(price)"¢";
+  content: attr(price);
   transform: translateY(-30px)
 }
 
