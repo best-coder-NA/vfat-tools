@@ -145,6 +145,12 @@ h2.tvl {
 .buy-btn {
   transform: translateY(-2px);
 }
+
+.buy-btn::after {
+  content: " "attr(price)"¢";
+  transform: translateY(-30px)
+}
+
 .token-logo{
   width: 24px;
   height: 24px;
