@@ -43,7 +43,7 @@ async function main() {
   if (userEarlyVoteBalance > 0) {
     $("#no_nft").hide();
     $("#nft1").show();
-    $("#nft1_image").html(`<img style="width: 300px"src='https://raw.githubusercontent.com/Snowball-Finance/Assets/main/nft1.gif'>`)
+    $("#nft1_image").html(`<img style="width: 300px"src='https://raw.githubusercontent.com/Snowball-Finance/Assets/main/nft1-1.gif'>`)
   }
 
   $("#claim_tab").click(function(){
