@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+  if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+    document.body.classList.add('dark-mode');
+  }
+
+</script>
+<body>
+<%- include(`${partials}/header_main`); -%>
+
+<%- include(`${partials}/wallet_error`); -%>
+
+
+<div class="page-wrapper with-navbar with-transitions">
+    <div class="loader--1">
+        <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                <div></div><div></div>
+            </div></div>
+    </div>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <div class="ml-20" style="text-align: center"><h2>NFTs</h2></div>
+            <div class="row">
+                <div class="col-sm-3 col-sm-3 col-md-3"></div>
+                <div class="col-sm-3 col-sm-3 col-md-2">
+                    <button id="shop_tab" class="font-size-16 btn-block btn btn-primary" type="button">
+                        Shop 🛍️</button>
+                </div>
+                <div class="col-sm-3 col-sm-3 col-md-2">
+                    <button id="claim_tab" class="font-size-16 btn-block btn" type="button">
+                        Claim 🛄</button>
+                </div>
+                <div class="col-sm-3 col-sm-3 col-md-2">
+                    <button id="gallery_tab" class="font-size-16 btn-block btn" type="button">
+                        Your Gallery 🖼️</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-md-2"></div>
+                <div class="card col-xs-12 col-sm-7 col-md-7">
+                    <div id="shop_section" class="row">
+                        <div class="font-size-16 font-weight-bold mb-5">Shop is coming soon!</div>
+                    </div>
+                    <div style="display: none" id="claim_section" class="row">
+                        <div class="font-size-16 font-weight-bold mb-5">Early Voter NFT 🗳️</div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="mb-10">
+                                Description: Voted on Proposal 1 or Proposal 2 during the first week of Snowball Governance
+                            </div>
+                            <div class="mb-10">
+                                Type: ERC-271 Token
+                            </div>
+                            <div class="mb-10">
+                                Status: <span id="early_vote_status"></span>
+                            </div>
+                            <div>
+                                <div style="display: none;" id="claim_early_vote_claimed">Already claimed</div>
+                                <button style="display: none;" id="claim_early_vote" class="mb-10 font-size-16 btn-block btn btn-primary" type="button">Claim</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: none" id="gallery_section" class="row">
+                        <div class="font-size-16 font-weight-bold mb-5">Your Gallery</div>
+                        <hr/>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div id="no_nft">No NFTs in your gallery.</div>
+                            <div style="display: none;" id="nft1" class="card">
+                                <div><b>Early Voter - NFT #1</b></div>
+                                <div class="my-5" id="nft1_image"></div>
+                                <div><b>Title:</b> Forest Sasquatch</div>
+                                <div>
+                                    <b>Description:</b> Voted on Proposal 1 or Proposal 2 during the first week of Snowball Governance
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+
+        <div>
+            <h1 class="error"></h1>
+
+
+
+            <%- include(`${partials}/scripts`, {scriptname: 'nft'}); -%>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
