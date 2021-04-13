@@ -138,6 +138,9 @@ async function main() {
       default:
         break;
     }
+    if (i == 1 || i == 2) {
+      stateDisplay = 'Executed';
+    }
     console.log(proposal)
     let proposal_html = `<details class="mb-20 collapse-panel w-500 mw-full">`;
     proposal_html += `<summary class="collapse-header">`;
