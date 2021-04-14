@@ -41,17 +41,25 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-3 col-md-2"></div>
                 <div class="card col-xs-12 col-sm-7 col-md-7">
-                    <div id="shop_section" class="row">
-                        <div class="font-size-16 font-weight-bold mb-5">Shop is coming soon!</div>
+                    <div id="shop_section">
+                        <div class="text-center">
+                            <div class="font-weight-bold font-size-16">The "Rolling Sasquatch" series </div>
+                            <div><b>Artist: </b><a href="https://twitter.com/LouisLeeCrypto" target="_blank">Louis Lee</a></div>
+                            <div><b>Proceeds: </b>50% to Artist, 50% to Snowball treasury</div>
+                            <div><b>Mint Type: </b>Limited edition</div>
+                        </div>
+                        <div id="shop_items" class="row col-xs-12 col-sm-12 col-md-12">
+                        </div>
                     </div>
+
                     <div style="display: none" id="claim_section" class="row">
-                        <div class="font-size-16 font-weight-bold mb-5">Early Voter NFT 🗳️</div>
+                        <div class="text-center col-md-12 font-size-16 font-weight-bold mb-5">Early Voter NFT 🗳️</div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="mb-10">
                                 Description: Voted on Proposal 1 or Proposal 2 during the first week of Snowball Governance
                             </div>
                             <div class="mb-10">
-                                Type: ERC-271 Token
+                                Type: ERC-721 Token
                             </div>
                             <div class="mb-10">
                                 Status: <span id="early_vote_status"></span>
@@ -63,17 +71,11 @@
                         </div>
                     </div>
                     <div style="display: none" id="gallery_section" class="row">
-                        <div class="font-size-16 font-weight-bold mb-5">Your Gallery</div>
+                        <div class="text-center col-md-12 font-size-16 font-weight-bold mb-5">Your Gallery</div>
                         <hr/>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div id="no_nft">No NFTs in your gallery.</div>
-                            <div style="display: none;" id="nft1" class="card">
-                                <div><b>Early Voter - NFT #1</b></div>
-                                <div class="my-5" id="nft1_image"></div>
-                                <div><b>Title: </b>Sasquatch throwing snowball</div>
-                                <div>
-                                    <b>Description:</b> Voted on Proposal 1 or Proposal 2 during the first week of Snowball Governance
-                                </div>
+                            <div id="nft_section" class="mr-auto ml-auto col-md-8">
                             </div>
                         </div>
                     </div>
