@@ -15,27 +15,157 @@ async function main() {
   const GOVERNANCE_ADDRESS = "0x914556b16c1220e4af63084dB1acbD4e6f9c65Aa";
   const EARLY_VOTER_ADDRESS = "0x7B097A18738cA9Fd524384Dab74c57CB12DAC724";
 
-  // ROLLING PINK
-  const ROLLING_PINK_ADDRESS = "0x35F268DaC74f94785135aA134deDEf7e67Db8fe3";
-  const ROLLING_PINK_CONTRACT = new ethers.Contract(ROLLING_PINK_ADDRESS, ROLLING_ABI, signer);
-  const rolling_pink_minted = await ROLLING_PINK_CONTRACT.totalSupply()
-  const rollingPinkBalance = await ROLLING_PINK_CONTRACT.balanceOf(App.YOUR_ADDRESS);
-
-  const buy_rolling_pink = async function () {
-    return buy_rolling(ROLLING_ABI, ROLLING_PINK_ADDRESS, App, "1.0")
-  }
-  //shop items
-  const buy_id = 'buy-rolling-pink';
-  printShopItem('Rolling Sasquatch - Pink', 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Pink.gif', 'Rolling through the snow - Pink', 'Part of the "Rolling Sasquatch" series', rolling_pink_minted,80, 'Louis Lee', 'salmon', 1, buy_id, rollingPinkBalance);
-  $("#"+buy_id).click(function(){
-    buy_rolling_pink();
-  });
-  if (rollingPinkBalance > 0) {
-    const tokensOfOwner = await ROLLING_PINK_CONTRACT.tokensOfOwner(App.YOUR_ADDRESS)
-    tokensOfOwner.forEach(id => {
-      printNFT('Rolling Sasquatch - Pink', 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Pink.gif', 'Rolling through the snow - Pink', 'Part of the "Rolling Sasquatch" series', id, 80, 'Louis Lee', 'salmon');
+  async function printRolling(options) {
+    const ROLLING_ADDRESS = options.addr;
+    printShopItem(options.name, options.img_url, options.title, options.description, options.minted, options.max, options.artist, options.border, options.cost, options.buy_id, options.balance, options.rainbow);
+    $("#"+options.buy_id).click(function(){
+      buy_rolling(ROLLING_ABI, ROLLING_ADDRESS, App, options.cost)
     });
+    if (options.balance > 0) {
+      options.owned.forEach(id => {
+        printNFT(options.name, options.img_url, options.title, options.description, id, options.max, options.artist, options.border, options.rainbow);
+      });
+    }
   }
+
+  // PINK
+  const ROLLING_ADDR_PINK = "0x35F268DaC74f94785135aA134deDEf7e67Db8fe3";
+  const ROLLING_CONTRACT_PINK = new ethers.Contract(ROLLING_ADDR_PINK, ROLLING_ABI, signer);
+  const rolling_minted_PINK = await ROLLING_CONTRACT_PINK.totalSupply()
+  const rollingBalance_PINK = await ROLLING_CONTRACT_PINK.balanceOf(App.YOUR_ADDRESS);
+  const tokensOfOwner_PINK = await ROLLING_CONTRACT_PINK.tokensOfOwner(App.YOUR_ADDRESS)
+
+  printRolling({
+    addr: ROLLING_ADDR_PINK,
+    cost: "1.0",
+    name: 'Rolling Sasquatch - Pink',
+    img_url: 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Pink.gif',
+    title: 'Rolling through the snow - Pink',
+    description: 'Part of the "Rolling Sasquatch" series',
+    max: 80,
+    artist: 'Louis Lee',
+    border: 'Salmon',
+    buy_id: 'buy-rolling-pink',
+    minted: rolling_minted_PINK,
+    balance: rollingBalance_PINK,
+    owned: tokensOfOwner_PINK,
+    rainbow: false
+  });
+
+  // PURPLE
+  const ROLLING_ADDR_PURPLE = "0xB954AE9a4374751CB3d578CfA3Db96e0E5881C00";
+  const ROLLING_CONTRACT_PURPLE = new ethers.Contract(ROLLING_ADDR_PURPLE, ROLLING_ABI, signer);
+  const rolling_minted_PURPLE = await ROLLING_CONTRACT_PURPLE.totalSupply()
+  const rollingBalance_PURPLE = await ROLLING_CONTRACT_PURPLE.balanceOf(App.YOUR_ADDRESS);
+  const tokensOfOwner_PURPLE = await ROLLING_CONTRACT_PURPLE.tokensOfOwner(App.YOUR_ADDRESS)
+  printRolling({
+    addr: ROLLING_ADDR_PURPLE,
+    cost: "1.0",
+    name: 'Rolling Sasquatch - Purple',
+    img_url: 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Purple.gif',
+    title: 'Rolling through the snow - Purple',
+    description: 'Part of the "Rolling Sasquatch" series',
+    max: 80,
+    artist: 'Louis Lee',
+    border: 'Purple',
+    buy_id: 'buy-rolling-purple',
+    minted: rolling_minted_PURPLE,
+    balance: rollingBalance_PURPLE,
+    owned: tokensOfOwner_PURPLE,
+    rainbow: false
+  });
+
+  // ORANGE
+  const ROLLING_ADDR_ORANGE = "0xD65e006644D417Af6A9385182C21733762b94E83";
+  const ROLLING_CONTRACT_ORANGE = new ethers.Contract(ROLLING_ADDR_ORANGE, ROLLING_ABI, signer);
+  const rolling_minted_ORANGE = await ROLLING_CONTRACT_ORANGE.totalSupply()
+  const rollingBalance_ORANGE = await ROLLING_CONTRACT_ORANGE.balanceOf(App.YOUR_ADDRESS);
+  const tokensOfOwner_ORANGE = await ROLLING_CONTRACT_ORANGE.tokensOfOwner(App.YOUR_ADDRESS)
+  printRolling({
+    addr: ROLLING_ADDR_ORANGE,
+    cost: "1.0",
+    name: 'Rolling Sasquatch - Orange',
+    img_url: 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Orange.gif',
+    title: 'Rolling through the snow - Orange',
+    description: 'Part of the "Rolling Sasquatch" series',
+    max: 80,
+    artist: 'Louis Lee',
+    border: 'Orange',
+    buy_id: 'buy-rolling-orange',
+    minted: rolling_minted_ORANGE,
+    balance: rollingBalance_ORANGE,
+    owned: tokensOfOwner_ORANGE,
+    rainbow: false
+  });
+
+  // BLUE
+  const ROLLING_ADDR_BLUE = "0xae88bE7d3fE6545C688b640B427aF4bAb90e2638";
+  const ROLLING_CONTRACT_BLUE = new ethers.Contract(ROLLING_ADDR_BLUE, ROLLING_ABI, signer);
+  const rolling_minted_BLUE = await ROLLING_CONTRACT_BLUE.totalSupply()
+  const rollingBalance_BLUE = await ROLLING_CONTRACT_BLUE.balanceOf(App.YOUR_ADDRESS);
+  const tokensOfOwner_BLUE = await ROLLING_CONTRACT_BLUE.tokensOfOwner(App.YOUR_ADDRESS)
+  printRolling({
+    addr: ROLLING_ADDR_BLUE,
+    cost: "3.0",
+    name: 'Rolling Sasquatch - Blue',
+    img_url: 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Blue.gif',
+    title: 'Rolling through the snow - Blue',
+    description: 'Part of the "Rolling Sasquatch" series',
+    max: 40,
+    artist: 'Louis Lee',
+    border: 'lightblue',
+    buy_id: 'buy-rolling-blue',
+    minted: rolling_minted_BLUE,
+    balance: rollingBalance_BLUE,
+    owned: tokensOfOwner_BLUE,
+    rainbow: false
+  });
+
+  // GREEN
+  const ROLLING_ADDR_GREEN = "0x5edd9bC699B6A613875E6760B4978d14d6EB3899";
+  const ROLLING_CONTRACT_GREEN = new ethers.Contract(ROLLING_ADDR_GREEN, ROLLING_ABI, signer);
+  const rolling_minted_GREEN = await ROLLING_CONTRACT_GREEN.totalSupply()
+  const rollingBalance_GREEN = await ROLLING_CONTRACT_GREEN.balanceOf(App.YOUR_ADDRESS);
+  const tokensOfOwner_GREEN = await ROLLING_CONTRACT_GREEN.tokensOfOwner(App.YOUR_ADDRESS)
+  printRolling({
+    addr: ROLLING_ADDR_GREEN,
+    cost: "3.0",
+    name: 'Rolling Sasquatch - Green',
+    img_url: 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Green.gif',
+    title: 'Rolling through the snow - Green',
+    description: 'Part of the "Rolling Sasquatch" series',
+    max: 40,
+    artist: 'Louis Lee',
+    border: 'Green',
+    buy_id: 'buy-rolling-green',
+    minted: rolling_minted_GREEN,
+    balance: rollingBalance_GREEN,
+    owned: tokensOfOwner_GREEN,
+    rainbow: false
+  });
+
+  // LASER
+  const ROLLING_ADDR_LASER = "0xd66Df640A2f213B6e5087204cAee2b2145A1c1c9";
+  const ROLLING_CONTRACT_LASER = new ethers.Contract(ROLLING_ADDR_LASER, ROLLING_ABI, signer);
+  const rolling_minted_LASER = await ROLLING_CONTRACT_LASER.totalSupply()
+  const rollingBalance_LASER = await ROLLING_CONTRACT_LASER.balanceOf(App.YOUR_ADDRESS);
+  const tokensOfOwner_LASER = await ROLLING_CONTRACT_LASER.tokensOfOwner(App.YOUR_ADDRESS)
+  printRolling({
+    addr: ROLLING_ADDR_LASER,
+    cost: "20.0",
+    name: 'Rolling Sasquatch - Laser Eyes',
+    img_url: 'https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Snowball_NFT_Sasquatch.gif',
+    title: 'Rolling through the snow - Laser Eyes',
+    description: 'Part of the "Rolling Sasquatch" series',
+    max: 5,
+    artist: 'Louis Lee',
+    border: null,
+    buy_id: 'buy-rolling-laser',
+    minted: rolling_minted_LASER,
+    balance: rollingBalance_LASER,
+    owned: tokensOfOwner_LASER,
+    rainbow: true
+  });
 
   const earlyVote_claim = async function () {
     return earlyVoteContract_claim(EARLY_VOTER_ABI, EARLY_VOTER_ADDRESS, App)
@@ -98,11 +228,14 @@ async function main() {
   hideLoading();
 }
 
-function printShopItem(name, img_url, title, description, minted, max, artist, border, cost, buy_id, owned) {
+function printShopItem(name, img_url, title, description, minted, max, artist, border, cost, buy_id, owned, rainbow) {
   let html = `<div class="card ml-auto mr-auto">`;
   html += `<div class="text-center"><div><b>${name}</b></div>`;
+  html += `<div class="text-center"><div><b>Max supply: ${max}</b></div>`;
   if (border) {
     html += `<div class="my-5"><img class="nft-image" style="width: 180px; border: 5px solid ${border}; border-style: outset;" src='${img_url}'></div>`;
+  } else if (rainbow){
+    html += `<div class="my-5"><img class="nft-image rainbow-box" style="width: 180px" src='${img_url}'></div>`;
   } else {
     html += `<div class="my-5"><img class="nft-image" style="width: 180px" src='${img_url}'></div>`;
   }
@@ -112,9 +245,7 @@ function printShopItem(name, img_url, title, description, minted, max, artist, b
   if (artist) {
     html += `<div><b>Artist: </b>${artist}</div>`;
   }
-  if (minted & max) {
-    html += `<div><b>Minted: </b>${minted}/${max}</div>`;
-  }
+  html += `<div><b>Minted: </b>${minted}/${max}</div>`;
   html += `<div><b>Owned: </b>${owned}</div>`;
   if (cost) {
     html += `<div><b>Price: </b>${cost} AVAX</div>`;
@@ -124,12 +255,14 @@ function printShopItem(name, img_url, title, description, minted, max, artist, b
   $("#shop_items").append(html);
 }
 
-function printNFT(name, img_url, title, description, id, max, artist, border) {
+function printNFT(name, img_url, title, description, id, max, artist, border, rainbow) {
   $("#no_nft").hide();
   let html = `<div class="card ml-auto mr-auto">`;
   html += `<div class="text-center"><div><b>${name}</b></div>`;
   if (border) {
     html += `<div class="my-5"><img class="nft-image" style="width: 250px; border: 5px solid ${border}; border-style: outset;" src='${img_url}'></div>`;
+  } else if (rainbow) {
+    html += `<div class="my-5"><img class="nft-image rainbow-box" style="width: 250px" src='${img_url}'></div>`;
   } else {
     html += `<div class="my-5"><img class="nft-image" style="width: 250px" src='${img_url}'></div>`;
   }
