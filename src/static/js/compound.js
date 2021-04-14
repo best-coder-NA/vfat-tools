@@ -624,12 +624,12 @@ async function main() {
     }else{
       var available = '';
     }
-    if ( options.owned_pgl / 1e18 > 0 ) {
+    if ( options.owned_pgl * 1 > 0 ) {
       //_print(`Deposit Available: <b>${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(3) : (options.current_tokens / 1e18) }</b> PGL`)
 
       var withdraw = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
       <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
-      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.owned_pgl / 1e18) > 0 ? (options.owned_pgl / 1e18) .toFixed(8) : (options.owned_pgl / 1e18) } PGL  </p>
+      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.owned_pgl * 1) > 0 ? (options.owned_pgl * 1).toFixed(8) : (options.owned_pgl * 1) } PGL  </p>
       <p class="m-0 font-size-12">(Available for withdraw) </p>
   </div>`;
     }else{
@@ -765,7 +765,7 @@ async function main() {
     stake_display: stakeDisplay_wbtc,
     total_pgl: totalPoolPGL_wbtc,
     withdraw_display: withdrawDisplay_wbtc,
-    owned_pgl: wbtcDeposited
+    owned_pgl: ownedPGL_wbtc
   })
   layout_pool({
     logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
