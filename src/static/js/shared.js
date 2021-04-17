@@ -10,10 +10,9 @@
   //contracts
   const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
 
+  const DAILY_COMPOUNDS = 6
 
-  const SNOWGLOBE_SUSHI_ADDR = "0x751089F1bf31B13Fa0F0537ae78108088a2253BF";
-  const SUSHI_AVAX_ADDR = "0xd8B262C0676E13100B33590F10564b46eeF652AD";
-  const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
+  const compounds_per_year = DAILY_COMPOUNDS * 365
 
   const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
 
@@ -25,7 +24,7 @@
     "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15": "ETH",
     "0xde3A24028580884448a5397872046a019649b084": "USDT",
     "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK",
-    "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC"
+    "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC"    
   }
 
   const PngStakingContracts = [
@@ -46,7 +45,10 @@
     },
     {
       stakingRewardAddress: '0x01897e996eefff65ae9999c02d1d8d7e9e0c0352'
-    }
+    },
+    {
+      stakingRewardAddress: '0x4e550fefbf888cb43ead73d821f646f43b1f2309'
+    }    
   ]
 
 
@@ -85,4 +87,139 @@
     $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
     $('#distribution_phase').append(`${blockNumber} / 1243700 (${1243700 - blockNumber} blocks left)`);
     
+  }
+
+  const layout_pool = ($, options) => {
+    console.log('options:', options);
+    if ( options.tvl_display ) {
+      var tvl = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5">
+      <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+      <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+      </div>`;
+    } else {
+      var tvl = '';
+    }
+    var apy =  `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5">
+      <p class="m-0 font-size-12">APY</p>
+      <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.apy.toFixed(2)}%</span>
+      </div>`;
+    if ( !isNaN(options.total_deposited) ) {
+      var poolSize = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5 mx-auto">
+      <p class="m-0 font-size-12"> Pool Size</p><span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_deposited / 1e18) > 1 ? (options.total_deposited / 1e18).toLocaleString() : (options.total_deposited / 1e18).toFixed(8)} sPGL </span>
+      <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-semi-bold">${(options.total_pgl / 1e18) > 1 ? (options.total_pgl / 1e18).toLocaleString() : (options.total_pgl / 1e18).toFixed(8)} PGL</span>
+      </div>`;
+    } else {
+      var poolSize = '';
+    }
+    if ( options.current_tokens / 1e18 > 0 ) {
+      var available = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.current_tokens / 1e18) > 0 ? (options.current_tokens / 1e18) .toFixed(8) : (options.current_tokens / 1e18) } PGL  </p>
+      <p class="m-0 font-size-12">(Available for deposit) </p>
+      </div>`;
+    } else {
+      var available = '';
+    }
+    if ( options.owned_pgl * 1 > 0 ) {
+      var withdraw = `<div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-5">
+      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+      <p class="m-0 font-size-16 font-weight-semi-bold">${(options.owned_pgl * 1) > 0 ? (options.owned_pgl * 1).toFixed(8) : (options.owned_pgl * 1) } PGL  </p>
+      <p class="m-0 font-size-12">(Available for withdraw) </p>
+      </div>`;
+    } else {
+      var withdraw = '';
+    }
+    let has_options = false;
+    var approveBtn = '';
+    var depositBtn = '';
+    if ( options.current_tokens / 1e18 > 0 ) {
+      has_options = true;
+      var approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
+      var depositBtn = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm depositBtn"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
+    }
+    var withdrawBtn = '';
+    if ( options.display_amount > 0 ) {
+      has_options = true;    
+      var withdrawBtn = `<button data-btn="${options.withdraw}" class="btn btn-success btn-sm withdrawBtn"><ion-icon name="push-outline"></ion-icon> Withdraw </button>`;
+    }
+    if( !has_options ){
+      var poolPrint = `<div class="col-md-4">
+      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+          <div class="row">
+              <div class="col-sm-12 col-md-12 align-items-center d-flex mb-5 mt-5">
+                  <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                      <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                      <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                      <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
+                  </div>
+              </div>
+              ${tvl}
+              ${apy}
+              <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                      </div>
+                  </div>
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.dailyAPR.toFixed(2)}%</p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.weeklyAPR.toFixed(2)}%</p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.yearlyAPR.toFixed(2)}%</p>
+                      </div>
+                  </div>
+              </div>
+              ${poolSize}
+
+              <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
+                  <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
+              </div>
+          </div>
+      </div>
+    </div>`;
+    $('#snob-pools').append(poolPrint);
+  } else {
+      var poolPrint = `<div class="col-md-4">
+        <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 align-items-center d-flex mb-5 mt-5">
+                    <div id="pooltokens" class="align-items-center d-flex mx-auto mx-md-0">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
+                    </div>
+                </div>
+                ${tvl}
+                ${apy}
+                <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                        <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.dailyAPR.toFixed(2)}%</p>
+                        <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.weeklyAPR.toFixed(2)}%</p>
+                        <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.yearlyAPR.toFixed(2)}%</p>
+                        </div>
+                    </div>
+                </div>
+                ${poolSize}
+                ${available}
+                ${withdraw}
+                <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
+                  ${approveBtn}
+                  ${depositBtn}
+                  ${withdrawBtn}
+                </div>
+            </div>
+        </div>
+    </div>`;
+      $('#snob-pools').append(poolPrint);
+    }
   }
