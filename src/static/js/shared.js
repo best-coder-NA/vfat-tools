@@ -71,15 +71,61 @@ document.getElementById('wallet-copy').addEventListener('click', ()=>{
   });
 });
 
-const snowglobeContract_withdraw = async function (chefAddress, poolIndex, stakeTokenAddr) {  
+const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
+  $('#snob-title-modal').html('').html(title);
+  $('#snob-message-modal').html('').html(message);
+  //icon = icon ? icon = `<ion-icon name="${icon}"></ion-icon>` : icon = '';
+  if (icon) {
+    if(state){
+      icon = `<ion-icon class="text-${state}" name="${icon}"></ion-icon>`;
+    } else{
+      icon = `<ion-icon name="${icon}"></ion-icon>`;
+    }
+  }else{
+    icon = '';
+  }
+  switch (btn1) {
+    case 'close':
+      btn1 = `<button class="btn mr-5" data-dismiss="modal">Close</button>`;
+      break;
+    case 'ok':
+      btn1 = `<button class="btn mr-5" data-dismiss="modal">Ok</button>`;
+      break;
+    case 'reload':
+      btn1 = `<button onclick="window.location.reload(true);" class="btn mr-5" data-dismiss="modal">Reload</button>`;
+      break;
+    default:
+      btn = ``;
+      break;
+  }
+  switch (btn2) {
+    case 'close':
+      btn2 = `<button class="btn btn-primary" data-dismiss="modal">Close</button>`;
+      break;
+    case 'ok':
+      btn2 = `<button class="btn btn-primary" data-dismiss="modal">Ok</button>`;
+      break;
+    case 'reload':
+      btn2 = `<button onclick="window.location.reload(true);" class="btn btn-primary" data-dismiss="modal">Reload</button>`;
+      break;
+    default:
+      btn = ``;
+      break;
+  }
+
+  $('#snob-icon-modal').html('').html(`${icon}`);
+  $('#snob-btn-modal').html('').append(btn1).append(btn2);
+  halfmoon.toggleModal('modal-message')
+  if(time){
+    setTimeout(function(){ $('#modal-message').removeClass('show');   }, time);
+  }
+}
+
+const snowglobe_withdraw = async function (chefAddress, stakeTokenAddr) {  
   let app = window.app;
   const signer = app.provider.getSigner()
-  console.log('signer:', signer);
-
   const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log('staking token:', STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, PGL_ABI, signer)
-  console.log('chef contract:',CHEF_CONTRACT)
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, SNOWGLOBE_ABI, signer)
 
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
   console.log('current tokens:', currentTokens)
@@ -91,6 +137,7 @@ const snowglobeContract_withdraw = async function (chefAddress, poolIndex, stake
     halfmoon.toggleModal('modal-loading')
     allow
       .then(async function () {
+        console.log('got here!');
         CHEF_CONTRACT.withdrawAll()
           .then(function (t) {
             app.provider.waitForTransaction(t.hash).then(function () {
@@ -109,25 +156,22 @@ const snowglobeContract_withdraw = async function (chefAddress, poolIndex, stake
         snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   } else {
+    console.log('got over here!');
     snobMessage(`Withdrawn Tokens`, `Withdrawn failed . You have no tokens to withdraw`, `close-circle-outline`, `danger`, false, `ok`, 4000);
   }
 }
 
-const snowglobe_stake = async function (chefAddress, poolIndex, stakeTokenAddr) {
+const snowglobe_stake = async function (chefAddress, stakeTokenAddr) {
+  
   let app = window.app;
   const signer = app.provider.getSigner()
-  console.log('signer:', signer)
-
   const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log('staking token:', STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, PGL_ABI, signer)
-  console.log('chef token:', CHEF_CONTRACT)
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, SNOWGLOBE_ABI, signer)
 
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
   console.log('current token:', currentTokens)
   const allowedTokens = await STAKING_TOKEN.allowance(app.YOUR_ADDRESS, chefAddress)
   console.log('allowed token:', allowedTokens)
-  console.log(allowedTokens)
 
   let allow = Promise.resolve()
 
@@ -142,15 +186,19 @@ const snowglobe_stake = async function (chefAddress, poolIndex, stakeTokenAddr) 
             app.provider.waitForTransaction(t.hash).then(function () {
               halfmoon.toggleModal('modal-loading')
               snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 5000);
+              setTimeout(function() { 
+                window.location.reload(true); 
+              }, 5000);
             })
           })
-          .catch(function () {
+          .catch(function (err) {
+            console.log('error 1:', err)
             halfmoon.toggleModal('modal-loading')
             snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
           })
       })
-      .catch(function () {
+      .catch(function (err2) {
+        console.log('error 2:', err2)
         halfmoon.toggleModal('modal-loading')
       })
   } else {
@@ -159,19 +207,15 @@ const snowglobe_stake = async function (chefAddress, poolIndex, stakeTokenAddr) 
 }
 
 const snowglobe_approve = async function (chefAddress, stakeTokenAddr) {
+
   let app = window.app;
   const signer = app.provider.getSigner()
-  console.log('signer:', signer);
   const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log('staking token:', STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, PGL_ABI, signer)
-  console.log('chef contract:', CHEF_CONTRACT)
-
+  
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
   console.log('current tokens:', currentTokens)
   const allowedTokens = await STAKING_TOKEN.allowance(app.YOUR_ADDRESS, chefAddress)
   console.log('allowed tokens:', currentTokens)
-  console.log(allowedTokens)
 
   let allow = Promise.resolve()
   halfmoon.toggleModal('modal-loading')
