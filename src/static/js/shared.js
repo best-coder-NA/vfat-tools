@@ -71,13 +71,14 @@ document.getElementById('wallet-copy').addEventListener('click', ()=>{
   });
 });
 
-const snowglobeContract_withdraw = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, app) {
+const snowglobeContract_withdraw = async function (chefAddress, poolIndex, stakeTokenAddr) {  
+  let app = window.app;
   const signer = app.provider.getSigner()
   console.log('signer:', signer);
 
   const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
   console.log('staking token:', STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, PGL_ABI, signer)
   console.log('chef contract:',CHEF_CONTRACT)
 
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
@@ -112,13 +113,14 @@ const snowglobeContract_withdraw = async function (chefAbi, chefAddress, poolInd
   }
 }
 
-const snowglobe_stake = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, app) {
+const snowglobe_stake = async function (chefAddress, poolIndex, stakeTokenAddr) {
+  let app = window.app;
   const signer = app.provider.getSigner()
   console.log('signer:', signer)
 
   const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
   console.log('staking token:', STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, PGL_ABI, signer)
   console.log('chef token:', CHEF_CONTRACT)
 
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
@@ -156,12 +158,13 @@ const snowglobe_stake = async function (chefAbi, chefAddress, poolIndex, stakeTo
   }
 }
 
-const snowglobe_approve = async function (chefAbi, chefAddress, stakeTokenAddr, app) {
+const snowglobe_approve = async function (chefAddress, stakeTokenAddr) {
+  let app = window.app;
   const signer = app.provider.getSigner()
   console.log('signer:', signer);
   const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
   console.log('staking token:', STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  const CHEF_CONTRACT = new ethers.Contract(chefAddress, PGL_ABI, signer)
   console.log('chef contract:', CHEF_CONTRACT)
 
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
@@ -189,8 +192,8 @@ const snowglobe_approve = async function (chefAbi, chefAddress, stakeTokenAddr, 
   }
 }
 
-const dotop = async (app, signer, prices) => {  
-
+const dotop = async (signer, prices) => {  
+  let app = window.app;
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
 
@@ -312,13 +315,13 @@ document.addEventListener('pool', (e) => {
   var depositBtn = '';
   if ( options.current_tokens / 1e18 > 0 ) {
     has_options = true;
-    var approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
-    var depositBtn = `<button data-btn="${options.stake}" class="btn btn-primary btn-sm depositBtn"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
+    var approveBtn = `<button onclick="${options.approve}" class="btn btn-sm mx-10 approveBtn"><ion-icon name="bag-check-outline"></ion-icon> Approve</button>`;
+    var depositBtn = `<button onclick="${options.stake}" class="btn btn-primary btn-sm depositBtn"><ion-icon name="download-outline"></ion-icon> Deposit </button>`;
   }
   var withdrawBtn = '';
   if ( options.display_amount > 0 ) {
     has_options = true;    
-    var withdrawBtn = `<button data-btn="${options.withdraw}" class="btn btn-success btn-sm withdrawBtn"><ion-icon name="push-outline"></ion-icon> Withdraw </button>`;
+    var withdrawBtn = `<button onclick="${options.withdraw}" class="btn btn-success btn-sm withdrawBtn"><ion-icon name="push-outline"></ion-icon> Withdraw </button>`;
   }
   if( !has_options ){
     var poolPrint = `<div class="col-md-4">
