@@ -124,7 +124,7 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
 const snowglobe_withdraw = async function (chefAddress, stakeTokenAddr) {  
   let app = window.app;
   const signer = app.provider.getSigner()
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
+  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, PNG_STAKING_ABI, signer)
   const CHEF_CONTRACT = new ethers.Contract(chefAddress, SNOWGLOBE_ABI, signer)
 
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
@@ -165,7 +165,7 @@ const snowglobe_stake = async function (chefAddress, stakeTokenAddr) {
   
   let app = window.app;
   const signer = app.provider.getSigner()
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
+  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, PNG_STAKING_ABI, signer)
   const CHEF_CONTRACT = new ethers.Contract(chefAddress, SNOWGLOBE_ABI, signer)
 
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
@@ -210,7 +210,7 @@ const snowglobe_approve = async function (chefAddress, stakeTokenAddr) {
 
   let app = window.app;
   const signer = app.provider.getSigner()
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
+  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, PNG_STAKING_ABI, signer)
   
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
   console.log('current tokens:', currentTokens)
@@ -236,7 +236,101 @@ const snowglobe_approve = async function (chefAddress, stakeTokenAddr) {
   }
 }
 
-const dotop = async (signer, prices) => {  
+const genpool = async (res, signer, prices, apr, pool) => {
+  let app = window.app;
+  const currentPGLTokens = await new ethers.Contract(pool.pair, ERC20_ABI, signer).balanceOf(app.YOUR_ADDRESS)  
+  const currentSPGLTokens = new ethers.Contract(pool.strategy, ERC20_ABI, signer).balanceOf(app.YOUR_ADDRESS)
+  const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(4) : 0;
+
+  console.log('display amount:', spglDisplayAmt)
+  
+  let pair_tvl = 0;
+  let pair_tvl_display = 0;
+
+  console.log('pairs tvl:', res.pairs.length);
+
+  res.pairs.forEach( p => {
+    if (
+      (p.token1.symbol.toLowerCase() == 'png' && p.token0.symbol.toLowerCase() == 'eth') ||
+      (p.token0.symbol.toLowerCase() == 'eth' && p.token1.symbol.toLowerCase() == 'png')
+     ) {
+      pair_tvl = p.locked;
+      pair_tvl_display = `$${new Intl.NumberFormat('en-US').format(pair_tvl)}`
+    } 
+  });    
+  
+  console.log(pair_tvl, pair_tvl_display)
+
+  let token_apr = apr.yearlyAPR / 100
+  let token_annual_apy = 100 * (1 + token_apr / compounds_per_year) ** compounds_per_year - 100
+
+  let snowglobeContract = new ethers.Contract(pool.strategy, SNOWGLOBE_ABI, signer);
+  let userDeposited = await snowglobeContract.balanceOf(app.YOUR_ADDRESS)
+
+  let totalPoolPGL;
+  try {
+    totalPoolPGL = await snowglobeContract.balance();
+  } catch (err) {
+    console.log('ignore balance error')
+    totalPoolPGL = 0
+  }
+
+  let poolShareDisplay = null;
+  let stakeDisplay = null;
+  let withdrawDisplay = null;
+  let userSPGL = userDeposited / 1e18;
+  let ownedPGL = 0
+
+  if (userSPGL > 0) {
+    let totalSPGL = await snowglobeContract.totalSupply();
+    ownedPGL = userSPGL * (totalPoolPGL / 1e18) / (totalSPGL / 1e18);
+    const pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
+    let totalSupplyPGL = await pglContract.totalSupply();
+    totalSupplyPGL = totalSupplyPGL / 1e18;
+    const reserves = await pglContract.getReserves();
+    const r0 = reserves._reserve0 / 1e18
+    const r1 = reserves._reserve1 / 1e18
+    let reserve0Owned = ownedPGL * (r0) / (totalSupplyPGL);
+    let reserve1Owned = ownedPGL * (r1) / (totalSupplyPGL);
+    const token0Address = await pglContract.token0();
+    const token1Address = await pglContract.token1();
+    const t0Price = prices[token0Address] ? prices[token0Address].usd : 0
+    const t1Price = prices[token1Address] ? prices[token1Address].usd : 0
+    const token0ValueUSDT = reserve0Owned * t0Price;
+    const token1ValueUSDT = reserve1Owned * t1Price;
+    const value = token0ValueUSDT + (token1ValueUSDT);
+    withdrawDisplay = `<b>${userSPGL.toFixed(4)}</b> sPGL (<b>${ownedPGL.toFixed(4)}</b> PGL)`;
+    poolShareDisplay = withdrawDisplay;
+    stakeDisplay = `Your LP value is <b>${reserve0Owned.toFixed(3)}</b> ${TOKEN_NAMES[token0Address]} / <b>${reserve1Owned.toFixed(3)}</b> ${TOKEN_NAMES[token1Address]} ($<b>${value.toFixed(2)}</b>)**</b>`
+  }   
+  document.dispatchEvent(new CustomEvent('pool', { detail: {
+      logo_token1: `https://x-api.snowball.network/assets/avalanche-tokens/${pool.token0.toLowerCase()}/logo.png`,
+      logo_token2: `https://x-api.snowball.network/assets/avalanche-tokens/${pool.token1.toLowerCase()}/logo.png`,      
+      url: `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`,
+      pool_name: pool.nickname,
+      apr: apr[2],  // placeholder
+      apy: token_annual_apy,
+      current_tokens: currentPGLTokens,
+      display_amount: spglDisplayAmt,
+      approve: `snowglobe_approve('${pool.strategy}', '${pool.pair}')`,
+      stake: `snowglobe_stake('${pool.strategy}', '${pool.pair}')`,
+      withdraw: `snowglobe_withdraw('${pool.pair}', '${pool.pair}')`,
+      tvl_display: pair_tvl_display,
+      pool_share_display: null,
+      stake_display: stakeDisplay,
+      total_pgl: null,
+      withdraw_display: withdrawDisplay,
+      owned_pgl: ownedPGL
+    }
+  }))
+  if ( thispagespools.length > 0 )  {
+    genpool(res, signer, prices, apr, thispagespools.pop())
+  } else {
+    hideLoading();
+  }
+}
+
+const gentop = async (signer, prices) => {  
   let app = window.app;
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)

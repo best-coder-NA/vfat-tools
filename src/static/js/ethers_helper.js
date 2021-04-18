@@ -1,7 +1,7 @@
 async function init_ethers() {
   const App = {}
 
-  const ETHEREUM_NODE_URL = 'aHR0cHM6Ly9tYWlubmV0LmluZnVyYS5pby92My9hNmYzNmI4OWM0OGM0ZmE4YjE0NjYwNWY2ZDdhNWI2Zg=='
+  //const ETHEREUM_NODE_URL = 'aHR0cHM6Ly9tYWlubmV0LmluZnVyYS5pby92My9hNmYzNmI4OWM0OGM0ZmE4YjE0NjYwNWY2ZDdhNWI2Zg=='
 
   let isMetaMaskInstalled = true
 
@@ -38,7 +38,7 @@ async function init_ethers() {
   }
   // If no injected web3 instance is detected, fall back to backup node
   else {
-    App.provider = new ethers.providers.JsonRpcProvider(atob(ETHEREUM_NODE_URL))
+    App.provider = new ethers.providers.JsonRpcProvider('https://api.avax.network/ext/bc/C/rpc')
     isMetaMaskInstalled = false
     _print(
       "You don't have MetaMask installed! Falling back to backup node...\n (will likely to fail. Please install MetaMask extension).\n"
