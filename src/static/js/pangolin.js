@@ -80,15 +80,13 @@ async function main() {
   ]).then(results => {
     
     window.app = results[0]  
-    const prices = results[1]  
-    const res = results[2]
-
-    const signer = app.provider.getSigner()  
+    window.prices = results[1]  
+    window.tvl = results[2]
     
-    gentop(signer, prices).then(res => { console.log('top done') })
+    gentop().then(res => { console.log('top done:') })
 
     return loadMultipleSnowglobePools(window.app, tokens, prices, pools).then(apr_array => {      
-      genpool(res, signer, prices, apr_array, thispagespools.pop())
+      genpool(apr_array, thispagespools.pop())
     })
   })
 
