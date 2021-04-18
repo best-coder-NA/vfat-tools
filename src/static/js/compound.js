@@ -749,7 +749,7 @@ async function main() {
     logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB/logo.png',
     url: WBTC_AVAX_POOL_URL,
-    pool_name: 'AVAX-WBTC Pangolin LP - New! 🌟',
+    pool_name: 'AVAX-WBTC Pangolin LP',
     tvl: WBTC_AVAX_TVL,
     apr: wbtc_apr,
     apy: wbtc_annual_apy,

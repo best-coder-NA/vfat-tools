@@ -97,11 +97,13 @@ const snowglobe = async (func, pairId, strategyId) => {
   let signer = app.provider.getSigner()
 
   const STAKING_TOKEN = new ethers.Contract(pairId, ERC20_ABI, signer)
+  const SNOWGLOBE = new ethers.Contract(strategyId, SNOWGLOBE_ABI, signer)
   
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
   const allowedTokens = await STAKING_TOKEN.allowance(app.YOUR_ADDRESS, strategyId)
+  const stakedTokens  = await SNOWGLOBE.balanceOf(app.YOUR_ADDRESS)
 
-  console.log('current tokens:', currentTokens, 'allowed tokens:', allowedTokens)
+  console.log('current tokens:', currentTokens, 'allowed tokens:', allowedTokens, 'staked tokens:', stakedTokens)
 
   let allow = Promise.resolve()
 
@@ -153,9 +155,9 @@ const snowglobe = async (func, pairId, strategyId) => {
       snobMessage(`Oops! Failed`, `Deposit Failed. You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
     }
   } else if ( func === 'withdraw' ) {
-    if (currentTokens / 1e18 > 0) {
+    if (stakedTokens / 1e18 > 0) {
       let c = new ethers.Contract(strategyId, SNOWGLOBE_ABI, signer)
-      console.log('withdraw:', currentTokens / 1e18, 'from:', c)
+      console.log('withdraw:', stakedTokens / 1e18, 'from:', c)
       halfmoon.toggleModal('modal-loading')
       allow
         .then(async function () {
@@ -433,10 +435,15 @@ const genpool = async (pool) => {
   let currentSPGLTokens = results[2]
   let totalPoolPGL = results[2];
 
+<<<<<<< HEAD
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(4) : 0;
 
   console.log('spgl display:', spglDisplayAmt)
     
+=======
+  const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
+  
+>>>>>>> upstream/develop
   let pair_tvl = 0;
   let pair_tvl_display = 0;
   
