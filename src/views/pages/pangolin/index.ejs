@@ -132,8 +132,7 @@
             <pre id="log" style="margin-left: 10px;">
             </pre>
 
-            <%- include(`${partials}/scripts`, {scriptname: 'shared'}); -%>
-            <%- include(`${partials}/scripts`, {scriptname: 'pangolin'}); -%>
+            <%- include(`${partials}/scripts`, { shared: 'shared', scriptname: 'pangolin'}); -%>            
             <%- include(`${partials}/footer`); -%>
         </div>
     </div>

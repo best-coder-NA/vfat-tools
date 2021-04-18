@@ -435,15 +435,8 @@ const genpool = async (pool) => {
   let currentSPGLTokens = results[2]
   let totalPoolPGL = results[2];
 
-<<<<<<< HEAD
-  const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(4) : 0;
-
-  console.log('spgl display:', spglDisplayAmt)
-    
-=======
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
   
->>>>>>> upstream/develop
   let pair_tvl = 0;
   let pair_tvl_display = 0;
   
