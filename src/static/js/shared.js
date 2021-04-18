@@ -6,17 +6,16 @@ const PNG_STAKING_ABI = [{ "inputs": [{ "internalType": "address", "name": "_rew
 const CRYSTAL_VAULT_ABI = [{"type":"constructor","stateMutability":"nonpayable","inputs":[{"type":"address","name":"_iceQueen","internalType":"address"},{"type":"address","name":"_snowball","internalType":"address"},{"type":"address","name":"_pgl","internalType":"address"},{"type":"uint256","name":"_poolId","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"snowball","internalType":"uint256"},{"type":"uint256","name":"PGL","internalType":"uint256"},{"type":"uint256","name":"rewardCredit","internalType":"uint256"},{"type":"uint256","name":"rewardSnapshot","internalType":"uint256"},{"type":"uint256","name":"votes","internalType":"uint256"},{"type":"uint256","name":"thawTimestamp","internalType":"uint256"}],"name":"accounts","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"deposit","inputs":[{"type":"uint256","name":"_amountSnowball","internalType":"uint256"},{"type":"uint256","name":"_amountPGL","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"depositPGL","inputs":[{"type":"uint256","name":"_amountIn","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"depositSnowball","inputs":[{"type":"uint256","name":"_amountIn","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"freeze","inputs":[{"type":"address","name":"_address","internalType":"address"},{"type":"uint256","name":"_duration","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"governance","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IIceQueen"}],"name":"iceQueen","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"isFrozen","inputs":[{"type":"address","name":"_address","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"pendingReward","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IPangolinPair"}],"name":"pgl","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"poolId","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"quadraticVotes","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setGovernance","inputs":[{"type":"address","name":"_governance","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"snowball","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"votes","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"withdrawAll","inputs":[]}]
 
 //governance
-const CRYSTAL_VAULT_ADDRESS = "0xe5614C304D73d990B8BcA8F055Ec0f2685Ebf60c";
-//contracts
-const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
+const CRYSTAL_VAULT_ADDRESS = '0xe5614C304D73d990B8BcA8F055Ec0f2685Ebf60c';
 
-const tokens = {}
+//contracts
+const ICEQUEEN_ADDR = '0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375';
 
 const DAILY_COMPOUNDS = 6
 
 const compounds_per_year = DAILY_COMPOUNDS * 365
 
-const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
+const SNOB_ADDRESS = '0xC38f41A296A4493Ff429F1238e030924A1542e50';
 
 const TOKEN_NAMES = {
   "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7": "AVAX",
@@ -26,42 +25,12 @@ const TOKEN_NAMES = {
   "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15": "ETH",
   "0xde3A24028580884448a5397872046a019649b084": "USDT",
   "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK",
-  "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC"    
+  "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC",
+  "0x99519acb025a0e0d44c3875a4bbf03af65933627": "YFI" ,
+  "0xf39f9671906d8630812f9d9863bbef5d523c84ab": "UNI",
+  "0xba7deebbfc5fa1100fb055a87773e1e99cd3507a": "DAI",
+  "0x8ce2dee54bb9921a2ae0a63dbb2df8ed88b91dd9": "AAVE"
 }
-
-const PngStakingContracts = [
-  {
-    stakingRewardAddress: '0xa16381eae6285123c323a665d4d99a6bcfaac307'
-  },
-  {
-    stakingRewardAddress: '0x8fd2755c6ae7252753361991bdcd6ff55bdc01ce'
-  },
-  {
-    stakingRewardAddress: '0x88f26b81c9cae4ea168e31bc6353f493fda29661'
-  },
-  {
-    stakingRewardAddress: '0x7d7ecd4d370384b17dfc1b4155a8410e97841b65'
-  },
-  {
-    stakingRewardAddress: '0x4f019452f51bba0250ec8b69d64282b79fc8bd9f'
-  },
-  {
-    stakingRewardAddress: '0x01897e996eefff65ae9999c02d1d8d7e9e0c0352'
-  },
-  {
-    stakingRewardAddress: '0x4e550fefbf888cb43ead73d821f646f43b1f2309'
-  }    
-]
-
-const pools = PngStakingContracts.map(c => {
-  return {
-    address: c.stakingRewardAddress,
-    abi: PNG_STAKING_ABI,
-    stakeTokenFunction: "stakingToken",
-    rewardTokenFunction: "rewardsToken"
-  }
-})
-
 
 document.getElementById('wallet-copy').addEventListener('click', ()=>{
   navigator.clipboard.writeText(`${app.YOUR_ADDRESS}`).then(function() {
@@ -215,17 +184,16 @@ const snowglobe = async (func, pairId, strategyId) => {
 }
 
 const gentop = async () => {  
+  let start = new Date().getTime();
+
   let app = window.app;
   let signer = app.provider.getSigner()  
   let prices = window.prices
 
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
-
   const CRYSTAL_CONTRACT = new ethers.Contract(CRYSTAL_VAULT_ADDRESS, CRYSTAL_VAULT_ABI, signer);
-  const pendingGovReward = await CRYSTAL_CONTRACT.pendingReward(app.YOUR_ADDRESS);
-  const assetsDeposited = await CRYSTAL_CONTRACT.accounts(app.YOUR_ADDRESS);
-
+  
   return Promise.all([
     ICEQUEEN_CONTRACT.pendingSnowball(1, app.YOUR_ADDRESS),
     ICEQUEEN_CONTRACT.pendingSnowball(2, app.YOUR_ADDRESS),
@@ -238,7 +206,12 @@ const gentop = async () => {
     SNOB_TOKEN.totalSupply(),
     SNOB_TOKEN.balanceOf(app.YOUR_ADDRESS),
     app.provider.getBlockNumber(),    
+    CRYSTAL_CONTRACT.pendingReward(app.YOUR_ADDRESS),
+    CRYSTAL_CONTRACT.accounts(app.YOUR_ADDRESS)
   ]).then(results => {
+
+    const pendingGovReward = results[11]
+    const assetsDeposited = results[12]
 
     const pendingSNOBTokensPool1 = results[0] 
     const pendingSNOBTokensPool2 = results[1] 
@@ -252,6 +225,8 @@ const gentop = async () => {
     const currentSNOBTokens = results[9] 
     const claimableSnowballs = pendingGovReward / 1e18 + pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18 + pendingSNOBTokensPool5 / 1e18 + pendingSNOBTokensPool6 / 1e18 + pendingSNOBTokensPool7 / 1e18;
     const blockNumber = results[10] 
+  
+
     return Promise.all([
       app.provider.getBlock(blockNumber),
       app.provider.getBlock(blockNumber - 15000)
@@ -291,6 +266,7 @@ const gentop = async () => {
       $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
       $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
       $('#distribution_phase').append(`${blockNumber} / 1243700 (${1243700 - blockNumber} blocks left)`);      
+      return new Date().getTime() - start
     })      
   }) 
 }
@@ -429,64 +405,84 @@ const layoutpool = (options, replace) => {
   }
 }
 
-const genpool = async (apr, pool) => {
+const genpool = async (pool) => {
   console.log('genpool nickname:', pool.nickname)
-  let app = window.app;
-  let signer = app.provider.getSigner()  
-  let prices = window.prices;
 
-  const currentPGLTokens = await new ethers.Contract(pool.pair, ERC20_ABI, signer).balanceOf(app.YOUR_ADDRESS)  
-  const currentSPGLTokens = await new ethers.Contract(pool.strategy, SNOWGLOBE_ABI, signer).balanceOf(app.YOUR_ADDRESS)
+  let app = window.app;
+  let prices = window.prices;  
+  let signer = app.provider.getSigner()  
+
+  let snowglobeContract = new ethers.Contract(pool.strategy, SNOWGLOBE_ABI, signer)
+  let pairToken = new ethers.Contract(pool.pair, ERC20_ABI, signer)
+  let pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
+
+  let results = await Promise.all([
+    loadSingleSnowglobePool(window.app, {}, window.prices, {
+      address: pool.stake,
+      abi: PNG_STAKING_ABI,
+      stakeTokenFunction: "stakingToken",
+      rewardTokenFunction: "rewardsToken"
+    }),
+    pairToken.balanceOf(app.YOUR_ADDRESS),
+    snowglobeContract.balanceOf(app.YOUR_ADDRESS),
+    snowglobeContract.balance()
+  ])
+
+  let apr = results[0]
+  let currentPGLTokens = results[1]
+  let currentSPGLTokens = results[2]
+  let totalPoolPGL = results[2];
 
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(4) : 0;
-  
+
+  console.log('spgl display:', spglDisplayAmt)
+    
   let pair_tvl = 0;
   let pair_tvl_display = 0;
-
+  
   window.tvl.pairs.forEach( p => {
     if (
       (p.token0.id.toLowerCase() == pool.token0.toLowerCase() && p.token1.id.toLowerCase() == pool.token1.toLowerCase()) ||
       (p.token1.id.toLowerCase() == pool.token1.toLowerCase() && p.token0.id.toLowerCase() == pool.token0.toLowerCase())
-     ) {
+      ) {
+      console.loge('found tvl:', p.locked)
       pair_tvl = p.locked;
       pair_tvl_display = `$${new Intl.NumberFormat('en-US').format(pair_tvl)}`
     } 
   });    
-
+  
   let token_apr = apr.yearlyAPR / 100
-  let token_annual_apy = 100 * (1 + token_apr / compounds_per_year) ** compounds_per_year - 100
-
-  let snowglobeContract = new ethers.Contract(pool.strategy, SNOWGLOBE_ABI, signer);
-  let userDeposited = await snowglobeContract.balanceOf(app.YOUR_ADDRESS)
-
-  let totalPoolPGL;
-
-  try {
-    totalPoolPGL = await snowglobeContract.balance();
-  } catch (err) {
-    console.log('ignore balance error')
-    totalPoolPGL = 0
-  }
-
+  let token_annual_apy = 100 * (1 + token_apr / compounds_per_year) ** compounds_per_year - 100  
+  
   let poolShareDisplay = null;
   let stakeDisplay = null;
   let withdrawDisplay = null;
-  let userSPGL = userDeposited / 1e18;
+
+  let userSPGL = currentSPGLTokens / 1e18;
   let ownedPGL = 0
 
   if (userSPGL > 0) {
-    let totalSPGL = await snowglobeContract.totalSupply();
+
+    let results2 = await Promise.all([
+      snowglobeContract.totalSupply(),
+      pglContract.totalSupply(),
+      pglContract.getReserves(),
+      pglContract.token0(),
+      pglContract.token1()
+    ]);
+
+    let totalSPGL = results2[0];
     ownedPGL = userSPGL * (totalPoolPGL / 1e18) / (totalSPGL / 1e18);
-    const pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
-    let totalSupplyPGL = await pglContract.totalSupply();
+    
+    let totalSupplyPGL = results2[1];
     totalSupplyPGL = totalSupplyPGL / 1e18;
-    const reserves = await pglContract.getReserves();
+    const reserves = await results2[2];
     const r0 = reserves._reserve0 / 1e18
     const r1 = reserves._reserve1 / 1e18
     let reserve0Owned = ownedPGL * (r0) / (totalSupplyPGL);
     let reserve1Owned = ownedPGL * (r1) / (totalSupplyPGL);
-    const token0Address = await pglContract.token0();
-    const token1Address = await pglContract.token1();
+    const token0Address = results2[3];
+    const token1Address = results2[4];
     const t0Price = prices[token0Address] ? prices[token0Address].usd : 0
     const t1Price = prices[token1Address] ? prices[token1Address].usd : 0
     const token0ValueUSDT = reserve0Owned * t0Price;
@@ -501,7 +497,7 @@ const genpool = async (apr, pool) => {
     logo_token2: `https://x-api.snowball.network/assets/avalanche-tokens/${pool.token1.toLowerCase()}/logo.png`,      
     url: `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`,
     pool_name: pool.nickname,
-    apr: apr[2],  // placeholder
+    apr: apr,
     apy: token_annual_apy,
     current_tokens: currentPGLTokens,
     display_amount: spglDisplayAmt,
@@ -516,7 +512,7 @@ const genpool = async (apr, pool) => {
     owned_pgl: ownedPGL
   })
   if ( thispagespools.length > 0 )  {
-    genpool(apr, thispagespools.pop())
+    genpool(thispagespools.pop())
   } else {
     hideLoading();
   }
