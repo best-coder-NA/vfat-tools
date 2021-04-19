@@ -139,6 +139,18 @@ a:hover {
   text-decoration: none !important;
   background-position: center;
 }
+h2.tvl {
+  margin: 0 !important;
+}
+.buy-btn {
+  transform: translateY(-2px);
+}
+
+.buy-btn::after {
+  content: attr(price);
+  transform: translateY(-30px)
+}
+
 .token-logo{
   width: 24px;
   height: 24px;
@@ -756,7 +768,13 @@ code {
 }
 .ldio-4ixcy4bihgi div { box-sizing: content-box; }
 
-
-
+.nft-image{
+  cursor: pointer;
+}
+.rainbow-box {
+  border: 5px solid transparent;
+  border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+  border-image-slice: 1;
+}
 
 @import "diff.scss";

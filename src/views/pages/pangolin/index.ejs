@@ -14,11 +14,25 @@
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
             <div class="row">
-                <a class="ml-20 mt-10 font-size-10" href="<%= PP %>/icequeen/">Switch to text view</a>
                 <div class="col-md-12 text-center">
-                    <h4 id="title" class="">IceQueen 👸 - Governance</h4>
-                    <p id="msg1" class="m-0 p-0">Estimates based on 15,000 blocks per day</p>
-                    <p id="msg2" class="m-0 p-0">Estimated LP value based on current token prices</p>
+                    <div class="row mt-20">
+                        <div class="col-sm-3 col-sm-3 col-md-4"></div>
+                        <div class="col-sm-3 col-sm-3 col-md-2">
+                            <a href="<%= PP %>/compound/">
+                                <button class="font-size-16 btn-block btn" type="button">
+                                    AVAX
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-sm-3 col-sm-3 col-md-2">
+                            <button class="font-size-16 btn-block btn btn-primary" type="button">
+                                PNG
+                            </button>
+                        </div>
+                    </div>
+                    <h4 id="title" class="">Snowglobes 🌐 (PNG)</h4>
+                    <p id="msg1" class="m-0 p-0">Deposit LP tokens into Pangolin Snowglobes for single step automatic compounding. Save on gas costs!</p>
+                    <p id="msg2" class="m-0 p-0">Harvest log available in the <a href="https://discord.com/channels/812557591917887508/818943563759878196" target="_blank">#harvests</a> channel in Discord</p>
                 </div>
             </div>
             <div class="row">
@@ -71,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="snob-info" class="col-xs-12 col-md-4" style="display: none;">
+                <div id="snob-info" class="col-xs-12 col-md-4 particles-js" style="display: none;">
                     <div class="snobcard br-8 box-shadow-1">
                         <div class="row mw-full m-0 p-0 d-flex" rel="noopener">
                             <div class="w-full m-auto">
@@ -104,21 +118,10 @@
                     </div>
                 </div>
             </div>
-
             <!-- POOLS OF ICEQUEEN -->
-            <div class="row">
-                <div id="snob-pools-used" class="w-full">
+            <div id="snob-pools" class="row">
 
-                </div>
-                <div id="snob-pools-new" class="w-full">
-
-                </div>
-                <div id="snob-pools-unused" class="w-full">
-
-                </div>
             </div>
-
-
             <div class="loader--1">
                 <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
                         <div></div><div></div>
@@ -129,15 +132,10 @@
             <pre id="log" style="margin-left: 10px;">
             </pre>
 
-            <%- include(`${partials}/scripts`, {scriptname: 'earn'}); -%>
+            <%- include(`${partials}/scripts`, { shared: 'shared', scriptname: 'pangolin'}); -%>            
             <%- include(`${partials}/footer`); -%>
         </div>
     </div>
 </div>
-<script>
-  function toggleDetails(pool){
-    $(`#details-${pool}`).slideToggle();
-  }
-</script>
 </body>
 </html>

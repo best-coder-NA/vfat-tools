@@ -229,7 +229,7 @@ async function main() {
   const currentSNOBTokens = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const snowballMultiplier = await ICEQUEEN_CONTRACT.BONUS_MULTIPLIER()
   const blockRate = await ICEQUEEN_CONTRACT.snowballPerBlock()
-  const snowballsPerBlock = snowballMultiplier * blockRate
+  const snowballsPerBlock = blockRate
   const blockNumber = await App.provider.getBlockNumber();
   const currentBlock = await App.provider.getBlock(blockNumber);
   const yesterdayBlock = await App.provider.getBlock(blockNumber - 15000);

@@ -190,34 +190,30 @@ async function main() {
   }
 
   $("#deposit_btn").click(function(){
-    loadDepositModal(TUNDRA_CONTRACT, App, S3D_ratio);
+    loadDepositModal(TUNDRA_CONTRACT, App, S3D_ratio, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS);
     $("#deposit_confirm_btn").prop('disabled', false);
   });
   $("#deposit_confirm_btn").click(function(){
     depositStables();
   });
+  $("#withdraw_open_btn").click(function() {
+    loadWithdrawModal(TUNDRA_CONTRACT, S3D_TOKEN, App, true);
+    $("#withdraw_confirm_btn").prop('disabled', false);
+  });
+  $("#withdraw_confirm_btn").click(function(){
+    withdrawLP();
+  });
 
-  if (S3D_balance > 0 ){
-    if (S3D_allowance == 0){
-      $("#approve_lp_btn").show();
-      $("#approve_lp_btn").click(function(){
-        approveLP();
-      });
-    } else {
-      $("#revoke_lp_btn").show();
-      $("#revoke_lp_btn").click(function(){
-        revokeLP();
-      });
-    }
-    $("#withdraw_btn").click(function() {
-      loadWithdrawModal(TUNDRA_CONTRACT, S3D_TOKEN, App);
-      $("#withdraw_confirm_btn").prop('disabled', false);
-    });
-    $("#withdraw_confirm_btn").click(function(){
-      withdrawLP();
+  if (S3D_allowance == 0){
+    $("#withdraw_approve_btn").show();
+    $("#withdraw_approve_btn").click(function(){
+      approveLP();
     });
   } else {
-    $("#withdraw_btn").hide();
+    $("#revoke_lp_btn").show();
+    $("#revoke_lp_btn").click(function(){
+      revokeLP();
+    });
   }
 
   $("#from_usdt").click(function() {
@@ -262,6 +258,10 @@ async function main() {
     swapTokens(from_token, to_token, TUNDRA_CONTRACT, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS, App);
   });
 
+  $("#withdraw_percentage, #radio-withdraw-combo, #radio-withdraw-usdt, #radio-withdraw-busd, #radio-withdraw-dai").change(function() {
+    updateWithdrawAmount(TUNDRA_CONTRACT, S3D_TOKEN, App);
+  });
+
   $("#swap_max").click(function(){
     let from_token = $("#swap_input").data("from_token");
     let to_token = $("#swap_input").data("to_token");
@@ -292,9 +292,75 @@ async function main() {
     $("#token_3_input").val(s3_balance_formatted);
   });
 
+  $("#remove_liquidity_btn").click(function(){
+    $("#add_liquidity_text").hide();
+    $("#add_liquidity_card").hide();
+    $("#remove_liquidity_btn").hide();
+
+    $("#add_liquidity_btn").show();
+    $("#remove_liquidity_text").show();
+    $("#remove_liquidity_card").show();
+  });
+
+  $("#add_liquidity_btn").click(function(){
+    $("#add_liquidity_text").show();
+    $("#add_liquidity_card").show();
+    $("#remove_liquidity_btn").show();
+
+    $("#add_liquidity_btn").hide();
+    $("#remove_liquidity_text").hide();
+    $("#remove_liquidity_card").hide();
+  });
+
   loadEvents(App, TUNDRA_CONTRACT);
 
   hideLoading();
+}
+
+const updateWithdrawAmount = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
+  const withdrawPercentage = $("#withdraw_percentage").val();
+  $("#withdraw_percentage_display").html(withdrawPercentage);
+  const comboChecked = $("#radio-withdraw-combo").is(':checked');
+  const usdtChecked = $("#radio-withdraw-usdt").is(':checked');
+  const busdChecked = $("#radio-withdraw-busd").is(':checked');
+  const daiChecked = $("#radio-withdraw-dai").is(':checked');
+  console.log("withdrawPercentage:", withdrawPercentage);
+  const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  console.log("S3D_balance:", S3D_balance);
+  let calculatedWithdraw = S3D_balance.mul(withdrawPercentage * 100 || 0).div(100).div(100);
+
+  if (comboChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, calculatedWithdraw);
+    if (withdrawAmount && withdrawAmount.length == 3) {
+      $("#token_1_withdraw_input").val((withdrawAmount[0] / 1e6).toFixed(2));
+      $("#token_2_withdraw_input").val((withdrawAmount[1] / 1e18).toFixed(2));
+      $("#token_3_withdraw_input").val((withdrawAmount[2] / 1e18).toFixed(2));
+    }
+  }
+  if (usdtChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 0);
+    if (withdrawAmount) {
+      $("#token_1_withdraw_input").val((withdrawAmount / 1e6).toFixed(2));
+      $("#token_2_withdraw_input").val(0);
+      $("#token_3_withdraw_input").val(0);
+    }
+  }
+  if (busdChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 1);
+    if (withdrawAmount) {
+      $("#token_1_withdraw_input").val(0);
+      $("#token_2_withdraw_input").val((withdrawAmount / 1e18).toFixed(2));
+      $("#token_3_withdraw_input").val(0);
+    }
+  }
+  if (daiChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 2);
+    if (withdrawAmount) {
+      $("#token_1_withdraw_input").val(0);
+      $("#token_2_withdraw_input").val(0);
+      $("#token_3_withdraw_input").val((withdrawAmount / 1e18).toFixed(2));
+    }
+  }
 }
 
 const loadEvents = async function (App, TUNDRA_CONTRACT) {
@@ -347,6 +413,15 @@ const addEventToDom = async function (event, App) {
       let depositsDisplay = deposits.join(' + ');
       row1 = `<div class="mb-5"><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">${label}: </span>`
       row1 += `${depositsDisplay} - ${event.timestamp}</a></div>`;
+      break;
+    case 'RemoveLiquidityOne':
+      let labelRemove = 'Remove';
+      let tokenAmount = event.args.tokensBought;
+      let tokenTypeId = event.args.boughtId;
+      let tokenLabel = tokenTypeId == 0 ? 'USDT' : tokenTypeId == 1 ? 'BUSD' : 'DAI';
+      let decimals = tokenTypeId ==  0 ? 1e6 : 1e18;
+      row1 = `<div class="mb-5"><a target="_blank" href="${transactionUrl}"><span class="font-weight-bold">${labelRemove}: </span>`
+      row1 += `$${(tokenAmount / decimals).toFixed(2)} ${tokenLabel} - ${event.timestamp}</a></div>`;
       break;
     case 'TokenSwap':
       let tokenBought = event.args.boughtId;
@@ -536,18 +611,54 @@ const loadFrom = async function(balance, token, allowance, TUNDRA_CONTRACT){
 const loadWithdrawModal = async function(TUNDRA_CONTRACT, S3D_TOKEN, App){
   $("#withdraw_confirm_btn").show();
   $("#withdraw_success").hide();
+
+  const slippage = getSlippageWithdraw();
+  $("#withdraw-slippage").html(slippage);
+
+  const withdrawPercentage = $("#withdraw_percentage").val();
+  const comboChecked = $("#radio-withdraw-combo").is(':checked');
+  const usdtChecked = $("#radio-withdraw-usdt").is(':checked');
+  const busdChecked = $("#radio-withdraw-busd").is(':checked');
+  const daiChecked = $("#radio-withdraw-dai").is(':checked');
+  console.log("withdrawPercentage:", withdrawPercentage);
   const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS);
-  // recieving
-  const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, S3D_balance)
-  if (withdrawAmount && withdrawAmount.length == 3) {
-    $("#token_1_withdraw_amt").html((withdrawAmount[0] / 1e6).toLocaleString());
-    $("#token_2_withdraw_amt").html((withdrawAmount[1] / 1e18).toLocaleString());
-    $("#token_3_withdraw_amt").html((withdrawAmount[2] / 1e18).toLocaleString());
+  console.log("S3D_balance:", S3D_balance);
+  let calculatedWithdraw = S3D_balance.mul(withdrawPercentage * 100 || 0).div(100).div(100);
+  if (comboChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, calculatedWithdraw);
+    if (withdrawAmount && withdrawAmount.length == 3) {
+      $("#token_1_withdraw_amt").html((withdrawAmount[0] / 1e6).toLocaleString());
+      $("#token_2_withdraw_amt").html((withdrawAmount[1] / 1e18).toLocaleString());
+      $("#token_3_withdraw_amt").html((withdrawAmount[2] / 1e18).toLocaleString());
+    }
   }
-  console.log("calculateRemoveLiquidity: ", withdrawAmount);
+  if (usdtChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 0);
+    if (withdrawAmount) {
+      $("#token_1_withdraw_amt").html((withdrawAmount / 1e6).toLocaleString());
+      $("#token_2_withdraw_amt").html(0);
+      $("#token_3_withdraw_amt").html(0);
+    }
+  }
+  if (busdChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 1);
+    if (withdrawAmount) {
+      $("#token_1_withdraw_amt").html(0);
+      $("#token_2_withdraw_amt").html((withdrawAmount / 1e18).toLocaleString());
+      $("#token_3_withdraw_amt").html(0);
+    }
+  }
+  if (daiChecked){
+    const withdrawAmount = await TUNDRA_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 2);
+    if (withdrawAmount) {
+      $("#token_1_withdraw_amt").html(0);
+      $("#token_2_withdraw_amt").html(0);
+      $("#token_3_withdraw_amt").html((withdrawAmount / 1e18).toLocaleString());
+    }
+  }
 }
 
-const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3D_ratio){
+const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3D_ratio, STABLE_1_TOKEN, STABLE_2_TOKEN, STABLE_3_TOKEN, TUNDRA_ADDRESS){
   $("#deposit_confirm_btn").show();
   $("#deposit_success").hide();
   // inputs
@@ -587,6 +698,18 @@ const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3D_ratio){
 
   const slippage = getSlippage();
   $("#max_slippage").html(slippage);
+
+  // allowances
+  const s1_allowance = await STABLE_1_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+  const s2_allowance = await STABLE_2_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+  const s3_allowance = await STABLE_3_TOKEN.allowance(App.YOUR_ADDRESS, TUNDRA_ADDRESS)
+  const s1_valid = s1_amount > 0 ? s1_allowance > 0 : true;
+  const s2_valid = s2_amount > 0 ? s2_allowance > 0 : true;
+  const s3_valid = s3_amount > 0 ? s3_allowance > 0 : true;
+  if (!s1_valid || !s2_valid || !s3_valid) {
+    $("#deposit_approvals_needed").show();
+    $("#deposit_confirm_btn").hide();
+  }
 }
 
 function getSwapSlippage() {
@@ -759,7 +882,22 @@ const tundraContract_deposit = async function (chefAbi, chefAddress, token1, tok
       })
   }
 }
-
+function getSlippageWithdraw() {
+  // slippage
+  const radio1checked = $("#radio-withdraw-slippage-1").is(':checked');
+  const radio2checked = $("#radio-withdraw-slippage-2").is(':checked');
+  const radio3checked = $("#radio-withdraw-slippage-3").is(':checked');
+  const customSlippage = $("#custom_withdraw_slippage").val();
+  let slippage = 1;
+  if (radio1checked) {
+    slippage = 0.1;
+  } else if (radio2checked) {
+    slippage = 1;
+  } else if (radio3checked) {
+    slippage = Number(customSlippage);
+  }
+  return slippage;
+}
 const tundraContract_withdraw = async function (chefAbi, chefAddress, S3D_token, tundra_address, App) {
   $("#withdraw_confirm_btn").prop('disabled', true);
   const signer = App.provider.getSigner()
@@ -768,51 +906,113 @@ const tundraContract_withdraw = async function (chefAbi, chefAddress, S3D_token,
   //Tokens
   const S3D_TOKEN = new ethers.Contract(S3D_token, ERC20_ABI, signer)
   const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const S3D_allowance = await S3D_TOKEN.allowance(App.YOUR_ADDRESS, tundra_address)
+  const withdrawPercentage = $("#withdraw_percentage").val();
+  const comboChecked = $("#radio-withdraw-combo").is(':checked');
+  const usdtChecked = $("#radio-withdraw-usdt").is(':checked');
+  const busdChecked = $("#radio-withdraw-busd").is(':checked');
+  const daiChecked = $("#radio-withdraw-dai").is(':checked');
+  console.log("withdrawPercentage:", withdrawPercentage);
+  const S3D_balance = await S3D_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  console.log("S3D_balance:", S3D_balance);
 
+  const slippage = getSlippageWithdraw();
+  const slippageMultiplier = 1000 - (slippage * 10);
+  let calculatedWithdraw = S3D_balance.mul(withdrawPercentage * 100 || 0).div(100).div(100);
 
-  const minToRemove = await CHEF_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, S3D_balance)
-  const minToRemoveAmount = [];
-  if (minToRemove && minToRemove.length == 3) {
-    console.log("minToRemove1:", minToRemove[0] / 1e6);
-    console.log("minToRemove2:", minToRemove[1] / 1e18);
-    console.log("minToRemove3:", minToRemove[2] / 1e18);
-    minToRemoveAmount[0] = minToRemove[0].mul(999).div(1000);
-    minToRemoveAmount[1] = minToRemove[1].mul(999).div(1000);
-    minToRemoveAmount[2] = minToRemove[2].mul(999).div(1000);
-    console.log("minToRemoveAmount1:", minToRemoveAmount[0] / 1e6);
-    console.log("minToRemoveAmount2:", minToRemoveAmount[1] / 1e18);
-    console.log("minToRemoveAmount3:", minToRemoveAmount[2] / 1e18);
-  }
-  const deadline = Date.now() + 180; //3 minutes
+  let minToRemove = null;
+  if (calculatedWithdraw == 0 || S3D_allowance == 0){
+    alert('Check approvals and input amounts first');
+  } else if (comboChecked){
+    minToRemove = await CHEF_CONTRACT.calculateRemoveLiquidity(App.YOUR_ADDRESS, calculatedWithdraw);
+    const minToRemoveAmount = [];
+    if (minToRemove && minToRemove.length == 3) {
+      console.log("minToRemove1:", minToRemove[0] / 1e6);
+      console.log("minToRemove2:", minToRemove[1] / 1e18);
+      console.log("minToRemove3:", minToRemove[2] / 1e18);
+      minToRemoveAmount[0] = minToRemove[0].mul(slippageMultiplier).div(1000);
+      minToRemoveAmount[1] = minToRemove[1].mul(slippageMultiplier).div(1000);
+      minToRemoveAmount[2] = minToRemove[2].mul(slippageMultiplier).div(1000);
+      console.log("minToRemoveAmount1:", minToRemoveAmount[0] / 1e6);
+      console.log("minToRemoveAmount2:", minToRemoveAmount[1] / 1e18);
+      console.log("minToRemoveAmount3:", minToRemoveAmount[2] / 1e18);
+    }
+    const deadline = Date.now() + 180; //3 minutes
 
-  let allow = Promise.resolve()
+    let allow = Promise.resolve()
 
-  showLoading()
-  if (S3D_allowance == 0) {
-    alert("Please approve spending first")
-    hideLoading();
-  } else {
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.removeLiquidity(S3D_balance, minToRemoveAmount, deadline)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              $("#withdraw_confirm_btn").hide();
-              $("#withdraw_success").show();
-              hideLoading()
-              alert('Tokens withdrawn. Refresh page to see balance.')
+    showLoading()
+    if (S3D_allowance == 0) {
+      alert("Please approve spending first")
+      hideLoading();
+    } else {
+      allow
+        .then(async function () {
+          CHEF_CONTRACT.removeLiquidity(calculatedWithdraw, minToRemoveAmount, deadline)
+            .then(function (t) {
+              App.provider.waitForTransaction(t.hash).then(function () {
+                $("#withdraw_confirm_btn").hide();
+                $("#withdraw_success").show();
+                hideLoading()
+                alert('Tokens withdrawn. Refresh page to see balance.')
+              })
             })
-          })
-          .catch(function () {
-            hideLoading()
-            alert('Could not withdraw. Refresh page and try again.')
-          })
-      })
-      .catch(function () {
-        hideLoading()
-        alert('Could not withdraw. Refresh page and try again.')
-      })
+            .catch(function () {
+              hideLoading()
+              alert('Could not withdraw. Refresh page and try again.')
+            })
+        })
+        .catch(function () {
+          hideLoading()
+          alert('Could not withdraw. Refresh page and try again.')
+        })
+    }
+  } else {
+
+    let calculatedWithdraw = S3D_balance.mul(withdrawPercentage * 100 || 0).div(100).div(100);
+    let tokenIndex = null;
+    if (usdtChecked){
+      tokenIndex = 0;
+      minToRemove = await CHEF_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 0);
+    }
+    if (busdChecked){
+      tokenIndex = 1;
+      minToRemove = await CHEF_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 1);
+    }
+    if (daiChecked){
+      tokenIndex = 2;
+      minToRemove = await CHEF_CONTRACT.calculateRemoveLiquidityOneToken(App.YOUR_ADDRESS, calculatedWithdraw, 2);
+    }
+
+    const deadline = Date.now() + 180; //3 minutes
+
+    let allow = Promise.resolve()
+
+    showLoading()
+    if (S3D_allowance == 0) {
+      alert("Please approve spending first")
+      hideLoading();
+    } else {
+      allow
+        .then(async function () {
+          CHEF_CONTRACT.removeLiquidityOneToken(calculatedWithdraw, tokenIndex, minToRemove.mul(slippageMultiplier).div(1000), deadline)
+            .then(function (t) {
+              App.provider.waitForTransaction(t.hash).then(function () {
+                $("#withdraw_confirm_btn").hide();
+                $("#withdraw_success").show();
+                hideLoading()
+                alert('Tokens withdrawn. Refresh page to see balance.')
+              })
+            })
+            .catch(function () {
+              hideLoading()
+              alert('Could not withdraw. Refresh page and try again.')
+            })
+        })
+        .catch(function () {
+          hideLoading()
+          alert('Could not withdraw. Refresh page and try again.')
+        })
+    }
   }
 }
