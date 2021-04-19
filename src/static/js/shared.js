@@ -90,17 +90,17 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
   }
 }
 
-const snowglobe = async (func, pairId, strategyId) => {
-  console.log('snowglobe:', func, 'pairid:', pairId, 'strategyId:', strategyId)
+const snowglobe = async (func, pairId, snowglobeId) => {
+  console.log('snowglobe:', func, 'pairid:', pairId, 'snowglobeId:', snowglobeId)
   
   let app = window.app;  
   let signer = app.provider.getSigner()
 
   const STAKING_TOKEN = new ethers.Contract(pairId, ERC20_ABI, signer)
-  const SNOWGLOBE = new ethers.Contract(strategyId, SNOWGLOBE_ABI, signer)
+  const SNOWGLOBE = new ethers.Contract(snowglobeId, SNOWGLOBE_ABI, signer)
   
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
-  const allowedTokens = await STAKING_TOKEN.allowance(app.YOUR_ADDRESS, strategyId)
+  const allowedTokens = await STAKING_TOKEN.allowance(app.YOUR_ADDRESS, snowglobeId)
   const stakedTokens  = await SNOWGLOBE.balanceOf(app.YOUR_ADDRESS)
 
   console.log('current tokens:', currentTokens, 'allowed tokens:', allowedTokens, 'staked tokens:', stakedTokens)
@@ -113,7 +113,7 @@ const snowglobe = async (func, pairId, strategyId) => {
       snobMessage(`Connected successfully`, `Already approved . <br>You can use the deposit/withdrawals options`, `checkmark-circle-outline`, `success`, false, `ok`, 4000);
       halfmoon.toggleModal('modal-loading')
     } else {
-      allow = STAKING_TOKEN.approve(strategyId, ethers.constants.MaxUint256)
+      allow = STAKING_TOKEN.approve(snowglobeId, ethers.constants.MaxUint256)
         .then(function (t) {
           halfmoon.toggleModal('modal-loading');
           return app.provider.waitForTransaction(t.hash)
@@ -131,7 +131,7 @@ const snowglobe = async (func, pairId, strategyId) => {
       halfmoon.toggleModal('modal-loading')
       allow
         .then(async function () {
-          new ethers.Contract(strategyId, SNOWGLOBE_ABI, signer).depositAll()
+          new ethers.Contract(snowglobeId, SNOWGLOBE_ABI, signer).depositAll()
             .then(function (t) {
               app.provider.waitForTransaction(t.hash).then(function () {
                 halfmoon.toggleModal('modal-loading')
@@ -156,7 +156,7 @@ const snowglobe = async (func, pairId, strategyId) => {
     }
   } else if ( func === 'withdraw' ) {
     if (stakedTokens / 1e18 > 0) {
-      let c = new ethers.Contract(strategyId, SNOWGLOBE_ABI, signer)
+      let c = new ethers.Contract(snowglobeId, SNOWGLOBE_ABI, signer)
       console.log('withdraw:', stakedTokens / 1e18, 'from:', c)
       halfmoon.toggleModal('modal-loading')
       allow
@@ -414,7 +414,7 @@ const genpool = async (pool) => {
   let prices = window.prices;  
   let signer = app.provider.getSigner()  
 
-  let snowglobeContract = new ethers.Contract(pool.strategy, SNOWGLOBE_ABI, signer)
+  let snowglobeContract = new ethers.Contract(pool.snowglobe, SNOWGLOBE_ABI, signer)
   let pairToken = new ethers.Contract(pool.pair, ERC20_ABI, signer)
   let pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
 
@@ -491,9 +491,9 @@ const genpool = async (pool) => {
     apy: null,
     current_tokens: currentPGLTokens,
     display_amount: spglDisplayAmt,
-    approve: `snowglobe('approve', '${pool.pair}', '${pool.strategy}')`,
-    stake: `snowglobe('stake','${pool.pair}', '${pool.strategy}')`,
-    withdraw: `snowglobe('withdraw', '${pool.pair}', '${pool.strategy}')`,
+    approve: `snowglobe('approve', '${pool.pair}', '${pool.snowglobe}')`,
+    stake: `snowglobe('stake','${pool.pair}', '${pool.snowglobe}')`,
+    withdraw: `snowglobe('withdraw', '${pool.pair}', '${pool.snowglobe}')`,
     tvl_display: pair_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay,
