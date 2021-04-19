@@ -418,13 +418,10 @@ const genpool = async (pool) => {
   let pairToken = new ethers.Contract(pool.pair, ERC20_ABI, signer)
   let pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
 
+    
+
   let results = await Promise.all([
-    loadSingleSnowglobePool(window.app, {}, window.prices, {
-      address: pool.stake,
-      abi: PNG_STAKING_ABI,
-      stakeTokenFunction: "stakingToken",
-      rewardTokenFunction: "rewardsToken"
-    }),
+    Promise.resolve(pool.apr),
     pairToken.balanceOf(app.YOUR_ADDRESS),
     snowglobeContract.balanceOf(app.YOUR_ADDRESS),
     snowglobeContract.balance()
