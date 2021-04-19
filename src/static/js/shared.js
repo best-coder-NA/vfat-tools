@@ -284,7 +284,7 @@ const layoutpool = (options, replace) => {
   }
   var apy =  `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5">
     <p class="m-0 font-size-12">APY</p>
-    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.apy.toFixed(2)}%</span>
+    <span class="badge font-size-12 px-5 px-sm-10 mx-5" id="${options.pool_id}-apy"></span>
     </div>`;
   if ( !isNaN(options.total_deposited) ) {
     var poolSize = `<div class="col-sm-12 col-md-12 align-items-center text-center mt-5 mb-5 mx-auto">
@@ -348,9 +348,9 @@ const layoutpool = (options, replace) => {
                 </div>
                 <div class="form-inline w-50 mx-auto">
                     <div class="form-group m-md-0">
-                    <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.dailyAPR.toFixed(2)}%</p>
-                    <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.weeklyAPR.toFixed(2)}%</p>
-                    <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.yearlyAPR.toFixed(2)}%</p>
+                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-daily"></p>
+                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-weekly"></p>
+                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-yearly"></p>
                     </div>
                 </div>
             </div>
@@ -386,9 +386,9 @@ const layoutpool = (options, replace) => {
                   </div>
                   <div class="form-inline w-50 mx-auto">
                       <div class="form-group m-md-0">
-                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.dailyAPR.toFixed(2)}%</p>
-                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.weeklyAPR.toFixed(2)}%</p>
-                      <p class="m-0 font-size-12 font-weight-semi-bold">${options.apr.yearlyAPR.toFixed(2)}%</p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-daily"></p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-weekly"></p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-yearly"></p>
                       </div>
                   </div>
               </div>
@@ -419,20 +419,13 @@ const genpool = async (pool) => {
   let pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
 
   let results = await Promise.all([
-    loadSingleSnowglobePool(window.app, {}, window.prices, {
-      address: pool.stake,
-      abi: PNG_STAKING_ABI,
-      stakeTokenFunction: "stakingToken",
-      rewardTokenFunction: "rewardsToken"
-    }),
     pairToken.balanceOf(app.YOUR_ADDRESS),
     snowglobeContract.balanceOf(app.YOUR_ADDRESS),
     snowglobeContract.balance()
   ])
 
-  let apr = results[0]
-  let currentPGLTokens = results[1]
-  let currentSPGLTokens = results[2]
+  let currentPGLTokens = results[0]
+  let currentSPGLTokens = results[1]
   let totalPoolPGL = results[2];
 
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
@@ -450,10 +443,7 @@ const genpool = async (pool) => {
       pair_tvl_display = `$${new Intl.NumberFormat('en-US').format(pair_tvl)}`
     } 
   });    
-  
-  let token_apr = apr.yearlyAPR / 100
-  let token_annual_apy = 100 * (1 + token_apr / compounds_per_year) ** compounds_per_year - 100  
-  
+
   let poolShareDisplay = null;
   let stakeDisplay = null;
   let withdrawDisplay = null;
@@ -497,8 +487,8 @@ const genpool = async (pool) => {
     logo_token2: `https://x-api.snowball.network/assets/avalanche-tokens/${pool.token1.toLowerCase()}/logo.png`,      
     url: `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`,
     pool_name: pool.nickname,
-    apr: apr,
-    apy: token_annual_apy,
+    apr: null,
+    apy: null,
     current_tokens: currentPGLTokens,
     display_amount: spglDisplayAmt,
     approve: `snowglobe('approve', '${pool.pair}', '${pool.strategy}')`,
@@ -509,11 +499,30 @@ const genpool = async (pool) => {
     stake_display: stakeDisplay,
     total_pgl: null,
     withdraw_display: withdrawDisplay,
-    owned_pgl: ownedPGL
+    owned_pgl: ownedPGL,
+    pool_id: pool.pool_id
   })
-  if ( thispagespools.length > 0 )  {
-    genpool(thispagespools.pop())
-  } else {
-    hideLoading();
-  }
+}
+
+const genAPR = async (pool) => {
+  console.log('genAPR nickname:', pool.nickname)
+
+  let results = await Promise.all([
+    loadSingleSnowglobePool(window.app, {}, window.prices, {
+      address: pool.stake,
+      abi: PNG_STAKING_ABI,
+      stakeTokenFunction: "stakingToken",
+      rewardTokenFunction: "rewardsToken"
+    })
+  ])
+
+  let apr = results[0]
+
+  let token_apr = apr.yearlyAPR / 100;
+  let token_annual_apy = 100 * (1 + token_apr / compounds_per_year) ** compounds_per_year - 100;
+  $(`#${pool.pool_id}-apy`).html(`${token_annual_apy.toFixed(2)}%`)
+  $(`#${pool.pool_id}-apr-daily`).html(`${apr.dailyAPR.toFixed(2)}%`);
+  $(`#${pool.pool_id}-apr-weekly`).html(`${apr.weeklyAPR.toFixed(2)}%`);
+  $(`#${pool.pool_id}-apr-yearly`).html(`${apr.yearlyAPR.toFixed(2)}%`);
+
 }
