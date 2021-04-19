@@ -276,11 +276,11 @@ async function main() {
           link_tvl = p.locked;
           link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
         } else if (p.token1.symbol.toLowerCase() == 'sushi') {
-          sushi_tvl = p.locked;
-          sushi_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+          sushi_tvl = 600000;
+          sushi_tvl_display = `$${new Intl.NumberFormat('en-US').format(600000)}`
         } else if (p.token1.symbol.toLowerCase() == 'png') {
-          png_tvl = p.locked;
-          png_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+          png_tvl = 2000000;
+          png_tvl_display = `$${new Intl.NumberFormat('en-US').format(2000000)}`
         } else if (p.token1.symbol.toLowerCase() == 'eth') {
           eth_tvl = p.locked;
           eth_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
