@@ -360,9 +360,9 @@ async function main() {
           pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`          
           pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked * 100;
         } else if (p.token1.symbol.toLowerCase() == 'png') {
-          pool3tvl = p.locked;
-          pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-          pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked * 100;
+          pool3tvl = 2000000;
+          pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(2000000)}`
+          pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / 2000000 * 100;
         } else if (p.token1.symbol.toLowerCase() == 'eth') {
           pool4tvl = p.locked;
           pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
