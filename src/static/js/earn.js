@@ -352,9 +352,9 @@ async function main() {
     if (res && res.pairs && res.locked) {
       res.pairs.forEach( p => {
         if (p.token1.symbol.toLowerCase() == 'sushi') {
-          pool1tvl = p.locked;
-          pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-          pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked * 100;
+          pool1tvl = 600000;
+          pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(600000)}`
+          pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / 600000 * 100;
         } else if (p.token1.symbol.toLowerCase() == 'snob') {
           pool2tvl = p.locked;
           pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`          
