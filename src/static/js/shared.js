@@ -502,6 +502,15 @@ const genpool = async (pool) => {
     owned_pgl: ownedPGL,
     pool_id: pool.pool_id
   })
+
+  // lazy load APR
+  genAPR(pool);
+
+  if ( thispagespools.length > 0 )  {
+    genpool(thispagespools.pop())
+  } else {
+    hideLoading();
+  }
 }
 
 const genAPR = async (pool) => {
