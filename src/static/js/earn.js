@@ -387,19 +387,19 @@ async function main() {
   // APR
   const PngStakingContracts= [
     {
-      stakingRewardAddress: '0xa16381eae6285123c323a665d4d99a6bcfaac307'
+      stakingRewardAddress: '0x417C02150b9a31BcaCb201d1D60967653384E1C6'
     },
     {
-      stakingRewardAddress: '0x8fd2755c6ae7252753361991bdcd6ff55bdc01ce'
+      stakingRewardAddress: '0x574d3245e36Cf8C9dc86430EaDb0fDB2F385F829'
     },
     {
-      stakingRewardAddress: '0x88f26b81c9cae4ea168e31bc6353f493fda29661'
+      stakingRewardAddress: '0xDA354352b03f87F84315eEF20cdD83c49f7E812e'
     },
     {
-      stakingRewardAddress: '0x7d7ecd4d370384b17dfc1b4155a8410e97841b65'
+      stakingRewardAddress: '0xBDa623cDD04d822616A263BF4EdbBCe0B7DC4AE7'
     },
     {
-      stakingRewardAddress: '0x4f019452f51bba0250ec8b69d64282b79fc8bd9f'
+      stakingRewardAddress: '0x94C021845EfE237163831DAC39448cFD371279d6'
     }
   ]
   const tokens = {};
