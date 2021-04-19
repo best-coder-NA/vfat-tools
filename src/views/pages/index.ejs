@@ -5,10 +5,10 @@
   if (window.localStorage.getItem('snowballDarkmode') == 'true') {
     document.body.classList.add('dark-mode');
   }
-  fetch('https://x-api.snowball.network/tvl/snob.json').then(function (response) {
+  fetch('https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json').then(function (response) {
     return response.json();
   }).then(function (info) {
-    document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked_value.toFixed(0));
+    document.getElementById('tvl').innerHTML = '$' + new Intl.NumberFormat('en-US').format(info.locked.toFixed(0));
     let cents = ' $0.' + info.price.toFixed(2).split('.')[1];
     document.querySelector('.buy-btn').setAttribute('price', cents);
   }).catch(function (err) {
