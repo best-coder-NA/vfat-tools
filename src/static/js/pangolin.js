@@ -94,7 +94,7 @@ async function main() {
   return Promise.all([
     init_ethers(),
     getAvaxPrices(),
-    $.getJSON('https://x-api.snowball.network/tvl/snob.json'),
+    $.getJSON('https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json'),
   ]).then(results => {
     
     window.app = results[0]  

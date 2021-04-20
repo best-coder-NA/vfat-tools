@@ -407,6 +407,11 @@ const layoutpool = (options, replace) => {
   }
 }
 
+function pairmatch(p, t0, t1) {
+  return ( p.token0.id.toLowerCase() == t0.toLowerCase() || p.token1.id.toLowerCase() == t0.toLowerCase() ) && 
+         ( p.token0.id.toLowerCase() == t1.toLowerCase() || p.token1.id.toLowerCase() == t1.toLowerCase() )
+}
+
 const genpool = async (pool) => {
   console.log('genpool nickname:', pool.nickname)
 
@@ -434,11 +439,7 @@ const genpool = async (pool) => {
   let pair_tvl_display = 0;
   
   window.tvl.pairs.forEach( p => {
-    if (
-      (p.token0.id.toLowerCase() == pool.token0.toLowerCase() && p.token1.id.toLowerCase() == pool.token1.toLowerCase()) ||
-      (p.token1.id.toLowerCase() == pool.token1.toLowerCase() && p.token0.id.toLowerCase() == pool.token0.toLowerCase())
-      ) {
-      console.loge('found tvl:', p.locked)
+    if ( pairmatch(p, pool.token0.toLowerCase(), pool.token1.toLowerCase()) ) {
       pair_tvl = p.locked;
       pair_tvl_display = `$${new Intl.NumberFormat('en-US').format(pair_tvl)}`
     } 
