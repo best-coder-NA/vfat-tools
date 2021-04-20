@@ -110,7 +110,8 @@ async function main() {
   const pool7weight = 0.20;
   const snowballsPerBlock = await ICEQUEEN_CONTRACT.snowballPerBlock();
   const pool7APR = snowballsPerBlock * pool7weight / 1e18 * 15000 * snobPrice / pool7tvl * 100 * 365;
-  $('#staking_apr').html(pool7APR.toFixed(2));
+  $('#staking_apr1').html(pool7APR.toFixed(2));
+  $('#staking_apr2').html(pool7APR.toFixed(2));
 
   const t1_supply_display = new Intl.NumberFormat('en-US').format((s1_supply / 1e6).toFixed(2));
   const t2_supply_display = new Intl.NumberFormat('en-US').format((s2_supply / 1e18).toFixed(2));
