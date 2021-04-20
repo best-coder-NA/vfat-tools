@@ -9,6 +9,12 @@ $(function () {
   consoleInit();
   start(main);
 });
+
+function pairmatch(p, t0, t1) {
+  return ( p.token0.symbol.toLowerCase() == t0.toLowerCase() || p.token1.symbol.toLowerCase() == t0.toLowerCase() ) && 
+         ( p.token0.symbol.toLowerCase() == t1.toLowerCase() || p.token1.symbol.toLowerCase() == t1.toLowerCase() )
+}
+
 async function main() {
 
   const App = await init_ethers();
@@ -194,10 +200,6 @@ async function main() {
     });
   });
 
-
-
-
-
   let walletAddres = `${App.YOUR_ADDRESS}`;
   $('#wallet-address').html(`${walletAddres}`);
 
@@ -264,30 +266,27 @@ async function main() {
   let sushi_tvl_display = '';
   try {
     res = await $.ajax({
-      url: 'https://x-api.snowball.network/tvl/snob.json',
+      url: 'https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json',
       type: 'GET',
     })
     if (res && res.pairs) {
       res.pairs.forEach( p => {
-        if (p.token1.symbol.toLowerCase() == 'usdt') {
+        if ( pairmatch(p, 'usdt', 'wavax') ) {
           usdt_tvl = p.locked;
           usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'link') {
+        } else if ( pairmatch(p, 'link', 'wavax') ) {
           link_tvl = p.locked;
           link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'sushi') {
-          sushi_tvl = 600000;
-          sushi_tvl_display = `$${new Intl.NumberFormat('en-US').format(600000)}`
-        } else if (p.token1.symbol.toLowerCase() == 'png') {
-          png_tvl = 2000000;
-          png_tvl_display = `$${new Intl.NumberFormat('en-US').format(2000000)}`
-        } else if (p.token1.symbol.toLowerCase() == 'eth') {
+        } else if ( pairmatch(p, 'sushi', 'wavax') ) {
+          sushi_tvl = p.locked;
+          sushi_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if ( pairmatch(p, 'png', 'wavax') ) {
+          png_tvl = p.locked;
+          png_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+        } else if ( pairmatch(p, 'eth', 'wavax') ) {
           eth_tvl = p.locked;
-          eth_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'usdt') {
-          usdt_tvl = p.locked;
-          usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'wbtc') {
+          eth_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`        
+        } else if ( pairmatch(p, 'wbtc', 'wavax') ) {
           wbtc_tvl = p.locked;
           wbtc_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
         }
