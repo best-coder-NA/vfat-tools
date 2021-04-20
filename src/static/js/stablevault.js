@@ -103,6 +103,15 @@ async function main() {
   const S3D_ratio = combined_supply / (S3D_supply / 1e18);
   console.log("S3D_ratio:", S3D_ratio);
 
+  const prices = await getAvaxPrices();
+  const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
+  const totalStakedS3D = await S3D_TOKEN.balanceOf(ICEQUEEN_ADDR)
+  const pool7tvl = totalStakedS3D / 1e18;
+  const pool7weight = 0.20;
+  const snowballsPerBlock = await ICEQUEEN_CONTRACT.snowballPerBlock();
+  const pool7APR = snowballsPerBlock * pool7weight / 1e18 * 15000 * snobPrice / pool7tvl * 100 * 365;
+  $('#staking_apr').html(pool7APR.toFixed(2));
+
   const t1_supply_display = new Intl.NumberFormat('en-US').format((s1_supply / 1e6).toFixed(2));
   const t2_supply_display = new Intl.NumberFormat('en-US').format((s2_supply / 1e18).toFixed(2));
   const t3_supply_display = new Intl.NumberFormat('en-US').format((s3_supply / 1e18).toFixed(2));
