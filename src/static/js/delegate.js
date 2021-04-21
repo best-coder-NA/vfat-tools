@@ -48,7 +48,7 @@ async function main() {
     if ( bo === 0 ) {
       $('#yourcontribution').html(`${prettyNumber(bo)} PNGs of support is still support`)
     } else {
-      $('#yourcontribution').html(`We'd appreciate your ${prettyNumber(bo)} PNGs of support`)
+      $('#yourcontribution').html(`We appreciate your ${prettyNumber(bo)} PNGs of support`)
     }    
   })
 
