@@ -32,13 +32,20 @@ const TOKEN_NAMES = {
   "0x8ce2dee54bb9921a2ae0a63dbb2df8ed88b91dd9": "AAVE"
 }
 
-document.getElementById('wallet-copy').addEventListener('click', ()=>{
-  navigator.clipboard.writeText(`${app.YOUR_ADDRESS}`).then(function() {
-    console.log('Snowball Platform: Copying to clipboard was successful!');
-  }, function(err) {
-    console.error('Snowball Platform: Could not copy text: ', err);
-  });
-});
+const walletcopy = () => {
+  let wc = document.getElementById('wallet-copy');
+  if ( wc ) {
+    wc.addEventListener('click', ()=>{
+      navigator.clipboard.writeText(`${app.YOUR_ADDRESS}`).then(function() {
+        console.log('Snowball Platform: Copying to clipboard was successful!');
+      }, function(err) {
+        console.error('Snowball Platform: Could not copy text: ', err);
+      });
+    });
+    
+  }
+}
+walletcopy();
 
 const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
   $('#snob-title-modal').html('').html(title);
