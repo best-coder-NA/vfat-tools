@@ -33,47 +33,40 @@
                                 </h6>
                             </div>
                             <div style="display:flex">
-                                <div style="display:flex;flex-direction: column;">    
-                                    <div style="margin: 0 10px 0 40px">
-                                        <div style="font-size: larger;">
-                                            The Pangolin Community voted overwhelmingly
-                                        </div>
-                                        <div style="display:inline-block;margin:10px 20px 10px 20px">
-                                            April6-13th a snapshot sentiment poll to add PNG/Snowball to the pool of pairs
-                                            receiving rewards.
-                                        </div>
-                                        <div style="display:inline-block;margin:10px 20px 10px 20px">
-                                            As a native Avalanche project it was an honor to be recognized.
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <a href="https://snapshot.org/#/pangolindex.eth/proposal/QmSn4BAhdwxEggUx36w645PPxmZKuMvEhLhyLzj5T9Wp2a">QmSn4BAhdwxEggUx36w645PPxmZKuMvEhLhyLzj5T9Wp2a</a>
-                                        </div>
-                                        <h4 style="text-align: center;color:#fff">
-                                        1 Million PNG Required 
-                                        </h4>
-                                        <div style="margin:10px 20px 10px 20px" id="yourcontribution">
-                                            
-                                        </div>                                                                                                                                                      
+                                <div style="display:flex;flex-direction: column;">
+
+                                    <div style="font-size: larger;">
+                                        Dear Snowball Community,
                                     </div>
+                                    <div style="margin:10px 20px 10px 20px">
+                                        Pangolin Governance is ready to accept a proposal to add PNG rewards to the PNG/SNOB pair.   
+                                    </div>
+                                    <div style="margin:10px 20px 10px 20px">                                        
+                                        To make the proposal official, we need to hold 1,000,000 PNG.  This amount can be held by multple wallets (i.e. the entire Snowball community) and delegated to the Snowball multisig contract for the time of the vote.
+                                    </div>
+                                    <div style="margin:10px 20px 10px 20px">
+                                        Contribute your PNG and help us take SNOB to the next level by giving it the much-deserved rewards from Pangolin and exposure to Avalanche and the general crypto community!
+                                    </div>
+                                    <div style="margin:10px 20px 10px 20px">
+                                        Over 200,000 votes have already been delegated.  Pledge your PNG and help us get 1 million votes to make the proposal!
+                                    </div>
+
                                 </div>
-                                <div style="display:flex;flex-direction:column;width:450px">
-                                    <div style="font-weight: bold; font-size: larger;color:#fff">
+                                <div style="display:flex;flex-direction: column;">
+                                    
+                                    <div style="font-size: larger;">
                                         Speak with your wallet
                                     </div>
-                                    <div>
+                                    <div style="margin-left: 15px">
                                         <img style="display:inline-block;height: 24px"
                                             src="https://s2.coinmarketcap.com/static/cloud/img/metamask.png?_=4b2fe1d"
                                             alt="Metamask">
-                                        <div style="font-size:x-small;display:inline-block;" id="wallet-address"
-                                            class="text-truncate"></div>
+                                        <div style="width: 50%; font-size:smaller;display:inline-block;" id="wallet-address" class="text-truncate"></div>
                                     </div>
                                     <div id="delegate" style="display:none">
                                         <div style="margin: 15px">
-                                            Stand with those that stood first❗
+                                            Roll with us❗
                                         </div>
-                                        <div style="margin: 15px">
-                                            Or sit. Just get comfy and
-                                        </div>                                        
                                         <button style="margin-left: -25px" class="delegate btn btn-primary btn-lg ml-0 ml-md-20">
                                             Delegate to 0x294a…
                                         </button>                                        
@@ -82,7 +75,7 @@
                                         </div>
                                     </div>
                                     <div id="undelegate" style="display:none">
-                                        <h4 style="text-align: center;">You are amoungst the few!</h4>
+                                        <div style="text-align: center;font-size:larger;color:#fff">You are amoungst the few!</div>
                                         <div style="margin: 15px">
                                             Having second thoughts?
                                         </div>
@@ -105,16 +98,16 @@
                                     </div>    
                                     <div id="facts"></div>                                                                    
                                 </div>
-
-                                <h1 class="error"></h1>
-                                <div style="display:none" id="effects"></div>
-
-                                <pre id="log" style="margin-left: 10px;"></pre>
-                                
                             </div>
-                            <%- include(`${partials}/scripts`, { shared: 'shared', scriptname: 'delegate'}); -%>            
-                            <%- include(`${partials}/footer`); -%>
                         </div>
+                        <h1 class="error"></h1>
+                        <div style="display:none" id="effects"></div>
+
+                        <pre id="log" style="margin-left: 10px;"></pre>                
+                    </div>
+                    <%- include(`${partials}/scripts`, { shared: 'shared', scriptname: 'delegate'}); -%>            
+                    <%- include(`${partials}/footer`); -%>
+                </div>
         </div>
     </body>
 </html>
