@@ -44,7 +44,7 @@ async function main() {
     if ( bo === 0 ) {
       $('#yourcontribution').html(`${prettyNumber(bo)} PNGs of support is still support`)
     } else {
-      $('#yourcontribution').html(`We appreciate your ${prettyNumber(bo)} PNGs of support`)
+      $('#yourcontribution').html(`We appreciate your <span style="color:#fff">${prettyNumber(bo)}</span> PNGs of support`)
     }    
   })
 
@@ -59,15 +59,15 @@ async function main() {
     return parseFloat(harvest)
   })]).then(res => {
     console.log('results:', res)
-    $('#facts').html(`
-    <dl>
-    <dt style="color:#fff">Snowball by the books</dt>
-    <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">$${prettyNumber(res[0], 2)}</span> Price</dd>
-    <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">${prettyNumber(res[1], 0)}</span> Circulating Supply</dd>
-    <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">$${prettyNumber(res[1] * res[0], 0)}</span> Market Cap</dd>
-    <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">$${prettyNumber(res[2], 2)}</span> Reinvestments</dd>
-    </dl>
+    $('#rightcolumn').append(`    
+    <div style="text-align:center">
+      <div style="white-space: nowrap;text-align:left"><span style="text-align:right;display:inline-block;width:100px">$${prettyNumber(res[0], 2)}</span> Price</div>
+      <div style="white-space: nowrap;text-align:left"><span style="text-align:right;display:inline-block;width:100px">${prettyNumber(res[1], 0)}</span> Circulating Supply</div>
+      <div style="white-space: nowrap;text-align:left"><span style="text-align:right;display:inline-block;width:100px">$${prettyNumber(res[1] * res[0], 0)}</span> Market Cap</div>
+      <div style="white-space: nowrap;text-align:left"><span style="text-align:right;display:inline-block;width:100px">$${prettyNumber(res[2], 2)}</span> Reinvestments</div>    
+    </div>    
     `);
+    $('#rightcolumn').show();
   }).catch(err => {
     console.log('fact error:', err);
   })
