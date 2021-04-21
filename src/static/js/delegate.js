@@ -65,7 +65,7 @@ async function main() {
     console.log('results:', res)
     $('#facts').html(`
     <dl>
-    <dt style="color:#fff">Snowball By Books</dt>
+    <dt style="color:#fff">Snowball by the Books</dt>
     <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">$${prettyNumber(res[0], 2)}</span> Price</dd>
     <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">${prettyNumber(res[1], 0)}</span> Circulating Supply</dd>
     <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">$${prettyNumber(res[1] * res[0], 0)}</span> Market Cap</dd>
