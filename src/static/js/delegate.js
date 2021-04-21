@@ -3,10 +3,6 @@ $(function () {
   start(main);
 });
 
-const abi = [
-  "event delegate(address indexed src, address indexed dst, uint val)"
-];
-
 const prettyNumber = (n, fixed) => {
   let nonNan = new Intl.NumberFormat('en-US').format(fixed ? n.toFixed(fixed): n);
   if  ( isNaN(n) ) {
@@ -65,7 +61,7 @@ async function main() {
     console.log('results:', res)
     $('#facts').html(`
     <dl>
-    <dt style="color:#fff">Snowball by the Books</dt>
+    <dt style="color:#fff">Snowball by the books</dt>
     <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">$${prettyNumber(res[0], 2)}</span> Price</dd>
     <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">${prettyNumber(res[1], 0)}</span> Circulating Supply</dd>
     <dd style="white-space: nowrap"><span style="text-align:right;display:inline-block;width:120px">$${prettyNumber(res[1] * res[0], 0)}</span> Market Cap</dd>
