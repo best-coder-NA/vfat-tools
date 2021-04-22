@@ -274,7 +274,7 @@ const gentop = async () => {
       $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
       $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
       $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
-      $('#distribution_phase').append(`${blockNumber.toLocaleString()} / 2,065,000 (${(2065000 - blockNumber).toLocaleString()} blocks left)`);
+      $('#distribution_phase').append(`${blockNumber.toLocaleString()} / 3,065,000 (${(3065000 - blockNumber).toLocaleString()} blocks left)`);
       return new Date().getTime() - start
     })      
   }) 
