@@ -31,7 +31,7 @@ async function main() {
 
   png_vote.getCurrentVotes(snowballmultisig).then(results => {
     let vc = results / 1e18
-    let sr = 1000000 - vc
+    let sr = (1000000 - vc) > 0 ? (1000000 - vc) : 0;
     $('#votecount').html(prettyNumber(vc));
     $('#stillrequire').html(prettyNumber(sr))
   })
