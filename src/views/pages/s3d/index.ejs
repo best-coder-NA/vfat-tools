@@ -16,6 +16,18 @@
     });
 
 </script>
+<style>
+    .tokenLogoContainer {
+        display: flex;
+        width: 24px;
+        height: 24px;
+    }
+    .tokenLogoContainer img {
+        position: absolute;
+        top: 50%;
+        margin-top: -12px;
+    }
+</style>
 <body>
 <%- include(`${partials}/header_main`); -%>
 
@@ -145,19 +157,25 @@
                             <button class="btn" data-toggle="dropdown" type="button" id="from-dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div id="from_usdt_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        </div>
                                         <span class="ml-10">USDT</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div style="display: none;" id="from_busd_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766">
+                                        </div>
                                         <span class="ml-10">BUSD</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div style="display: none;" id="from_dai_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png">
+                                        </div>
                                         <span class="ml-10">DAI</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
@@ -199,19 +217,25 @@
                             <button class="btn" data-toggle="dropdown" type="button" id="dropdown-toggle-btn-1" aria-haspopup="true" aria-expanded="false">
                                 <div style="display: none;" id="to_usdt_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        </div>
                                         <span class="ml-10">USDT</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div id="to_busd_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766">
+                                        </div>
                                         <span class="ml-10">BUSD</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div style="display: none;" id="to_dai_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png">
+                                        </div>
                                         <span class="ml-10">DAI</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
