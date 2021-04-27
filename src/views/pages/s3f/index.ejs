@@ -16,6 +16,18 @@
     // });
 
 </script>
+<style>
+    .tokenLogoContainer {
+        display: flex;
+        width: 24px;
+        height: 24px;
+    }
+    .tokenLogoContainer img {
+        position: absolute;
+        top: 50%;
+        margin-top: -12px;
+    }
+</style>
 <body>
 <%- include(`${partials}/header_main`); -%>
 
@@ -144,19 +156,25 @@
                             <button class="btn" data-toggle="dropdown" type="button" id="from-dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div id="from_FRAX_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        </div>
                                         <span class="ml-10">Frax</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div style="display: none;" id="from_TUSD_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        </div>
                                         <span class="ml-10">TUSD</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div style="display: none;" id="from_USDT_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        </div>
                                         <span class="ml-10">USDT</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
@@ -198,19 +216,25 @@
                             <button class="btn" data-toggle="dropdown" type="button" id="dropdown-toggle-btn-1" aria-haspopup="true" aria-expanded="false">
                                 <div style="display: none;" id="to_FRAX_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        </div>
                                         <span class="ml-10">Frax</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div id="to_TUSD_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        </div>
                                         <span class="ml-10">TUSD</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
                                 <div style="display: none;" id="to_USDT_button">
                                     <div style="display: flex;">
-                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        </div>
                                         <span class="ml-10">USDT</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
                                     </div>
                                 </div>
