@@ -424,6 +424,18 @@ async function main() {
   const link_apr = apr_array[3]
   const usdt_apr = apr_array[4]
 
+  let compounds_per_year = 6 * 365
+  let eth_r = eth_apr.yearlyAPR / 100
+  let eth_annual_apy = 100 * (1 + eth_r / compounds_per_year) ** compounds_per_year - 100
+  let png_r = png_apr.yearlyAPR / 100
+  let png_annual_apy = 100 * (1 + png_r / compounds_per_year) ** compounds_per_year - 100
+  let sushi_r = sushi_apr.yearlyAPR / 100
+  let sushi_annual_apy = 100 * (1 + sushi_r / compounds_per_year) ** compounds_per_year - 100
+  let link_r = link_apr.yearlyAPR / 100
+  let link_annual_apy = 100 * (1 + link_r / compounds_per_year) ** compounds_per_year - 100
+  let usdt_r = usdt_apr.yearlyAPR/100
+  let usdt_annual_apy = 100*(1 + usdt_r/compounds_per_year)**compounds_per_year - 100
+
 
   const stakeUnstake = (amount, stake, st) => {
     return `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
@@ -442,14 +454,12 @@ async function main() {
             <div class="form-inline w-50 mx-auto">
                 <div class="form-group m-md-0">
                     <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                     <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                 </div>
             </div>
             <div class="form-inline w-50 mx-auto">
                 <div class="form-group m-md-0">
                 <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
-                <p class="m-0 font-size-12 font-weight-regular">${cWeekAPR}%</p>
                 <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}%</p>
                 </div>
             </div>
@@ -552,10 +562,10 @@ async function main() {
   }
 
   //SNOWGLOBE_LINK_ADDR
-  const snowglobeContract_6 = new ethers.Contract(SNOWGLOBE_USDT_ADDR, SNOWGLOBE_ABI, signer);
+  const snowglobeContract_6 = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_6, poolShareDisplay_6_pgl, stakeDisplay_6, totalPoolPGL_6;
   if (stakedPool6.amount / 1e18 > 0) {
-    let ret_6 = await calculateShare(snowglobeContract_6, USDT_AVAX_ADDR, stakedPool6.amount / 1e18, 1e18)
+    let ret_6 = await calculateShare(snowglobeContract_6, LINK_AVAX_ADDR, stakedPool6.amount / 1e18, 1e18)
     poolShareDisplay_6 = ret_6[0]
     poolShareDisplay_6_pgl = ret_6[1]
     stakeDisplay_6 = ret_6[2]
@@ -576,7 +586,7 @@ async function main() {
 
         var cDayAPR = `${combinedAPR.toFixed(2)}`;
         var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}`;
-        var cYearAPR = `${(combinedAPR * 365).toFixed(2)}`;
+        var cYearAPR = `${options.apy.toFixed(2)}`;
 
         var combinedAprDisplay = aprDisplay(cDayAPR, cWeekAPR, cYearAPR)
       }
@@ -669,14 +679,12 @@ async function main() {
                     <div class="form-inline w-50 mx-auto">
                         <div class="form-group m-md-0">
                             <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                             <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                         </div>
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
                         <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${cWeekAPR}% </p>
                         <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}% </p>
                         </div>
                     </div>
@@ -703,14 +711,12 @@ async function main() {
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                     <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                                     <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                                 </div>
                             </div>
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                 <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                                 <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                                 </div>
                             </div>
@@ -754,14 +760,12 @@ async function main() {
                     <div class="form-inline w-50 mx-auto">
                         <div class="form-group m-md-0">
                             <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                             <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                         </div>
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
                         <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${cWeekAPR}%</p>
                         <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}%</p>
                         </div>
                     </div>
@@ -790,14 +794,12 @@ async function main() {
                             <div class="form-inline w-50 ">
                                 <div class="form-group m-md-0">
                                     <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                                     <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                                 </div>
                             </div>
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                 <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                                 <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                                 </div>
                             </div>
@@ -935,14 +937,12 @@ async function main() {
                     <div class="form-inline w-50 mx-auto">
                         <div class="form-group m-md-0">
                             <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                             <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                         </div>
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
                         <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}% </p>
                         <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}% </p>
                         </div>
                     </div>
@@ -969,14 +969,12 @@ async function main() {
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                     <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                                     <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                                 </div>
                             </div>
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                 <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                                 <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                                 </div>
                             </div>
@@ -1021,14 +1019,12 @@ async function main() {
                   <div class="form-inline w-50 mx-auto">
                       <div class="form-group m-md-0">
                           <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                           <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                       </div>
                   </div>
                   <div class="form-inline w-50 mx-auto mx-md-0">
                       <div class="form-group m-md-0">
                       <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                      <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                       <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                       </div>
                   </div>
@@ -1057,14 +1053,12 @@ async function main() {
                           <div class="form-inline w-50 ">
                               <div class="form-group m-md-0">
                                   <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                  <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                                   <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                               </div>
                           </div>
                           <div class="form-inline w-50 mx-auto">
                               <div class="form-group m-md-0">
                               <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                              <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                               <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                               </div>
                           </div>
@@ -1224,14 +1218,12 @@ async function main() {
                     <div class="form-inline w-50 mx-auto">
                         <div class="form-group m-md-0">
                             <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                             <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                         </div>
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
                         <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}% </p>
                         <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}% </p>
                         </div>
                     </div>
@@ -1258,14 +1250,12 @@ async function main() {
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                     <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                                     <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                                 </div>
                             </div>
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                 <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                                 <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                                 </div>
                             </div>
@@ -1309,14 +1299,12 @@ async function main() {
                     <div class="form-inline w-50 mx-auto">
                         <div class="form-group m-md-0">
                             <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                             <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                         </div>
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
                         <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                         <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                         </div>
                     </div>
@@ -1345,14 +1333,12 @@ async function main() {
                             <div class="form-inline w-50 ">
                                 <div class="form-group m-md-0">
                                     <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
                                     <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
                                 </div>
                             </div>
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
                                 <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${eWeekAPR}%</p>
                                 <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
                                 </div>
                             </div>
@@ -1437,9 +1423,10 @@ async function main() {
     tvl_display: pool6tvlDisplay,
     tvl_class: tvl_class,
     total_pgl: null,
-    pool_share_display: '',
-    pool_share_display_pgl: '',
-    stake_display: ''
+    pool_share_display: poolShareDisplay_6,
+    pool_share_display_pgl: poolShareDisplay_6_pgl,
+    stake_display: '',
+    apy: link_annual_apy
   })
   pool({
     logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
@@ -1465,7 +1452,8 @@ async function main() {
     total_pgl: totalPoolPGL_5,
     pool_share_display: poolShareDisplay_5,
     pool_share_display_pgl: poolShareDisplay_5_pgl,
-    stake_display: stakeDisplay_5
+    stake_display: stakeDisplay_5,
+    apy: usdt_annual_apy
   })
   pool({
     logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
@@ -1491,7 +1479,8 @@ async function main() {
     total_pgl: totalPoolPGL_4,
     pool_share_display: poolShareDisplay_4,
     pool_share_display_pgl: poolShareDisplay_4_pgl,
-    stake_display: stakeDisplay_4
+    stake_display: stakeDisplay_4,
+    apy: eth_annual_apy
   })
   pool({
     logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
@@ -1517,7 +1506,8 @@ async function main() {
     total_pgl: totalPoolPGL_3,
     pool_share_display: poolShareDisplay_3,
     pool_share_display_pgl: poolShareDisplay_3_pgl,
-    stake_display: stakeDisplay_3
+    stake_display: stakeDisplay_3,
+    apy: png_annual_apy
   })
   poolSNOB({
     logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
@@ -1569,7 +1559,8 @@ async function main() {
     total_pgl: totalPoolPGL_1,
     pool_share_display: poolShareDisplay_1,
     pool_share_display_pgl: poolShareDisplay_1_pgl,
-    stake_display: stakeDisplay_1
+    stake_display: stakeDisplay_1,
+    apy: sushi_annual_apy
   })
 
   $(".unstakeBtn").click(function(){
