@@ -370,7 +370,7 @@ async function main() {
 
   const pool8tvl = totalStakedS3F / 1e18;
   const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
-  const pool8APR = (s3FRewardRate || 0) * 86400 / pool8tvl / 1e18;
+  const pool8APR = 2666 * snobPrice / pool8tvl * 100;
   
   const pool7tvl = totalStakedS3D / 1e18;
   const pool7tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool7tvl)}`;
@@ -1131,14 +1131,8 @@ async function main() {
 
   }
   function poolS3F(options) {
-    if (options.icequeen_apr) {
-
-      var eDayAPR = `0`;
-      var eWeekAPR = `0`;
-      var eYearAPR = `0`;
-
-      var combinedAprDisplay = ''
-    }
+    var eDayAPR = options.icequeen_apr;
+    var eYearAPR = options.icequeen_apr * 365;
 
     poolSize = '';
     if (options.total_staked) {
@@ -1225,8 +1219,8 @@ async function main() {
                     </div>
                     <div class="form-inline w-50 mx-auto mx-md-0">
                         <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${"0.00"}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${"0.00"}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
                         </div>
                     </div>
                 </div>
@@ -1257,8 +1251,8 @@ async function main() {
                             </div>
                             <div class="form-inline w-50 mx-auto">
                                 <div class="form-group m-md-0">
-                                <p class="m-0 font-size-12 font-weight-regular">${"0.00"}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${"0.00"}%</p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
                                 </div>
                             </div>
                         </div>
@@ -1306,8 +1300,8 @@ async function main() {
                   </div>
                   <div class="form-inline w-50 mx-auto mx-md-0">
                       <div class="form-group m-md-0">
-                      <p class="m-0 font-size-12 font-weight-regular">${"0.00"}% </p>
-                      <p class="m-0 font-size-12 font-weight-regular">${"0.00"}%</p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
                       </div>
                   </div>
 
@@ -1340,8 +1334,8 @@ async function main() {
                           </div>
                           <div class="form-inline w-50 mx-auto">
                               <div class="form-group m-md-0">
-                              <p class="m-0 font-size-12 font-weight-regular">${"0.00"}% </p>
-                              <p class="m-0 font-size-12 font-weight-regular">${"0.00"}%</p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
                               </div>
                           </div>
                       </div>
@@ -1673,7 +1667,7 @@ async function main() {
     stake: 'stakeS3F',
     unstake: 'withdrawPool8',
     claim: 'claimPool8',
-    icequeen_apr: 0,
+    icequeen_apr: pool8APR,
     snowglobe_apr: null,
     tvl_display: pool8tvlDisplay,
     total_pgl: null,
