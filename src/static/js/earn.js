@@ -1725,7 +1725,7 @@ async function main() {
     total_pgl: null,
     pool_share_display: poolShareDisplay_6,
     pool_share_display_pgl: poolShareDisplay_6_pgl,
-    stake_display: '',
+    stake_display: stakeDisplay_6,
     apy: link_annual_apy
   })
   pool({
