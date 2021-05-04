@@ -445,12 +445,12 @@ const genpool = async (pool) => {
   let pair_tvl = 0;
   let pair_tvl_display = 0;
   
-  window.tvl.pairs.forEach( p => {
-    if ( pairmatch(p, pool.token0.toLowerCase(), pool.token1.toLowerCase()) ) {
-      pair_tvl = p.locked;
-      pair_tvl_display = `$${new Intl.NumberFormat('en-US').format(pair_tvl)}`
-    } 
-  });    
+  // window.tvl.pairs.forEach( p => {
+  //   if ( pairmatch(p, pool.token0.toLowerCase(), pool.token1.toLowerCase()) ) {
+  //     pair_tvl = p.locked;
+  //     pair_tvl_display = `$${new Intl.NumberFormat('en-US').format(pair_tvl)}`
+  //   }
+  // });
 
   let poolShareDisplay = null;
   let stakeDisplay = null;
@@ -502,7 +502,7 @@ const genpool = async (pool) => {
     approve: `snowglobe('approve', '${pool.pair}', '${pool.snowglobe}')`,
     stake: `snowglobe('stake','${pool.pair}', '${pool.snowglobe}')`,
     withdraw: `snowglobe('withdraw', '${pool.pair}', '${pool.snowglobe}')`,
-    tvl_display: pair_tvl_display,
+    tvl_display: '',
     pool_share_display: null,
     stake_display: stakeDisplay,
     total_pgl: null,

@@ -30,13 +30,12 @@ async function main() {
 
   return Promise.all([
     init_ethers(),
-    getAvaxPrices(),
-    $.getJSON('https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json'),
+    getAvaxPrices()
   ]).then(results => {
     
     window.app = results[0]  
     window.prices = results[1]  
-    window.tvl = results[2]
+    window.tvl = 0;
     
     gentop().then(td => { console.log('top done:', td) })
     genpool(thispagespools.pop())
