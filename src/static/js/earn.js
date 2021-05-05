@@ -114,7 +114,10 @@ async function main() {
     return stakingContract_approve(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
   }
   const stakeS3F  = async function () {
-    return stakingContract_stake(STAKING_ABI, STAKING_ADDR,  S3F_ADDRESS, App)
+    // return stakingContract_stake(STAKING_ABI, STAKING_ADDR,  S3F_ADDRESS, App)
+    return stakingContract_stake({
+      STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
+    })
   }
   const approveSNOB = async function () {
     return icequeenContract_approve(PGL_ABI, ICEQUEEN_ADDR, SNOB_AVAX_ADDR, App)
@@ -168,7 +171,8 @@ async function main() {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 7, SPGL_LINK_ADDRESS, App)
   }
   const withdrawPool8 = async function () {
-    return stakingContract_withdraw(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
+    // return stakingContract_withdraw(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
+    return stakingContract_withdraw({STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F})
   }
   const signer = App.provider.getSigner()
 
@@ -1620,6 +1624,7 @@ async function main() {
   })
 
   $(".unstakeBtn").click(function(){
+    console.log('unstakeBtn clicked')
     let fn = $(this).attr("data-btn");
     switch (fn) {
       case 'withdrawPool1':
@@ -1747,271 +1752,328 @@ async function main() {
     }
   });
 
-  hideLoading();
-}
-
-function stakeUnstake(amount, stake, st){
-  return `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-  <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
-  <p class="m-0 font-size-16 font-weight-regular">${amount} ${(st?st:'sPGL')} </p>
-  <p class="m-0 font-size-12">(Available to ${(stake? 'Stake': 'Unstake')}) </p>
-  </div>`
-}
-
-function poolS3F(options) {
-  let poolId = `pool_${options.pool_name.split(' ').join('')}`;
-  let eDayAPR = options.icequeen_apr;
-  let eYearAPR = options.icequeen_apr * 365;
-
-  poolSize = '';
-  if (options.total_staked) {
-    let poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3F </span>`;
+  function stakeUnstake(amount, stake, st){
+    return `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+    <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+    <p class="m-0 font-size-16 font-weight-regular">${amount} ${(st?st:'sPGL')} </p>
+    <p class="m-0 font-size-12">(Available to ${(stake? 'Stake': 'Unstake')}) </p>
+    </div>`
   }
-  let estimatedRate = '';
-  let poolShare = '';
-  let earning = '';
-  let stakeDisplay = '';
-
-  if ( options.user_pool_percent > 0 ) {
-    if (options.pool_share_display) {
-      poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
-      <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
-      <p class="m-0 font-size-12">(${options.user_pool_percent.toFixed(6)}%)</p>
-      </div>`;
+  
+  function poolS3F(options){
+    let poolId = `pool_${options.pool_name.split(' ').join('')}`;
+    let eDayAPR = options.icequeen_apr;
+    let eYearAPR = options.icequeen_apr * 365;
+  
+    poolSize = '';
+    if (options.total_staked) {
+      let poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3F </span>`;
     }
-    if (options.stake_display) {
-      stakeDisplay = options.stake_display;
+    let estimatedRate = '';
+    let poolShare = '';
+    let earning = '';
+    let stakeDisplay = '';
+  
+    if ( options.user_pool_percent > 0 ) {
+      if (options.pool_share_display) {
+        poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
+        <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
+        <p class="m-0 font-size-12">(${options.user_pool_percent.toFixed(6)}%)</p>
+        </div>`;
+      }
+      if (options.stake_display) {
+        stakeDisplay = options.stake_display;
+      }
+  
+      estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+        <p class="m-0 font-size-12"> Estimated Rate</p>
+        <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(2666 * options.user_pool_percent / 100 ).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
+        <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * options.snobPrice).toFixed(2)})</p>
+        </div>`;
+  
+      earning = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You are earning</p>
+        <p class="m-0 font-size-16 font-weight-regular">${(2666 * options.user_pool_percent / 100 ).toFixed(2)} SNOB </p>
+        <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * options.snobPrice).toFixed(2)})</p>
+        </div>`
     }
-
-    estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-      <p class="m-0 font-size-12"> Estimated Rate</p>
-      <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(2666 * options.user_pool_percent / 100 ).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
-      <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * snobPrice).toFixed(2)})</p>
-      </div>`;
-
-    earning = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You are earning</p>
-      <p class="m-0 font-size-16 font-weight-regular">${(2666 * options.user_pool_percent / 100 ).toFixed(2)} SNOB </p>
-      <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * snobPrice).toFixed(2)})</p>
-      </div>`
-  }
-
-  let availableStake = '';
-  if ( options.display_amount > 0 ) {
-    availableStake = stakeUnstake(options.display_amount.toFixed(6), true, 'S3F');
-  }
-  let availableUnstake = ''
-  if ( options.staked_pool / 1e18 > 0 ) {
-    availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(6), false, 'S3F');
-  }
-  let has_options = false
-  approveBtn = '';
-  stakeBtn = '';
-  unstakeBtn = '';
-  claimBtn = '';
-  if ( options.display_amount > 0 ) {
-    has_options = true
-    approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
-    stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake S3F</button>`;
-  }
-  if ( options.staked_pool / 1e18 > 0 ) {
-    has_options = true
-    unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake S3F</button>`;
-  }
-  if ( options.pending_tokens / 1e18 > 0 ) {
-    has_options = true
-    claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
-  }
-
-  if( !has_options ){
-    let poolPrint = `<div id="${poolId}" class="col-md-12">
-      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
-          <div class="row">
-              <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
-                  <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0 ">
-                      <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                      <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
-                      <img style="background-color: white" class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
-                      <h6 class="pl-10 m-0">${options.pool_name}</h6>
-                  </div>
-              </div>
-              <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
-                  <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
-                  <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
-              </div>
-              <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                  <div class="form-inline w-50 mx-auto">
-                      <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                      </div>
-                  </div>
-                  <div class="form-inline w-50 mx-auto mx-md-0">
-                      <div class="form-group m-md-0">
-                      <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                      <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
-                  <p class="m-0 font-size-12"> Pool Size</p>
-                      ${poolSize}
-              </div>
-              <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                  <a href="/stablevault" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get S3F from StableVault</a>
-              </div>
-
-              <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                  <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
-              </div>
-          </div>
-          <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
-              <div class="row">
-                  <div class="col-sm-12 col-md-3 align-items-center pb-10">
-                      <div class="row">
-                          <p class="w-full text-center">Rewards APR :</p>
-                      </div>
-                      <div class="row">
-                          <div class="form-inline w-50 mx-auto">
-                              <div class="form-group m-md-0">
-                                  <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                  <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                              </div>
-                          </div>
-                          <div class="form-inline w-50 mx-auto">
-                              <div class="form-group m-md-0">
-                      <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                      <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                      <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">80,000 SNOB</span>
-                      <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
-                  </div>
-
-                  <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                      <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
-                      <p class="m-0 font-size-16 font-weight-regular">O S3F </p>
-                      <p class="m-0 font-size-12">(No S3F to Stake/Withdraw) </p>
-                  </div>
-              </div>
-          </div>
-      </div>
-      </div>`;
-
-      console.log('poolPrint', poolPrint)
-    if($(`#${poolId}`).length) {
-      $(`#${poolId}`).replaceWith(poolPrint);
+  
+    let availableStake = '';
+    if ( options.display_amount > 0 ) {
+      availableStake = stakeUnstake(options.display_amount.toFixed(6), true, 'S3F');
     }
-    else {
-      $('#snob-pools-new').append(poolPrint); 
-    }   
-  }
-  if(has_options){
-    let poolPrint = `<div id="${poolId}" class="col-md-12">
-      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
-          <div class="row">
-              <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
-                  <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0">
-                      <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                      <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
-                      <img style="background-color: white" class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
-                      <h6 class="pl-10 m-0">${options.pool_name}</h6>
-                  </div>
-              </div>
-              <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
-                  <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
-                  <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
-              </div>
-              <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                  <div class="form-inline w-50 mx-auto">
-                      <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                      </div>
-                  </div>
-                  <div class="form-inline w-50 mx-auto mx-md-0">
-                      <div class="form-group m-md-0">
+    let availableUnstake = ''
+    if ( options.staked_pool / 1e18 > 0 ) {
+      availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(6), false, 'S3F');
+    }
+    let has_options = false
+    approveBtn = '';
+    stakeBtn = '';
+    unstakeBtn = '';
+    claimBtn = '';
+    if ( options.display_amount > 0 ) {
+      has_options = true
+      approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
+      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake S3F</button>`;
+    }
+    if ( options.staked_pool / 1e18 > 0 ) {
+      has_options = true
+      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake S3F</button>`;
+    }
+    if ( options.pending_tokens / 1e18 > 0 ) {
+      has_options = true
+      claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
+    }
+  
+    if( !has_options ){
+      let poolPrint = `<div id="${poolId}" class="col-md-12">
+        <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                    <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0 ">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <img style="background-color: white" class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
+                        <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
+                    <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+                </div>
+                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto mx-md-0">
+                        <div class="form-group m-md-0">
                         <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
                         <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                      </div>
-                  </div>
-
-              </div>
-              ${estimatedRate}
-              <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-              ${approveBtn}
-              ${stakeBtn}
-              ${unstakeBtn}
-              ${claimBtn}
-              </div>
-
-              <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                  <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
-              </div>
-          </div>
-
-          <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
-              <div class="row">
-                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
-                      <div class="row text-center">
-                          <p class="font-weight-light">Rewards APR :</p>
-                      </div>
-                      <div class="row">
-                          <div class="form-inline w-50 ">
-                              <div class="form-group m-md-0">
-                                  <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                  <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                              </div>
-                          </div>
-                          <div class="form-inline w-50 mx-auto">
-                              <div class="form-group m-md-0">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
+                    <p class="m-0 font-size-12"> Pool Size</p>
+                        ${poolSize}
+                </div>
+                <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <a href="/stablevault" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get S3F from StableVault</a>
+                </div>
+  
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
+                </div>
+            </div>
+            <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 align-items-center pb-10">
+                        <div class="row">
+                            <p class="w-full text-center">Rewards APR :</p>
+                        </div>
+                        <div class="row">
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                                </div>
+                            </div>
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
                         <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
                         <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
                         <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">80,000 SNOB</span>
                         <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
                         <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
-                  </div>
-                  <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
-                      <p class="m-0 font-size-12"> Pool Size</p>
-                      ${poolSize}
-                  </div>
-                  ${poolShare}
-                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
-                      <p class="m-0 font-size-16 font-weight-regular">${(options.pending_tokens / 1e18).toFixed(6)}</p>
-                  </div>
-
-              </div>
-              <div class="row pt-20">
-                  ${earning}
-
-                  ${availableStake}
-                  
-                  ${availableUnstake}
-              </div>
-          </div>
-      </div>
-  </div>`;
-
-    if($(`#${poolId}`).length) {
-      $(`#${poolId}`).replaceWith(poolPrint);
+                    </div>
+  
+                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+                        <p class="m-0 font-size-16 font-weight-regular">O S3F </p>
+                        <p class="m-0 font-size-12">(No S3F to Stake/Withdraw) </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>`;
+  
+        console.log('poolPrint', poolPrint)
+      if($(`#${poolId}`).length) {
+        $(`#${poolId}`).replaceWith(poolPrint);
+      }
+      else {
+        $('#snob-pools-new').append(poolPrint); 
+      }   
     }
-    else {
-      $('#snob-pools-new').append(poolPrint); 
-    }      
+    if(has_options){
+      let poolPrint = `<div id="${poolId}" class="col-md-12">
+        <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                    <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <img style="background-color: white" class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
+                        <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
+                    <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+                </div>
+                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto mx-md-0">
+                        <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                          <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
+                        </div>
+                    </div>
+  
+                </div>
+                ${estimatedRate}
+                <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                ${approveBtn}
+                ${stakeBtn}
+                ${unstakeBtn}
+                ${claimBtn}
+                </div>
+  
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
+                </div>
+            </div>
+  
+            <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
+                <div class="row">
+                    <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                        <div class="row text-center">
+                            <p class="font-weight-light">Rewards APR :</p>
+                        </div>
+                        <div class="row">
+                            <div class="form-inline w-50 ">
+                                <div class="form-group m-md-0">
+                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                                </div>
+                            </div>
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                          <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                          <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
+                          <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">80,000 SNOB</span>
+                          <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
+                          <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
+                    </div>
+                    <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"> Pool Size</p>
+                        ${poolSize}
+                    </div>
+                    ${poolShare}
+                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
+                        <p class="m-0 font-size-16 font-weight-regular">${(options.pending_tokens / 1e18).toFixed(6)}</p>
+                    </div>
+  
+                </div>
+                <div class="row pt-20">
+                    ${earning}
+  
+                    ${availableStake}
+                    
+                    ${availableUnstake}
+                </div>
+            </div>
+        </div>
+    </div>`;
+  
+      if($(`#${poolId}`).length) {
+        $(`#${poolId}`).replaceWith(poolPrint);
+      }
+      else {
+        $('#snob-pools-new').append(poolPrint); 
+      }      
+    }
   }
+  
+  async function renderPoolS3F ({
+    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+  }) {
+    const totalStakedS3F = await STAKING_CONTRACT.totalSupply();
+    
+    const stakedPool8 = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
+  
+    const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100;
+  
+    const pendingSNOBTokensPool8 = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  
+    const currentS3FTokens = await S3F_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  
+    const S3FDisplayAmt = currentS3FTokens > 1000 ? currentS3FTokens / 1e18 : 0;
+  
+    const pool8tvl = totalStakedS3F / 1e18;
+  
+    const prices = await getAvaxPrices();
+  
+    const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
+  
+    const pool8APR = 2666 * snobPrice / pool8tvl * 100;
+  
+    const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
+  
+    const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
+  
+    poolS3F({
+      logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
+      logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
+      logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
+      pool_nickname: 'pool-8',
+      pool_name: 'StableVault S3F 🌟',
+      url: null,
+      tvl: null,
+      pool_weight: null,
+      total_staked: totalStakedS3F,
+      user_pool_percent: userPool8Percent,
+      staked_pool: stakedPool8,
+      pending_tokens: pendingSNOBTokensPool8,
+      display_amount: S3FDisplayAmt,
+      approve: 'approveS3F',
+      stake: 'stakeS3F',
+      unstake: 'withdrawPool8',
+      claim: 'claimPool8',
+      icequeen_apr: pool8APR,
+      snowglobe_apr: null,
+      tvl_display: pool8tvlDisplay,
+      total_pgl: null,
+      pool_share_display: poolShareDisplay_8,
+      pool_share_display_pgl: '',
+      stake_display: '',
+      snobPrice
+    });
+    return;
+  }
+
+  hideLoading();
 }
 
 const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
@@ -2333,16 +2395,19 @@ const stakingContract_approve = async function (chefAbi, chefAddress, stakeToken
       })
   }
 }
-const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
+// const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
+const stakingContract_stake = async function ({
+  STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
+}) {
   const signer = App.provider.getSigner()
   console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
+  const STAKING_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer)
   console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
   console.log(CHEF_CONTRACT)
   const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
   console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
+  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR)
   console.log(allowedTokens)
   let allow = Promise.resolve()
   if (allowedTokens / 1e18 == 0) {
@@ -2354,11 +2419,18 @@ const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAd
         CHEF_CONTRACT.stake(currentTokens)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
+              // halfmoon.toggleModal('modal-loading')
               // snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
               // setTimeout(function(){ window.location.reload(true); }, 6000);
               
               // change here
+              return renderPoolS3F({
+                STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+              })
+            })
+            .then(() => {
+              halfmoon.toggleModal('modal-loading');
+              snobMessage(`Tokens deposit`, `Tokens deposited`, `checkmark-circle-outline`, `success`, false, `ok`);
             })
           })
           .catch(function () {
@@ -2374,10 +2446,12 @@ const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAd
     snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
   }
 }
-const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
+
+// const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
+const stakingContract_withdraw = async function ({STAKING_ABI, STAKING_ADDR, App, AppSTAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) {
   const signer = App.provider.getSigner()
   console.log(signer)
-  const STAKING_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
+  const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
   const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS)
   let allow = Promise.resolve()
   if (currentTokens / 1e18 > 0) {
@@ -2387,9 +2461,18 @@ const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeToke
         STAKING_CONTRACT.withdraw(currentTokens)
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
+              // halfmoon.toggleModal('modal-loading')
+              // setTimeout(function(){ window.location.reload(true); }, 6000);
+              // snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+
+              // change here
+              return renderPoolS3F({
+                STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+              })
+            })
+            .then(() => {
               halfmoon.toggleModal('modal-loading')
-              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
+              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`);
             })
           })
           .catch(function () {
@@ -2405,6 +2488,8 @@ const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeToke
     snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
   }
 }
+
+
 const stakingContract_claim = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
   console.log(signer)
@@ -2440,58 +2525,3 @@ const stakingContract_claim = async function (chefAbi, chefAddress, stakeTokenAd
   }
 }
 
-const renderPoolS3F = async function ({
-  STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-}) {
-  const totalStakedS3F = await STAKING_CONTRACT.totalSupply();
-  
-  const stakedPool8 = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
-
-  const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100;
-
-  const pendingSNOBTokensPool8 = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS);
-
-  const currentS3FTokens = await S3F_TOKEN.balanceOf(App.YOUR_ADDRESS)
-
-  const S3FDisplayAmt = currentS3FTokens > 1000 ? currentS3FTokens / 1e18 : 0;
-
-  const pool8tvl = totalStakedS3F / 1e18;
-
-  const prices = await getAvaxPrices();
-
-  const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
-
-  const pool8APR = 2666 * snobPrice / pool8tvl * 100;
-
-  const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
-
-  const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
-
-  poolS3F({
-    logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
-    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
-    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
-    pool_nickname: 'pool-8',
-    pool_name: 'StableVault S3F 🌟',
-    url: null,
-    tvl: null,
-    pool_weight: null,
-    total_staked: totalStakedS3F,
-    user_pool_percent: userPool8Percent,
-    staked_pool: stakedPool8,
-    pending_tokens: pendingSNOBTokensPool8,
-    display_amount: S3FDisplayAmt,
-    approve: 'approveS3F',
-    stake: 'stakeS3F',
-    unstake: 'withdrawPool8',
-    claim: 'claimPool8',
-    icequeen_apr: pool8APR,
-    snowglobe_apr: null,
-    tvl_display: pool8tvlDisplay,
-    total_pgl: null,
-    pool_share_display: poolShareDisplay_8,
-    pool_share_display_pgl: '',
-    stake_display: ''
-  });
-  return;
-}
