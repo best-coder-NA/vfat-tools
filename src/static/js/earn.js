@@ -5,6 +5,7 @@
 * @author Jongseung Lim -- https://yieldfarming.info
 * Copyright 2021. MIT Licensed.
 */
+
 $(function () {
   consoleInit();
   start(main);
@@ -1131,6 +1132,7 @@ async function main() {
 
   }
   function poolS3F(options) {
+    let poolId = `pool_${options.pool_name.trim()}`;
     var eDayAPR = options.icequeen_apr;
     var eYearAPR = options.icequeen_apr * 365;
 
@@ -1195,7 +1197,7 @@ async function main() {
     }
 
     if( !has_options ){
-      var poolPrint = `<div class="col-md-12">
+      var poolPrint = `<div id=${poolId} class="col-md-12">
         <div class="card border-0 p-10 pl-20 pr-20 mt-5">
             <div class="row">
                 <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
@@ -1276,7 +1278,7 @@ async function main() {
       $('#snob-pools-new').append(poolPrint);
     }
     if(has_options){
-      var poolPrint = `<div class="col-md-12">
+      var poolPrint = `<div id=${poolId} class="col-md-12">
       <div class="card border-0 p-10 pl-20 pr-20 mt-5">
           <div class="row">
               <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
@@ -1367,7 +1369,12 @@ async function main() {
           </div>
       </div>
   </div>`;
-      $('#snob-pools-new').append(poolPrint);
+      if($(`#${poolId}`)) {
+        $(`#${poolId}`).replaceWith(poolPrint);
+      }
+      else {
+        $('#snob-pools-new').append(poolPrint); 
+      }      
     }
 
 
@@ -1649,6 +1656,58 @@ async function main() {
       $('#snob-pools-used').append(poolPrint);
     }
   }
+  poolS3F({
+    logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
+    pool_nickname: 'pool-8',
+    pool_name: 'StableVault S3F 🌟',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStakedS3F,
+    user_pool_percent: userPool8Percent,
+    staked_pool: stakedPool8,
+    pending_tokens: pendingSNOBTokensPool8,
+    display_amount: S3FDisplayAmt,
+    approve: 'approveS3F',
+    stake: 'stakeS3F',
+    unstake: 'withdrawPool8',
+    claim: 'claimPool8',
+    icequeen_apr: pool8APR,
+    snowglobe_apr: null,
+    tvl_display: pool8tvlDisplay,
+    total_pgl: null,
+    pool_share_display: poolShareDisplay_8,
+    pool_share_display_pgl: '',
+    stake_display: ''
+  })
+  poolS3F({
+    logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
+    pool_nickname: 'pool-8',
+    pool_name: 'StableVault S3F 🌟',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStakedS3F,
+    user_pool_percent: userPool8Percent,
+    staked_pool: stakedPool8,
+    pending_tokens: pendingSNOBTokensPool8,
+    display_amount: S3FDisplayAmt,
+    approve: 'approveS3F',
+    stake: 'stakeS3F',
+    unstake: 'withdrawPool8',
+    claim: 'claimPool8',
+    icequeen_apr: pool8APR,
+    snowglobe_apr: null,
+    tvl_display: pool8tvlDisplay,
+    total_pgl: null,
+    pool_share_display: poolShareDisplay_8,
+    pool_share_display_pgl: '',
+    stake_display: ''
+  })
   poolS3F({
     logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
@@ -2334,8 +2393,10 @@ const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAd
           .then(function (t) {
             App.provider.waitForTransaction(t.hash).then(function () {
               halfmoon.toggleModal('modal-loading')
-              snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
+              // snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              // setTimeout(function(){ window.location.reload(true); }, 6000);
+              
+              // change here
             })
           })
           .catch(function () {
