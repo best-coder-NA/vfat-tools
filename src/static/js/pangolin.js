@@ -11,7 +11,7 @@ const thispagespools = [
     snowglobe: '0x234ed7c95Be12b2A0A43fF602e737225C83c2aa1',
     nickname: 'PNG-YFI Pangolin LP',
     token0: '0x60781C2586D68229fde47564546784ab3fACA982',
-    token1: '0x99519acb025a0e0d44c3875a4bbf03af65933627', 
+    token1: '0x99519AcB025a0e0d44c3875A4BbF03af65933627',
     pair: '0xa465e953f9f2a00b2c1c5805560207b66a570093',
     stake: '0xc7D0E29b616B29aC6fF4FD5f37c8Da826D16DB0D'
   },
@@ -20,7 +20,7 @@ const thispagespools = [
     snowglobe: '0x14F98349Af847AB472Eb7f7c705Dc4Bee530713B',
     nickname: 'PNG-UNI Pangolin LP',
     token0: '0x60781C2586D68229fde47564546784ab3fACA982',
-    token1: '0xf39f9671906d8630812f9d9863bbef5d523c84ab', 
+    token1: '0xf39f9671906d8630812f9d9863bBEf5D523c84Ab',
     pair: '0x874685bc6794c8b4befbd037147c2eef990761a9',
     stake: '0x4f74BbF6859A994e7c309eA0f11E3Cc112955110'
   },  
@@ -29,7 +29,7 @@ const thispagespools = [
     snowglobe: '0x3270b685A4a61252C6f30c1eBca9DbE622984e22',
     nickname: 'PNG-AAVE Pangolin LP',
     token0: '0x60781C2586D68229fde47564546784ab3fACA982',
-    token1: '0x8ce2dee54bb9921a2ae0a63dbb2df8ed88b91dd9', 
+    token1: '0x8cE2Dee54bB9921a2AE0A63dBb2DF8eD88B91dD9',
     pair: '0x0025cebd8289bbe0a51a5c85464da68cbc2ec0c4',
     stake: '0xFd9ACEc0F413cA05d5AD5b962F3B4De40018AD87'
   },
@@ -38,7 +38,7 @@ const thispagespools = [
     snowglobe: '0xcD651AD29835099334d312a9372418Eb2b70c72F',
     nickname: 'PNG-DAI Pangolin LP',
     token0: '0x60781C2586D68229fde47564546784ab3fACA982',
-    token1: '0xba7deebbfc5fa1100fb055a87773e1e99cd3507a', 
+    token1: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
     pair: '0xd765b31399985f411a9667330764f62153b42c76',
     stake: '0xe3103e565cF96a5709aE8e603B1EfB7fED04613B'
   },  
@@ -46,7 +46,7 @@ const thispagespools = [
     pool_id: 'png-sushi',
     snowglobe: '0x8eDd233546730C51a9d3840e954E5581Eb3fDAB1',
     nickname: 'SUSHI-PNG Pangolin LP',
-    token0: '0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc',
+    token0: '0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc',
     token1: '0x60781C2586D68229fde47564546784ab3fACA982', 
     pair: '0xf105fb50fc6ddd8a857bbecd296c8a630e8ca857',
     stake: '0x633F4b4DB7dD4fa066Bd9949Ab627a551E0ecd32'

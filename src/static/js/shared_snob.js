@@ -455,8 +455,8 @@ const genpool = async (pool) => {
     stakeDisplay = `Your LP value is <b>${reserve0Owned.toFixed(3)}</b> ${TOKEN_NAMES[token0Address]} / <b>${reserve1Owned.toFixed(3)}</b> ${TOKEN_NAMES[token1Address]} ($<b>${value.toFixed(2)}</b>)**</b>`
   }   
   layoutpool({
-    logo_token1: `https://x-api.snowball.network/assets/avalanche-tokens/${pool.token0.toLowerCase()}/logo.png`,
-    logo_token2: `https://x-api.snowball.network/assets/avalanche-tokens/${pool.token1.toLowerCase()}/logo.png`,      
+    logo_token1: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token0}/logo.png`,
+    logo_token2: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
     url: `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`,
     pool_name: pool.nickname,
     apr: null,
