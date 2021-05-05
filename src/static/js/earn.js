@@ -74,6 +74,100 @@ async function main() {
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
   const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C"
 
+  // const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
+  const stakingContract_stake = async ({
+    STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
+  }) => {
+    const signer = App.provider.getSigner()
+    console.log(signer)
+    const STAKING_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer)
+    console.log(STAKING_TOKEN)
+    const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
+    console.log(CHEF_CONTRACT)
+    const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
+    console.log(currentTokens)
+    const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR)
+    console.log(allowedTokens)
+    let allow = Promise.resolve()
+    if (allowedTokens / 1e18 == 0) {
+      snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
+    } else if (currentTokens / 1e18 > 0) {
+      halfmoon.toggleModal('modal-loading')
+      allow
+        .then(async function () {
+          CHEF_CONTRACT.stake(currentTokens)
+            .then(function (t) {
+              App.provider.waitForTransaction(t.hash).then(function () {
+                // halfmoon.toggleModal('modal-loading')
+                // snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+                // setTimeout(function(){ window.location.reload(true); }, 6000);
+                
+                // change here
+                return renderPoolS3F({
+                  STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+                })
+              })
+              .then(() => {
+                halfmoon.toggleModal('modal-loading');
+                snobMessage(`Tokens deposit`, `Tokens deposited`, `checkmark-circle-outline`, `success`, false, `ok`);
+              })
+            })
+            .catch(function () {
+              halfmoon.toggleModal('modal-loading')
+              snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+            })
+        })
+        .catch(function () {
+          halfmoon.toggleModal('modal-loading')
+          snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+        })
+    } else {
+      snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
+    }
+  }
+
+  // const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
+  const stakingContract_withdraw = async ({STAKING_ABI, STAKING_ADDR, App, AppSTAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) => {
+    const signer = App.provider.getSigner()
+    console.log(signer)
+    const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
+    const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+    let allow = Promise.resolve()
+    if (currentTokens / 1e18 > 0) {
+      halfmoon.toggleModal('modal-loading')
+      allow
+        .then(async function () {
+          STAKING_CONTRACT.withdraw(currentTokens)
+            .then(function (t) {
+              App.provider.waitForTransaction(t.hash).then(function () {
+                // halfmoon.toggleModal('modal-loading')
+                // setTimeout(function(){ window.location.reload(true); }, 6000);
+                // snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+
+                // change here
+                return renderPoolS3F({
+                  STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+                })
+              })
+              .then(() => {
+                halfmoon.toggleModal('modal-loading')
+                snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`);
+              })
+            })
+            .catch(function () {
+              halfmoon.toggleModal('modal-loading')
+              snobMessage(`Oops! Failed`, `Withdrawn Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+            })
+        })
+        .catch(function () {
+          halfmoon.toggleModal('modal-loading')
+          snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+        })
+    } else {
+      snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
+    }
+  }
+
   const approveSPGLSUSHI = async function () {
     return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_SUSHI_ADDRESS, App)
   }
@@ -2070,6 +2164,135 @@ async function main() {
       stake_display: '',
       snobPrice
     });
+
+    $(".unstakeBtn").click(function(){
+      console.log('unstakeBtn clicked')
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'withdrawPool1':
+          withdrawPool1();
+          break;
+        case 'withdrawPool2':
+          withdrawPool2();
+          break;
+        case 'withdrawPool3':
+          withdrawPool3();
+          break;
+        case 'withdrawPool4':
+          withdrawPool4();
+          break;
+        case 'withdrawPool5':
+          withdrawPool5();
+          break;
+        case 'withdrawPool6':
+          withdrawPool6();
+          break;
+        case 'withdrawPool7':
+          withdrawPool7();
+          break;
+        case 'withdrawPool8':
+          withdrawPool8();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
+  
+    $(".claimBtn").click(function(){
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'claimPool1':
+          claimPool1();
+          break;
+        case 'claimPool2':
+          claimPool2();
+          break;
+        case 'claimPool3':
+          claimPool3();
+          break;
+        case 'claimPool4':
+          claimPool4();
+          break;
+        case 'claimPool5':
+          claimPool5();
+          break;
+        case 'claimPool6':
+          claimPool6();
+          break;
+        case 'claimPool7':
+          claimPool7();
+          break;
+        case 'claimPool8':
+          claimPool8();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
+  
+    $(".approveBtn").click(function(){
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'approveSPGLSUSHI':
+          approveSPGLSUSHI();
+          break;
+        case 'approveSNOB':
+          approveSNOB();
+          break;
+        case 'approveSPGLPNG':
+          approveSPGLPNG();
+          break;
+        case 'approveSPGLETH':
+          approveSPGLETH();
+          break;
+        case 'approveSPGLUSDT':
+          approveSPGLUSDT();
+          break;
+        case 'approveSPGLLINK':
+          approveSPGLLINK();
+          break;
+        case 'approveS3D':
+          approveS3D();
+          break;
+        case 'approveS3F':
+          approveS3F();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
+  
+    $(".stakeBtn").click(function(){
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'stakeSPGLSUSHI':
+          stakeSPGLSUSHI();
+          break;
+        case 'stakeSNOB':
+          stakeSNOB();
+          break;
+        case 'stakeSPGLPNG':
+          stakeSPGLPNG();
+          break;
+        case 'stakeSPGLETH':
+          stakeSPGLETH();
+          break;
+        case 'stakeSPGLUSDT':
+          stakeSPGLUSDT();
+          break;
+        case 'stakeSPGLLINK':
+          stakeSPGLLINK();
+          break;
+        case 'stakeS3D':
+          stakeS3D();
+          break;
+        case 'stakeS3F':
+          stakeS3F();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
     return;
   }
 
@@ -2395,99 +2618,7 @@ const stakingContract_approve = async function (chefAbi, chefAddress, stakeToken
       })
   }
 }
-// const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-const stakingContract_stake = async function ({
-  STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
-}) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
-  console.log(CHEF_CONTRACT)
-  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
-  if (allowedTokens / 1e18 == 0) {
-    snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
-  } else if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.stake(currentTokens)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              // halfmoon.toggleModal('modal-loading')
-              // snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              // setTimeout(function(){ window.location.reload(true); }, 6000);
-              
-              // change here
-              return renderPoolS3F({
-                STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-              })
-            })
-            .then(() => {
-              halfmoon.toggleModal('modal-loading');
-              snobMessage(`Tokens deposit`, `Tokens deposited`, `checkmark-circle-outline`, `success`, false, `ok`);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
-  } else {
-    snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
-  }
-}
 
-// const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-const stakingContract_withdraw = async function ({STAKING_ABI, STAKING_ADDR, App, AppSTAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
-  const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-  let allow = Promise.resolve()
-  if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        STAKING_CONTRACT.withdraw(currentTokens)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              // halfmoon.toggleModal('modal-loading')
-              // setTimeout(function(){ window.location.reload(true); }, 6000);
-              // snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-
-              // change here
-              return renderPoolS3F({
-                STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-              })
-            })
-            .then(() => {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Withdrawn Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
-  } else {
-    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
-  }
-}
 
 
 const stakingContract_claim = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
