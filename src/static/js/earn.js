@@ -286,10 +286,10 @@ async function main() {
   let snobTotalSupply, pendingSNOBTokensPool1, pendingSNOBTokensPool2, pendingSNOBTokensPool3, pendingSNOBTokensPool4, pendingSNOBTokensPool5, pendingSNOBTokensPool6, pendingSNOBTokensPool7, pendingSNOBTokensPool8;
   let currentSNOBTokens, snowballMultiplier, blockRate, blockNumber, currentBlock, yesterdayBlock;
 
-  // change here
-  await renderPoolS3F({
-    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-  });
+  // // change here
+  // await renderPoolS3F({
+  //   STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+  // });
 
   await Promise.all([
     SNOB_TOKEN.totalSupply(),
@@ -1529,6 +1529,11 @@ async function main() {
   //   pool_share_display_pgl: '',
   //   stake_display: ''
   // })
+
+  // change here
+  await renderPoolS3F({
+    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+  });
   poolS3D({
     logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xba7deebbfc5fa1100fb055a87773e1e99cd3507a/logo.png',
     logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xaeb044650278731ef3dc244692ab9f64c78ffaea/logo.png',
