@@ -2077,7 +2077,7 @@ async function main() {
   
     const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100;
   
-    const pendingSNOBTokensPool8 = await SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS);
+    const pendingSNOBTokensPool8 = await STAKING_CONTRACT.earned(App.YOUR_ADDRESS);
   
     const currentS3FTokens = await S3F_TOKEN.balanceOf(App.YOUR_ADDRESS)
   
