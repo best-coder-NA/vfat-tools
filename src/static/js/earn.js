@@ -74,7 +74,6 @@ async function main() {
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
   const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C"
 
-  // const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
   const stakingContract_stake = async ({
     STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
   }) => {
@@ -98,11 +97,6 @@ async function main() {
           CHEF_CONTRACT.stake(currentTokens)
             .then(function (t) {
               App.provider.waitForTransaction(t.hash).then(function () {
-                // halfmoon.toggleModal('modal-loading')
-                // snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-                // setTimeout(function(){ window.location.reload(true); }, 6000);
-                
-                // change here
                 return renderPoolS3F({
                   STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
                 })
@@ -126,7 +120,6 @@ async function main() {
     }
   }
 
-  // const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
   const stakingContract_withdraw = async ({STAKING_ABI, STAKING_ADDR, App, AppSTAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) => {
     const signer = App.provider.getSigner()
     console.log(signer)
@@ -140,11 +133,6 @@ async function main() {
           STAKING_CONTRACT.withdraw(currentTokens)
             .then(function (t) {
               App.provider.waitForTransaction(t.hash).then(function () {
-                // halfmoon.toggleModal('modal-loading')
-                // setTimeout(function(){ window.location.reload(true); }, 6000);
-                // snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-
-                // change here
                 return renderPoolS3F({
                   STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
                 })
@@ -208,7 +196,6 @@ async function main() {
     return stakingContract_approve(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
   }
   const stakeS3F  = async function () {
-    // return stakingContract_stake(STAKING_ABI, STAKING_ADDR,  S3F_ADDRESS, App)
     return stakingContract_stake({
       STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
     })
@@ -265,7 +252,6 @@ async function main() {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 7, SPGL_LINK_ADDRESS, App)
   }
   const withdrawPool8 = async function () {
-    // return stakingContract_withdraw(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
     return stakingContract_withdraw({STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F})
   }
   const signer = App.provider.getSigner()
@@ -285,11 +271,6 @@ async function main() {
   const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
   let snobTotalSupply, pendingSNOBTokensPool1, pendingSNOBTokensPool2, pendingSNOBTokensPool3, pendingSNOBTokensPool4, pendingSNOBTokensPool5, pendingSNOBTokensPool6, pendingSNOBTokensPool7, pendingSNOBTokensPool8;
   let currentSNOBTokens, snowballMultiplier, blockRate, blockNumber, currentBlock, yesterdayBlock;
-
-  // // change here
-  // await renderPoolS3F({
-  //   STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-  // });
 
   await Promise.all([
     SNOB_TOKEN.totalSupply(),
@@ -1503,34 +1484,6 @@ async function main() {
       $('#snob-pools-used').append(poolPrint);
     }
   }
-  // poolS3F({
-  //   logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
-  //   logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
-  //   logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
-  //   pool_nickname: 'pool-8',
-  //   pool_name: 'StableVault S3F 🌟',
-  //   url: null,
-  //   tvl: null,
-  //   pool_weight: null,
-  //   total_staked: totalStakedS3F,
-  //   user_pool_percent: userPool8Percent,
-  //   staked_pool: stakedPool8,
-  //   pending_tokens: pendingSNOBTokensPool8,
-  //   display_amount: S3FDisplayAmt,
-  //   approve: 'approveS3F',
-  //   stake: 'stakeS3F',
-  //   unstake: 'withdrawPool8',
-  //   claim: 'claimPool8',
-  //   icequeen_apr: pool8APR,
-  //   snowglobe_apr: null,
-  //   tvl_display: pool8tvlDisplay,
-  //   total_pgl: null,
-  //   pool_share_display: poolShareDisplay_8,
-  //   pool_share_display_pgl: '',
-  //   stake_display: ''
-  // })
-
-  // change here
   await renderPoolS3F({
     STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
   });
