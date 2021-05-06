@@ -1675,8 +1675,8 @@ async function main() {
     apy: sushi_annual_apy
   })
 
+  $(".unstakeBtn").unbind('click');
   $(".unstakeBtn").click(function(){
-    console.log('unstakeBtn clicked')
     let fn = $(this).attr("data-btn");
     switch (fn) {
       case 'withdrawPool1':
@@ -1708,6 +1708,7 @@ async function main() {
     }
   });
 
+  $(".claimBtn").unbind('click');
   $(".claimBtn").click(function(){
     let fn = $(this).attr("data-btn");
     switch (fn) {
@@ -1740,6 +1741,7 @@ async function main() {
     }
   });
 
+  $(".claimBtn").unbind('click');
   $(".approveBtn").click(function(){
     let fn = $(this).attr("data-btn");
     switch (fn) {
@@ -1772,6 +1774,7 @@ async function main() {
     }
   });
 
+  $(".stakeBtn").unbind('click');
   $(".stakeBtn").click(function(){
     let fn = $(this).attr("data-btn");
     switch (fn) {
@@ -2123,8 +2126,8 @@ async function main() {
       snobPrice
     });
 
+    $(".unstakeBtn").unbind('click');
     $(".unstakeBtn").click(function(){
-      console.log('unstakeBtn clicked')
       let fn = $(this).attr("data-btn");
       switch (fn) {
         case 'withdrawPool1':
@@ -2156,6 +2159,7 @@ async function main() {
       }
     });
   
+    $(".claimBtn").unbind('click');
     $(".claimBtn").click(function(){
       let fn = $(this).attr("data-btn");
       switch (fn) {
@@ -2188,6 +2192,7 @@ async function main() {
       }
     });
   
+    $(".approveBtn").unbind('click');
     $(".approveBtn").click(function(){
       let fn = $(this).attr("data-btn");
       switch (fn) {
@@ -2220,6 +2225,7 @@ async function main() {
       }
     });
   
+    $(".stakeBtn").unbind('click');
     $(".stakeBtn").click(function(){
       let fn = $(this).attr("data-btn");
       switch (fn) {
