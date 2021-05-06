@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+  if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+    document.body.classList.add('dark-mode');
+  }
+
+</script>
+<body>
+<%- include(`${partials}/header_main`); -%>
+
+<%- include(`${partials}/wallet_error`); -%>
+
+
+<div class="page-wrapper with-navbar with-transitions" style="background-color: #ce5c0b2b;">
+    <div class="loader--1">
+        <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                <div></div><div></div>
+            </div></div>
+    </div>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <h2 style="margin-left: 40px;">Pangolin Governance <img class="rounded-circle" width="30" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png"></h2>
+            <div class="row">
+                <div class="card col-xs-12 col-sm-4 col-md-4">
+                    <div class="row">
+                        <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
+                            <div class="font-size-20 font-weight-bold mb-5">PNG balance</div>
+                            <div class="font-size-18 mb-10"><span id="png_balance"></span> PNG</div>
+                            <div class="font-size-20 font-weight-bold mb-5">Delegated Votes</div>
+                            <div class="font-size-18 mb-10"><span id="my_votes"></span> Votes</div>
+                            <div>Delegate your PNG here (self-delegation is an option):</div>
+                            <div class="mb-10"><a href="https://app.pangolin.exchange/#/vote" target="_blank">https://app.pangolin.exchange/#/vote</a></div>
+                            <div>*Note: If you have delegated to the Snowball multisig wallet, please remain delegated for the duration of the voting and execution process (3 days voting + 7 days execution wait time) so that we can retain a 1M PNG minimum balance</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card col-xs-10 col-sm-6 col-md-6">
+                    <h2 class="content-title">
+                        Proposals <ion-icon name="archive-outline"></ion-icon>
+                    </h2>
+                    <div class="row" id="proposal_list">
+                    </div>
+                </div>
+            </div>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+
+    <div>
+        <h1 class="error"></h1>
+
+
+
+        <%- include(`${partials}/scripts`, {scriptname: 'pangolin_vote'}); -%>
+
+    </div>
+    </div>
+</div>
+</body>
+</html>

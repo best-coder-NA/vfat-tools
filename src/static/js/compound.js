@@ -9,6 +9,12 @@ $(function () {
   consoleInit();
   start(main);
 });
+
+function pairmatch(p, t0, t1) {
+  return ( p.token0.symbol.toLowerCase() == t0.toLowerCase() || p.token1.symbol.toLowerCase() == t0.toLowerCase() ) && 
+         ( p.token0.symbol.toLowerCase() == t1.toLowerCase() || p.token1.symbol.toLowerCase() == t1.toLowerCase() )
+}
+
 async function main() {
 
   const App = await init_ethers();
@@ -184,7 +190,7 @@ async function main() {
   $('#snob-per-block').append(`${snowballsPerBlock / 1e18}`)
   $('#snob-block-pday').append(`${(snowballsPerBlock / 1e18 * 15000).toLocaleString()}`)
   $('#blocks-24-hrs').append(`~${Math.round(blocks24hrs).toLocaleString()}`)
-  $('#distribution_phase').append(`${blockNumber} / 1243700 (${1243700 - blockNumber} blocks left)`);
+  $('#distribution_phase').append(`${blockNumber.toLocaleString()} / 3,065,000 (${(3065000 - blockNumber).toLocaleString()} blocks left)`);
 
   document.getElementById('wallet-copy').addEventListener('click', ()=>{
     navigator.clipboard.writeText(`${App.YOUR_ADDRESS}`).then(function() {
@@ -193,10 +199,6 @@ async function main() {
       console.error('Snowball Platform: Could not copy text: ', err);
     });
   });
-
-
-
-
 
   let walletAddres = `${App.YOUR_ADDRESS}`;
   $('#wallet-address').html(`${walletAddres}`);
@@ -264,30 +266,27 @@ async function main() {
   let sushi_tvl_display = '';
   try {
     res = await $.ajax({
-      url: 'https://x-api.snowball.network/tvl/snob.json',
+      url: 'https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json',
       type: 'GET',
     })
     if (res && res.pairs) {
       res.pairs.forEach( p => {
-        if (p.token1.symbol.toLowerCase() == 'usdt') {
+        if ( pairmatch(p, 'usdt', 'wavax') ) {
           usdt_tvl = p.locked;
           usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'link') {
+        } else if ( pairmatch(p, 'link', 'wavax') ) {
           link_tvl = p.locked;
           link_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'sushi') {
+        } else if ( pairmatch(p, 'sushi', 'wavax') ) {
           sushi_tvl = p.locked;
           sushi_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'png') {
+        } else if ( pairmatch(p, 'png', 'wavax') ) {
           png_tvl = p.locked;
           png_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'eth') {
+        } else if ( pairmatch(p, 'eth', 'wavax') ) {
           eth_tvl = p.locked;
-          eth_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'usdt') {
-          usdt_tvl = p.locked;
-          usdt_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-        } else if (p.token1.symbol.toLowerCase() == 'wbtc') {
+          eth_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`        
+        } else if ( pairmatch(p, 'wbtc', 'wavax') ) {
           wbtc_tvl = p.locked;
           wbtc_tvl_display = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
         }
@@ -300,22 +299,22 @@ async function main() {
   // APR
   const PngStakingContracts = [
     {
-      stakingRewardAddress: '0xa16381eae6285123c323a665d4d99a6bcfaac307'
+      stakingRewardAddress: '0x417C02150b9a31BcaCb201d1D60967653384E1C6'
     },
     {
-      stakingRewardAddress: '0x8fd2755c6ae7252753361991bdcd6ff55bdc01ce'
+      stakingRewardAddress: '0x574d3245e36Cf8C9dc86430EaDb0fDB2F385F829'
     },
     {
-      stakingRewardAddress: '0x88f26b81c9cae4ea168e31bc6353f493fda29661'
+      stakingRewardAddress: '0xDA354352b03f87F84315eEF20cdD83c49f7E812e'
     },
     {
-      stakingRewardAddress: '0x7d7ecd4d370384b17dfc1b4155a8410e97841b65'
+      stakingRewardAddress: '0xBDa623cDD04d822616A263BF4EdbBCe0B7DC4AE7'
     },
     {
-      stakingRewardAddress: '0x4f019452f51bba0250ec8b69d64282b79fc8bd9f'
+      stakingRewardAddress: '0x94C021845EfE237163831DAC39448cFD371279d6'
     },
     {
-      stakingRewardAddress: '0x01897e996eefff65ae9999c02d1d8d7e9e0c0352'
+      stakingRewardAddress: '0xe968E9753fd2c323C2Fe94caFF954a48aFc18546'
     }
   ]
 
@@ -746,7 +745,7 @@ async function main() {
     }
   }
   layout_pool({
-    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB/logo.png',
     url: WBTC_AVAX_POOL_URL,
     pool_name: 'AVAX-WBTC Pangolin LP',
@@ -768,8 +767,8 @@ async function main() {
     owned_pgl: ownedPGL_wbtc
   })
   layout_pool({
-    logo_token1 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2 : 'https://x-api.snowball.network/assets/avalanche-tokens/0xde3a24028580884448a5397872046a019649b084/logo.png',
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
     url: USDT_AVAX_POOL_URL,
     pool_name: 'AVAX-USDT Pangolin LP',
     tvl: USDT_AVAX_TVL,
@@ -791,8 +790,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb3fe5374f67d7a22886a0ee082b2e2f9d2651651/logo.png',
+    logo_token1: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    logo_token2: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651/logo.png',
     url: LINK_AVAX_POOL_URL,
     pool_name: 'AVAX-LINK Pangolin LP',
     tvl: LINK_AVAX_TVL,
@@ -814,8 +813,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15/logo.png',
+    logo_token1: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    logo_token2: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15/logo.png',
     url: ETH_AVAX_POOL_URL,
     pool_name: 'AVAX-ETH Pangolin LP',
     apr: eth_apr,
@@ -834,8 +833,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png',
+    logo_token1: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    logo_token2: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png',
     url: PNG_AVAX_POOL_URL,
     pool_name: 'AVAX-PNG Pangolin LP',
     apr: png_apr,
@@ -854,8 +853,8 @@ async function main() {
   })
 
   layout_pool({
-    logo_token1: 'https://x-api.snowball.network/assets/avalanche-tokens/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/logo.png',
-    logo_token2: 'https://x-api.snowball.network/assets/avalanche-tokens/0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc/logo.png',
+    logo_token1: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    logo_token2: 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc/logo.png',
     url: SUSHI_AVAX_POOL_URL,
     pool_name: 'AVAX-SUSHI Pangolin LP',
     apr: sushi_apr,

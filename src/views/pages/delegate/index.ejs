@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+    <script>
+        if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+
+    <body>
+        <div class="page-wrapper with-navbar with-transitions">
+            <%- include(`${partials}/header_main`); -%>
+            <%- include(`${partials}/wallet_error`); -%>
+
+                    <!-- Content wrapper start -->
+                    <div class="content-wrapper d-lg-flex">
+                        <div class="container-lg">
+                            <div class="my-20 col-md-12 text-center">
+                                <h4 id="title" class="">
+                                    Pangolin Rewards for
+                                    <img style="display:inline-block; margin-bottom:-12px; height:48px;width:48px"
+                                        src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xc38f41a296a4493ff429f1238e030924a1542e50/logo.png">
+                                    <img style="margin-bottom:-12px; margin-left:-24px; display:inline-block; height:48px;width:48px"
+                                        src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781c2586d68229fde47564546784ab3faca982/logo.png">
+                                    Pair
+                                </h4>
+                                <h6>
+                                    Current Support: <span
+                                        style="display:inline-block;margin-right: 15px;font-weight:bold;color:#fff"
+                                        id="votecount"></span>
+                                    Required Remaining: <span style="font-weight:bold;color:#fff"
+                                        id="stillrequire"></span>
+                                </h6>
+                            </div>
+                            <div style="display:flex;">
+                                <div style="display:flex;flex-direction: column;">
+
+                                    <div style="font-size: larger;">
+                                        Dear Snowball Community,
+                                    </div>
+                                    <div style="margin:10px 20px 10px 20px">
+                                        Pangolin Governance is ready to accept a proposal to add PNG rewards to the PNG/SNOB pair.   
+                                    </div>
+                                    <div style="margin:10px 20px 10px 20px">                                        
+                                        To make the proposal official, we need to hold 1,000,000 PNG.  This amount can be held by multple wallets (i.e. the entire Snowball community) and delegated to the Snowball multisig contract for the time of the vote.
+                                    </div>
+                                    <div style="margin:10px 20px 10px 20px">
+                                        Contribute your PNG and help us take SNOB to the next level by giving it the much-deserved rewards from Pangolin and exposure to Avalanche and the general crypto community!
+                                    </div>
+                                    <div style="margin:10px 20px 10px 20px">
+                                        Over 200,000 votes have already been delegated.  Pledge your PNG and help us get 1 million votes to make the proposal!
+                                    </div>
+                                    <div style="text-align:center">
+                                        <span id="yourcontribution"></span>
+                                        <br>
+                                        <span>❄️ The Snowball Team</span>
+                                    </div>                                    
+                                </div>
+                                <div id="rightcolumn" style="display:none">
+                                    <div style="font-size: larger;">
+                                        Speak with your wallet
+                                    </div>
+                                    <div style="margin-left: 15px">
+                                        <img style="display:inline-block;height: 24px"
+                                            src="https://s2.coinmarketcap.com/static/cloud/img/metamask.png?_=4b2fe1d"
+                                            alt="Metamask">
+                                        <div style="width: 50%; font-size:smaller;display:inline-block;" id="wallet-address" class="text-truncate"></div>
+                                    </div>
+                                    <div id="delegate" style="display:none">
+                                        <button style="margin-left: -25px" class="delegate btn btn-primary ml-0 ml-md-20">
+                                            Delegate to 0x294a…
+                                        </button>                                        
+                                        <div style="margin: 15px">
+                                            Snowball's <a href="https://cchain.explorer.avax.network/address/0x294aB3200ef36200db84C4128b7f1b4eec71E38a/transactions">MultiSigWallet</a>
+                                        </div>
+                                    </div>
+                                    <div id="undelegate" style="display:none">
+                                        <div style="text-align: center;font-size:larger;color:#fff">You are amoungst the few!</div>
+                                        <div style="margin: 15px">
+                                            Having second thoughts?
+                                        </div>
+                                        <div>
+                                            <button class="undelegate btn btn-primary ml-0 ml-md-20">
+                                                Delegate to 0x000…
+                                            </button>
+                                        </div>
+                                        <div style="margin: 15px;">
+                                            Undelegate by delegating to
+                                            the <a
+                                                href="https://cchain.explorer.avax.network/address/0x0000000000000000000000000000000000000000">root</a>
+                                            account.
+                                            <br><br>
+                                            <div style="text-align: center">Or visit <a
+                                                    href="https://app.pangolin.exchange/#/vote" target="_blank">Pangolin
+                                                    Governance</a>
+                                            </div>
+                                        </div>                                        
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class="error"></h1>
+                        <div style="display:none" id="effects"></div>
+
+                        <pre id="log" style="margin-left: 10px;"></pre>                
+                    </div>
+                    <%- include(`${partials}/scripts`, { shared: 'shared', scriptname: 'delegate'}); -%>            
+                    <%- include(`${partials}/footer`); -%>
+                </div>
+        </div>
+    </body>
+</html>

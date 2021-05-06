@@ -10,6 +10,13 @@ $(function () {
   consoleInit();
   start(main);
 });
+
+function pairmatch(p, t0, t1) {
+  return ( p.token0.symbol.toLowerCase() == t0.toLowerCase() || p.token1.symbol.toLowerCase() == t0.toLowerCase() ) && 
+         ( p.token0.symbol.toLowerCase() == t1.toLowerCase() || p.token1.symbol.toLowerCase() == t1.toLowerCase() )
+}
+
+
 async function main() {
   const App = await init_ethers();
 
@@ -361,38 +368,41 @@ async function main() {
 	let pool1APR = null;
 	try {
 		res = await $.ajax({
-	      url: 'https://x-api.snowball.network/tvl/snob.json',
+	      url: 'https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json',
 	      type: 'GET',
 	    })
     	if (res && res.pairs) {
         console.log(res.pairs)
-    		res.pairs.forEach( p => {
-    			if (p.token1.symbol.toLowerCase() == 'sushi') {
-    				pool1tvl = p.locked;
-    				pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-    				pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.symbol.toLowerCase() == 'snob') {
-    				pool2tvl = p.locked;
-    				pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-    				pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.symbol.toLowerCase() == 'png') {
-    				pool3tvl = p.locked;
-    				pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-    				pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.symbol.toLowerCase() == 'eth') {
-    				pool4tvl = p.locked;
-    				pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-    				pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked * 100
-    			} else if (p.token1.symbol.toLowerCase() == 'usdt') {
+        res.pairs.forEach( p => {
+          if ( pairmatch(p, 'usdt', 'wavax') ) {
             pool5tvl = p.locked;
             pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-            pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked * 100
-          } else if (p.token1.symbol.toLowerCase() == 'link') {
+            pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked * 100;
+          } else if ( pairmatch(p, 'link', 'wavax') ) {
             pool6tvl = p.locked;
             pool6tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-            pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked * 100
+            pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked * 100;
+          } else if ( pairmatch(p, 'sushi', 'wavax') ) {
+            pool1tvl = p.locked;
+            pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+            pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked * 100;
+          } else if ( pairmatch(p, 'png', 'wavax') ) {
+            pool3tvl = p.locked;
+            pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+            pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked * 100;
+          } else if ( pairmatch(p, 'eth', 'wavax') ) {
+            pool4tvl = p.locked;
+            pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
+            pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked * 100;
+          } else if ( pairmatch(p, 'snob', 'wavax') ) {
+            pool2tvl = p.locked;
+            pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`          
+            pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked * 100;
           }
-    		});
+        });
+        if ( res.locked > 6000000) {
+          tvl_class = 'tvl-show';
+        }        
 		}
 	}
 	catch(e) {

@@ -343,24 +343,6 @@ const layoutpool = (options, replace) => {
                     <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
                 </div>
             </div>
-            ${tvl}
-            ${apy}
-            <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
-                <div class="form-inline w-50 mx-auto">
-                    <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                        <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
-                        <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                    </div>
-                </div>
-                <div class="form-inline w-50 mx-auto">
-                    <div class="form-group m-md-0">
-                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-daily"></p>
-                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-weekly"></p>
-                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-yearly"></p>
-                    </div>
-                </div>
-            </div>
             ${poolSize}
 
             <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
@@ -379,24 +361,6 @@ const layoutpool = (options, replace) => {
                       <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
                       <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
                       <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
-                  </div>
-              </div>
-              ${tvl}
-              ${apy}
-              <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
-                  <div class="form-inline w-50 mx-auto">
-                      <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                      </div>
-                  </div>
-                  <div class="form-inline w-50 mx-auto">
-                      <div class="form-group m-md-0">
-                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-daily"></p>
-                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-weekly"></p>
-                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-yearly"></p>
-                      </div>
                   </div>
               </div>
               ${poolSize}
@@ -443,7 +407,7 @@ const genpool = async (pool) => {
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
   
   let pair_tvl = 0;
-  let pair_tvl_display = 0;
+  let pair_tvl_display = '';
   
   // window.tvl.pairs.forEach( p => {
   //   if ( pairmatch(p, pool.token0.toLowerCase(), pool.token1.toLowerCase()) ) {
@@ -502,7 +466,7 @@ const genpool = async (pool) => {
     approve: `snowglobe('approve', '${pool.pair}', '${pool.snowglobe}')`,
     stake: `snowglobe('stake','${pool.pair}', '${pool.snowglobe}')`,
     withdraw: `snowglobe('withdraw', '${pool.pair}', '${pool.snowglobe}')`,
-    tvl_display: '',
+    tvl_display: pair_tvl_display,
     pool_share_display: null,
     stake_display: stakeDisplay,
     total_pgl: null,

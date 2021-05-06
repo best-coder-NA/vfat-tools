@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+    if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    // fetch('https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json').then(function (response) {
+    //   return response.json();
+    // }).then(function (info) {
+    //   let tvl = info.pairs[0].locked;
+    //   document.getElementById('combined_supply').innerHTML = '$' + new Intl.NumberFormat('en-US').format(tvl);
+    // }).catch(function (err) {
+    //   console.log('could not get tvl');
+    // });
+
+</script>
+<style>
+    .tokenLogoContainer {
+        display: flex;
+        width: 24px;
+        height: 24px;
+    }
+    .tokenLogoContainer img {
+        position: absolute;
+        top: 50%;
+        margin-top: -12px;
+    }
+</style>
+<body>
+<%- include(`${partials}/header_main`); -%>
+
+<%- include(`${partials}/wallet_error`); -%>
+<div class="modal" id="modal-deposit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" role="button" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+            <h5 class="modal-title">Review Deposit</h5>
+            <div class="col-md-6">
+                <div class="my-5 font-weight-semi-bold font-size-16">Depositing</div>
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                    <span class="mr-5">Frax: </span><span style="margin-left: auto" id="token_1_deposit_amt"></span>
+                </div>
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                    <span class="mr-5">TUSD: </span><span style="margin-left: auto" id="token_2_deposit_amt"></span>
+                </div>
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                    <span class="mr-5">USDT: </span><span style="margin-left: auto" id="token_3_deposit_amt"></span>
+                </div>
+                <div class="my-5 font-weight-bold" style="display: flex">
+                    <span class="mr-5 font-size-14">Total: </span><span style="margin-left: auto" id="total_deposit_amt"></span>
+                </div>
+            </div>
+            <hr class="my-10">
+            <div class="col-md-6">
+                <div class="my-5 font-weight-semi-bold font-size-16">Receiving</div>
+                <div class="my-5 font-weight-bold" style="display: flex">
+                    <span class="mr-5 font-size-14">s3F:</span><span style="margin-left: auto" id="receiving_amt"></span>
+                </div>
+                <div class="my-5" id="premium_row" style="display: flex">
+                    <span class="mr-5 font-size-14" id="premium_label">Premium/Discount:</span><span style="margin-left: auto" id="premium_amt"></span>
+                </div>
+            </div>
+            <hr class="my-10">
+            <div class="col-md-6">
+                <div class="my-5" style="display: flex">
+                    <span class="mr-5 font-size-14">Max slippage:</span><span style="margin-left: auto" id="max_slippage"></span>%
+                </div>
+            </div>
+            <hr class="my-10">
+            <div class="font-size-8 font-italic mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
+                Output is estimated. If the price changes by more than the max slippage the transaction will revert.
+            </div>
+            <div class="text-right mt-20"> <!-- text-right = text-align: right, mt-20 = margin-top: 2rem (20px) -->
+                <a href="#" class="btn mr-5" role="button">Close</a>
+                <button style="display: none;" id="deposit_confirm_btn" class="btn btn-primary" type="button">Confirm Deposit</button>
+                <span style="display: none;" id="deposit_approvals_needed">Approvals Needed</span>
+                <span style="display: none;" id="deposit_success">Deposit Successful</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modal-2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" role="button" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </a>
+            <h5 class="modal-title">You will receive</h5>
+            <div class="col-md-6">
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                    <span class="mr-5">Frax: </span><span style="margin-left: auto" id="token_1_withdraw_amt"></span>
+                </div>
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                    <span class="mr-5">TUSD: </span><span style="margin-left: auto" id="token_2_withdraw_amt"></span>
+                </div>
+                <div class="my-5" style="display: flex">
+                    <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                    <span class="mr-5">USDT: </span><span style="margin-left: auto" id="token_3_withdraw_amt"></span>
+                </div>
+            </div>
+            <hr class="my-10">
+            <div class="col-md-6">
+                <div class="my-5" style="display: flex">
+                    <span class="mr-5 font-size-14">Max slippage:</span><span style="margin-left: auto" id="withdraw-slippage"></span>%
+                </div>
+            </div>
+            <hr class="my-10">
+            <div class="font-size-8 font-italic mt-20">
+                Output is estimated. If the price changes by more than the max slippage the transaction will revert.
+            </div>
+            <div class="text-right mt-20">
+                <a href="#" class="btn mr-5" role="button">Close</a>
+                <button id="withdraw_confirm_btn" class="btn btn-primary" type="button">Confirm Withdraw</button>
+                <span style="display: none;" id="withdraw_success">Withdraw Successful</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper with-navbar with-transitions">
+    <div class="loader--1">
+        <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                <div></div><div></div>
+            </div></div>
+    </div>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <a class="ml-20 mt-10 font-size-10" href="<%= PP %>/stablevault/">Back to StableVault</a>
+            <div style="text-align: center">
+                <div style="margin-right: 5%;"><img class="img-fluid" style="vertical-align: text-top" width="60px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3F.png"></div>
+            </div>
+            <div style="text-align: center;">
+                <div style="margin-right: 5%; font-size: 40px">s3F Vault</div>
+            </div>
+            <div style="text-align: center;">
+                <div style="margin-right: 5%; font-size: 20px">Frax + TUSD + USDT</div>
+            </div>
+            <div style="text-align: center;font-size: 20px;margin-right: 5%;">Staking APR: <span id="staking_apr1"></span>%</div>
+            <div class="row">
+                <div class="card col-xs-12 col-sm-5 col-md-5">
+                    <h2 class="content-title">
+                        Swap <ion-icon name="swap-horizontal-outline"></ion-icon>
+                    </h2>
+                    <div class="col-xs-6 font-size-14">
+                        <div class="mb-10"><span class="font-weight-bold">From: </span><span class="float-right mr-20">Balance: <span id="from_balance"></span></span></div>
+                        <div class="dropdown mr-10">
+                            <button class="btn" data-toggle="dropdown" type="button" id="from-dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div id="from_FRAX_button">
+                                    <div style="display: flex;">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        </div>
+                                        <span class="ml-10">Frax</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
+                                    </div>
+                                </div>
+                                <div style="display: none;" id="from_TUSD_button">
+                                    <div style="display: flex;">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        </div>
+                                        <span class="ml-10">TUSD</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
+                                    </div>
+                                </div>
+                                <div style="display: none;" id="from_USDT_button">
+                                    <div style="display: flex;">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        </div>
+                                        <span class="ml-10">USDT</span><ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdown-toggle-btn-1">
+                                <a id="from_FRAX" href="#" class="dropdown-item">
+                                    <div style="display: flex;">
+                                        <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        <span class="ml-10">Frax</span>
+                                    </div>
+                                </a>
+                                <a id="from_TUSD" href="#" class="dropdown-item">
+                                    <div style="display: flex;">
+                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        <span class="ml-10">TUSD</span>
+                                    </div>
+                                </a>
+                                <a id="from_USDT" href="#" class="dropdown-item">
+                                    <div style="display: flex;">
+                                        <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        <span class="ml-10">USDT</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <a style="display: none;" href="#" id="revoke_swap_btn_FRAX"> Revoke<br></a>
+                            <a style="display: none; " href="#" id="revoke_swap_btn_TUSD"> Revoke<br></a>
+                            <a style="display: none;" href="#" id="revoke_swap_btn_USDT"> Revoke<br></a>
+                        </div>
+                        <div class="mt-10 input-group">
+                            <input id="swap_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">
+                            <div class="input-group-append">
+                                <button id="swap_max" class="btn" type="button">MAX</button>
+                            </div>
+                        </div>
+                        <div class="mb-10"><span class="font-size-16 font-weight-bold">To: </span></div>
+                        <div class="dropdown">
+                            <button class="btn" data-toggle="dropdown" type="button" id="dropdown-toggle-btn-1" aria-haspopup="true" aria-expanded="false">
+                                <div style="display: none;" id="to_FRAX_button">
+                                    <div style="display: flex;">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        </div>
+                                        <span class="ml-10">Frax</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
+                                    </div>
+                                </div>
+                                <div id="to_TUSD_button">
+                                    <div style="display: flex;">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        </div>
+                                        <span class="ml-10">TUSD</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
+                                    </div>
+                                </div>
+                                <div style="display: none;" id="to_USDT_button">
+                                    <div style="display: flex;">
+                                        <div class="tokenLogoContainer">
+                                            <img class="token-logo token-logo-bump" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        </div>
+                                        <span class="ml-10">USDT</span> <ion-icon style="margin: 7px;" name="caret-down-outline"></ion-icon>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdown-toggle-btn-1">
+                                <a id="to_FRAX" href="#" class="dropdown-item">
+                                    <div style="display: flex;">
+                                        <img class="token-logo" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                        <span class="ml-10"> Frax</span>
+                                    </div>
+                                </a>
+                                <a id="to_TUSD" href="#" class="dropdown-item">
+                                    <div style="display: flex;">
+                                        <img class="token-logo" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                        <span class="ml-10"> TUSD</span>
+                                    </div>
+                                </a>
+                                <a id="to_USDT" href="#" class="dropdown-item">
+                                    <div style="display: flex;">
+                                        <img class="token-logo" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                        <span class="ml-10"> USDT</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <input disabled id="swap_calculated" type="number" value="0" min="0" class="mt-10 mb-10 form-control">
+                        <br>
+                        <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="approve_swap_btn_FRAX"> Approve Frax</button>
+                        <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="approve_swap_btn_TUSD"> Approve TUSD</button>
+                        <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="approve_swap_btn_USDT"> Approve USDT</button>
+                        <a href="#" id="swap_btn" class="font-size-20 btn-block btn btn-primary" role="button">Swap</a>
+                        <hr class="my-20"/>
+                        <details class="collapse-panel w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+                            <summary class="collapse-header">
+                                Advanced Options
+                            </summary>
+                            <div class="collapse-content">
+                                <div>Max Slippage </div>
+                                <!-- Horizontally stacked radio buttons -->
+                                <div class="custom-radio d-inline-block mr-10"> <!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
+                                    <input checked type="radio" name="radio-set-2" id="swap-radio-1" value="0.1">
+                                    <label for="swap-radio-1">0.1%</label>
+                                </div>
+                                <div class="custom-radio d-inline-block mr-10">
+                                    <input type="radio" name="radio-set-2" id="swap-radio-2" value="1">
+                                    <label for="swap-radio-2">1%</label>
+                                </div>
+                                <div class="custom-radio d-inline-block">
+                                    <input type="radio" name="radio-set-2" id="swap-radio-3" value="custom">
+                                    <label for="swap-radio-3">Custom %:</label>
+                                </div>
+                                <input type="number" min="0" max="100" id="swap_custom_slippage" class="w-50">
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="card col-xs-8 col-sm-5 col-md-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button id="add_liquidity_btn" style="display: none;" class="btn btn-rounded">
+                                Add Liquidity <ion-icon name="add-circle-outline"></ion-icon>
+                            </button>
+                            <h2 id="add_liquidity_text" class="content-title">
+                                Add Liquidity
+                            </h2>
+                        </div>
+                        <div class="col-md-6">
+                            <button id="remove_liquidity_btn" class="btn btn-rounded">
+                                Remove Liquidity <ion-icon name="remove-circle-outline"></ion-icon>
+                            </button>
+                            <h2 id="remove_liquidity_text" style="display: none;" class="content-title">
+                                Remove Liquidity
+                            </h2>
+                        </div>
+                    </div>
+                    <div id="add_liquidity_card" class="col-xs-6">
+                        <div class="mb-10">Deposit any combination of tokens</div>
+                        <div class="token-input">
+                            <div style="display: flex">
+                                <img class="token-logo mr-5" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                <span class="mr-5">Frax - Balance: </span><span class="font-size-14 font-weight-bold" id="token_1_balance"></span>
+                            </div>
+                            <a style="display:none" id="token_1_revoke" href="#"> Revoke</a>
+                            <div class="input-group">
+                                <input id="token_1_input" type="number" value="0" min="0" size="20" class="mb-10 form-control" placeholder="Enter amount">
+                                <div class="input-group-append">
+                                    <button id="token_1_max" class="btn" type="button">MAX</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="token-input">
+                            <div style="display: flex">
+                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                <span class="mr-5">TUSD - Balance: </span><span class="font-size-14 font-weight-bold" id="token_2_balance"></span>
+                            </div>
+                            <a style="display:none" id="token_2_revoke" href="#"> Revoke</a>
+                            <div class="input-group">
+                                <input id="token_2_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">
+                                <div class="input-group-append">
+                                    <button id="token_2_max" class="btn" type="button">MAX</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="token-input">
+                            <div style="display: flex">
+                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                <span class="mr-5">USDT - Balance: </span><span class="font-size-14 font-weight-bold" id="token_3_balance"></span>
+                            </div>
+                            <a style="display:none" id="token_3_revoke" href="#"> Revoke</a>
+                            <div class="input-group">
+                                <input id="token_3_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">
+                                <div class="input-group-append">
+                                    <button id="token_3_max" class="btn" type="button">MAX</button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button class="mb-10 font-size-16 btn-block btn btn-success" style="display:none" id="token_1_approve" href="#">Approve Frax</button>
+                        <button class="mb-10 font-size-16 btn-block btn btn-success" style="display:none" id="token_2_approve" href="#">Approve TUSD</button>
+                        <button class="mb-10 font-size-16 btn-block btn btn-success" style="display:none" id="token_3_approve" href="#">Approve USDT</button>
+                        <a href="#modal-deposit" id="deposit_btn" class="font-size-20 btn-block btn btn-primary" role="button">Deposit</a>
+                        <hr class="my-20"/>
+                        <details class="collapse-panel w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+                            <summary class="collapse-header">
+                                Advanced Options
+                            </summary>
+                            <div class="collapse-content">
+                                <div>Max Slippage </div>
+                                <!-- Horizontally stacked radio buttons -->
+                                <div class="custom-radio d-inline-block mr-10"> <!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
+                                    <input type="radio" name="radio-set-1" id="radio-1" value="0.1">
+                                    <label for="radio-1">0.1%</label>
+                                </div>
+                                <div class="custom-radio d-inline-block mr-10">
+                                    <input checked type="radio" name="radio-set-1" id="radio-2" value="1">
+                                    <label for="radio-2">1%</label>
+                                </div>
+                                <div class="custom-radio d-inline-block">
+                                    <input type="radio" name="radio-set-1" id="radio-3" value="custom">
+                                    <label for="radio-3">Custom %:</label>
+                                </div>
+                                <input type="number" min="0" max="100" id="custom_slippage" class="w-50">
+                            </div>
+                        </details>
+                    </div>
+                    <div style="display: none;" id="remove_liquidity_card" class="col-xs-6">
+                        <div class="mb-10">
+                            <div>Withdraw percentage (%): <span id="withdraw_percentage_display">0</span></div>
+                            <input style="width: 90%" type="range" min="0" max="100" value="0" class="slider mt-10 mx-10" id="withdraw_percentage">
+                            <div class="mx-10 d-flex">
+                                <div style="width: 13%; text-align:left;">0%</div>
+                                <div style="width: 24%; text-align:center;">25%</div>
+                                <div style="width: 24%; text-align:center;">50%</div>
+                                <div style="width: 24%; text-align:center;">75%</div>
+                                <div style="width: 13%; text-align:right;">100%</div>
+                            </div>
+                        </div>
+                        <div class="mb-10 ml-10">
+                            <div class="custom-radio d-inline-block mr-10"> <!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
+                                <input checked type="radio" name="radio-set-withdraw" id="radio-withdraw-combo" value="0.1">
+                                <label for="radio-withdraw-combo">Combo</label>
+                            </div>
+                            <div class="custom-radio d-inline-block mr-10">
+                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-FRAX" value="1">
+                                <label for="radio-withdraw-FRAX">Frax</label>
+                            </div>
+                            <div class="custom-radio d-inline-block mr-10">
+                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-TUSD" value="custom">
+                                <label for="radio-withdraw-TUSD">TUSD</label>
+                            </div>
+                            <div class="custom-radio d-inline-block">
+                                <input type="radio" name="radio-set-withdraw" id="radio-withdraw-USDT" value="custom">
+                                <label for="radio-withdraw-USDT">USDT</label>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="token-input mt-5">
+                            <div style="display: flex">
+                                <img class="token-logo mr-5" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                                <span class="mr-5">Frax</span>
+                            </div>
+                            <div class="input-group">
+                                <input id="token_1_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="token-input">
+                            <div style="display: flex">
+                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                                <span class="mr-5">TUSD</span>
+                            </div>
+                            <div class="input-group">
+                                <input id="token_2_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="token-input">
+                            <div style="display: flex">
+                                <img class="token-logo mr-5" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                                <span class="mr-5">USDT</span>
+                            </div>
+                            <div class="input-group">
+                                <input id="token_3_withdraw_input" type="number" value="0" min="0" class="mb-10 form-control" disabled="disabled">
+                            </div>
+                        </div>
+                        <br>
+                        <a style="display: none;" href="#" id="withdraw_approve_btn" class="mb-10 font-size-16 btn-block btn btn-success" role="button">Approve s3F</a>
+                        <a href="#modal-2" id="withdraw_open_btn" class="font-size-20 btn-block btn btn-primary" role="button">Withdraw</a>
+                        <hr class="my-20"/>
+                        <details class="collapse-panel w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+                            <summary class="collapse-header">
+                                Advanced Options
+                            </summary>
+                            <div class="collapse-content">
+                                <div>Max Slippage </div>
+                                <!-- Horizontally stacked radio buttons -->
+                                <div class="custom-radio d-inline-block mr-10"> <!-- d-inline-block = display: inline-block, mr-10 = margin-right: 1rem (10px) -->
+                                    <input checked type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-1" value="0.1">
+                                    <label for="radio-withdraw-slippage-1">0.1%</label>
+                                </div>
+                                <div class="custom-radio d-inline-block mr-10">
+                                    <input type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-2" value="1">
+                                    <label for="radio-withdraw-slippage-2">1%</label>
+                                </div>
+                                <div class="custom-radio d-inline-block">
+                                    <input type="radio" name="radio-set-withdraw-slippage" id="radio-withdraw-slippage-3" value="custom">
+                                    <label for="radio-withdraw-slippage-3">Custom %:</label>
+                                </div>
+                                <input type="number" min="0" max="100" id="custom_withdraw_slippage" class="w-50">
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row font-size-14">
+                <div class="card col-xs-12 col-sm-5 col-md-5">
+                    <h2 class="content-title">
+                        Transactions <ion-icon name="stats-chart-outline"></ion-icon>
+                    </h2>
+                    <div id="recent-transactions">
+                    </div>
+                </div>
+                <div class="card col-xs-8 col-sm-5 col-md-5">
+                    <h2 class="content-title">
+                        My Share <ion-icon name="pie-chart-outline"></ion-icon>
+                    </h2>
+                    <div>
+                        <div class="font-size-16">
+                            <span class="font-size-18 font-weight-bold" id="withdraw_balance"></span> s3F
+                            <span class="text-success font-size-16 font-weight-bold float-right" id="pool_percent">%</span>
+                        </div>
+<!--                        <a href="#modal-2" class="font-weight-bold" id="withdraw_btn">Remove Liquidity<br></a>-->
+                        <a style="display: none" href="#" id="revoke_lp_btn"> Revoke<br></a>
+                        <div class="font-size-14 mt-5">
+                            <span id="staked_balance"></span> s3F staked
+                        </div>
+                        <div class="font-size-14 mt-5">
+                            Staking APR: <span id="staking_apr2"></span>%
+                        </div>
+                        <div class="mt-5"><a href="<%= PP %>/earn/">Stake s3F</a></div>
+                    </div>
+                    <hr class="my-20"/>
+                    <h2 class="content-title">
+                        Currency Reserves
+                    </h2>
+                    <div>
+                        <div class="my-10" style="display: flex">
+                            <img class="token-logo" src="https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506">
+                            <span class="ml-5">Frax </span><span class="text-success ml-10 font-size-14 font-weight-bold" id="t1_supply_percentage">%</span><span id="t1_supply" style="margin-left: auto;" class="float-right font-size-14 font-weight-bold">$</span>
+                        </div>
+                        <div class="my-10" style="display: flex">
+                            <img class="token-logo" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png">
+                            <span class="ml-5">TUSD </span><span class="text-success ml-10 font-size-14 font-weight-bold" id="t2_supply_percentage">%</span><span id="t2_supply" style="margin-left: auto;" class="float-right font-size-14 font-weight-bold">$</span></div>
+                        <div class="my-10" style="display: flex">
+                            <img class="token-logo" src="https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png">
+                            <span class="ml-5">USDT </span><span class="text-success ml-20 font-size-14 font-weight-bold" id="t3_supply_percentage">%</span><span id="t3_supply" style="margin-left: auto;" class="float-right font-size-14 font-weight-bold">$</span>
+                        </div>
+                        <div class="my-20 font-size-16">Total<span id="combined_supply" class="font-size-16 font-weight-bold float-right">$</span></div>
+                    </div>
+                </div>
+            </div>
+
+        <h1 class="error"></h1>
+
+        <pre id="log" style="margin-left: 10px;">
+        </pre>
+
+        <%- include(`${partials}/scripts`, {scriptname: 's3f'}); -%>
+        <%- include(`${partials}/footer`); -%>
+    </div>
+</div>
+</body>
+</html>
