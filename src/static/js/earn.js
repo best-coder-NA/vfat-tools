@@ -1386,7 +1386,6 @@ async function main() {
         </div>
         </div>`;
   
-        console.log('poolPrint', poolPrint)
       if($(`#${poolId}`).length) {
         $(`#${poolId}`).replaceWith(poolPrint);
       }
@@ -1946,194 +1945,7 @@ async function main() {
     apy: sushi_annual_apy
   })
 
-  $(".unstakeBtn").unbind('click');
-  $(".unstakeBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'withdrawPool1':
-        withdrawPool1();
-        break;
-      case 'withdrawPool2':
-        withdrawPool2();
-        break;
-      case 'withdrawPool3':
-        withdrawPool3();
-        break;
-      case 'withdrawPool4':
-        withdrawPool4();
-        break;
-      case 'withdrawPool5':
-        withdrawPool5();
-        break;
-      case 'withdrawPool6':
-        withdrawPool6();
-        break;
-      case 'withdrawPool7':
-        withdrawPool7();
-        break;
-      case 'withdrawPool8':
-        withdrawPool8();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
-
-  $(".claimBtn").unbind('click');
-  $(".claimBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'claimPool1':
-        claimPool1();
-        break;
-      case 'claimPool2':
-        claimPool2();
-        break;
-      case 'claimPool3':
-        claimPool3();
-        break;
-      case 'claimPool4':
-        claimPool4();
-        break;
-      case 'claimPool5':
-        claimPool5();
-        break;
-      case 'claimPool6':
-        claimPool6();
-        break;
-      case 'claimPool7':
-        claimPool7();
-        break;
-      case 'claimPool8':
-        claimPool8();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
-
-  $(".approveBtn").unbind('click');
-  $(".approveBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'approveSPGLSUSHI':
-        approveSPGLSUSHI();
-        break;
-      case 'approveSNOB':
-        approveSNOB();
-        break;
-      case 'approveSPGLPNG':
-        approveSPGLPNG();
-        break;
-      case 'approveSPGLETH':
-        approveSPGLETH();
-        break;
-      case 'approveSPGLUSDT':
-        approveSPGLUSDT();
-        break;
-      case 'approveSPGLLINK':
-        approveSPGLLINK();
-        break;
-      case 'approveS3D':
-        approveS3D();
-        break;
-      case 'approveS3F':
-        approveS3F();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
-
-  $(".stakeBtn").unbind('click');
-  $(".stakeBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'stakeSPGLSUSHI':
-        stakeSPGLSUSHI();
-        break;
-      case 'stakeSNOB':
-        stakeSNOB();
-        break;
-      case 'stakeSPGLPNG':
-        stakeSPGLPNG();
-        break;
-      case 'stakeSPGLETH':
-        stakeSPGLETH();
-        break;
-      case 'stakeSPGLUSDT':
-        stakeSPGLUSDT();
-        break;
-      case 'stakeSPGLLINK':
-        stakeSPGLLINK();
-        break;
-      case 'stakeS3D':
-        stakeS3D();
-        break;
-      case 'stakeS3F':
-        stakeS3F();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
-
-  
-  async function renderPoolS3F ({
-    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-  }) {
-    const totalStakedS3F = await STAKING_CONTRACT.totalSupply();
-    
-    const stakedPool8 = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
-  
-    const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100;
-  
-    const pendingSNOBTokensPool8 = await STAKING_CONTRACT.earned(App.YOUR_ADDRESS);
-  
-    const currentS3FTokens = await S3F_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  
-    const S3FDisplayAmt = currentS3FTokens > 1000 ? currentS3FTokens / 1e18 : 0;
-  
-    const pool8tvl = totalStakedS3F / 1e18;
-  
-    const prices = await getAvaxPrices();
-  
-    const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
-  
-    const pool8APR = 2666 * snobPrice / pool8tvl * 100;
-  
-    const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
-  
-    const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
-  
-    poolS3F({
-      logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
-      logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
-      logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
-      pool_nickname: 'pool-8',
-      pool_name: 'StableVault S3F 🌟',
-      url: null,
-      tvl: null,
-      pool_weight: null,
-      total_staked: totalStakedS3F,
-      user_pool_percent: userPool8Percent,
-      staked_pool: stakedPool8,
-      pending_tokens: pendingSNOBTokensPool8,
-      display_amount: S3FDisplayAmt,
-      approve: 'approveS3F',
-      stake: 'stakeS3F',
-      unstake: 'withdrawPool8',
-      claim: 'claimPool8',
-      icequeen_apr: pool8APR,
-      snowglobe_apr: null,
-      tvl_display: pool8tvlDisplay,
-      total_pgl: null,
-      pool_share_display: poolShareDisplay_8,
-      pool_share_display_pgl: '',
-      stake_display: '',
-      snobPrice
-    });
-
+  const updateButtonHandlers = () => {
     $(".unstakeBtn").unbind('click');
     $(".unstakeBtn").click(function(){
       let fn = $(this).attr("data-btn");
@@ -2265,9 +2077,68 @@ async function main() {
           alert('Oops something went wrong. Try refreshing the page.');
       }
     });
+  }
+
+  async function renderPoolS3F ({
+    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+  }) {
+    const totalStakedS3F = await STAKING_CONTRACT.totalSupply();
+    
+    const stakedPool8 = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
+  
+    const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100;
+  
+    const pendingSNOBTokensPool8 = await STAKING_CONTRACT.earned(App.YOUR_ADDRESS);
+  
+    const currentS3FTokens = await S3F_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  
+    const S3FDisplayAmt = currentS3FTokens > 1000 ? currentS3FTokens / 1e18 : 0;
+  
+    const pool8tvl = totalStakedS3F / 1e18;
+  
+    const prices = await getAvaxPrices();
+  
+    const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
+  
+    const pool8APR = 2666 * snobPrice / pool8tvl * 100;
+  
+    const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
+  
+    const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
+  
+    poolS3F({
+      logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
+      logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
+      logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
+      pool_nickname: 'pool-8',
+      pool_name: 'StableVault S3F 🌟',
+      url: null,
+      tvl: null,
+      pool_weight: null,
+      total_staked: totalStakedS3F,
+      user_pool_percent: userPool8Percent,
+      staked_pool: stakedPool8,
+      pending_tokens: pendingSNOBTokensPool8,
+      display_amount: S3FDisplayAmt,
+      approve: 'approveS3F',
+      stake: 'stakeS3F',
+      unstake: 'withdrawPool8',
+      claim: 'claimPool8',
+      icequeen_apr: pool8APR,
+      snowglobe_apr: null,
+      tvl_display: pool8tvlDisplay,
+      total_pgl: null,
+      pool_share_display: poolShareDisplay_8,
+      pool_share_display_pgl: '',
+      stake_display: '',
+      snobPrice
+    });
+
+    updateButtonHandlers();
     return;
   }
 
+  updateButtonHandlers();
   hideLoading();
 }
 
