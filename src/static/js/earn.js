@@ -1945,7 +1945,7 @@ async function main() {
     apy: sushi_annual_apy
   })
 
-  const updateButtonHandlers = () => {
+  function updateButtonHandlers() {
     $(".unstakeBtn").unbind('click');
     $(".unstakeBtn").click(function(){
       let fn = $(this).attr("data-btn");
