@@ -1623,7 +1623,7 @@ async function main() {
     const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
     const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
     const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR)
-    if (allowedTokens / 1e18 == 0) {
+    if (allowedTokens === 0) {
       snobMessage(
         `Approve spending`,
         `Please approve spending first. Please check your Metamask Wallet`,
