@@ -3483,7 +3483,7 @@ async function main() {
     }
   })
 
-  $('.claimBtn').unbind('click')
+  $('.approveBtn').unbind('click')
   $('.approveBtn').click(function() {
     let fn = $(this).attr('data-btn')
     switch (fn) {
