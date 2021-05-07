@@ -1666,65 +1666,42 @@ async function main() {
     }
   }
 
-  const stakingContract_withdraw = async ({
-    STAKING_ABI,
-    STAKING_ADDR,
-    App,
-    AppSTAKING_CONTRACT,
-    SNOB_TOKEN,
-    S3F_TOKEN,
-    renderPoolS3F,
-  }) => {
-    const signer = App.provider.getSigner()
-    console.log(signer)
+  const stakingContract_withdraw = async ({STAKING_ABI, STAKING_ADDR, App, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) => {
+    const signer = await App.provider.getSigner()
     const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
     const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-    let allow = Promise.resolve()
+
     if (currentTokens / 1e18 > 0) {
       halfmoon.toggleModal('modal-loading')
-      allow
-        .then(async function() {
-          STAKING_CONTRACT.withdraw(currentTokens)
-            .then(function(t) {
-              App.provider
-                .waitForTransaction(t.hash)
-                .then(function() {
-                  return renderPoolS3F({
-                    STAKING_CONTRACT,
-                    App,
-                    SNOB_TOKEN,
-                    S3F_TOKEN,
-                  })
-                })
-                .then(() => {
-                  halfmoon.toggleModal('modal-loading')
-                  snobMessage(
-                    `Withdrawn Tokens`,
-                    `Tokens Withdrawn.`,
-                    `checkmark-circle-outline`,
-                    `success`,
-                    false,
-                    `ok`
-                  )
-                })
-            })
-            .catch(function() {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(
-                `Oops! Failed`,
-                `Withdrawn Failed. Something went wrong`,
-                `close-circle-outline`,
-                `danger`,
-                false,
-                `ok`,
-                false
-              )
-            })
+
+      let withdrawResult
+
+      try {
+        withdrawResult = await STAKING_CONTRACT.withdraw(currentTokens)
+
+        await App.provider.waitForTransaction(withdrawResult.hash)
+
+        await renderPoolS3F({
+          STAKING_CONTRACT,
+          App,
+          SNOB_TOKEN,
+          S3F_TOKEN,
         })
-        .catch(function() {
-          halfmoon.toggleModal('modal-loading')
-          snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false)
-        })
+
+        halfmoon.toggleModal('modal-loading')
+        snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`)
+      } catch (err) {
+        halfmoon.toggleModal('modal-loading')
+        snobMessage(
+          `Oops! Failed`,
+          `Withdrawn Failed. Something went wrong`,
+          `close-circle-outline`,
+          `danger`,
+          false,
+          `ok`,
+          false
+        )
+      }
     } else {
       snobMessage(
         `Withdrawn Tokens`,
