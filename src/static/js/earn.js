@@ -75,84 +75,109 @@ async function main() {
   const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C"
 
   const stakingContract_stake = async ({
-    STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
+    STAKING_ABI,
+    STAKING_ADDR,
+    S3F_ADDRESS,
+    App,
+    STAKING_CONTRACT,
+    SNOB_TOKEN,
+    S3F_TOKEN,
+    renderPoolS3F,
   }) => {
-    const signer = App.provider.getSigner()
-    console.log(signer)
-    const STAKING_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer)
-    console.log(STAKING_TOKEN)
-    const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
-    console.log(CHEF_CONTRACT)
-    const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-    console.log(currentTokens)
-    const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR)
-    console.log(allowedTokens)
-    let allow = Promise.resolve()
-    if (allowedTokens / 1e18 == 0) {
-      snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
+    const signer = await App.provider.getSigner();
+    const STAKING_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer);
+    const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer);
+    const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS);
+    const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR);
+    if (allowedTokens === 0) {
+      snobMessage(
+        `Approve spending`,
+        `Please approve spending first. Please check your Metamask Wallet`,
+        `information-circle-outline`,
+        `primary`,
+        false,
+        `ok`
+      );
     } else if (currentTokens / 1e18 > 0) {
-      halfmoon.toggleModal('modal-loading')
-      allow
-        .then(async function () {
-          CHEF_CONTRACT.stake(currentTokens)
-            .then(function (t) {
-              App.provider.waitForTransaction(t.hash).then(function () {
-                return renderPoolS3F({
-                  STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-                })
-              })
-              .then(() => {
-                halfmoon.toggleModal('modal-loading');
-                snobMessage(`Tokens deposit`, `Tokens deposited`, `checkmark-circle-outline`, `success`, false, `ok`);
-              })
-            })
-            .catch(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-            })
-        })
-        .catch(function () {
-          halfmoon.toggleModal('modal-loading')
-          snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-        })
+      halfmoon.toggleModal('modal-loading');
+      let stakeResult;
+      try {
+        stakeResult = await CHEF_CONTRACT.stake(currentTokens);
+
+        await App.provider.waitForTransaction(stakeResult.hash);
+
+        await renderPoolS3F({
+          STAKING_CONTRACT,
+          App,
+          SNOB_TOKEN,
+          S3F_TOKEN,
+        });
+
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(`Tokens deposit`, `Tokens deposited`, `checkmark-circle-outline`, `success`, false, `ok`);
+      } catch (err) {
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(
+          `Oops! Failed`,
+          `Deposit Failed. Something went wrong`,
+          `close-circle-outline`,
+          `danger`,
+          false,
+          `ok`,
+          false
+        );
+      }
     } else {
       snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
     }
   }
 
-  const stakingContract_withdraw = async ({STAKING_ABI, STAKING_ADDR, App, AppSTAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) => {
-    const signer = App.provider.getSigner()
-    console.log(signer)
-    const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
-    const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-    let allow = Promise.resolve()
+  const stakingContract_withdraw = async ({STAKING_ABI, STAKING_ADDR, App, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) => {
+    const signer = await App.provider.getSigner();
+    const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer);
+    const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
+
     if (currentTokens / 1e18 > 0) {
-      halfmoon.toggleModal('modal-loading')
-      allow
-        .then(async function () {
-          STAKING_CONTRACT.withdraw(currentTokens)
-            .then(function (t) {
-              App.provider.waitForTransaction(t.hash).then(function () {
-                return renderPoolS3F({
-                  STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-                })
-              })
-              .then(() => {
-                halfmoon.toggleModal('modal-loading')
-                snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              })
-            })
-            .catch(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Oops! Failed`, `Withdrawn Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-            })
-        })
-        .catch(function () {
-          halfmoon.toggleModal('modal-loading')
-          snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-        })
+      halfmoon.toggleModal('modal-loading');
+
+      let withdrawResult;
+
+      try {
+        withdrawResult = await STAKING_CONTRACT.withdraw(currentTokens);
+
+        await App.provider.waitForTransaction(withdrawResult.hash);
+
+        await renderPoolS3F({
+          STAKING_CONTRACT,
+          App,
+          SNOB_TOKEN,
+          S3F_TOKEN,
+        });
+
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`);
+      } catch (err) {
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(
+          `Oops! Failed`,
+          `Withdrawn Failed. Something went wrong`,
+          `close-circle-outline`,
+          `danger`,
+          false,
+          `ok`,
+          false
+        );
+      }
     } else {
-      snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
+      snobMessage(
+        `Withdrawn Tokens`,
+        `Withdrawn failed . Something went wrong`,
+        `close-circle-outline`,
+        `danger`,
+        false,
+        `ok`,
+        4000
+      );
     }
   }
 
@@ -1208,16 +1233,7 @@ async function main() {
 
   }
   function poolSNOB(options) {
-    //_print(``)
-    if (options.url) {
-      //_print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
-    } else {
-      //_print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
-    }
-    //_print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
     if (options.icequeen_apr) {
-      //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
-
       var eDayAPR = `${options.icequeen_apr.toFixed(2)}`;
       var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}`;
       var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}`;
@@ -1225,8 +1241,7 @@ async function main() {
 
       var combinedAprDisplay = '';
       if (options.snowglobe_apr) {
-        let combinedAPR = options.icequeen_apr + options.snowglobe_apr
-        //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+        let combinedAPR = options.icequeen_apr + options.snowglobe_apr;
 
         var cDayAPR = `${combinedAPR.toFixed(2)}`;
         var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}`;
@@ -1235,18 +1250,13 @@ async function main() {
         var combinedAprDisplay = aprDisplay(cDayAPR, cWeekAPR, cYearAPR);
       }
     }
-    //_print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
     if (options.total_staked && options.total_pgl) {
-      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
-
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} PGL </span>
         <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
 
     } else if (options.total_staked) {
-      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL`)
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} PGL </span>`;
     } else {
-      //_print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
     }
     var poolShare = '';
@@ -1254,7 +1264,6 @@ async function main() {
     var earning = '';
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
-        //_print(options.pool_share_display)
         var poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
         <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
@@ -1263,7 +1272,6 @@ async function main() {
       }
       var stakeDisplay = '';
       if (options.stake_display ) {
-        //_print(options.stake_display)
         stakeDisplay = options.stake_display;
       }else{
         stakeDisplay = '';
@@ -1741,7 +1749,7 @@ async function main() {
     }
   });
 
-  $(".claimBtn").unbind('click');
+  $(".approveBtn").unbind('click');
   $(".approveBtn").click(function(){
     let fn = $(this).attr("data-btn");
     switch (fn) {
