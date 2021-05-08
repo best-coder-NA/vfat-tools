@@ -138,7 +138,7 @@ async function main() {
       default:
         break;
     }
-    if (i == 1 || i == 2 || i == 3) {
+    if (i == 1 || i == 2 || i == 3 || i == 4 || i == 5) {
       stateDisplay = 'Executed';
     }
     console.log(proposal)
