@@ -5,6 +5,7 @@
 * @author Jongseung Lim -- https://yieldfarming.info
 * Copyright 2021. MIT Licensed.
 */
+
 $(function () {
   consoleInit();
   start(main);
@@ -73,6 +74,113 @@ async function main() {
   const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
   const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C"
 
+  const stakingContract_stake = async ({
+    STAKING_ABI,
+    STAKING_ADDR,
+    S3F_ADDRESS,
+    App,
+    STAKING_CONTRACT,
+    SNOB_TOKEN,
+    S3F_TOKEN,
+    renderPoolS3F,
+  }) => {
+    const signer = await App.provider.getSigner();
+    const STAKING_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer);
+    const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer);
+    const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS);
+    const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR);
+    if (allowedTokens === 0) {
+      snobMessage(
+        `Approve spending`,
+        `Please approve spending first. Please check your Metamask Wallet`,
+        `information-circle-outline`,
+        `primary`,
+        false,
+        `ok`
+      );
+    } else if (currentTokens / 1e18 > 0) {
+      halfmoon.toggleModal('modal-loading');
+      let stakeResult;
+      try {
+        stakeResult = await CHEF_CONTRACT.stake(currentTokens);
+
+        await App.provider.waitForTransaction(stakeResult.hash);
+
+        await renderPoolS3F({
+          STAKING_CONTRACT,
+          App,
+          SNOB_TOKEN,
+          S3F_TOKEN,
+        });
+
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(`Tokens deposit`, `Tokens deposited`, `checkmark-circle-outline`, `success`, false, `ok`);
+      } catch (err) {
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(
+          `Oops! Failed`,
+          `Deposit Failed. Something went wrong`,
+          `close-circle-outline`,
+          `danger`,
+          false,
+          `ok`,
+          false
+        );
+      }
+    } else {
+      snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
+    }
+  }
+
+  const stakingContract_withdraw = async ({STAKING_ABI, STAKING_ADDR, App, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) => {
+    const signer = await App.provider.getSigner();
+    const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer);
+    const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
+
+    if (currentTokens / 1e18 > 0) {
+      halfmoon.toggleModal('modal-loading');
+
+      let withdrawResult;
+
+      try {
+        withdrawResult = await STAKING_CONTRACT.withdraw(currentTokens);
+
+        await App.provider.waitForTransaction(withdrawResult.hash);
+
+        await renderPoolS3F({
+          STAKING_CONTRACT,
+          App,
+          SNOB_TOKEN,
+          S3F_TOKEN,
+        });
+
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`);
+      } catch (err) {
+        halfmoon.toggleModal('modal-loading');
+        snobMessage(
+          `Oops! Failed`,
+          `Withdrawn Failed. Something went wrong`,
+          `close-circle-outline`,
+          `danger`,
+          false,
+          `ok`,
+          false
+        );
+      }
+    } else {
+      snobMessage(
+        `Withdrawn Tokens`,
+        `Withdrawn failed . Something went wrong`,
+        `close-circle-outline`,
+        `danger`,
+        false,
+        `ok`,
+        4000
+      );
+    }
+  }
+
   const approveSPGLSUSHI = async function () {
     return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_SUSHI_ADDRESS, App)
   }
@@ -113,7 +221,9 @@ async function main() {
     return stakingContract_approve(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
   }
   const stakeS3F  = async function () {
-    return stakingContract_stake(STAKING_ABI, STAKING_ADDR,  S3F_ADDRESS, App)
+    return stakingContract_stake({
+      STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
+    })
   }
   const approveSNOB = async function () {
     return icequeenContract_approve(PGL_ABI, ICEQUEEN_ADDR, SNOB_AVAX_ADDR, App)
@@ -167,7 +277,7 @@ async function main() {
     return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 7, SPGL_LINK_ADDRESS, App)
   }
   const withdrawPool8 = async function () {
-    return stakingContract_withdraw(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
+    return stakingContract_withdraw({STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F})
   }
   const signer = App.provider.getSigner()
 
@@ -874,7 +984,7 @@ async function main() {
     }
 
     if( !has_options ){
-      var poolPrint = `<div class="col-md-12">
+      let poolPrint = `<div class="col-md-12">
         <div class="card border-0 p-10 pl-20 pr-20 mt-5">
             <div class="row">
                 <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
@@ -1053,19 +1163,20 @@ async function main() {
 
 
   }
-  function poolS3F(options) {
-    var eDayAPR = options.icequeen_apr;
-    var eYearAPR = options.icequeen_apr * 365;
-
+  function poolS3F(options){
+    let poolId = `pool_${options.pool_name.split(' ').join('')}`;
+    let eDayAPR = options.icequeen_apr;
+    let eYearAPR = options.icequeen_apr * 365;
+  
     poolSize = '';
     if (options.total_staked) {
-      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3F </span>`;
+      let poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3F </span>`;
     }
-    var estimatedRate = '';
-    var poolShare = '';
-    var earning = '';
-    var stakeDisplay = '';
-
+    let estimatedRate = '';
+    let poolShare = '';
+    let earning = '';
+    let stakeDisplay = '';
+  
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
         poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
@@ -1077,24 +1188,25 @@ async function main() {
       if (options.stake_display) {
         stakeDisplay = options.stake_display;
       }
-
-      var estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
+  
+      estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
         <p class="m-0 font-size-12"> Estimated Rate</p>
         <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(2666 * options.user_pool_percent / 100 ).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
-        <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * snobPrice).toFixed(2)})</p>
+        <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * options.snobPrice).toFixed(2)})</p>
         </div>`;
-
-      var earning = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+  
+      earning = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You are earning</p>
         <p class="m-0 font-size-16 font-weight-regular">${(2666 * options.user_pool_percent / 100 ).toFixed(2)} SNOB </p>
-        <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * snobPrice).toFixed(2)})</p>
+        <p class="m-0 font-size-12">per day ($${(2666 * options.user_pool_percent / 100 * options.snobPrice).toFixed(2)})</p>
         </div>`
     }
-    var availableStake = '';
+  
+    let availableStake = '';
     if ( options.display_amount > 0 ) {
       availableStake = stakeUnstake(options.display_amount.toFixed(6), true, 'S3F');
     }
-    var availableUnstake = ''
+    let availableUnstake = ''
     if ( options.staked_pool / 1e18 > 0 ) {
       availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(6), false, 'S3F');
     }
@@ -1116,9 +1228,9 @@ async function main() {
       has_options = true
       claimBtn = `<button data-btn="${options.claim}" class="btn btn-primary btn-sm claimBtn"><ion-icon name="push-outline"></ion-icon> Harvest SNOB</button>`;
     }
-
+  
     if( !has_options ){
-      var poolPrint = `<div class="col-md-12">
+      let poolPrint = `<div id="${poolId}" class="col-md-12">
         <div class="card border-0 p-10 pl-20 pr-20 mt-5">
             <div class="row">
                 <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
@@ -1154,7 +1266,7 @@ async function main() {
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <a href="/stablevault" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get S3F from StableVault</a>
                 </div>
-
+  
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
                 </div>
@@ -1186,7 +1298,7 @@ async function main() {
                         <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
                         <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
                     </div>
-
+  
                     <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
                         <p class="m-0 font-size-16 font-weight-regular">O S3F </p>
@@ -1196,116 +1308,117 @@ async function main() {
             </div>
         </div>
         </div>`;
-      $('#snob-pools-new').append(poolPrint);
+  
+      if($(`#${poolId}`).length) {
+        $(`#${poolId}`).replaceWith(poolPrint);
+      }
+      else {
+        $('#snob-pools-new').append(poolPrint); 
+      }   
     }
     if(has_options){
-      var poolPrint = `<div class="col-md-12">
-      <div class="card border-0 p-10 pl-20 pr-20 mt-5">
-          <div class="row">
-              <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
-                  <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0">
-                      <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
-                      <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
-                      <img style="background-color: white" class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
-                      <h6 class="pl-10 m-0">${options.pool_name}</h6>
-                  </div>
-              </div>
-              <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
-                  <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
-                  <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
-              </div>
-              <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                  <div class="form-inline w-50 mx-auto">
-                      <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                      </div>
-                  </div>
-                  <div class="form-inline w-50 mx-auto mx-md-0">
-                      <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                      </div>
-                  </div>
-
-              </div>
-              ${estimatedRate}
-              <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-              ${approveBtn}
-              ${stakeBtn}
-              ${unstakeBtn}
-              ${claimBtn}
-              </div>
-
-              <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                  <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
-              </div>
-          </div>
-
-          <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
-              <div class="row">
-                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
-                      <div class="row text-center">
-                          <p class="font-weight-light">Rewards APR :</p>
-                      </div>
-                      <div class="row">
-                          <div class="form-inline w-50 ">
-                              <div class="form-group m-md-0">
-                                  <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                  <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                              </div>
-                          </div>
-                          <div class="form-inline w-50 mx-auto">
-                              <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">80,000 SNOB</span>
-                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
-                  </div>
-                  <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
-                      <p class="m-0 font-size-12"> Pool Size</p>
-                      ${poolSize}
-                  </div>
-                  ${poolShare}
-                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                      <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
-                      <p class="m-0 font-size-16 font-weight-regular">${(options.pending_tokens / 1e18).toFixed(6)}</p>
-                  </div>
-
-              </div>
-              <div class="row pt-20">
-                  ${earning}
-
-                  ${availableStake}
-                  
-                  ${availableUnstake}
-              </div>
-          </div>
-      </div>
-  </div>`;
-      $('#snob-pools-new').append(poolPrint);
+      let poolPrint = `<div id="${poolId}" class="col-md-12">
+        <div class="card border-0 p-10 pl-20 pr-20 mt-5">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 align-items-center d-flex pb-10 pb-md-0">
+                    <div id="pooltokens-3sd" class="align-items-center d-flex mx-auto mx-md-0">
+                        <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
+                        <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
+                        <img style="background-color: white" class="rounded-circle" width="48" src="${options.logo_token3}" alt="${options.pool_name}">
+                        <h6 class="pl-10 m-0">${options.pool_name}</h6>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
+                    <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
+                    <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
+                </div>
+                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
+                    <div class="form-inline w-50 mx-auto">
+                        <div class="form-group m-md-0">
+                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                        </div>
+                    </div>
+                    <div class="form-inline w-50 mx-auto mx-md-0">
+                        <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                          <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
+                        </div>
+                    </div>
+  
+                </div>
+                ${estimatedRate}
+                <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                ${approveBtn}
+                ${stakeBtn}
+                ${unstakeBtn}
+                ${claimBtn}
+                </div>
+  
+                <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
+                    <ion-icon class="pointer" alt="More Details" name="chevron-down-outline"></ion-icon>
+                </div>
+            </div>
+  
+            <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
+                <div class="row">
+                    <div class="col-sm-12 col-md-2 align-items-center pb-10">
+                        <div class="row text-center">
+                            <p class="font-weight-light">Rewards APR :</p>
+                        </div>
+                        <div class="row">
+                            <div class="form-inline w-50 ">
+                                <div class="form-group m-md-0">
+                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                                </div>
+                            </div>
+                            <div class="form-inline w-50 mx-auto">
+                                <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
+                          <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                          <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
+                          <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">80,000 SNOB</span>
+                          <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
+                          <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
+                    </div>
+                    <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"> Pool Size</p>
+                        ${poolSize}
+                    </div>
+                    ${poolShare}
+                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
+                        <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Pending SNOB</p>
+                        <p class="m-0 font-size-16 font-weight-regular">${(options.pending_tokens / 1e18).toFixed(6)}</p>
+                    </div>
+  
+                </div>
+                <div class="row pt-20">
+                    ${earning}
+  
+                    ${availableStake}
+                    
+                    ${availableUnstake}
+                </div>
+            </div>
+        </div>
+    </div>`;
+  
+      if($(`#${poolId}`).length) {
+        $(`#${poolId}`).replaceWith(poolPrint);
+      }
+      else {
+        $('#snob-pools-new').append(poolPrint); 
+      }      
     }
-
-
   }
   function poolSNOB(options) {
-    //_print(``)
-    if (options.url) {
-      //_print(`<b>${options.pool_nickname}</b> <a href='${options.url}' target="_blank">${options.pool_name}</a>`)
-    } else {
-      //_print(`<b>${options.pool_nickname}</b> ${options.pool_name}`)
-    }
-    //_print(`TVL: <a href='${options.tvl}' target='_blank'>${options.tvl_display}</a>`)
     if (options.icequeen_apr) {
-      //_print(`Estimated APR*: Day ${options.icequeen_apr.toFixed(2)}% Week ${(options.icequeen_apr * 7).toFixed(2)}% Year ${(options.icequeen_apr * 365).toFixed(2)}%`)
-
       var eDayAPR = `${options.icequeen_apr.toFixed(2)}`;
       var eWeekAPR = `${(options.icequeen_apr * 7).toFixed(2)}`;
       var eYearAPR = `${(options.icequeen_apr * 365).toFixed(2)}`;
@@ -1313,8 +1426,7 @@ async function main() {
 
       var combinedAprDisplay = '';
       if (options.snowglobe_apr) {
-        let combinedAPR = options.icequeen_apr + options.snowglobe_apr
-        //_print(`Combined APR**: Day ${combinedAPR.toFixed(2)}% Week ${(combinedAPR * 7).toFixed(2)}% Year ${(combinedAPR * 365).toFixed(2)}%`)
+        let combinedAPR = options.icequeen_apr + options.snowglobe_apr;
 
         var cDayAPR = `${combinedAPR.toFixed(2)}`;
         var cWeekAPR = `${(combinedAPR * 7).toFixed(2)}`;
@@ -1323,18 +1435,13 @@ async function main() {
         var combinedAprDisplay = aprDisplay(cDayAPR, cWeekAPR, cYearAPR);
       }
     }
-    //_print(`Allocation: <b>${ (options.pool_weight * 100)}%</b> SNOB Per Day: <b>${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</b>`)
     if (options.total_staked && options.total_pgl) {
-      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL (<b>${(options.total_pgl / 1e18).toLocaleString()}</b> PGL)`)
-
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} PGL </span>
         <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
 
     } else if (options.total_staked) {
-      //_print(`Pool Size: <b>${(options.total_staked / 1e18).toLocaleString()}</b> sPGL`)
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} PGL </span>`;
     } else {
-      //_print(`Pool Size: <b>${ (options.total_pgl / 1e18).toLocaleString()}</b> PGL`)
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
     }
     var poolShare = '';
@@ -1342,7 +1449,6 @@ async function main() {
     var earning = '';
     if ( options.user_pool_percent > 0 ) {
       if (options.pool_share_display) {
-        //_print(options.pool_share_display)
         var poolShare = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> Your pool share is</p>
         <p class="m-0 font-size-16 font-weight-regular">${options.pool_share_display} </p>
@@ -1351,7 +1457,6 @@ async function main() {
       }
       var stakeDisplay = '';
       if (options.stake_display ) {
-        //_print(options.stake_display)
         stakeDisplay = options.stake_display;
       }else{
         stakeDisplay = '';
@@ -1515,32 +1620,9 @@ async function main() {
       $('#snob-pools-used').append(poolPrint);
     }
   }
-  poolS3F({
-    logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
-    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
-    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
-    pool_nickname: 'pool-8',
-    pool_name: 'StableVault S3F 🌟',
-    url: null,
-    tvl: null,
-    pool_weight: null,
-    total_staked: totalStakedS3F,
-    user_pool_percent: userPool8Percent,
-    staked_pool: stakedPool8,
-    pending_tokens: pendingSNOBTokensPool8,
-    display_amount: S3FDisplayAmt,
-    approve: 'approveS3F',
-    stake: 'stakeS3F',
-    unstake: 'withdrawPool8',
-    claim: 'claimPool8',
-    icequeen_apr: pool8APR,
-    snowglobe_apr: null,
-    tvl_display: pool8tvlDisplay,
-    total_pgl: null,
-    pool_share_display: poolShareDisplay_8,
-    pool_share_display_pgl: '',
-    stake_display: ''
-  })
+  await renderPoolS3F({
+    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+  });
   poolS3D({
     logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a/logo.png',
@@ -1729,136 +1811,203 @@ async function main() {
     apy: sushi_annual_apy
   })
 
-  $(".unstakeBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'withdrawPool1':
-        withdrawPool1();
-        break;
-      case 'withdrawPool2':
-        withdrawPool2();
-        break;
-      case 'withdrawPool3':
-        withdrawPool3();
-        break;
-      case 'withdrawPool4':
-        withdrawPool4();
-        break;
-      case 'withdrawPool5':
-        withdrawPool5();
-        break;
-      case 'withdrawPool6':
-        withdrawPool6();
-        break;
-      case 'withdrawPool7':
-        withdrawPool7();
-        break;
-      case 'withdrawPool8':
-        withdrawPool8();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
+  function updateButtonHandlers() {
+    $(".unstakeBtn").unbind('click');
+    $(".unstakeBtn").click(function(){
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'withdrawPool1':
+          withdrawPool1();
+          break;
+        case 'withdrawPool2':
+          withdrawPool2();
+          break;
+        case 'withdrawPool3':
+          withdrawPool3();
+          break;
+        case 'withdrawPool4':
+          withdrawPool4();
+          break;
+        case 'withdrawPool5':
+          withdrawPool5();
+          break;
+        case 'withdrawPool6':
+          withdrawPool6();
+          break;
+        case 'withdrawPool7':
+          withdrawPool7();
+          break;
+        case 'withdrawPool8':
+          withdrawPool8();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
+  
+    $(".claimBtn").unbind('click');
+    $(".claimBtn").click(function(){
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'claimPool1':
+          claimPool1();
+          break;
+        case 'claimPool2':
+          claimPool2();
+          break;
+        case 'claimPool3':
+          claimPool3();
+          break;
+        case 'claimPool4':
+          claimPool4();
+          break;
+        case 'claimPool5':
+          claimPool5();
+          break;
+        case 'claimPool6':
+          claimPool6();
+          break;
+        case 'claimPool7':
+          claimPool7();
+          break;
+        case 'claimPool8':
+          claimPool8();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
+  
+    $(".approveBtn").unbind('click');
+    $(".approveBtn").click(function(){
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'approveSPGLSUSHI':
+          approveSPGLSUSHI();
+          break;
+        case 'approveSNOB':
+          approveSNOB();
+          break;
+        case 'approveSPGLPNG':
+          approveSPGLPNG();
+          break;
+        case 'approveSPGLETH':
+          approveSPGLETH();
+          break;
+        case 'approveSPGLUSDT':
+          approveSPGLUSDT();
+          break;
+        case 'approveSPGLLINK':
+          approveSPGLLINK();
+          break;
+        case 'approveS3D':
+          approveS3D();
+          break;
+        case 'approveS3F':
+          approveS3F();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
+  
+    $(".stakeBtn").unbind('click');
+    $(".stakeBtn").click(function(){
+      let fn = $(this).attr("data-btn");
+      switch (fn) {
+        case 'stakeSPGLSUSHI':
+          stakeSPGLSUSHI();
+          break;
+        case 'stakeSNOB':
+          stakeSNOB();
+          break;
+        case 'stakeSPGLPNG':
+          stakeSPGLPNG();
+          break;
+        case 'stakeSPGLETH':
+          stakeSPGLETH();
+          break;
+        case 'stakeSPGLUSDT':
+          stakeSPGLUSDT();
+          break;
+        case 'stakeSPGLLINK':
+          stakeSPGLLINK();
+          break;
+        case 'stakeS3D':
+          stakeS3D();
+          break;
+        case 'stakeS3F':
+          stakeS3F();
+          break;
+        default:
+          alert('Oops something went wrong. Try refreshing the page.');
+      }
+    });
+  }
 
-  $(".claimBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'claimPool1':
-        claimPool1();
-        break;
-      case 'claimPool2':
-        claimPool2();
-        break;
-      case 'claimPool3':
-        claimPool3();
-        break;
-      case 'claimPool4':
-        claimPool4();
-        break;
-      case 'claimPool5':
-        claimPool5();
-        break;
-      case 'claimPool6':
-        claimPool6();
-        break;
-      case 'claimPool7':
-        claimPool7();
-        break;
-      case 'claimPool8':
-        claimPool8();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
+  async function renderPoolS3F ({
+    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+  }) {
+    const totalStakedS3F = await STAKING_CONTRACT.totalSupply();
+    
+    const stakedPool8 = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
+  
+    const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100;
+  
+    const pendingSNOBTokensPool8 = await STAKING_CONTRACT.earned(App.YOUR_ADDRESS);
+  
+    const currentS3FTokens = await S3F_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  
+    const S3FDisplayAmt = currentS3FTokens > 1000 ? currentS3FTokens / 1e18 : 0;
+  
+    const pool8tvl = totalStakedS3F / 1e18;
+  
+    const prices = await getAvaxPrices();
+  
+    const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
+  
+    const pool8APR = 2666 * snobPrice / pool8tvl * 100;
+  
+    const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
+  
+    const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
+  
+    poolS3F({
+      logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
+      logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
+      logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
+      pool_nickname: 'pool-8',
+      pool_name: 'StableVault S3F 🌟',
+      url: null,
+      tvl: null,
+      pool_weight: null,
+      total_staked: totalStakedS3F,
+      user_pool_percent: userPool8Percent,
+      staked_pool: stakedPool8,
+      pending_tokens: pendingSNOBTokensPool8,
+      display_amount: S3FDisplayAmt,
+      approve: 'approveS3F',
+      stake: 'stakeS3F',
+      unstake: 'withdrawPool8',
+      claim: 'claimPool8',
+      icequeen_apr: pool8APR,
+      snowglobe_apr: null,
+      tvl_display: pool8tvlDisplay,
+      total_pgl: null,
+      pool_share_display: poolShareDisplay_8,
+      pool_share_display_pgl: '',
+      stake_display: '',
+      snobPrice
+    });
 
-  $(".approveBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'approveSPGLSUSHI':
-        approveSPGLSUSHI();
-        break;
-      case 'approveSNOB':
-        approveSNOB();
-        break;
-      case 'approveSPGLPNG':
-        approveSPGLPNG();
-        break;
-      case 'approveSPGLETH':
-        approveSPGLETH();
-        break;
-      case 'approveSPGLUSDT':
-        approveSPGLUSDT();
-        break;
-      case 'approveSPGLLINK':
-        approveSPGLLINK();
-        break;
-      case 'approveS3D':
-        approveS3D();
-        break;
-      case 'approveS3F':
-        approveS3F();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
+    updateButtonHandlers();
+    return;
+  }
 
-  $(".stakeBtn").click(function(){
-    let fn = $(this).attr("data-btn");
-    switch (fn) {
-      case 'stakeSPGLSUSHI':
-        stakeSPGLSUSHI();
-        break;
-      case 'stakeSNOB':
-        stakeSNOB();
-        break;
-      case 'stakeSPGLPNG':
-        stakeSPGLPNG();
-        break;
-      case 'stakeSPGLETH':
-        stakeSPGLETH();
-        break;
-      case 'stakeSPGLUSDT':
-        stakeSPGLUSDT();
-        break;
-      case 'stakeSPGLLINK':
-        stakeSPGLLINK();
-        break;
-      case 'stakeS3D':
-        stakeS3D();
-        break;
-      case 'stakeS3F':
-        stakeS3F();
-        break;
-      default:
-        alert('Oops something went wrong. Try refreshing the page.');
-    }
-  });
-
+  updateButtonHandlers();
   hideLoading();
 }
+
 const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
   console.log(signer)
@@ -2178,76 +2327,9 @@ const stakingContract_approve = async function (chefAbi, chefAddress, stakeToken
       })
   }
 }
-const stakingContract_stake = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
-  if (allowedTokens / 1e18 == 0) {
-    snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
-  } else if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.stake(currentTokens)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
-  } else {
-    snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
-  }
-}
-const stakingContract_withdraw = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-  let allow = Promise.resolve()
-  if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        STAKING_CONTRACT.withdraw(currentTokens)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Withdrawn Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
-  } else {
-    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
-  }
-}
+
+
+
 const stakingContract_claim = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
   console.log(signer)
@@ -2282,3 +2364,4 @@ const stakingContract_claim = async function (chefAbi, chefAddress, stakeTokenAd
       })
   }
 }
+
