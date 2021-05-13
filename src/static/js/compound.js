@@ -56,6 +56,7 @@ async function main() {
   const SPGL_USDT_ADDRESS = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const SPGL_WBTC_ADDRESS = "0x39BE35904f52E83137881C0AC71501Edf0180181";
   const SPGL_DAI_ADDRESS = "0xb21b21E4fA802EE4c158d7cf4bD5416B8035c5e0";
+
   const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
 
   //LP URLs
@@ -143,6 +144,7 @@ async function main() {
   const withdrawDAI = async function() {
     return snowglobeContract_withdraw(SNOWGLOBE_ABI, SNOWGLOBE_DAI_ADDR, 1, SPGL_DAI_ADDRESS, App)
   }
+
   const signer = App.provider.getSigner()
 
   //Tokens
@@ -153,7 +155,7 @@ async function main() {
   const LINK_AVAX_TOKEN = new ethers.Contract(LINK_AVAX_ADDR, ERC20_ABI, signer)
   const USDT_AVAX_TOKEN = new ethers.Contract(USDT_AVAX_ADDR, ERC20_ABI, signer)
   const WBTC_AVAX_TOKEN = new ethers.Contract(WBTC_AVAX_ADDR, ERC20_ABI, signer)
-  const DAI_AVAX_TOKEN = new ethers.Contact(DAI_AVAX_ADDR, ERC20_ABI, signer)
+  const DAI_AVAX_TOKEN = new ethers.Contract(DAI_AVAX_ADDR, ERC20_ABI, signer)
 
   const SPGL_SUSHI_TOKEN = new ethers.Contract(SPGL_SUSHI_ADDRESS, ERC20_ABI, signer)
   const SPGL_PNG_TOKEN = new ethers.Contract(SPGL_PNG_ADDRESS, ERC20_ABI, signer)
@@ -161,7 +163,7 @@ async function main() {
   const SPGL_LINK_TOKEN = new ethers.Contract(SPGL_LINK_ADDRESS, ERC20_ABI, signer)
   const SPGL_USDT_TOKEN = new ethers.Contract(SPGL_USDT_ADDRESS, ERC20_ABI, signer)
   const SPGL_WBTC_TOKEN = new ethers.Contract(SPGL_WBTC_ADDRESS, ERC20_ABI, signer)
-  const SPGL_DAI_TOKEN = new ethers.Contact(SPGL_DAI_ADDRESS, ERC20_ABI, signer)
+  const SPGL_DAI_TOKEN = new ethers.Contract(SPGL_DAI_ADDRESS, ERC20_ABI, signer)
 
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
 
@@ -393,7 +395,7 @@ async function main() {
   const userWbtcDeposited = await WBTC_CONTRACT.balanceOf(App.YOUR_ADDRESS)
   const userWbtcPoolPercent = (userWbtcDeposited / 1e18)/(totalDepositedWBTCAVAX / 1e18)*100
 
-  const DAI_CONTRACT = new ethers.Contract(SNOWGLOBE_DAI_ADDR, SNOWGLOBE_API, signer)
+  const DAI_CONTRACT = new ethers.Contract(SNOWGLOBE_DAI_ADDR, SNOWGLOBE_ABI, signer)
   const totalDepositedDAIAVAX = await DAI_CONTRACT.totalSupply()
   const userDaiDeposited = await DAI_CONTRACT.balanceOf(App.YOUR_ADDRESS)
   const userDaiPoolPercent = (userDaiDeposited / 1e18)/(totalDepositedDAIAVAX / 1e18)*100
