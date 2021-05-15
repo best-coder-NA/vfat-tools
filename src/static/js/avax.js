@@ -68,7 +68,15 @@ $(function () {
       token1: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
       pair: '0x17a2e8275792b4616befb02eb9ae699aa0dcb94b',
       stake: '0x701e03fad691799a8905043c0d18d2213bbcf2c7'
-      
+    },
+    {
+      pool_id: 'avax-uni',
+      snowglobe: '0xdf7F15d05d641dF701D961a38d03028e0a26a42D',
+      nickname: 'AVAX-UNI Pangolin LP',
+      token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+      token1: '0xf39f9671906d8630812f9d9863bBEf5D523c84Ab',
+      pair: '0x92dc558cb9f8d0473391283ead77b79b416877ca',
+      stake: '0x1f6acc5f5fe6af91c1bb3bebd27f4807a243d935'
     }
   ]
   
