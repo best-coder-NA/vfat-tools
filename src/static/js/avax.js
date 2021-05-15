@@ -65,7 +65,7 @@ $(function () {
       snowglobe: '0xb21b21E4fA802EE4c158d7cf4bD5416B8035c5e0',
       nickname: 'AVAX-DAI Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-      token1: '0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18',
+      token1: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
       pair: '0x17a2e8275792b4616befb02eb9ae699aa0dcb94b',
       stake: '0x701e03fad691799a8905043c0d18d2213bbcf2c7'
       
