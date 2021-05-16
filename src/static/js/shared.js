@@ -258,6 +258,7 @@ const gentop = async () => {
           $('#value-usd').append(`${((currentSNOBTokens / 1e18 + claimableSnowballs) * snobPrice).toFixed(2)}`);
           $('#wallet').append(`${(currentSNOBTokens / 1e18).toFixed(4)}`);
           $('#governance-snob').append(`In Governance: ${(assetsDeposited.snowball / 1e18).toFixed(4)}`);
+          $('#track-portfolio').html(`<ion-icon name="arrow-redo-outline"></ion-icon> <a href='https://markr.io/#/wallet?address=${walletAddres}' target='_blank'>Track Your Portfolio</a>`);
           if (claimableSnowballs > 0) {
             $('#pending').append(`<ion-icon name="time-outline"></ion-icon> Pending: ${(claimableSnowballs).toFixed(4)}`);
           }else{
@@ -362,7 +363,9 @@ const layoutpool = (options, replace) => {
                 </div>
             </div>
             ${poolSize}
-
+            <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-0 mx-auto">
+                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+            </div>
             <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-10 mx-auto">
                 <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
             </div>
