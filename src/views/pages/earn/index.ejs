@@ -5,7 +5,7 @@
   if (window.localStorage.getItem('snowballDarkmode') == 'true') {
     document.body.classList.add('dark-mode');
   }
-</script>
+</script> 
 <body>
 <div class="page-wrapper with-navbar with-transitions">
     <%- include(`${partials}/header_main`); -%>
@@ -39,6 +39,9 @@
                                         </span>
                                         <span class="font-size-14 font-weight-light"  data-toggle="tooltip" data-title="Total value of Snowballs in USD">($<span id="value-usd"></span> )</span>
                                     </h3>
+                                    <p class="m-0 text-muted font-size-12">
+                                        <span id="track-portfolio"></span>
+                                    </p>
                                     <p class="m-0 text-muted font-size-12">
                                         <ion-icon name="wallet-outline"></ion-icon> Wallet: <span id="wallet"></span>
                                     </p>
