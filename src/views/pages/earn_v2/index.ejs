@@ -18,16 +18,16 @@
                     <div class="row mt-20">
                         <div class="col-sm-3 col-sm-3 col-md-3"></div>
                         <div class="col-sm-3 col-sm-3 col-md-3">
-                            <button class="font-size-16 btn-block btn btn-primary" type="button">
-                                Old Pools
-                            </button>
-                        </div>
-                        <div class="col-sm-3 col-sm-3 col-md-3">
-                            <a href="<%= PP %>/earn_v2/">
+                            <a href="<%= PP %>/earn/">
                                 <button class="font-size-16 btn-block btn" type="button">
-                                    New Pools ⭐
+                                    Old Pools
                                 </button>
                             </a>
+                        </div>
+                        <div class="col-sm-3 col-sm-3 col-md-3">
+                            <button class="font-size-16 btn-block btn btn-primary" type="button">
+                                New Pools ⭐
+                            </button>
                         </div>
                     </div>
                     <h4 id="title" class="">Snowglobes 🌐 (AVAX)</h4>
@@ -154,7 +154,7 @@
             <pre id="log" style="margin-left: 10px;">
             </pre>
 
-            <%- include(`${partials}/scripts`, {scriptname: 'earn'}); -%>
+            <%- include(`${partials}/scripts`, {scriptname: 'earn_v2'}); -%>
             <%- include(`${partials}/footer`); -%>
         </div>
     </div>
