@@ -36,6 +36,7 @@ async function main() {
   const SNOWGLOBE_USDT_ADDR = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
   const SNOWGLOBE_WBTC_ADDR = "0x39BE35904f52E83137881C0AC71501Edf0180181";
+  const SNOWGLOBE_DAI_ADDR = "0xb21b21E4fA802EE4c158d7cf4bD5416B8035c5e0";
 
   //pangolin pairs
   const SUSHI_AVAX_ADDR = "0xd8B262C0676E13100B33590F10564b46eeF652AD";
@@ -45,6 +46,7 @@ async function main() {
   const LINK_AVAX_ADDR = "0xbbc7fff833d27264aac8806389e02f717a5506c9";
   const USDT_AVAX_ADDR = "0x9EE0a4E21bd333a6bb2ab298194320b8DaA26516";
   const WBTC_AVAX_ADDR = "0x7a6131110b82dacbb5872c7d352bfe071ea6a17c";
+  const DAI_AVAX_ADDR = "0x17a2e8275792b4616befb02eb9ae699aa0dcb94b";
 
   //tokens
   const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
@@ -53,6 +55,7 @@ async function main() {
   const SPGL_LINK_ADDRESS = "0x00933c16e06b1d15958317C2793BC54394Ae356C";
   const SPGL_USDT_ADDRESS = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const SPGL_WBTC_ADDRESS = "0x39BE35904f52E83137881C0AC71501Edf0180181";
+  const SPGL_DAI_ADDRESS = "0xb21b21E4fA802EE4c158d7cf4bD5416B8035c5e0";
   const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
 
   //LP URLs
@@ -63,6 +66,7 @@ async function main() {
   const LINK_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651";
   const USDT_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xde3a24028580884448a5397872046a019649b084";
   const WBTC_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab";
+  const DAI_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18";
 
   // TVL URLS
   const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
@@ -130,6 +134,15 @@ async function main() {
   const withdrawWBTC = async function() {
     return snowglobeContract_withdraw(SNOWGLOBE_ABI, SNOWGLOBE_WBTC_ADDR, 1, SPGL_WBTC_ADDRESS, App)
   }
+  const approveDAI = async function() {
+    return snowglobeContract_approve(PGL_ABI, SNOWGLOBE_DAI_ADDR, DAI_AVAX_ADDR, App)
+  }
+  const stakeDAI= async function() {
+    return snowglobeContract_stake(SNOWGLOBE_ABI, SNOWGLOBE_DAI_ADDR, 1, DAI_AVAX_ADDR, App)
+  }
+  const withdrawDAI = async function() {
+    return snowglobeContract_withdraw(SNOWGLOBE_ABI, SNOWGLOBE_DAI_ADDR, 1, SPGL_DAI_ADDRESS, App)
+  }
   const signer = App.provider.getSigner()
 
   //Tokens
@@ -140,6 +153,7 @@ async function main() {
   const LINK_AVAX_TOKEN = new ethers.Contract(LINK_AVAX_ADDR, ERC20_ABI, signer)
   const USDT_AVAX_TOKEN = new ethers.Contract(USDT_AVAX_ADDR, ERC20_ABI, signer)
   const WBTC_AVAX_TOKEN = new ethers.Contract(WBTC_AVAX_ADDR, ERC20_ABI, signer)
+  const DAI_AVAX_TOKEN = new ethers.Contract(DAI_AVAX_ADDR ERC20_ABI, signer)
 
   const SPGL_SUSHI_TOKEN = new ethers.Contract(SPGL_SUSHI_ADDRESS, ERC20_ABI, signer)
   const SPGL_PNG_TOKEN = new ethers.Contract(SPGL_PNG_ADDRESS, ERC20_ABI, signer)
@@ -147,6 +161,7 @@ async function main() {
   const SPGL_LINK_TOKEN = new ethers.Contract(SPGL_LINK_ADDRESS, ERC20_ABI, signer)
   const SPGL_USDT_TOKEN = new ethers.Contract(SPGL_USDT_ADDRESS, ERC20_ABI, signer)
   const SPGL_WBTC_TOKEN = new ethers.Contract(SPGL_WBTC_ADDRESS, ERC20_ABI, signer)
+  const SPGL_DAI_TOKEN = new ethers.Contract(SPGL_DAI_ADDRESS, ERC20_ABI, signer)
 
   const SNOB_TOKEN = new ethers.Contract(SNOB_ADDRESS, ERC20_ABI, signer)
 
@@ -247,6 +262,10 @@ async function main() {
   const currentSPGLWBTCTokens = await SPGL_WBTC_TOKEN.balanceOf(App.YOUR_ADDRESS)
   const spglWbtcDisplayAmt = currentSPGLWBTCTokens > 1000 ? (currentSPGLWBTCTokens / 1e18).toFixed(8) : 0;
 
+  const currentDAIAVAXTokens = await DAI_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  const currentSPGLDAITokens = await SPGL_DAI_TOKEN.balanceOf(App.YOUR_ADDRESS)
+  const spglDaiDisplayAmt = currentSPGLDAITokens > 1000 ? (currentSPGLDAITokens / 1e18).toFixed(8) : 0; 
+
   //snowglobes
   /*  //_print(`<b style="font-size: 20px;"">Snowglobes 🌐</b>`)
    //_print(`Deposit LP tokens into Snowglobes for automatic compounding. Save on gas costs!`)
@@ -315,6 +334,9 @@ async function main() {
     },
     {
       stakingRewardAddress: '0xe968E9753fd2c323C2Fe94caFF954a48aFc18546'
+    },
+    {
+      stakingRewardAddress: '0x701e03fAD691799a8905043C0d18d2213BbCf2c7'
     }
   ]
 
@@ -336,6 +358,7 @@ async function main() {
   const link_apr = apr_array[3]
   const usdt_apr = apr_array[4]
   const wbtc_apr = apr_array[5]
+  const dai_apr = apr_array[6]
   
   // APY = P(1 + r/n)nt
   let compounds_per_year = DAILY_COMPOUNDS * 365
@@ -351,6 +374,8 @@ async function main() {
   let usdt_annual_apy = 100*(1 + usdt_r/compounds_per_year)**compounds_per_year - 100
   let wbtc_r = wbtc_apr.yearlyAPR/100
   let wbtc_annual_apy = 100*(1 + wbtc_r/compounds_per_year)**compounds_per_year - 100
+  let dai_r = dai_apr.yearlyAPR/100
+  let dai_annual_apy = 100*(1 + dai_r/compounds_per_year)**compounds_per_year - 100
 
   //Contracts
   const LINK_CONTRACT = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer)
@@ -368,6 +393,11 @@ async function main() {
   const userWbtcDeposited = await WBTC_CONTRACT.balanceOf(App.YOUR_ADDRESS)
   const userWbtcPoolPercent = (userWbtcDeposited / 1e18)/(totalDepositedWBTCAVAX / 1e18)*100
 
+  const DAI_CONTRACT = new ethers.Contract(SNOWGLOBE_DAI_ADDR, SNOWGLOBE_ABI, signer)
+  const totalDepositedDAIAVAX = await DAI_CONTRACT.totalSupply()
+  const userDaiDeposited = await DAI_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+  const userDaiPoolPercent = (userDaiDeposited / 1e18)/(totalDepositedDAIAVAX / 1e18)*100
+
   const TOKEN_NAMES = {
     "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7": "AVAX",
     "0x60781C2586D68229fde47564546784ab3fACA982": "PNG",
@@ -376,7 +406,8 @@ async function main() {
     "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15": "ETH",
     "0xde3A24028580884448a5397872046a019649b084": "USDT",
     "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK",
-    "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC"
+    "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC",
+    "0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18": "DAI"
   }
 
   // PGL & LP values
@@ -577,6 +608,39 @@ async function main() {
     }
   } catch { console.log('error calculating PGL value')}
 
+  const snowglobeContract_dai = new ethers.Contract(SNOWGLOBE_DAI_ADDR, SNOWGLOBE_ABI, signer);
+  let daiDeposited = await snowglobeContract_dai.balanceOf(App.YOUR_ADDRESS)
+  let totalPoolPGL_dai = await snowglobeContract_dai.balance();
+  let poolShareDisplay_dai = null;
+  let stakeDisplay_dai = null;
+  let withdrawDisplay_dai = null;
+  const userSPGL_dai = daiDeposited / 1e18;
+  let ownedPGL_dai = 0;
+  try {
+    if (userSPGL_dai > 0) {
+      let totalSPGL_dai = await snowglobeContract_dai.totalSupply();
+      ownedPGL_dai = userSPGL_dai * (totalPoolPGL_dai / 1e18) / (totalSPGL_dai / 1e18);
+      const pglContract_dai = new ethers.Contract(DAI_AVAX_ADDR, PGL_ABI, signer);
+      let totalSupplyPGL_dai = await pglContract_dai.totalSupply();
+      totalSupplyPGL_dai = totalSupplyPGL_dai / 1e18;
+      const reserves_dai = await pglContract_dai.getReserves();
+      const r0_dai = reserves_dai._reserve0 / 1e18
+      const r1_dai = reserves_dai._reserve1 / 1e18
+      let reserve0Owned_dai = ownedPGL_dai * (r0_dai) / (totalSupplyPGL_dai);
+      let reserve1Owned_dai = ownedPGL_dai * (r1_dai) / (totalSupplyPGL_dai);
+      const token0Address_dai = await pglContract_dai.token0();
+      const token1Address_dai = await pglContract_dai.token1();
+      const t0Price_dai = prices[token0Address_dai] ? prices[token0Address_dai].usd : 0
+      const t1Price_dai = prices[token1Address_dai] ? prices[token1Address_dai].usd : 0
+      const token0ValueUSDT_dai = reserve0Owned_dai * t0Price_dai;
+      const token1ValueUSDT_dai = reserve1Owned_dai * t1Price_dai;
+      const value_dai = token0ValueUSDT_dai + (token1ValueUSDT_dai);
+      withdrawDisplay_dai = `<b>${userSPGL_dai .toFixed(4)}</b> sPGL (<b>${ownedPGL_dai .toFixed(4)}</b> PGL)`;
+      poolShareDisplay_dai = withdrawDisplay_dai;
+      stakeDisplay_dai = `Your LP value is <b>${reserve0Owned_dai .toFixed(3)}</b> ${TOKEN_NAMES[token0Address_dai ]} / <b>${reserve1Owned_dai .toFixed(3)}</b> ${TOKEN_NAMES[token1Address_dai ]} ($<b>${value_dai .toFixed(2)}</b>)**</b>`
+    }
+  } catch { console.log('error calculating PGL value')}
+
   const layout_pool = function(options) {
     //_print(``)
     //_print(`<a href='${options.url}' target='_blank'>${options.pool_name}</a>`)
@@ -768,6 +832,28 @@ async function main() {
   })
   layout_pool({
     logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18/logo.png',
+    url: DAI_AVAX_POOL_URL,
+    pool_name: 'AVAX-DAI Pangolin LP',
+    tvl: DAI_AVAX_TVL,
+    apr: dai_apr,
+    apy: dai_annual_apy,
+    total_deposited: totalDepositedDAIAVAX,
+    user_pool_percent: userDaiPoolPercent,
+    current_tokens: currentDAIAVAXTokens,
+    display_amount: spglDaiDisplayAmt,
+    approve: 'approveDAI',
+    stake: 'stakeDAI',
+    withdraw: 'withdrawDAI',
+    tvl_display: dai_tvl_display,
+    pool_share_display: poolShareDisplay_dai,
+    stake_display: stakeDisplay_dai,
+    total_pgl: totalPoolPGL_dai,
+    withdraw_display: withdrawDisplay_dai,
+    owned_pgl: ownedPGL_dai
+  })
+  layout_pool({
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
     url: USDT_AVAX_POOL_URL,
     pool_name: 'AVAX-USDT Pangolin LP',
@@ -900,6 +986,9 @@ async function main() {
       case 'approveWBTC':
         approveWBTC();
         break;
+      case 'approveDAI':
+        approveDAI();
+        break;
       default:
         alert('Oops something went wrong. Try refreshing the page.');
     }
@@ -926,6 +1015,9 @@ async function main() {
       case 'stakeWBTC':
         stakeWBTC();
         break;
+      case 'stakeDAI':
+        stakeDAI();
+        break;
       default:
         alert('Oops something went wrong. Try refreshing the page.');
     }
@@ -951,6 +1043,9 @@ async function main() {
         break;
       case 'withdrawWBTC':
         withdrawWBTC();
+        break;
+      case 'withdrawDAI':
+        withdrawDAI();
         break;
       default:
         alert('Oops something went wrong. Try refreshing the page.');
