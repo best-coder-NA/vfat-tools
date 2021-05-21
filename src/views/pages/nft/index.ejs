@@ -8,12 +8,13 @@
 
 </script>
 <body>
+    <div class="page-wrapper with-navbar with-transitions">
 <%- include(`${partials}/header_main`); -%>
 
 <%- include(`${partials}/wallet_error`); -%>
 
 
-<div class="page-wrapper with-navbar with-transitions">
+
     <div class="loader--1">
         <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
                 <div></div><div></div>
@@ -22,9 +23,11 @@
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
-            <div class="ml-20" style="text-align: center"><h2>NFTs</h2></div>
-            <div class="row">
-                <div class="col-sm-3 col-sm-3 col-md-3"></div>
+            <div class="col-md-12 text-center pt-10">
+                <h1 id="title" style="font-size: 40px">NFTs</h1>
+            </div>
+
+            <div class="row pt-20 d-flex-center-row ">
                 <div class="col-sm-3 col-sm-3 col-md-2">
                     <button id="shop_tab" class="font-size-16 btn-block btn btn-primary" type="button">
                         Shop 🛍️</button>
@@ -38,11 +41,10 @@
                         Your Gallery 🖼️</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-3 col-md-2"></div>
-                <div class="card col-xs-12 col-sm-7 col-md-7">
+            <div class="row d-flex justify-content-center">
+                <div class=" col-xs-12 col-sm-12 col-md-12">
                     <div id="shop_section">
-                        <div class="text-center col-md-12 font-size-20 font-weight-bold mb-5">Shop</div>
+                        <div class="text-center col-md-12 font-size-20 font-weight-bold mt-10 mb-10">Shop</div>
                         <div class="text-center">
                             <div class="font-weight-bold font-size-16">Snow Ball Head</div>
                             <div><b>Artist: </b><a href="https://twitter.com/fennec_nft" target="_blank">Fennec</a></div>
@@ -53,7 +55,7 @@
                             <div><b>91-120: </b>0.6 AVAX, <b>121-130: </b>1 AVAX</div>
                             <div><b>131-140: </b>2 AVAX, <b>141-150: </b>5 AVAX</div>
                         </div>
-                        <div id="snowball_head" class="row col-xs-12 col-sm-12 col-md-12">
+                        <div id="snowball_head" class="row col-xs-12 col-sm-12 col-md-12 justify-content-center">
                         </div>
                         <div class="text-center">
                             <div class="font-weight-bold font-size-16">The "Rolling Sasquatch" series </div>
@@ -61,14 +63,15 @@
                             <div><b>Proceeds: </b>50% to Artist, 50% to Snowball treasury</div>
                             <div><b>Mint Type: </b>Limited edition</div>
                         </div>
-                        <div id="shop_items" class="row col-xs-12 col-sm-12 col-md-12">
+                        <div id="shop_items" class="row col-xs-12 col-sm-12 col-md-12 justify-content-center">
                         </div>
                     </div>
 
-                    <div style="display: none" id="claim_section" class="row">
-                        <div class="text-center col-md-12 font-size-20 font-weight-bold mb-5">Covid Relief in India 🇮🇳</div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div style="display: none" id="claim_section" class="row justify-content-center">
+
+                        <div class="col-xs-12 col-sm-12 col-md-4 mx-20">
                             <div class="card ml-auto mr-auto text-center">
+                                <div class="text-center col-md-12 font-size-20 font-weight-bold mb-5">Covid Relief in India 🇮🇳</div>
                                 <div><img style="max-width: 200px; border: 5px solid Gray; border-style: outset; cursor: pointer;" src="https://gateway.pinata.cloud/ipfs/QmfRecmhvomvhpR1HVnXrmHNBEfgGcR4Coc1gWSJb6au5s"></div>
                                 <div class="mb-10">
                                     <b>Description:</b> Donated to the Snowball campaign for Covid Relief in India
@@ -85,9 +88,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center col-md-12 font-size-20 font-weight-bold mb-5">Early Voter NFT 🗳️</div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+
+                        <div class="col-xs-12 col-sm-12 col-md-4 mx-20">
                             <div class="card ml-auto mr-auto text-center">
+                                <div class="text-center col-md-12 font-size-20 font-weight-bold mb-5 mx-10">Early Voter NFT 🗳️</div>
                                 <div><img style="max-width: 200px; cursor: pointer;" src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/nft1-3.gif"></div>
                                 <div class="mb-10">
                                     <b>Description:</b> Voted on Proposal 1 or Proposal 2 during the first week of Snowball Governance
@@ -110,7 +114,7 @@
                         <hr/>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div id="no_nft">No NFTs in your gallery.</div>
-                            <div id="nft_section" class="mr-auto ml-auto col-md-8">
+                            <div id="nft_section" class="row mr-auto ml-auto col-md-12 justify-content-center">
                             </div>
                         </div>
                     </div>

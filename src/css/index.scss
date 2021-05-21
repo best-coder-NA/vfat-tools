@@ -874,5 +874,13 @@ code {
 .vault-card:hover {
     background-color: #b2dfff7d !important;
 }
+.d-flex-center-row {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap !important;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
 
 @import 'diff.scss';
