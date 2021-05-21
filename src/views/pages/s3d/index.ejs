@@ -29,6 +29,7 @@
     }
 </style>
 <body>
+    <div class="page-wrapper with-navbar with-transitions">
 <%- include(`${partials}/header_main`); -%>
 
 <%- include(`${partials}/wallet_error`); -%>
@@ -126,7 +127,7 @@
     </div>
 </div>
 
-<div class="page-wrapper with-navbar with-transitions">
+
     <div class="loader--1">
         <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
                 <div></div><div></div>
@@ -135,18 +136,29 @@
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
-            <a class="ml-20 mt-10 font-size-10" href="<%= PP %>/stablevault/">Back to StableVault</a>
-            <div style="text-align: center">
-                <div style="margin-right: 5%;"><img class="img-fluid" style="vertical-align: text-top" width="60px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3D.png"></div>
+
+            <div class="col-md-12 text-center pt-10">
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-start">
+                        <a class="font-size-10 ml-20 back-margin" href="<%= PP %>/stablevault/" style="
+                            font-size: 15px;
+                            border: 0.5px solid;
+                            border-radius: 7px;
+                            padding: 5px;
+                        "><ion-icon name="arrow-back-outline"></ion-icon> Back to StableVault</a>
+                    </div>
+
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <img class="img-fluid" style="vertical-align: text-top" width="60px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3D.png">
+                </div>
+                <h1 id="title" style="font-size: 40px">s3D Vault</h1>
+                <div style=" font-size: 20px">USDT + BUSD + DAI</div>
+                <div style="text-align: center;font-size: 20px;">Staking APR: <span id="staking_apr1"></span>%</div>
             </div>
-            <div style="text-align: center;">
-                <div style="margin-right: 5%; font-size: 40px">s3D Vault</div>
-            </div>
-            <div style="text-align: center;">
-                <div style="margin-right: 5%; font-size: 20px">USDT + BUSD + DAI</div>
-            </div>
-            <div style="text-align: center;font-size: 20px;margin-right: 5%;">Staking APR: <span id="staking_apr1"></span>%</div>
-            <div class="row">
+
+
+            <div class="row d-flex justify-content-center">
                 <div class="card col-xs-12 col-sm-5 col-md-5">
                     <h2 class="content-title">
                         Swap <ion-icon name="swap-horizontal-outline"></ion-icon>
@@ -266,7 +278,7 @@
                         <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="approve_swap_btn_usdt"> Approve USDT</button>
                         <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="approve_swap_btn_busd"> Approve BUSD</button>
                         <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="approve_swap_btn_dai"> Approve DAI</button>
-                        <a href="#" id="swap_btn" class="font-size-20 btn-block btn btn-primary" role="button">Swap</a>
+                        <a href="#" id="swap_btn" class="snob-btn bg-primary" role="button">Swap</a>
                         <hr class="my-20"/>
                         <details class="collapse-panel w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
                             <summary class="collapse-header">
@@ -302,7 +314,7 @@
                                 Add Liquidity
                             </h2>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 d-flex justify-content-end">
                             <button id="remove_liquidity_btn" class="btn btn-rounded">
                                 Remove Liquidity <ion-icon name="remove-circle-outline"></ion-icon>
                             </button>
@@ -356,7 +368,7 @@
                         <button class="mb-10 font-size-16 btn-block btn btn-success" style="display:none" id="token_1_approve" href="#">Approve USDT</button>
                         <button class="mb-10 font-size-16 btn-block btn btn-success" style="display:none" id="token_2_approve" href="#">Approve BUSD</button>
                         <button class="mb-10 font-size-16 btn-block btn btn-success" style="display:none" id="token_3_approve" href="#">Approve DAI</button>
-                        <a href="#modal-deposit" id="deposit_btn" class="font-size-20 btn-block btn btn-primary" role="button">Deposit</a>
+                        <a href="#modal-deposit" id="deposit_btn" class="snob-btn bg-primary" role="button">Deposit</a>
                         <hr class="my-20"/>
                         <details class="collapse-panel w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
                             <summary class="collapse-header">
@@ -469,7 +481,7 @@
                 </div>
 
             </div>
-            <div class="row font-size-14">
+            <div class="row font-size-14 row d-flex justify-content-center">
                 <div class="card col-xs-12 col-sm-5 col-md-5">
                     <h2 class="content-title">
                         Transactions <ion-icon name="stats-chart-outline"></ion-icon>

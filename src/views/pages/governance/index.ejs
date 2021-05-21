@@ -8,12 +8,13 @@
 
 </script>
 <body>
+    <div class="page-wrapper with-navbar with-transitions">
 <%- include(`${partials}/header_main`); -%>
 
 <%- include(`${partials}/wallet_error`); -%>
 
 
-<div class="page-wrapper with-navbar with-transitions">
+
     <div class="loader--1">
         <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
                 <div></div><div></div>
@@ -22,7 +23,9 @@
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
-            <h2 style="margin-left: 40px;">Governance <ion-icon name="stats-chart-outline"></ion-icon></h2>
+            <div class="col-md-12 pt-20">
+                <h1 id="title" style="font-size: 40px; margin-left: 40px;">Governance <ion-icon name="stats-chart-outline"></ion-icon></h1>
+            </div>
             <div class="row">
                 <div class="card col-xs-12 col-sm-4 col-md-4">
                     <div class="row">
