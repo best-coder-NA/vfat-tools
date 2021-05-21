@@ -12,17 +12,23 @@
 }
 @mixin for-tablet-portrait-up {
     @media (min-width: 600px) {
-        @content;
+        .back-margin {
+            margin-left: 10px;
+        }
     }
 }
 @mixin for-tablet-landscape-up {
     @media (min-width: 900px) {
-        @content;
+        .back-margin {
+            margin-left: 70px;
+        }
     }
 }
 @mixin for-desktop-up {
     @media (min-width: 1200px) {
-        @content;
+        .back-margin {
+            margin-left: 70px;
+        }
     }
 }
 @mixin for-big-desktop-up {

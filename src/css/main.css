@@ -53,6 +53,17 @@ code {
     user-select: all;
 }
 
+@media (min-width: 1200px) {
+    .back-margin {
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 599px) {
+    .back-margin {
+        margin-left: 10px;
+    }
+}
 .loader-home {
     display: -webkit-box;
     display: flex;
