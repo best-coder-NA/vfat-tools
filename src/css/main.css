@@ -13,7 +13,9 @@ body {
     }
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: border-box;
 }
 
@@ -80,10 +82,10 @@ code {
     animation: anim2 700ms steps(1, end) infinite;
 }
 .loader--2:after {
-    content: ".loader--2";
+    content: '.loader--2';
     display: inline-block;
     vertical-align: middle;
-    font-size: .7em;
+    font-size: 0.7em;
     font-weight: 200;
     margin-left: 10px;
     background-color: #e1e1e1;
@@ -102,10 +104,10 @@ code {
     animation: anim3 700ms steps(1, end) infinite;
 }
 .loader--3:after {
-    content: ".loader--3";
+    content: '.loader--3';
     display: inline-block;
     vertical-align: middle;
-    font-size: .7em;
+    font-size: 0.7em;
     font-weight: 200;
     margin-left: 10px;
     background-color: #e1e1e1;
@@ -124,10 +126,10 @@ code {
     animation: anim4 700ms steps(1, end) infinite;
 }
 .loader--4:after {
-    content: ".loader--4";
+    content: '.loader--4';
     display: inline-block;
     vertical-align: middle;
-    font-size: .7em;
+    font-size: 0.7em;
     font-weight: 200;
     margin-left: 10px;
     background-color: #e1e1e1;
@@ -146,10 +148,10 @@ code {
     animation: anim5 700ms steps(1, end) infinite;
 }
 .loader--5:after {
-    content: ".loader--5";
+    content: '.loader--5';
     display: inline-block;
     vertical-align: middle;
-    font-size: .7em;
+    font-size: 0.7em;
     font-weight: 200;
     margin-left: 10px;
     background-color: #e1e1e1;
@@ -168,10 +170,10 @@ code {
     animation: anim6 700ms steps(1, end) infinite;
 }
 .loader--6:after {
-    content: ".loader--6";
+    content: '.loader--6';
     display: inline-block;
     vertical-align: middle;
-    font-size: .7em;
+    font-size: 0.7em;
     font-weight: 200;
     margin-left: 10px;
     background-color: #e1e1e1;
@@ -190,10 +192,10 @@ code {
     animation: anim7 700ms steps(1, end) infinite;
 }
 .loader--7:after {
-    content: ".loader--7";
+    content: '.loader--7';
     display: inline-block;
     vertical-align: middle;
-    font-size: .7em;
+    font-size: 0.7em;
     font-weight: 200;
     margin-left: 10px;
     background-color: #e1e1e1;
@@ -207,223 +209,237 @@ code {
 }
 
 @-webkit-keyframes anim1 {
-    0%, 100% {
-        content: "[----]";
+    0%,
+    100% {
+        content: '[----]';
     }
     20% {
-        content: "[=---]";
+        content: '[=---]';
     }
     40% {
-        content: "[-=--]";
+        content: '[-=--]';
     }
     60% {
-        content: "[--=-]";
+        content: '[--=-]';
     }
     80% {
-        content: "[---=]";
+        content: '[---=]';
     }
 }
 
 @keyframes anim1 {
-    0%, 100% {
-        content: "[....]";
+    0%,
+    100% {
+        content: '[....]';
     }
     20% {
-        content: "[=...]";
+        content: '[=...]';
     }
     40% {
-        content: "[.=..]";
+        content: '[.=..]';
     }
     60% {
-        content: "[..=.]";
+        content: '[..=.]';
     }
     80% {
-        content: "[...=]";
+        content: '[...=]';
     }
 }
 @-webkit-keyframes anim2 {
-    0%, 100% {
-        content: "{/////}";
+    0%,
+    100% {
+        content: '{/////}';
     }
     20% {
-        content: "{~////}";
+        content: '{~////}';
     }
     40% {
-        content: "{/~///}";
+        content: '{/~///}';
     }
     60% {
-        content: "{//~//}";
+        content: '{//~//}';
     }
     80% {
-        content: "{////~}";
+        content: '{////~}';
     }
 }
 @keyframes anim2 {
-    0%, 100% {
-        content: "{/////}";
+    0%,
+    100% {
+        content: '{/////}';
     }
     20% {
-        content: "{~////}";
+        content: '{~////}';
     }
     40% {
-        content: "{/~///}";
+        content: '{/~///}';
     }
     60% {
-        content: "{//~//}";
+        content: '{//~//}';
     }
     80% {
-        content: "{////~}";
+        content: '{////~}';
     }
 }
 @-webkit-keyframes anim3 {
-    0%, 100% {
-        content: "(●)";
+    0%,
+    100% {
+        content: '(●)';
     }
     50% {
-        content: "(⚬)";
+        content: '(⚬)';
     }
 }
 @keyframes anim3 {
-    0%, 100% {
-        content: "(●)";
+    0%,
+    100% {
+        content: '(●)';
     }
     50% {
-        content: "(⚬)";
+        content: '(⚬)';
     }
 }
 @-webkit-keyframes anim4 {
-    0%, 100% {
-        content: "↑";
+    0%,
+    100% {
+        content: '↑';
     }
     12.5% {
-        content: "↗";
+        content: '↗';
     }
     25% {
-        content: "→";
+        content: '→';
     }
     37.5% {
-        content: "↘";
+        content: '↘';
     }
     50% {
-        content: "↓";
+        content: '↓';
     }
     62.5% {
-        content: "↙";
+        content: '↙';
     }
     75% {
-        content: "←";
+        content: '←';
     }
     87.5% {
-        content: "↖";
+        content: '↖';
     }
 }
 @keyframes anim4 {
-    0%, 100% {
-        content: "↑";
+    0%,
+    100% {
+        content: '↑';
     }
     12.5% {
-        content: "↗";
+        content: '↗';
     }
     25% {
-        content: "→";
+        content: '→';
     }
     37.5% {
-        content: "↘";
+        content: '↘';
     }
     50% {
-        content: "↓";
+        content: '↓';
     }
     62.5% {
-        content: "↙";
+        content: '↙';
     }
     75% {
-        content: "←";
+        content: '←';
     }
     87.5% {
-        content: "↖";
+        content: '↖';
     }
 }
 @-webkit-keyframes anim5 {
-    0%, 100% {
-        content: "⊏";
+    0%,
+    100% {
+        content: '⊏';
     }
     25% {
-        content: "⊓";
+        content: '⊓';
     }
     50% {
-        content: "⊐";
+        content: '⊐';
     }
     75% {
-        content: "⊔";
+        content: '⊔';
     }
 }
 @keyframes anim5 {
-    0%, 100% {
-        content: "⊏";
+    0%,
+    100% {
+        content: '⊏';
     }
     25% {
-        content: "⊓";
+        content: '⊓';
     }
     50% {
-        content: "⊐";
+        content: '⊐';
     }
     75% {
-        content: "⊔";
+        content: '⊔';
     }
 }
 @-webkit-keyframes anim6 {
-    0%, 100% {
-        content: "×";
+    0%,
+    100% {
+        content: '×';
     }
     50% {
-        content: "+";
+        content: '+';
     }
 }
 @keyframes anim6 {
-    0%, 100% {
-        content: "×";
+    0%,
+    100% {
+        content: '×';
     }
     50% {
-        content: "+";
+        content: '+';
     }
 }
 @-webkit-keyframes anim7 {
-    0%, 100% {
-        content: "☰";
+    0%,
+    100% {
+        content: '☰';
     }
     16.6666666667% {
-        content: "☱";
+        content: '☱';
     }
     33.3333333333% {
-        content: "☳";
+        content: '☳';
     }
     50% {
-        content: "☷";
+        content: '☷';
     }
     66.6666666667% {
-        content: "☶";
+        content: '☶';
     }
     83.3333333333% {
-        content: "☴";
+        content: '☴';
     }
 }
 @keyframes anim7 {
-    0%, 100% {
-        content: "☰";
+    0%,
+    100% {
+        content: '☰';
     }
     16.6666666667% {
-        content: "☱";
+        content: '☱';
     }
     33.3333333333% {
-        content: "☳";
+        content: '☳';
     }
     50% {
-        content: "☷";
+        content: '☷';
     }
     66.6666666667% {
-        content: "☶";
+        content: '☶';
     }
     83.3333333333% {
-        content: "☴";
+        content: '☴';
     }
 }

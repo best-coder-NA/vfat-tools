@@ -17,6 +17,7 @@
 
 </script>
 <body>
+    <div class="page-wrapper with-navbar with-transitions">
 <%- include(`${partials}/header_main`); -%>
 
 <%- include(`${partials}/wallet_error`); -%>
@@ -114,7 +115,7 @@
     </div>
 </div>
 
-<div class="page-wrapper with-navbar with-transitions">
+
     <div class="loader--1">
         <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
                 <div></div><div></div>
@@ -123,11 +124,14 @@
     <!-- Content wrapper start -->
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
-            <div style="text-align: center">
-                <h2 style="margin-left: 5%">StableVault</h2>
+            <div class="row pt-15">
+                <div class="col-md-12 text-center">
+                    <h2>StableVault</h2>
+                </div>
             </div>
+
             <div class="row">
-                <div class="card col-md-12">
+                <div class="col-md-6">
                     <div class="card text-center vault-card">
                         <a href="<%= PP %>/s3f/">
                             <div><img class="img-fluid" style="vertical-align: text-top" width="60px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3F.png"></div>
@@ -135,6 +139,8 @@
                             <div class="font-size-18">Frax + TUSD + USDT</div>
                         </a>
                     </div>
+                </div>
+                <div class="col-md-6">
                     <div class="card text-center vault-card">
                         <a href="<%= PP %>/s3d/">
                             <div><img class="img-fluid" style="vertical-align: text-top" width="60px"src="https://raw.githubusercontent.com/Snowball-Finance/Assets/main/S3D.png"></div>
