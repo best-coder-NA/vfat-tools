@@ -25,6 +25,9 @@ async function main() {
   const PNG_STAKING_ABI = [{ "inputs": [{ "internalType": "address", "name": "_rewardsToken", "type": "address" }, { "internalType": "address", "name": "_stakingToken", "type": "address" }], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "address", "name": "token", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Recovered", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "uint256", "name": "reward", "type": "uint256" }], "name": "RewardAdded", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "user", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "reward", "type": "uint256" }], "name": "RewardPaid", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "uint256", "name": "newDuration", "type": "uint256" }], "name": "RewardsDurationUpdated", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "user", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Staked", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "user", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Withdrawn", "type": "event" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "earned", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "exit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "getReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "getRewardForDuration", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "lastTimeRewardApplicable", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "lastUpdateTime", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "reward", "type": "uint256" }], "name": "notifyRewardAmount", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "periodFinish", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "tokenAddress", "type": "address" }, { "internalType": "uint256", "name": "tokenAmount", "type": "uint256" }], "name": "recoverERC20", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "rewardPerToken", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "rewardPerTokenStored", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "rewardRate", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "rewards", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "rewardsDuration", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "rewardsToken", "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_rewardsDuration", "type": "uint256" }], "name": "setRewardsDuration", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "stake", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "uint8", "name": "v", "type": "uint8" }, { "internalType": "bytes32", "name": "r", "type": "bytes32" }, { "internalType": "bytes32", "name": "s", "type": "bytes32" }], "name": "stakeWithPermit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "stakingToken", "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "userRewardPerTokenPaid", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }]
   const CRYSTAL_VAULT_ABI = [{"type":"constructor","stateMutability":"nonpayable","inputs":[{"type":"address","name":"_iceQueen","internalType":"address"},{"type":"address","name":"_snowball","internalType":"address"},{"type":"address","name":"_pgl","internalType":"address"},{"type":"uint256","name":"_poolId","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"snowball","internalType":"uint256"},{"type":"uint256","name":"PGL","internalType":"uint256"},{"type":"uint256","name":"rewardCredit","internalType":"uint256"},{"type":"uint256","name":"rewardSnapshot","internalType":"uint256"},{"type":"uint256","name":"votes","internalType":"uint256"},{"type":"uint256","name":"thawTimestamp","internalType":"uint256"}],"name":"accounts","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"deposit","inputs":[{"type":"uint256","name":"_amountSnowball","internalType":"uint256"},{"type":"uint256","name":"_amountPGL","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"depositPGL","inputs":[{"type":"uint256","name":"_amountIn","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"depositSnowball","inputs":[{"type":"uint256","name":"_amountIn","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"freeze","inputs":[{"type":"address","name":"_address","internalType":"address"},{"type":"uint256","name":"_duration","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"governance","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IIceQueen"}],"name":"iceQueen","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"isFrozen","inputs":[{"type":"address","name":"_address","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"pendingReward","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IPangolinPair"}],"name":"pgl","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"poolId","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"quadraticVotes","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setGovernance","inputs":[{"type":"address","name":"_governance","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"snowball","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"votes","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"withdrawAll","inputs":[]}]
   const STAKING_ABI = [{"type":"constructor","stateMutability":"nonpayable","inputs":[{"type":"address","name":"_owner","internalType":"address"},{"type":"address","name":"_rewardsToken","internalType":"address"},{"type":"address","name":"_stakingToken","internalType":"address"}]},{"type":"event","name":"OwnerChanged","inputs":[{"type":"address","name":"oldOwner","internalType":"address","indexed":false},{"type":"address","name":"newOwner","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"OwnerNominated","inputs":[{"type":"address","name":"newOwner","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"PauseChanged","inputs":[{"type":"bool","name":"isPaused","internalType":"bool","indexed":false}],"anonymous":false},{"type":"event","name":"Recovered","inputs":[{"type":"address","name":"token","internalType":"address","indexed":false},{"type":"uint256","name":"amount","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"RewardAdded","inputs":[{"type":"uint256","name":"reward","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"RewardPaid","inputs":[{"type":"address","name":"user","internalType":"address","indexed":true},{"type":"uint256","name":"reward","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"RewardsDurationUpdated","inputs":[{"type":"uint256","name":"newDuration","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"Staked","inputs":[{"type":"address","name":"user","internalType":"address","indexed":true},{"type":"uint256","name":"amount","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"Withdrawn","inputs":[{"type":"address","name":"user","internalType":"address","indexed":true},{"type":"uint256","name":"amount","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"acceptOwnership","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"balanceOf","inputs":[{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"earned","inputs":[{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"exit","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"getReward","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getRewardForDuration","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"lastPauseTime","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"lastTimeRewardApplicable","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"lastUpdateTime","inputs":[]},{"type":"function","stateMutability":"pure","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"min","inputs":[{"type":"uint256","name":"a","internalType":"uint256"},{"type":"uint256","name":"b","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"nominateNewOwner","inputs":[{"type":"address","name":"_owner","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"nominatedOwner","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"notifyRewardAmount","inputs":[{"type":"uint256","name":"reward","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"owner","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"paused","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"periodFinish","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"recoverERC20","inputs":[{"type":"address","name":"tokenAddress","internalType":"address"},{"type":"uint256","name":"tokenAmount","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewardPerToken","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewardPerTokenStored","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewardRate","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewards","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewardsDuration","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"rewardsToken","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setPaused","inputs":[{"type":"bool","name":"_paused","internalType":"bool"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"setRewardsDuration","inputs":[{"type":"uint256","name":"_rewardsDuration","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"stake","inputs":[{"type":"uint256","name":"amount","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"stakingToken","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"totalSupply","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"userRewardPerTokenPaid","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"withdraw","inputs":[{"type":"uint256","name":"amount","internalType":"uint256"}]}]
+  const GAUGEPROXY_ABI = [ { "type": "constructor", "stateMutability": "nonpayable", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "contract IceQueen" } ], "name": "MASTER", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "contract IERC20" } ], "name": "SNOWBALL", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "contract IERC20" } ], "name": "SNOWCONE", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "contract IERC20" } ], "name": "TOKEN", "inputs": [] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "acceptGovernance", "inputs": [] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "addGauge", "inputs": [ { "type": "address", "name": "_token", "internalType": "address" } ] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "collect", "inputs": [] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "deposit", "inputs": [] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "distribute", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "address" } ], "name": "gauges", "inputs": [ { "type": "address", "name": "", "internalType": "address" } ] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "address" } ], "name": "getGauge", "inputs": [ { "type": "address", "name": "_token", "internalType": "address" } ] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "address" } ], "name": "governance", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "uint256", "name": "", "internalType": "uint256" } ], "name": "length", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "address" } ], "name": "pendingGovernance", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "uint256", "name": "", "internalType": "uint256" } ], "name": "pid", "inputs": [] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "poke", "inputs": [ { "type": "address", "name": "_owner", "internalType": "address" } ] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "reset", "inputs": [] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "setGovernance", "inputs": [ { "type": "address", "name": "_governance", "internalType": "address" } ] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "setPID", "inputs": [ { "type": "uint256", "name": "_pid", "internalType": "uint256" } ] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address", "name": "", "internalType": "address" } ], "name": "tokenVote", "inputs": [ { "type": "address", "name": "", "internalType": "address" }, { "type": "uint256", "name": "", "internalType": "uint256" } ] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "address[]", "name": "", "internalType": "address[]" } ], "name": "tokens", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "uint256", "name": "", "internalType": "uint256" } ], "name": "totalWeight", "inputs": [] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "uint256", "name": "", "internalType": "uint256" } ], "name": "usedWeights", "inputs": [ { "type": "address", "name": "", "internalType": "address" } ] }, { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "vote", "inputs": [ { "type": "address[]", "name": "_tokenVote", "internalType": "address[]" }, { "type": "uint256[]", "name": "_weights", "internalType": "uint256[]" } ] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "uint256", "name": "", "internalType": "uint256" } ], "name": "votes", "inputs": [ { "type": "address", "name": "", "internalType": "address" }, { "type": "address", "name": "", "internalType": "address" } ] }, { "type": "function", "stateMutability": "view", "outputs": [ { "type": "uint256", "name": "", "internalType": "uint256" } ], "name": "weights", "inputs": [ { "type": "address", "name": "", "internalType": "address" } ] } ]
+  const GAUGE_ABI = [{"type":"constructor","stateMutability":"nonpayable","inputs":[{"type":"address","name":"_token","internalType":"address"}]},{"type":"event","name":"RewardAdded","inputs":[{"type":"uint256","name":"reward","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"RewardPaid","inputs":[{"type":"address","name":"user","internalType":"address","indexed":true},{"type":"uint256","name":"reward","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"Staked","inputs":[{"type":"address","name":"user","internalType":"address","indexed":true},{"type":"uint256","name":"amount","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"Withdrawn","inputs":[{"type":"address","name":"user","internalType":"address","indexed":true},{"type":"uint256","name":"amount","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"DISTRIBUTION","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"DURATION","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"SNOWBALL","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"SNOWCONE","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"TOKEN","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"TREASURY","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"balanceOf","inputs":[{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"deposit","inputs":[{"type":"uint256","name":"amount","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"depositAll","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"depositFor","inputs":[{"type":"uint256","name":"amount","internalType":"uint256"},{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"derivedBalance","inputs":[{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"derivedBalances","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"derivedSupply","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"earned","inputs":[{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"exit","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"getReward","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getRewardForDuration","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"kick","inputs":[{"type":"address","name":"account","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"lastTimeRewardApplicable","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"lastUpdateTime","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"notifyRewardAmount","inputs":[{"type":"uint256","name":"reward","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"periodFinish","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewardPerToken","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewardPerTokenStored","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewardRate","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"rewards","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"totalSupply","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"userRewardPerTokenPaid","inputs":[{"type":"address","name":"","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"withdraw","inputs":[{"type":"uint256","name":"amount","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"withdrawAll","inputs":[]}]
+    
 
   //governance
   const CRYSTAL_VAULT_ADDRESS = "0xe5614C304D73d990B8BcA8F055Ec0f2685Ebf60c";
@@ -37,20 +40,33 @@ async function main() {
   const SNOWGLOBE_USDT_ADDR = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
   const STAKING_ADDR = "0xDC132af22690c0d3812ADF7260F083E7935092Bd";
+  const GAUGEPROXY_ADDR = "0xFc371bA1E7874Ad893408D7B581F3c8471F03D2C";
 
-  //pangolin pairs
+  //gauges
+  const SUSHI_AVAX_GAUGE = "0x38a9635c0a1b62a7d8bc608a3ad5d84b300831ae";
+  const PNG_AVAX_GAUGE = "0x3b062f421be17a7dc2d973a2da3fe56ff5ac8042";
+  const ETH_AVAX_GAUGE = "0x6bb9d2420217e0c3f272f47c58942e89e23806c9";
+  const LINK_AVAX_GAUGE = "0x7e68717f6228764bc1fc7a970dd5a041837c370c";
+  const USDT_AVAX_GAUGE = "0x45590658f6608c5be4c94ce885c52dbddb4fa21a";
+  const SNOB_AVAX_GAUGE = "0xda7099baa4693209ead01d2baf2f722f40ab30c1";
+  const S3D_GAUGE = "0x5994612ffffc31d6c05c4fbec4a17116676d5b22";
+  const S3F_GAUGE = "0x472075680e16d34aba24ce9a6ddb59f27995906a";
+
+  //PGL address
   const SUSHI_AVAX_ADDR = "0xd8B262C0676E13100B33590F10564b46eeF652AD";
-  const SNOB_AVAX_ADDR = "0xa1c2c3b6b120cbd4cec7d2371ffd4a931a134a32";
   const PNG_AVAX_ADDR = "0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367";
   const ETH_AVAX_ADDR = "0x1aCf1583bEBdCA21C8025E172D8E8f2817343d65";
   const LINK_AVAX_ADDR = "0xbbc7fff833d27264aac8806389e02f717a5506c9";
   const USDT_AVAX_ADDR = "0x9EE0a4E21bd333a6bb2ab298194320b8DaA26516";
+  const PGL_SNOB_AVAX_ADDR = "0xa1c2c3b6b120cbd4cec7d2371ffd4a931a134a32";
+
   //tokens
   const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
   const SPGL_PNG_ADDRESS = "0x621207093D2e65Bf3aC55dD8Bf0351B980A63815";
   const SPGL_ETH_ADDRESS = "0x586554828eE99811A8ef75029351179949762c26";
   const SPGL_LINK_ADDRESS = "0x00933c16e06b1d15958317C2793BC54394Ae356C";
   const SPGL_USDT_ADDRESS = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
+  const SPGL_SNOB_AVAX_ADDR = "0xF4072358C1E3d7841BD7AfDE31F61E17E8d99BE7";
   const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
   const S3D_ADDRESS = "0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4"
   const S3F_ADDRESS = "0xA42BE3dB9aff3aee48167b240bFEE5e1697e1281"
@@ -67,169 +83,60 @@ async function main() {
   const SNOB_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xC38f41A296A4493Ff429F1238e030924A1542e50";
 
   // TVL URLS
-  const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
-  const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375"
-  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d"
-  const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf"
-  const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103"
-  const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C"
-
-  const stakingContract_stake = async ({
-    STAKING_ABI,
-    STAKING_ADDR,
-    S3F_ADDRESS,
-    App,
-    STAKING_CONTRACT,
-    SNOB_TOKEN,
-    S3F_TOKEN,
-    renderPoolS3F,
-  }) => {
-    const signer = await App.provider.getSigner();
-    const STAKING_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer);
-    const CHEF_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer);
-    const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS);
-    const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, STAKING_ADDR);
-    if (allowedTokens === 0) {
-      snobMessage(
-        `Approve spending`,
-        `Please approve spending first. Please check your Metamask Wallet`,
-        `information-circle-outline`,
-        `primary`,
-        false,
-        `ok`
-      );
-    } else if (currentTokens / 1e18 > 0) {
-      halfmoon.toggleModal('modal-loading');
-      let stakeResult;
-      try {
-        stakeResult = await CHEF_CONTRACT.stake(currentTokens);
-
-        await App.provider.waitForTransaction(stakeResult.hash);
-
-        await renderPoolS3F({
-          STAKING_CONTRACT,
-          App,
-          SNOB_TOKEN,
-          S3F_TOKEN,
-        });
-
-        halfmoon.toggleModal('modal-loading');
-        snobMessage(`Tokens deposit`, `Tokens deposited`, `checkmark-circle-outline`, `success`, false, `ok`);
-      } catch (err) {
-        halfmoon.toggleModal('modal-loading');
-        snobMessage(
-          `Oops! Failed`,
-          `Deposit Failed. Something went wrong`,
-          `close-circle-outline`,
-          `danger`,
-          false,
-          `ok`,
-          false
-        );
-      }
-    } else {
-      snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
-    }
-  }
-
-  const stakingContract_withdraw = async ({STAKING_ABI, STAKING_ADDR, App, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F}) => {
-    const signer = await App.provider.getSigner();
-    const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer);
-    const currentTokens = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
-
-    if (currentTokens / 1e18 > 0) {
-      halfmoon.toggleModal('modal-loading');
-
-      let withdrawResult;
-
-      try {
-        withdrawResult = await STAKING_CONTRACT.withdraw(currentTokens);
-
-        await App.provider.waitForTransaction(withdrawResult.hash);
-
-        await renderPoolS3F({
-          STAKING_CONTRACT,
-          App,
-          SNOB_TOKEN,
-          S3F_TOKEN,
-        });
-
-        halfmoon.toggleModal('modal-loading');
-        snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn.`, `checkmark-circle-outline`, `success`, false, `ok`);
-      } catch (err) {
-        halfmoon.toggleModal('modal-loading');
-        snobMessage(
-          `Oops! Failed`,
-          `Withdrawn Failed. Something went wrong`,
-          `close-circle-outline`,
-          `danger`,
-          false,
-          `ok`,
-          false
-        );
-      }
-    } else {
-      snobMessage(
-        `Withdrawn Tokens`,
-        `Withdrawn failed . Something went wrong`,
-        `close-circle-outline`,
-        `danger`,
-        false,
-        `ok`,
-        4000
-      );
-    }
-  }
+  const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC";
+  const SNOB_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
+  const PNG_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x6A803904b9eA0Fc982fBB077c7243c244Ae05a2d";
+  const ETH_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x953853590b805A0E885A75A3C786D2aFfcEEA3Cf";
+  const LINK_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x974Ef0bDA58C81F3094e124f530eF34fe70dc103";
+  const USDT_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x74dB28797957a52a28963F424dAF2B10226ba04C";
 
   const approveSPGLSUSHI = async function () {
-    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_SUSHI_ADDRESS, App)
+    return approveGauge(SPGL_SUSHI_ADDRESS, SUSHI_AVAX_GAUGE, App);
   }
   const stakeSPGLSUSHI = async function () {
-    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SPGL_SUSHI_ADDRESS, App)
+    return gaugeContractStake(SUSHI_AVAX_GAUGE, GAUGE_ABI, SPGL_SUSHI_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveSPGLPNG = async function () {
-    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_PNG_ADDRESS, App)
+    return approveGauge(SPGL_PNG_ADDRESS, PNG_AVAX_GAUGE, App);
   }
   const stakeSPGLPNG = async function () {
-    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 3, SPGL_PNG_ADDRESS, App)
+    return gaugeContractStake(PNG_AVAX_GAUGE, GAUGE_ABI, SPGL_PNG_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveSPGLETH = async function () {
-    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_ETH_ADDRESS, App)
+    return approveGauge(SPGL_ETH_ADDRESS, ETH_AVAX_GAUGE, App);
   }
   const stakeSPGLETH = async function () {
-    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 4, SPGL_ETH_ADDRESS, App)
+    return gaugeContractStake(ETH_AVAX_GAUGE, GAUGE_ABI, SPGL_ETH_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveSPGLUSDT = async function () {
-    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_USDT_ADDRESS, App)
+    return approveGauge(SPGL_USDT_ADDRESS, USDT_AVAX_GAUGE, App);
   }
   const stakeSPGLUSDT = async function () {
-    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SPGL_USDT_ADDRESS, App)
+    return gaugeContractStake(USDT_AVAX_GAUGE, GAUGE_ABI, SPGL_ETH_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveSPGLLINK = async function () {
-    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, SPGL_LINK_ADDRESS, App)
+    return approveGauge(SPGL_LINK_ADDRESS, LINK_AVAX_GAUGE, App);
   }
   const stakeSPGLLINK = async function () {
-    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 6, SPGL_LINK_ADDRESS, App)
+    return gaugeContractStake(LINK_AVAX_GAUGE, GAUGE_ABI, SPGL_LINK_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveS3D = async function () {
-    return icequeenContract_approve(SNOWGLOBE_ABI, ICEQUEEN_ADDR, S3D_ADDRESS, App)
+    return approveGauge(S3D_ADDRESS, S3D_GAUGE, App);
   }
   const stakeS3D  = async function () {
-    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 7, S3D_ADDRESS, App)
+    return gaugeContractStake(S3D_GAUGE, GAUGE_ABI, S3D_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveS3F = async function () {
-    return stakingContract_approve(STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App)
+    return approveGauge(S3F_ADDRESS, S3F_GAUGE, App);
   }
   const stakeS3F  = async function () {
-    return stakingContract_stake({
-      STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F
-    })
+    return gaugeContractStake(S3F_GAUGE, GAUGE_ABI, S3F_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveSNOB = async function () {
-    return icequeenContract_approve(PGL_ABI, ICEQUEEN_ADDR, SNOB_AVAX_ADDR, App)
+    return approveGauge(SPGL_SNOB_AVAX_ADDR, SNOB_AVAX_GAUGE, App);
   }
   const stakeSNOB = async function () {
-    return icequeenContract_stake(ICEQUEEN_ABI, ICEQUEEN_ADDR, 2, SNOB_AVAX_ADDR, App)
+    return gaugeContractStake(SNOB_AVAX_GAUGE, GAUGE_ABI, SPGL_SNOB_AVAX_ADDR, SNOWGLOBE_ABI, App);
   }
   const claimPool1 = async function () {
     return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SNOB_AVAX_ADDR, App)
@@ -253,36 +160,36 @@ async function main() {
     return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 7, SNOB_AVAX_ADDR, App)
   }
   const claimPool8 = async function () {
-    return stakingContract_claim(STAKING_ABI, STAKING_ADDR,  S3F_ADDRESS, App)
+    //
   }
   const withdrawPool1 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SPGL_SUSHI_ADDRESS, App)
+    return gaugeContractWithdraw(SUSHI_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPool2 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 2, SNOB_AVAX_ADDR, App)
+    return gaugeContractWithdraw(SNOB_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPool3 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 3, SPGL_PNG_ADDRESS, App)
+    return gaugeContractWithdraw(PNG_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPool4 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 4, SPGL_ETH_ADDRESS, App)
+    return gaugeContractWithdraw(ETH_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPool5 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 5, SPGL_USDT_ADDRESS, App)
+    return gaugeContractWithdraw(USDT_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPool6 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 6, SPGL_LINK_ADDRESS, App)
+    return gaugeContractWithdraw(LINK_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPool7 = async function () {
-    return icequeenContract_withdraw(ICEQUEEN_ABI, ICEQUEEN_ADDR, 7, SPGL_LINK_ADDRESS, App)
+    return gaugeContractWithdraw(S3D_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPool8 = async function () {
-    return stakingContract_withdraw({STAKING_ABI, STAKING_ADDR, S3F_ADDRESS, App, STAKING_CONTRACT, SNOB_TOKEN, S3F_TOKEN, renderPoolS3F})
+    return gaugeContractWithdraw(S3F_GAUGE, GAUGE_ABI, App);
   }
-  const signer = App.provider.getSigner()
+  const signer = App.provider.getSigner();
 
   //Tokens
-  const SNOB_AVAX_TOKEN = new ethers.Contract(SNOB_AVAX_ADDR, ERC20_ABI, signer)
+  const SNOB_AVAX_TOKEN = new ethers.Contract(SPGL_SNOB_AVAX_ADDR, ERC20_ABI, signer)
   const S3D_TOKEN = new ethers.Contract(S3D_ADDRESS, ERC20_ABI, signer)
   const S3F_TOKEN = new ethers.Contract(S3F_ADDRESS, ERC20_ABI, signer)
   const SPGL_SUSHI_TOKEN = new ethers.Contract(SPGL_SUSHI_ADDRESS, ERC20_ABI, signer)
@@ -294,23 +201,35 @@ async function main() {
   //Contracts
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
   const STAKING_CONTRACT = new ethers.Contract(STAKING_ADDR, STAKING_ABI, signer)
+
+  /* GAUGE CONTRACTS */
+  const LINK_GAUGE_CONTRACT = new ethers.Contract(LINK_AVAX_GAUGE, GAUGE_ABI, signer);
+  const SUSHI_GAUGE_CONTRACT = new ethers.Contract(SUSHI_AVAX_GAUGE, GAUGE_ABI, signer);
+  const PNG_GAUGE_CONTRACT = new ethers.Contract(PNG_AVAX_GAUGE, GAUGE_ABI, signer);
+  const ETH_GAUGE_CONTRACT = new ethers.Contract(ETH_AVAX_GAUGE, GAUGE_ABI, signer);
+  const USDT_GAUGE_CONTRACT = new ethers.Contract(USDT_AVAX_GAUGE, GAUGE_ABI, signer);
+  const S3D_GAUGE_CONTRACT = new ethers.Contract(S3D_GAUGE, GAUGE_ABI, signer);
+  const S3F_GAUGE_CONTRACT = new ethers.Contract(S3F_GAUGE, GAUGE_ABI, signer);
+  const SNOB_AVAX_GAUGE_CONTRACT = new ethers.Contract(SNOB_AVAX_GAUGE, GAUGE_ABI, signer);
+
+
   let snobTotalSupply, pendingSNOBTokensPool1, pendingSNOBTokensPool2, pendingSNOBTokensPool3, pendingSNOBTokensPool4, pendingSNOBTokensPool5, pendingSNOBTokensPool6, pendingSNOBTokensPool7, pendingSNOBTokensPool8;
   let currentSNOBTokens, snowballMultiplier, blockRate, blockNumber, currentBlock, yesterdayBlock;
 
   await Promise.all([
     SNOB_TOKEN.totalSupply(),
-    ICEQUEEN_CONTRACT.pendingSnowball(1, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.pendingSnowball(2, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.pendingSnowball(3, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.pendingSnowball(4, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.pendingSnowball(5, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.pendingSnowball(6, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.pendingSnowball(7, App.YOUR_ADDRESS),
+    SUSHI_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    SNOB_AVAX_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    ETH_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    USDT_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    LINK_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    S3D_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS),
     ICEQUEEN_CONTRACT.BONUS_MULTIPLIER(),
     ICEQUEEN_CONTRACT.snowballPerBlock(),
     App.provider.getBlockNumber(),
-    STAKING_CONTRACT.earned(App.YOUR_ADDRESS)
+    S3F_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
   ]).then(res => {
     snobTotalSupply = res[0]
     pendingSNOBTokensPool1 = res[1]
@@ -400,53 +319,50 @@ async function main() {
     S3D_TOKEN.balanceOf(App.YOUR_ADDRESS),
     SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
 
-    ICEQUEEN_CONTRACT.userInfo(1, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.userInfo(2, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.userInfo(3, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.userInfo(4, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.userInfo(5, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.userInfo(6, App.YOUR_ADDRESS),
-    ICEQUEEN_CONTRACT.userInfo(7, App.YOUR_ADDRESS),
+    SUSHI_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    SNOB_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    PNG_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    ETH_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    USDT_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    LINK_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    S3D_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
 
-    SPGL_SUSHI_TOKEN.balanceOf(ICEQUEEN_ADDR),
-    SPGL_PNG_TOKEN.balanceOf(ICEQUEEN_ADDR),
-    SPGL_ETH_TOKEN.balanceOf(ICEQUEEN_ADDR),
-    SNOB_AVAX_TOKEN.balanceOf(ICEQUEEN_ADDR),
-    SPGL_USDT_TOKEN.balanceOf(ICEQUEEN_ADDR),
-    SPGL_LINK_TOKEN.balanceOf(ICEQUEEN_ADDR),
-    S3D_TOKEN.balanceOf(ICEQUEEN_ADDR),
+    SUSHI_GAUGE_CONTRACT.totalSupply(),
+    PNG_GAUGE_CONTRACT.totalSupply(),
+    ETH_GAUGE_CONTRACT.totalSupply(),
+    SNOB_AVAX_GAUGE_CONTRACT.totalSupply(),
+    USDT_GAUGE_CONTRACT.totalSupply(),
+    LINK_GAUGE_CONTRACT.totalSupply(),
+    S3D_GAUGE_CONTRACT.totalSupply(),
     S3F_TOKEN.balanceOf(App.YOUR_ADDRESS),
-    STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS),
-    STAKING_CONTRACT.totalSupply(),
-    STAKING_CONTRACT.rewardRate()
+    S3F_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    S3F_GAUGE_CONTRACT.totalSupply(),
   ]).then(res => {
     currentSPGLSUSHITokens = res[0]
     currentSPGLPNGTokens = res[1]
     currentSPGLETHTokens = res[2]
     currentSPGLUSDTTokens = res[3]
     currentSPGLLINKTokens = res[4]
-    currentS3DTokens = res[5]
+    currentS3DTokens = res[5];
     currentSNOBAVAXTokens = res[6]
-
     stakedPool1 = res[7]
     stakedPool2 = res[8]
     stakedPool3 = res[9]
     stakedPool4 = res[10]
     stakedPool5 = res[11]
-    stakedPool6 = res[12]
+    stakedPool6 = res[12];
     stakedPool7 = res[13]
 
     totalStakedSPGLSUSHI = res[14]
     totalStakedSPGLPNG = res[15]
-    totalStakedSPGLETH = res[16]
-    totalStakedSNOBAVAX = res[17]
+    totalStakedSPGLETH = res[16];
+    totalStakedSNOBAVAX = res[17];
     totalStakedSPGLUSDT = res[18]
     totalStakedSPGLLINK = res[19]
     totalStakedS3D = res[20]
     currentS3FTokens = res[21]
     stakedPool8 = res[22]
     totalStakedS3F = res[23]
-    s3FRewardRate = res[24]
   })
 
   //Balances
@@ -460,17 +376,18 @@ async function main() {
   const snobAvaxDisplayAmt = currentSNOBAVAXTokens > 1000 ? currentSNOBAVAXTokens / 1e18 : 0;
 
   const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100
-  const userPool7Percent = (stakedPool7.amount / 1e18) / (totalStakedS3D / 1e18) * 100
-  const userPool6Percent = (stakedPool6.amount / 1e18) / (totalStakedSPGLLINK / 1e18) * 100
-  const userPool5Percent = (stakedPool5.amount / 1e18) / (totalStakedSPGLUSDT / 1e18) * 100
-  const userPool4Percent = (stakedPool4.amount / 1e18) / (totalStakedSPGLETH / 1e18) * 100
-  const userPool3Percent = (stakedPool3.amount / 1e18) / (totalStakedSPGLPNG / 1e18) * 100
-  const userPool2Percent = (stakedPool2.amount / 1e18) / (totalStakedSNOBAVAX / 1e18) * 100
-  const userPool1Percent = (stakedPool1.amount / 1e18) / (totalStakedSPGLSUSHI / 1e18) * 100
+  const userPool7Percent = (stakedPool7 / 1e18) / (totalStakedS3D / 1e18) * 100
+  const userPool6Percent = (stakedPool6 / 1e18) / (totalStakedSPGLLINK / 1e18) * 100;
+  const userPool5Percent = (stakedPool5 / 1e18) / (totalStakedSPGLUSDT / 1e18) * 100
+  const userPool4Percent = (stakedPool4 / 1e18) / (totalStakedSPGLETH / 1e18) * 100
+  const userPool3Percent = (stakedPool3 / 1e18) / (totalStakedSPGLPNG / 1e18) * 100
+  const userPool2Percent = (stakedPool2 / 1e18) / (totalStakedSNOBAVAX / 1e18) * 100
+  const userPool1Percent = (stakedPool1 / 1e18) / (totalStakedSPGLSUSHI / 1e18) * 100
   
-  const poolShareDisplay_7 = `${(stakedPool7.amount / 1e18).toFixed(6)} S3D`;
+  const poolShareDisplay_7 = `${(stakedPool7 / 1e18).toFixed(6)} S3D`;
   const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
 
+  const pool8weight = 0.16
   const pool7weight = 0.20
   const pool6weight = 0.08
   const pool5weight = 0.05
@@ -621,13 +538,13 @@ async function main() {
       pglContract.token0(),
       pglContract.token1()
     ]).then(res => {
-      let totalPoolPGL = res[0]
-      let totalSPGL = res[1]
+      let totalPoolPGL = res[0];
+      let totalSPGL = res[1];
       let totalSupplyPGL = res[2] / 1e18
       let reserves = res[3]
       let token0Address = res[4]
       let token1Address = res[5]
-      let ownedPGL = userSPGL * (totalPoolPGL / 1e18) / (totalSPGL / 1e18);        
+      let ownedPGL = userSPGL * (totalPoolPGL / 1e18) / (totalSPGL / 1e18);
       const r0 = reserves._reserve0 / 1e18
       const r1 = reserves._reserve1 / decimals
       let reserve0Owned = ownedPGL * (r0) / (totalSupplyPGL);
@@ -655,28 +572,28 @@ async function main() {
   //SNOWGLOBE_SUSHI_ADDR
   const snowglobeContract_1 = new ethers.Contract(SNOWGLOBE_SUSHI_ADDR, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_1, poolShareDisplay_1_pgl, stakeDisplay_1, totalPoolPGL_1;
-  if (stakedPool1.amount / 1e18 > 0) {
-    let ret_1 = await calculateShare(snowglobeContract_1, SUSHI_AVAX_ADDR, stakedPool1.amount / 1e18, 1e18, userPool1Percent)
+  if (stakedPool1 / 1e18 > 0) {
+    let ret_1 = await calculateShare(snowglobeContract_1, SUSHI_AVAX_ADDR, stakedPool1 / 1e18, 1e18, userPool1Percent)
     poolShareDisplay_1 = ret_1[0]
     poolShareDisplay_1_pgl = ret_1[1]
     stakeDisplay_1 = ret_1[2]
     totalPoolPGL_1 = ret_1[3]
   }
-    
+  const snowglobeContract_2 = new ethers.Contract(SPGL_SNOB_AVAX_ADDR, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_2, poolShareDisplay_2_pgl, stakeDisplay_2, totalPoolPGL_2;
-  if (stakedPool2.amount / 1e18 > 0) {
-    let ret_2 = await calculateShare(null, SNOB_AVAX_ADDR, stakedPool2.amount / 1e18, 1e18, userPool2Percent)
-    poolShareDisplay_2 = ret_2[0]
-    poolShareDisplay_2_pgl = ret_2[1]
-    stakeDisplay_2 = ret_2[2]
-    totalPoolPGL_2 = ret_2[3]
+  if (stakedPool2 / 1e18 > 0) {
+    let ret_2 = await calculateShare(snowglobeContract_2, PGL_SNOB_AVAX_ADDR, stakedPool2 / 1e18, 1e18, userPool2Percent)
+    poolShareDisplay_2 = ret_2[0];
+    poolShareDisplay_2_pgl = ret_2[1];
+    stakeDisplay_2 = ret_2[2];
+    totalPoolPGL_2 = ret_2[3];
   }
 
   //SNOWGLOBE_PNG_ADDR
   const snowglobeContract_3 = new ethers.Contract(SNOWGLOBE_PNG_ADDR, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_3, poolShareDisplay_3_pgl, stakeDisplay_3, totalPoolPGL_3;
-  if (stakedPool3.amount / 1e18 > 0) {
-    let ret_3 = await calculateShare(snowglobeContract_3, PNG_AVAX_ADDR, stakedPool3.amount / 1e18, 1e18, userPool3Percent)
+  if (stakedPool3 / 1e18 > 0) {
+    let ret_3 = await calculateShare(snowglobeContract_3, PNG_AVAX_ADDR, stakedPool3 / 1e18, 1e18, userPool3Percent)
     poolShareDisplay_3 = ret_3[0]
     poolShareDisplay_3_pgl = ret_3[1]
     stakeDisplay_3 = ret_3[2]
@@ -686,8 +603,8 @@ async function main() {
   //SNOWGLOBE_ETH_ADDR
   const snowglobeContract_4 = new ethers.Contract(SNOWGLOBE_ETH_ADDR, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_4, poolShareDisplay_4_pgl, stakeDisplay_4, totalPoolPGL_4;
-  if (stakedPool4.amount / 1e18 > 0) {
-    let ret_4 = await calculateShare(snowglobeContract_4, ETH_AVAX_ADDR, stakedPool4.amount / 1e18, 1e18, userPool4Percent)
+  if (stakedPool4 / 1e18 > 0) {
+    let ret_4 = await calculateShare(snowglobeContract_4, ETH_AVAX_ADDR, stakedPool4 / 1e18, 1e18, userPool4Percent)
     poolShareDisplay_4 = ret_4[0]
     poolShareDisplay_4_pgl = ret_4[1]
     stakeDisplay_4 = ret_4[2]
@@ -697,8 +614,8 @@ async function main() {
   //SNOWGLOBE_USDT_ADDR
   const snowglobeContract_5 = new ethers.Contract(SNOWGLOBE_USDT_ADDR, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_5, poolShareDisplay_5_pgl, stakeDisplay_5, totalPoolPGL_5;
-  if (stakedPool5.amount / 1e18 > 0) {
-    let ret_5 = await calculateShare(snowglobeContract_5, USDT_AVAX_ADDR, stakedPool5.amount / 1e18, 1e6, userPool5Percent)
+  if (stakedPool5 / 1e18 > 0) {
+    let ret_5 = await calculateShare(snowglobeContract_5, USDT_AVAX_ADDR, stakedPool5 / 1e18, 1e6, userPool5Percent)
     poolShareDisplay_5 = ret_5[0]
     poolShareDisplay_5_pgl = ret_5[1]
     stakeDisplay_5 = ret_5[2]
@@ -708,8 +625,8 @@ async function main() {
   //SNOWGLOBE_LINK_ADDR
   const snowglobeContract_6 = new ethers.Contract(SNOWGLOBE_LINK_ADDR, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_6, poolShareDisplay_6_pgl, stakeDisplay_6, totalPoolPGL_6;
-  if (stakedPool6.amount / 1e18 > 0) {
-    let ret_6 = await calculateShare(snowglobeContract_6, LINK_AVAX_ADDR, stakedPool6.amount / 1e18, 1e18, userPool6Percent)
+  if (stakedPool6 / 1e18 > 0) {
+    let ret_6 = await calculateShare(snowglobeContract_6, LINK_AVAX_ADDR, stakedPool6 / 1e18, 1e18, userPool6Percent)
     poolShareDisplay_6 = ret_6[0]
     poolShareDisplay_6_pgl = ret_6[1]
     stakeDisplay_6 = ret_6[2]
@@ -736,6 +653,7 @@ async function main() {
       }
     }
     if (options.total_staked && options.total_pgl) {
+      
 
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} sPGL </span>
         <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
@@ -764,7 +682,7 @@ async function main() {
       }
 
       var estimatedRate = `<div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0 mx-auto">
-        <p class="m-0 font-size-12"> Estimated Rate 2</p>
+        <p class="m-0 font-size-12"> Estimated Rate</p>
         <span class="badge badge-success font-size-12 px-5 px-sm-10 mx-10">${(snowballsPerBlock * options.pool_weight * options.user_pool_percent / 100 / 1e18 * blocks24hrs).toFixed(2)} SNOB <ion-icon name="trending-up-outline"></ion-icon></span>
         <p class="m-0 font-size-12">(24hr block rate)</p>
         </div>`;
@@ -781,8 +699,8 @@ async function main() {
       availableStake = stakeUnstake(options.display_amount.toFixed(6), true);
     }
     availableUnstake = '';
-    if ( options.staked_pool.amount / 1e18 > 0 ) {      
-      availableUnstake = stakeUnstake((options.staked_pool.amount / 1e18).toFixed(6), false);
+    if ( options.staked_pool / 1e18 > 0 ) {      
+      availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(6), false);
     }
 
     let has_options = false
@@ -795,7 +713,7 @@ async function main() {
       approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
       stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake sPGL</button>`;
     }
-    if ( options.staked_pool.amount / 1e18 > 0 ) {
+    if ( options.staked_pool / 1e18 > 0 ) {
       has_options = true
       unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake sPGL</button>`;
     }
@@ -964,8 +882,8 @@ async function main() {
       availableStake = stakeUnstake(options.display_amount.toFixed(6), true, 'S3D');
     }
     var availableUnstake = ''
-    if ( options.staked_pool.amount / 1e18 > 0 ) {
-      availableUnstake = stakeUnstake((options.staked_pool.amount / 1e18).toFixed(6), false, 'S3D');
+    if ( options.staked_pool / 1e18 > 0 ) {
+      availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(6), false, 'S3D');
     }
     let has_options = false
     approveBtn = '';
@@ -977,7 +895,7 @@ async function main() {
       approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
       stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake S3D</button>`;
     }
-    if ( options.staked_pool.amount / 1e18 > 0 ) {
+    if ( options.staked_pool / 1e18 > 0 ) {
       has_options = true
       unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake S3D</button>`;
     }
@@ -1486,8 +1404,8 @@ async function main() {
       availableStake = stakeUnstake(options.display_amount.toFixed(6), true, 'PGL');
     }
     availableUnstake = '';
-    if ( options.staked_pool.amount / 1e18 > 0 ) {      
-      availableUnstake = stakeUnstake((options.staked_pool.amount / 1e18).toFixed(6), false, 'PGL'); 
+    if ( options.staked_pool / 1e18 > 0 ) {      
+      availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(6), false, 'PGL'); 
     }
     let has_options = false
     approveBtn = '';
@@ -1499,7 +1417,7 @@ async function main() {
       approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
       stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake PGL</button>`;
     }
-    if ( options.staked_pool.amount / 1e18 > 0 ) {
+    if ( options.staked_pool / 1e18 > 0 ) {
       has_options = true
       unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake PGL</button>`;
     }
@@ -1628,8 +1546,32 @@ async function main() {
       $('#snob-pools-used').append(poolPrint);
     }
   }
-  await renderPoolS3F({
-    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
+  poolS3F({
+    logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
+    pool_nickname: 'pool-8',
+    pool_name: 'StableVault S3F 🌟',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStakedS3F,
+    user_pool_percent: userPool8Percent,
+    staked_pool: stakedPool8,
+    pending_tokens: pendingSNOBTokensPool8,
+    display_amount: S3FDisplayAmt,
+    approve: 'approveS3F',
+    stake: 'stakeS3F',
+    unstake: 'withdrawPool8',
+    claim: 'claimPool8',
+    icequeen_apr: pool8APR,
+    snowglobe_apr: null,
+    tvl_display: pool8tvlDisplay,
+    total_pgl: null,
+    pool_share_display: poolShareDisplay_8,
+    pool_share_display_pgl: '',
+    stake_display: '',
+    snobPrice
   });
   poolS3D({
     logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
@@ -1765,11 +1707,11 @@ async function main() {
     stake_display: stakeDisplay_3,
     apy: png_annual_apy
   })
-  poolSNOB({
+  pool({
     logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xC38f41A296A4493Ff429F1238e030924A1542e50/logo.png',
     pool_nickname: 'pool-2',
-    pool_name: 'SNOB-AVAX Pangolin LP',
+    pool_name: 'SNOB-AVAX sPGL',
     url: SNOB_AVAX_POOL_URL,
     tvl: SNOB_AVAX_TVL,
     pool_weight: pool2weight,
@@ -1786,7 +1728,7 @@ async function main() {
     snowglobe_apr: null,
     tvl_display: pool2tvlDisplay,
     tvl_class: tvl_class,
-    total_pgl: totalStakedSNOBAVAX,
+    total_pgl: totalPoolPGL_2,
     pool_share_display: poolShareDisplay_2,
     pool_share_display_pgl: poolShareDisplay_2_pgl,
     stake_display: stakeDisplay_2
@@ -1953,117 +1895,23 @@ async function main() {
     });
   }
 
-  async function renderPoolS3F ({
-    STAKING_CONTRACT, App, SNOB_TOKEN, S3F_TOKEN
-  }) {
-    const totalStakedS3F = await STAKING_CONTRACT.totalSupply();
-    
-    const stakedPool8 = await STAKING_CONTRACT.balanceOf(App.YOUR_ADDRESS);
-  
-    const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100;
-  
-    const pendingSNOBTokensPool8 = await STAKING_CONTRACT.earned(App.YOUR_ADDRESS);
-  
-    const currentS3FTokens = await S3F_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  
-    const S3FDisplayAmt = currentS3FTokens > 1000 ? currentS3FTokens / 1e18 : 0;
-  
-    const pool8tvl = totalStakedS3F / 1e18;
-  
-    const prices = await getAvaxPrices();
-  
-    const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
-  
-    const pool8APR = 2666 * snobPrice / pool8tvl * 100;
-  
-    const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
-  
-    const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
-  
-    poolS3F({
-      logo_token3 : 'https://assets.coingecko.com/coins/images/13422/small/frax_logo.png?1608476506',
-      logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1C20E891Bab6b1727d14Da358FAe2984Ed9B59EB/logo.png',
-      logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xde3A24028580884448a5397872046a019649b084/logo.png',
-      pool_nickname: 'pool-8',
-      pool_name: 'StableVault S3F 🌟',
-      url: null,
-      tvl: null,
-      pool_weight: null,
-      total_staked: totalStakedS3F,
-      user_pool_percent: userPool8Percent,
-      staked_pool: stakedPool8,
-      pending_tokens: pendingSNOBTokensPool8,
-      display_amount: S3FDisplayAmt,
-      approve: 'approveS3F',
-      stake: 'stakeS3F',
-      unstake: 'withdrawPool8',
-      claim: 'claimPool8',
-      icequeen_apr: pool8APR,
-      snowglobe_apr: null,
-      tvl_display: pool8tvlDisplay,
-      total_pgl: null,
-      pool_share_display: poolShareDisplay_8,
-      pool_share_display_pgl: '',
-      stake_display: '',
-      snobPrice
-    });
-
-    updateButtonHandlers();
-    return;
-  }
-
   updateButtonHandlers();
   hideLoading();
 }
 
-const snowglobeContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
-  halfmoon.toggleModal('modal-loading')
-  if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
-    halfmoon.toggleModal('modal-loading')
-    snobMessage(`Connected successfully`, `Already approved . <br>You can use the deposit/withdrawals options`, `checkmark-circle-outline`, `success`, false, `ok`, 4000);
-    halfmoon.toggleModal('modal-loading')
-  } else {
-    allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
-      .then(function (t) {
-        halfmoon.toggleModal('modal-loading');
-        return App.provider.waitForTransaction(t.hash)
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading');
-        snobMessage(`Connecting to metamask`, `Approval failed . Please check your Metamask Wallet`, `close-circle-outline`, `danger`, false, `ok`, 4000);
-      })
-  }
-}
 
-const icequeenContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
+const approveGauge = async function(stakingToken, gaugeAddress, App) {
+  const signer = App.provider.getSigner();
+  const STAKING_TOKEN = new ethers.Contract(stakingToken, ERC20_ABI, signer);
   const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
-  halfmoon.toggleModal('modal-loading')
+  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, gaugeAddress);
+  let allow = Promise.resolve();
+  halfmoon.toggleModal('modal-loading');
   if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
     halfmoon.toggleModal('modal-loading')
     snobMessage(`Connected successfully`, `Already approved . <br>You can use the deposit/withdrawals options`, `checkmark-circle-outline`, `success`, false, `ok`, 4000);
   } else {
-    allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
+    allow = STAKING_TOKEN.approve(gaugeAddress, ethers.constants.MaxUint256)
       .then(function (t) {
         halfmoon.toggleModal('modal-loading')
         return App.provider.waitForTransaction(t.hash)
@@ -2074,156 +1922,67 @@ const icequeenContract_approve = async function (chefAbi, chefAddress, stakeToke
       })
   }
 }
-const snowglobeContract_stake = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
-  if (allowedTokens / 1e18 == 0) {
-    snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
-  } else if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.depositAll()
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              hideLoading()
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
-  } else {
-    snobMessage(`Oops! Failed`, `Deposit Failed. You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
-  }
-}
 
-const snowglobeContract_withdraw = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
-  if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.withdrawAll()
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
-  } else {
-    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . You have no tokens to withdraw`, `close-circle-outline`, `danger`, false, `ok`, 4000);
-  }
-}
-const icequeenContract_stake = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
+
+const gaugeContractStake = async function(gaugeAddress, gaugeAbi, stakeTokenAddr, stakeTokenAbi, App) {
+  const signer = App.provider.getSigner();
+  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, stakeTokenAbi, signer);
+  const GAUGE_CONTRACT = new ethers.Contract(gaugeAddress, gaugeAbi, signer);
+  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS);
+  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, gaugeAddress);
+  let allow = Promise.resolve();
   if (allowedTokens / 1e18 == 0) {
     snobMessage(`Approve spending`, `Please approve spending first. Please check your Metamask Wallet`, `information-circle-outline`, `primary`, false, `ok`);
   } else if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.deposit(poolIndex, currentTokens)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
+    halfmoon.toggleModal('modal-loading');
+    allow.then(async function() {
+      GAUGE_CONTRACT.deposit(currentTokens).then(function(t) {
+        App.provider.waitForTransaction(t.hash).then(function () {
+          halfmoon.toggleModal('modal-loading');
+          snobMessage(`Tokens deposit`, `Tokens deposited. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+          setTimeout(function(){ window.location.reload(true); }, 6000);
+        });
+      });
+    })
+    .catch(function () {
+        halfmoon.toggleModal('modal-loading');
         snobMessage(`Oops! Failed`, `Deposit Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
       })
   } else {
     snobMessage(`Oops! Failed`, `You have no tokens to stake`, `close-circle-outline`, `danger`, false, `ok`, false);
   }
 }
-const icequeenContract_withdraw = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const ICEQUEEN_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  const userPoolInfo = await ICEQUEEN_CONTRACT.userInfo(poolIndex, App.YOUR_ADDRESS)
-  console.log(userPoolInfo)
-  const currentTokens = userPoolInfo.amount
-  let allow = Promise.resolve()
-  if (currentTokens / 1e18 > 0) {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        ICEQUEEN_CONTRACT.withdraw(poolIndex, currentTokens)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Withdrawn Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
+
+const gaugeContractWithdraw = async function (gaugeAddress, gaugeAbi, App) {
+  const signer = App.provider.getSigner();
+  console.log(signer);
+  const GAUGE_CONTRACT = new ethers.Contract(gaugeAddress, gaugeAbi, signer);
+  const currentTokens = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS);
+  console.log(currentTokens / 1e18);
+  let allow = Promise.resolve();
+  if(currentTokens / 1e18 > 0) {
+    halfmoon.toggleModal('modal-loading');
+    allow.then(async function() {
+      GAUGE_CONTRACT.withdraw(currentTokens).then(function(t) {
+        App.provider.waitForTransaction(t.hash).then(function () {
+          halfmoon.toggleModal('modal-loading');
+          snobMessage(`Withdrawn Tokens`, `Tokens Withdrawn. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+          setTimeout(function(){ window.location.reload(true); }, 6000);
+        });
+      }).catch(function() {
         halfmoon.toggleModal('modal-loading')
-        snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
+        snobMessage(`Oops! Failed`, `Withdrawn Failed. Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+      });
+    }).catch(function () {
+      halfmoon.toggleModal('modal-loading')
+      snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+    });
   } else {
-    snobMessage(`Withdrawn Tokens`, `Withdrawn failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
+    snobMessage(`Withdrawn Tokens`, `Withdraw failed . Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, 4000);
   }
 }
+
+
 const icequeenContract_claim = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
   const signer = App.provider.getSigner()
   console.log(signer)
@@ -2307,69 +2066,3 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
   }
 
 }
-const stakingContract_approve = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const currentTokens = await STAKING_TOKEN.balanceOf(App.YOUR_ADDRESS)
-  console.log(currentTokens)
-  const allowedTokens = await STAKING_TOKEN.allowance(App.YOUR_ADDRESS, chefAddress)
-  console.log(allowedTokens)
-  let allow = Promise.resolve()
-  halfmoon.toggleModal('modal-loading')
-  if (allowedTokens / 1e18 == ethers.constants.MaxUint256 / 1e18) {
-    halfmoon.toggleModal('modal-loading')
-    snobMessage(`Connected successfully`, `Already approved . <br>You can use the deposit/withdrawals options`, `checkmark-circle-outline`, `success`, false, `ok`, 4000);
-  } else {
-    allow = STAKING_TOKEN.approve(chefAddress, ethers.constants.MaxUint256)
-      .then(function (t) {
-        halfmoon.toggleModal('modal-loading')
-        return App.provider.waitForTransaction(t.hash)
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Connecting to metamask`, `Approval failed . Please check your Metamask Wallet`, `close-circle-outline`, `danger`, false, `ok`, 4000);
-      })
-  }
-}
-
-
-
-const stakingContract_claim = async function (chefAbi, chefAddress, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const pendingRewards = await CHEF_CONTRACT.earned(App.YOUR_ADDRESS)
-  let allow = Promise.resolve()
-  if (pendingRewards / 1e18 == 0) {
-    snobMessage(`Oops`, `You have no rewards to claim`, `information-circle-outline`, `primary`, false, `ok`, 4000);
-  } else {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.getReward()
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Withdrawn Tokens`, `Rewards claimed. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
-        snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
-  }
-}
-
