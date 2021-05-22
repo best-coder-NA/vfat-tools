@@ -494,48 +494,6 @@ async function main() {
   let tvl_class = 'tvl-hide';
   let res = null;
 
-  try {
-    res = await $.ajax({
-      url: 'https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json',
-      type: 'GET',
-    })
-    if (res && res.pairs && res.locked) {
-
-      res.pairs.forEach( p => {
-        if ( pairmatch(p, 'usdt', 'wavax') ) {
-          pool5tvl = p.locked;
-          pool5tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-          pool5APR = snowballsPerBlock * pool5weight / 1e18 * 15000 * snobPrice / p.locked * 100;
-        } else if ( pairmatch(p, 'link', 'wavax') ) {
-          pool6tvl = p.locked;
-          pool6tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-          pool6APR = snowballsPerBlock * pool6weight / 1e18 * 15000 * snobPrice / p.locked * 100;
-        } else if ( pairmatch(p, 'sushi', 'wavax') ) {
-          pool1tvl = p.locked;
-          pool1tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-          pool1APR = snowballsPerBlock * pool1weight / 1e18 * 15000 * snobPrice / p.locked * 100;
-        } else if ( pairmatch(p, 'png', 'wavax') ) {
-          pool3tvl = p.locked;
-          pool3tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-          pool3APR = snowballsPerBlock * pool3weight / 1e18 * 15000 * snobPrice / p.locked * 100;
-        } else if ( pairmatch(p, 'eth', 'wavax') ) {
-          pool4tvl = p.locked;
-          pool4tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`
-          pool4APR = snowballsPerBlock * pool4weight / 1e18 * 15000 * snobPrice / p.locked * 100;
-        } else if ( pairmatch(p, 'snob', 'wavax') ) {
-          pool2tvl = p.locked;
-          pool2tvlDisplay = `$${new Intl.NumberFormat('en-US').format(p.locked)}`          
-          pool2APR = snowballsPerBlock * pool2weight / 1e18 * 15000 * snobPrice / p.locked * 100;
-        }
-      });
-
-      if ( res.locked > 6000000) {
-        tvl_class = 'tvl-show';
-      }      
-    }    
-  } catch(e) {
-    console.log('could not get tvl:', e);
-  }
   // APR
   const PngStakingContracts= [
     {
