@@ -235,7 +235,7 @@ async function main() {
   const approveSUSHI_PNG = async function() {
     return approveGauge(SPGL_SUSHI_PNG, SUSHI_PNG_GAUGE, App);
   }
-  const approveDAIWBTC_PNG = async function() {
+  const approveDAI_PNG = async function() {
     return approveGauge(SPGL_DAI_PNG, DAI_PNG_GAUGE, App);
   }
   const approveAAVE_PNG = async function() {
@@ -574,7 +574,6 @@ async function main() {
     SPGL_LINK_TOKEN.balanceOf(App.YOUR_ADDRESS),
     S3D_TOKEN.balanceOf(App.YOUR_ADDRESS),
     SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
-
     SUSHI_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     SNOB_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     PNG_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
@@ -582,7 +581,6 @@ async function main() {
     USDT_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     LINK_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     S3D_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
-
     SUSHI_GAUGE_CONTRACT.totalSupply(),
     PNG_GAUGE_CONTRACT.totalSupply(),
     ETH_GAUGE_CONTRACT.totalSupply(),
@@ -644,7 +642,6 @@ async function main() {
     stakedPool5 = res[11]
     stakedPool6 = res[12];
     stakedPool7 = res[13]
-
     totalStakedSPGLSUSHI = res[14]
     totalStakedSPGLPNG = res[15]
     totalStakedSPGLETH = res[16];
@@ -655,56 +652,43 @@ async function main() {
     currentS3FTokens = res[21]
     stakedPool8 = res[22]
     totalStakedS3F = res[23];
-
     currentSPGL_WBTC_AVAX = res[24];
     stakedPool_WBTC_AVAX = res[25];
     totalStaked_WBTC_AVAX = res[26];
-
     currentSPGL_DAI_AVAX = res[27];
     stakedPool_DAI_AVAX = res[28];
     totalStaked_DAI_AVAX = res[29];
-
     currentSPGL_UNI_AVAX = res[30];
     stakedPool_UNI_AVAX = res[31];
     totalStaked_UNI_AVAX = res[32];
-
     currentSPGL_WBTC_PNG = res[33];
     stakedPool_WBTC_PNG = res[34];
     totalStaked_WBTC_PNG = res[35];
-
     currentSPGL_LINK_PNG = res[36];
     stakedPool_LINK_PNG = res[37];
     totalStaked_LINK_PNG = res[38];
-    
     currentSPGL_USDT_PNG = res[39];
     stakedPool_USDT_PNG = res[40];
     totalStaked_USDT_PNG = res[41];
-
     currentSPGL_SUSHI_PNG = res[42];
     stakedPool_SUSHI_PNG = res[43];
     totalStaked_SUSHI_PNG = res[44];
-
     currentSPGL_DAI_PNG = res[45];
     stakedPool_DAI_PNG = res[46];
     totalStaked_DAI_PNG = res[47];
-
     currentSPGL_AAVE_PNG = res[48];
     stakedPool_AAVE_PNG = res[49];
     totalStaked_AAVE_PNG = res[50];
-
     currentSPGL_UNI_PNG = res[51];
     stakedPool_UNI_PNG = res[52];
     totalStaked_UNI_PNG = res[53];
-
     currentSPGL_YFI_PNG = res[54];
     stakedPool_YFI_PNG = res[55];
     totalStaked_YFI_PNG = res[56];
-
-    currentSPGL_PNG_SNOB = res[54];
-    stakedPool_PNG_SNOB = res[55];
-    totalStaked_PNG_SNOB = res[56];
+    currentSPGL_PNG_SNOB = res[57];
+    stakedPool_PNG_SNOB = res[58];
+    totalStaked_PNG_SNOB = res[59];
   });
-
   //Balances
   const spglSushiDisplayAmt = currentSPGLSUSHITokens > 1000 ? currentSPGLSUSHITokens / 1e18 : 0;
   const spglPngDisplayAmt = currentSPGLPNGTokens > 1000 ? currentSPGLPNGTokens / 1e18 : 0;
@@ -960,7 +944,7 @@ async function main() {
   const snowglobeContract_9 = new ethers.Contract(SPGL_WBTC_AVAX, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_9, poolShareDisplay_9_pgl, stakeDisplay_9, totalPoolPGL_9;
   if (stakedPool_WBTC_AVAX / 1e18 > 0) {
-    let ret_9 = await calculateShare(snowglobeContract_9, PGL_WBTC_PNG, stakedPool_WBTC_AVAX / 1e18, 1e18, userPool_WBTC_AVAX)
+    let ret_9 = await calculateShare(snowglobeContract_9, PGL_WBTC_AVAX, stakedPool_WBTC_AVAX / 1e18, 1e18, userPool_WBTC_AVAX)
     poolShareDisplay_9 = ret_9[0]
     poolShareDisplay_9_pgl = ret_9[1]
     stakeDisplay_9 = ret_9[2]
