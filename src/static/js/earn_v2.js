@@ -153,7 +153,7 @@ async function main() {
     return approveGauge(SPGL_USDT_ADDRESS, USDT_AVAX_GAUGE, App);
   }
   const stakeSPGLUSDT = async function () {
-    return gaugeContractStake(USDT_AVAX_GAUGE, GAUGE_ABI, SPGL_ETH_ADDRESS, SNOWGLOBE_ABI, App);
+    return gaugeContractStake(USDT_AVAX_GAUGE, GAUGE_ABI, SPGL_USDT_ADDRESS, SNOWGLOBE_ABI, App);
   }
   const approveSPGLLINK = async function () {
     return approveGauge(SPGL_LINK_ADDRESS, LINK_AVAX_GAUGE, App);
@@ -1128,8 +1128,8 @@ async function main() {
     if (options.total_staked && options.total_pgl) {
       
 
-      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} sPGL </span>
-        <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_pgl / 1e18).toLocaleString()} PGL</span>`;
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${options.total_staked / 1e18 > 1 ? (options.total_staked / 1e18).toLocaleString() : (options.total_staked / 1e18).toFixed(6)} sPGL </span>
+        <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${options.total_pgl / 1e18 > 1 ? (options.total_pgl / 1e18).toLocaleString() :(options.total_pgl / 1e18).toFixed(6) } PGL</span>`;
 
     } else if (options.total_staked) {
       var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} sPGL </span>`;

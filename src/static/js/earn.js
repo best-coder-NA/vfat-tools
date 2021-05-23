@@ -549,23 +549,6 @@ async function main() {
 
   const aprDisplay = (cDayAPR, cWeekAPR, cYearAPR) => {
     return `<div class="col-sm-12 col-md-3 align-items-center pb-10">
-        <div class="row">
-            <p class="w-full text-center">Combined APR :</p>
-        </div>
-        <div class="row">
-            <div class="form-inline w-50 mx-auto">
-                <div class="form-group m-md-0">
-                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                </div>
-            </div>
-            <div class="form-inline w-50 mx-auto">
-                <div class="form-group m-md-0">
-                <p class="m-0 font-size-12 font-weight-regular">${cDayAPR}% </p>
-                <p class="m-0 font-size-12 font-weight-regular">${cYearAPR}%</p>
-                </div>
-            </div>
-        </div>
     </div>`    
   }
 
@@ -788,12 +771,6 @@ async function main() {
             </div>
             <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
                 <div class="row">
-                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
-                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
-                    </div>
 
                     <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
@@ -817,10 +794,7 @@ async function main() {
                         <h6 class="pl-10 m-0">${options.pool_name}</h6>
                     </div>
                 </div>
-                ${estimatedRate}
                 <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                ${approveBtn}
-                ${stakeBtn}
                 ${unstakeBtn}
                 ${claimBtn}
                 <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
@@ -833,12 +807,6 @@ async function main() {
 
             <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
                 <div class="row">
-                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
-                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
-                    </div>
                     <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
@@ -847,7 +815,6 @@ async function main() {
 
                 </div>
                 <div class="row pt-20">
-                    ${earning}
                     ${stakeDisplay || ''}
                     ${availableStake}
                     <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
@@ -960,20 +927,6 @@ async function main() {
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
                 </div>
-                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                    <div class="form-inline w-50 mx-auto">
-                        <div class="form-group m-md-0">
-                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                        </div>
-                    </div>
-                    <div class="form-inline w-50 mx-auto mx-md-0">
-                        <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}% </p>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
                     <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
@@ -989,32 +942,6 @@ async function main() {
             </div>
             <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
                 <div class="row">
-                    <div class="col-sm-12 col-md-3 align-items-center pb-10">
-                        <div class="row">
-                            <p class="w-full text-center">Rewards APR :</p>
-                        </div>
-                        <div class="row">
-                            <div class="form-inline w-50 mx-auto">
-                                <div class="form-group m-md-0">
-                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                                </div>
-                            </div>
-                            <div class="form-inline w-50 mx-auto">
-                                <div class="form-group m-md-0">
-                                <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    ${combinedAprDisplay}
-                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
-                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
-                    </div>
 
                     <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
@@ -1043,25 +970,8 @@ async function main() {
                   <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                   <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
               </div>
-              <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                  <div class="form-inline w-50 mx-auto">
-                      <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                      </div>
-                  </div>
-                  <div class="form-inline w-50 mx-auto mx-md-0">
-                      <div class="form-group m-md-0">
-                      <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                      <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
-                      </div>
-                  </div>
 
-              </div>
-              ${estimatedRate}
               <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-              ${approveBtn}
-              ${stakeBtn}
               ${unstakeBtn}
               ${claimBtn}
               <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
@@ -1074,32 +984,6 @@ async function main() {
 
           <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
               <div class="row">
-                  <div class="col-sm-12 col-md-2 align-items-center pb-10">
-                      <div class="row text-center">
-                          <p class="font-weight-light">Rewards APR :</p>
-                      </div>
-                      <div class="row">
-                          <div class="form-inline w-50 ">
-                              <div class="form-group m-md-0">
-                                  <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                  <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                              </div>
-                          </div>
-                          <div class="form-inline w-50 mx-auto">
-                              <div class="form-group m-md-0">
-                              <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                              <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  ${combinedAprDisplay}
-                  <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                      <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
-                      <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                      <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
-                  </div>
                   <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
                       <p class="m-0 font-size-12"> Pool Size</p>
                       ${poolSize}
@@ -1112,7 +996,6 @@ async function main() {
 
               </div>
               <div class="row pt-20">
-                  ${earning}
 
                   ${availableStake}
                   
@@ -1208,20 +1091,6 @@ async function main() {
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
                 </div>
-                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                    <div class="form-inline w-50 mx-auto">
-                        <div class="form-group m-md-0">
-                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                        </div>
-                    </div>
-                    <div class="form-inline w-50 mx-auto mx-md-0">
-                        <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
                     <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
@@ -1236,31 +1105,6 @@ async function main() {
             </div>
             <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display: none;">
                 <div class="row">
-                    <div class="col-sm-12 col-md-3 align-items-center pb-10">
-                        <div class="row">
-                            <p class="w-full text-center">Rewards APR :</p>
-                        </div>
-                        <div class="row">
-                            <div class="form-inline w-50 mx-auto">
-                                <div class="form-group m-md-0">
-                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                                </div>
-                            </div>
-                            <div class="form-inline w-50 mx-auto">
-                                <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">80,000 SNOB</span>
-                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
-                    </div>
   
                     <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
@@ -1295,25 +1139,7 @@ async function main() {
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
                 </div>
-                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                    <div class="form-inline w-50 mx-auto">
-                        <div class="form-group m-md-0">
-                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                        </div>
-                    </div>
-                    <div class="form-inline w-50 mx-auto mx-md-0">
-                        <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                          <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                        </div>
-                    </div>
-  
-                </div>
-                ${estimatedRate}
                 <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                ${approveBtn}
-                ${stakeBtn}
                 ${unstakeBtn}
                 ${claimBtn}
                 <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
@@ -1326,31 +1152,6 @@ async function main() {
   
             <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
                 <div class="row">
-                    <div class="col-sm-12 col-md-2 align-items-center pb-10">
-                        <div class="row text-center">
-                            <p class="font-weight-light">Rewards APR :</p>
-                        </div>
-                        <div class="row">
-                            <div class="form-inline w-50 ">
-                                <div class="form-group m-md-0">
-                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                                </div>
-                            </div>
-                            <div class="form-inline w-50 mx-auto">
-                                <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                          <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                          <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                          <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">80,000 SNOB</span>
-                          <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                          <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">2666</span>
-                    </div>
                     <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
@@ -1363,7 +1164,6 @@ async function main() {
   
                 </div>
                 <div class="row pt-20">
-                    ${earning}
   
                     ${availableStake}
                     
@@ -1521,10 +1321,7 @@ async function main() {
                         <h6 class="pl-10 m-0">${options.pool_name}</h6>
                     </div>
                 </div>
-                ${estimatedRate}
                 <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                ${approveBtn}
-                ${stakeBtn}
                 ${unstakeBtn}
                 ${claimBtn}
                 <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
@@ -1537,32 +1334,6 @@ async function main() {
 
             <div id="details-${options.pool_nickname}" class="border-top mt-20 pt-10 pb-10" style="display:none">
                 <div class="row">
-                    <div class="col-sm-12 col-md-2 align-items-center pb-10">
-                        <div class="row text-center">
-                            <p class="font-weight-light">Rewards APR :</p>
-                        </div>
-                        <div class="row">
-                            <div class="form-inline w-50 ">
-                                <div class="form-group m-md-0">
-                                    <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                                    <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                                </div>
-                            </div>
-                            <div class="form-inline w-50 mx-auto">
-                                <div class="form-group m-md-0">
-                                <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                                <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    ${combinedAprDisplay}
-                    <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
-                        <p class="m-0 font-size-12"><ion-icon name="bowling-ball-outline"></ion-icon> Allocation</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.pool_weight * 100)}%</span>
-                        <p class="m-0 font-size-12 pt-10"><ion-icon name="ellipse-outline"></ion-icon> SNOB per day</p>
-                        <span class="badge font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${snowballsPerBlock * options.pool_weight / 1e18 * 15000}</span>
-                    </div>
                     <div class="col-sm-12 col-md-2 align-items-center d-flex flex-column text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
@@ -1571,7 +1342,6 @@ async function main() {
 
                 </div>
                 <div class="row pt-20">
-                    ${earning}
 
                     ${availableStake}
                     <div class="col-sm-12 col-md-2 align-items-center text-center snob-tvl pb-10 pb-md-0">
