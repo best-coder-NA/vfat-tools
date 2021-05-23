@@ -54,6 +54,7 @@ async function main() {
   const WBTC_AVAX_GAUGE = "0x4906bf6aa9aad2b76f2c92738b7242a5c7a6a7bd";
   const DAI_AVAX_GAUGE = "0x2e2191fde0872e686b0a5117cd639896d2c8ad97";
   const UNI_AVAX_GAUGE = "0x0e06c4d0ecaae66b82ebc9133ca52ea82702cd30";
+  const ETH_PNG_GAUGE = "0x5f05dc58ee067c91a98ec025d5c332af40b84667";
   const WBTC_PNG_GAUGE = "0x1e544e0eedc7e44f506f2ae7d389e0b07289e3c1";
   const LINK_PNG_GAUGE = "0xc4960af75f321c7fb36b725afc6059727e2db457";
   const USDT_PNG_GAUGE = "0xe58961d4895f0e26309ca1f36d607c6a2a1556ff";
@@ -74,6 +75,7 @@ async function main() {
   const PGL_WBTC_AVAX = "0x7a6131110b82dacbb5872c7d352bfe071ea6a17c";
   const PGL_DAI_AVAX = "0x17a2e8275792b4616befb02eb9ae699aa0dcb94b";
   const PGL_UNI_AVAX = "0x92dc558cb9f8d0473391283ead77b79b416877ca";
+  const PGL_ETH_PNG = "0x53b37b9a6631c462d74d65d61e1c056ea9daa637"
   const PGL_WBTC_PNG = "0xf372ceae6b2f4a2c4a6c0550044a7eab914405ea";
   const PGL_LINK_PNG = "0x7313835802c6e8ca2a6327e6478747b71440f7a4";
   const PGL_USDT_PNG = "0xE8AcF438B10A2C09f80aEf3Ef2858F8E758C98F9";
@@ -93,12 +95,13 @@ async function main() {
   const SPGL_USDT_ADDRESS = "0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605";
   const SPGL_SNOB_AVAX_ADDR = "0xF4072358C1E3d7841BD7AfDE31F61E17E8d99BE7";
   const SNOB_ADDRESS = "0xC38f41A296A4493Ff429F1238e030924A1542e50";
-  const S3D_ADDRESS = "0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4"
-  const S3F_ADDRESS = "0xA42BE3dB9aff3aee48167b240bFEE5e1697e1281"
+  const S3D_ADDRESS = "0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4";
+  const S3F_ADDRESS = "0xA42BE3dB9aff3aee48167b240bFEE5e1697e1281";
   const SPGL_WBTC_AVAX = "0x39BE35904f52E83137881C0AC71501Edf0180181";
   const SPGL_DAI_AVAX = "0xb21b21E4fA802EE4c158d7cf4bD5416B8035c5e0";
   const SPGL_UNI_AVAX = "0xdf7F15d05d641dF701D961a38d03028e0a26a42D";
-  const SPGL_WBTC_PNG = "0x3815f36C3d60d658797958EAD8778f6500be16Df";
+  const SPGL_ETH_PNG = "0x3815f36C3d60d658797958EAD8778f6500be16Df";
+  const SPGL_WBTC_PNG = "0x763Aa38c837f61DD8429313933Cc47f24E881430";
   const SPGL_LINK_PNG = "0x392c51Ab0AF3017E3e22713353eCF5B9d6fBDE84";
   const SPGL_USDT_PNG = "0x7987aDB3C789f071FeFC1BEb15Ce6DfDfbc75899";
   const SPGL_SUSHI_PNG = "0x8eDd233546730C51a9d3840e954E5581Eb3fDAB1";
@@ -212,6 +215,9 @@ async function main() {
   const stakePNG_SNOB = async function() {
     return gaugeContractStake(PNG_SNOB_GAUGE, GAUGE_ABI, SPGL_PNG_SNOB, SNOWGLOBE_ABI, App);
   }
+  const stakeETH_PNG = async function() {
+    return gaugeContractStake(ETH_PNG_GAUGE, GAUGE_ABI, SPGL_ETH_PNG, SNOWGLOBE_ABI, App);
+  }
 
   /* approve */
   const approveWBTC_AVAX = async function() {
@@ -246,6 +252,9 @@ async function main() {
   }
   const approveYFI_PNG = async function() {
     return approveGauge(SPGL_YFI_PNG, YFI_PNG_GAUGE, App);
+  }
+  const approveETH_PNG = async function() {
+    return approveGauge(SPGL_ETH_PNG, ETH_PNG_GAUGE, App);
   }
   const approvePNG_SNOB = async function() {
     return approveGauge(SPGL_PNG_SNOB, PNG_SNOB_GAUGE, App);
@@ -307,6 +316,9 @@ async function main() {
     
   }
   const claimYFI_PNG = async function () {
+    
+  }
+  const claimETH_PNG = async function () {
     
   }
   const claimPNG_SNOB = async function () {
@@ -371,6 +383,9 @@ async function main() {
   const withdrawYFI_PNG = async function() {
     return gaugeContractWithdraw(YFI_PNG_GAUGE, GAUGE_ABI, App);
   }
+  const withdrawETH_PNG = async function() {
+    return gaugeContractWithdraw(ETH_PNG_GAUGE, GAUGE_ABI, App);
+  }
   const withdrawPNG_SNOB = async function() {
     return gaugeContractWithdraw(PNG_SNOB_GAUGE, GAUGE_ABI, App);
   }
@@ -400,6 +415,7 @@ async function main() {
   const SPGL_AAVE_PNG_TOKEN = new ethers.Contract(SPGL_AAVE_PNG, ERC20_ABI, signer);
   const SPGL_UNI_PNG_TOKEN = new ethers.Contract(SPGL_UNI_PNG, ERC20_ABI, signer);
   const SPGL_YFI_PNG_TOKEN = new ethers.Contract(SPGL_YFI_PNG, ERC20_ABI, signer);
+  const SPGL_ETH_PNG_TOKEN = new ethers.Contract(SPGL_ETH_PNG, ERC20_ABI, signer);
   const SPGL_PNG_SNOB_TOKEN = new ethers.Contract(SPGL_PNG_SNOB, ERC20_ABI, signer);
 
 
@@ -427,6 +443,7 @@ async function main() {
   const AAVE_PNG_GAUGE_CONTRACT = new ethers.Contract(AAVE_PNG_GAUGE, GAUGE_ABI, signer);
   const UNI_PNG_GAUGE_CONTRACT = new ethers.Contract(UNI_PNG_GAUGE, GAUGE_ABI, signer);
   const YFI_PNG_GAUGE_CONTRACT = new ethers.Contract(YFI_PNG_GAUGE, GAUGE_ABI, signer);
+  const ETH_PNG_GAUGE_CONTRACT = new ethers.Contract(ETH_PNG_GAUGE, GAUGE_ABI, signer);
   const PNG_SNOB_GAUGE_CONTRACT = new ethers.Contract(PNG_SNOB_GAUGE, GAUGE_ABI, signer);
 
 
@@ -458,7 +475,8 @@ async function main() {
     AAVE_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     UNI_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     YFI_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
-    PNG_SNOB_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
+    PNG_SNOB_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    ETH_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
   ]).then(res => {
     snobTotalSupply = res[0]
     pendingSNOBTokensPool1 = res[1]
@@ -485,7 +503,8 @@ async function main() {
     pendingSNOBTokensPool_UNI_PNG = res[22];
     pendingSNOBTokensPool_YFI_PNG = res[23];
     pendingSNOBTokensPool_PNG_SNOB = res[24];
-  })
+    pendingSNOBTokensPool_ETH_PNG = res[25];
+  });
 
   await Promise.all([
     App.provider.getBlock(blockNumber),
@@ -505,7 +524,7 @@ async function main() {
   // wallet info
   var claimableSnowballs = pendingGovReward / 1e18 + pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18 + pendingSNOBTokensPool5 / 1e18 + pendingSNOBTokensPool6 / 1e18 + pendingSNOBTokensPool7 / 1e18 + pendingSNOBTokensPool8 / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_WBTC_AVAX / 1e18 + pendingSNOBTokensPool_DAI_AVAX / 1e18 + pendingSNOBTokensPool_UNI_AVAX / 1e18;
-  claimableSnowballs += pendingSNOBTokensPool_LINK_PNG / 1e18 + pendingSNOBTokensPool_USDT_PNG / 1e18 + pendingSNOBTokensPool_SUSHI_PNG / 1e18 + pendingSNOBTokensPool_WBTC_PNG / 1e18;
+  claimableSnowballs += pendingSNOBTokensPool_LINK_PNG / 1e18 + pendingSNOBTokensPool_USDT_PNG / 1e18 + pendingSNOBTokensPool_SUSHI_PNG / 1e18 + pendingSNOBTokensPool_WBTC_PNG / 1e18 + pendingSNOBTokensPool_ETH_PNG / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_DAI_PNG / 1e18 + pendingSNOBTokensPool_AAVE_PNG / 1e18 + pendingSNOBTokensPool_UNI_PNG / 1e18 + pendingSNOBTokensPool_YFI_PNG / 1e18 + pendingSNOBTokensPool_PNG_SNOB / 1e18;
   const snowballsPerBlock = blockRate
   const secondsInDay = 86400;
@@ -566,6 +585,10 @@ async function main() {
   let stakedPool_PNG_SNOB;
   let totalStaked_PNG_SNOB;
 
+  let currentSPGL_ETH_PNG;
+  let stakedPool_ETH_PNG;
+  let totalStaked_ETH_PNG;
+
   await Promise.all([
     SPGL_SUSHI_TOKEN.balanceOf(App.YOUR_ADDRESS),
     SPGL_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS),
@@ -574,6 +597,7 @@ async function main() {
     SPGL_LINK_TOKEN.balanceOf(App.YOUR_ADDRESS),
     S3D_TOKEN.balanceOf(App.YOUR_ADDRESS),
     SNOB_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
+
     SUSHI_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     SNOB_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     PNG_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
@@ -581,6 +605,7 @@ async function main() {
     USDT_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     LINK_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     S3D_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+
     SUSHI_GAUGE_CONTRACT.totalSupply(),
     PNG_GAUGE_CONTRACT.totalSupply(),
     ETH_GAUGE_CONTRACT.totalSupply(),
@@ -627,6 +652,9 @@ async function main() {
     SPGL_PNG_SNOB_TOKEN.balanceOf(App.YOUR_ADDRESS),
     PNG_SNOB_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     PNG_SNOB_GAUGE_CONTRACT.totalSupply(),
+    SPGL_ETH_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS),
+    ETH_PNG_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    ETH_PNG_GAUGE_CONTRACT.totalSupply()
   ]).then(res => {
     currentSPGLSUSHITokens = res[0]
     currentSPGLPNGTokens = res[1]
@@ -642,6 +670,7 @@ async function main() {
     stakedPool5 = res[11]
     stakedPool6 = res[12];
     stakedPool7 = res[13]
+
     totalStakedSPGLSUSHI = res[14]
     totalStakedSPGLPNG = res[15]
     totalStakedSPGLETH = res[16];
@@ -688,7 +717,11 @@ async function main() {
     currentSPGL_PNG_SNOB = res[57];
     stakedPool_PNG_SNOB = res[58];
     totalStaked_PNG_SNOB = res[59];
+    currentSPGL_ETH_PNG = res[60];
+    stakedPool_ETH_PNG = res[61];
+    totalStaked_ETH_PNG = res[62];
   });
+
   //Balances
   const spglSushiDisplayAmt = currentSPGLSUSHITokens > 1000 ? currentSPGLSUSHITokens / 1e18 : 0;
   const spglPngDisplayAmt = currentSPGLPNGTokens > 1000 ? currentSPGLPNGTokens / 1e18 : 0;
@@ -710,6 +743,7 @@ async function main() {
   const UNI_PNG_DisplayAmount = currentSPGL_UNI_PNG > 1000 ? currentSPGL_UNI_PNG / 1e18 : 0;
   const YFI_PNG_DisplayAmount = currentSPGL_YFI_PNG > 1000 ? currentSPGL_YFI_PNG / 1e18 : 0;
   const PNG_SNOB_DisplayAmount = currentSPGL_PNG_SNOB > 1000 ? currentSPGL_PNG_SNOB / 1e18 : 0;
+  const ETH_PNG_DisplayAmount = currentSPGL_ETH_PNG > 1000 ? currentSPGL_ETH_PNG / 1e18 : 0;
 
 
   const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100
@@ -733,6 +767,7 @@ async function main() {
   const userPool_UNI_PNG = (stakedPool_UNI_PNG / 1e18) / (totalStaked_UNI_PNG / 1e18) * 100;
   const userPool_YFI_PNG = (stakedPool_YFI_PNG / 1e18) / (totalStaked_YFI_PNG / 1e18) * 100;
   const userPool_PNG_SNOB = (stakedPool_PNG_SNOB / 1e18) / (totalStaked_PNG_SNOB / 1e18) * 100;
+  const userPool_ETH_PNG = (stakedPool_ETH_PNG / 1e18) / (totalStaked_ETH_PNG / 1e18) * 100;
   
   const poolShareDisplay_7 = `${(stakedPool7 / 1e18).toFixed(6)} S3D`;
   const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
@@ -1051,14 +1086,24 @@ async function main() {
     totalPoolPGL_19 = ret_19[3]
   }
 
-  const snowglobeContract_20 = new ethers.Contract(SPGL_PNG_SNOB, SNOWGLOBE_ABI, signer);
+  const snowglobeContract_20 = new ethers.Contract(SPGL_ETH_PNG, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_20, poolShareDisplay_20_pgl, stakeDisplay_20, totalPoolPGL_20;
-  if (stakedPool_PNG_SNOB / 1e18 > 0) {
-    let ret_20 = await calculateShare(snowglobeContract_20, PGL_PNG_SNOB, stakedPool_PNG_SNOB / 1e18, 1e18, userPool_PNG_SNOB)
+  if (stakedPool_ETH_PNG / 1e18 > 0) {
+    let ret_20 = await calculateShare(snowglobeContract_20, PGL_ETH_PNG, stakedPool_ETH_PNG / 1e18, 1e18, userPool_ETH_PNG)
     poolShareDisplay_20 = ret_20[0]
     poolShareDisplay_20_pgl = ret_20[1]
     stakeDisplay_20 = ret_20[2]
     totalPoolPGL_20 = ret_20[3]
+  }
+
+  const snowglobeContract_21 = new ethers.Contract(SPGL_PNG_SNOB, SNOWGLOBE_ABI, signer);
+  let poolShareDisplay_21, poolShareDisplay_21_pgl, stakeDisplay_21, totalPoolPGL_21;
+  if (stakedPool_PNG_SNOB / 1e18 > 0) {
+    let ret_21 = await calculateShare(snowglobeContract_21, PGL_PNG_SNOB, stakedPool_PNG_SNOB / 1e18, 1e18, userPool_PNG_SNOB)
+    poolShareDisplay_21 = ret_21[0]
+    poolShareDisplay_21_pgl = ret_21[1]
+    stakeDisplay_21 = ret_21[2]
+    totalPoolPGL_21 = ret_21[3]
   }
 
 
@@ -2346,9 +2391,37 @@ async function main() {
   });
 
   pool({
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15/logo.png',
+    pool_nickname: 'pool-20',
+    pool_name: 'ETH-PNG sPGL',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStaked_ETH_PNG,
+    user_pool_percent: userPool_ETH_PNG,
+    staked_pool: stakedPool_ETH_PNG,
+    pending_tokens: pendingSNOBTokensPool_ETH_PNG,
+    display_amount: ETH_PNG_DisplayAmount,
+    approve: 'approveETH_PNG',
+    stake: 'stakeETH_PNG',
+    unstake: 'withdrawETH_PNG',
+    claim: 'claimETH_PNG',
+    icequeen_apr: null,
+    snowglobe_apr: null,
+    tvl_display: null,
+    tvl_class: tvl_class,
+    total_pgl: totalPoolPGL_20,
+    pool_share_display: poolShareDisplay_20,
+    pool_share_display_pgl: poolShareDisplay_20_pgl,
+    stake_display: stakeDisplay_20,
+    apy: null
+  });
+
+  pool({
     logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xC38f41A296A4493Ff429F1238e030924A1542e50/logo.png',
     logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png',
-    pool_nickname: 'pool-20',
+    pool_nickname: 'pool-21',
     pool_name: 'PNG-SNOB sPGL',
     url: null,
     tvl: null,
@@ -2366,10 +2439,10 @@ async function main() {
     snowglobe_apr: null,
     tvl_display: null,
     tvl_class: tvl_class,
-    total_pgl: totalPoolPGL_20,
-    pool_share_display: poolShareDisplay_20,
-    pool_share_display_pgl: poolShareDisplay_20_pgl,
-    stake_display: stakeDisplay_20,
+    total_pgl: totalPoolPGL_21,
+    pool_share_display: poolShareDisplay_21,
+    pool_share_display_pgl: poolShareDisplay_21_pgl,
+    stake_display: stakeDisplay_21,
     apy: null
   });
 
@@ -2436,6 +2509,9 @@ async function main() {
           break;
         case 'withdrawYFI_PNG':
           withdrawYFI_PNG();
+          break;
+        case 'withdrawETH_PNG':
+          withdrawETH_PNG();
           break;
         case 'withdrawPNG_SNOB':
           withdrawPNG_SNOB();
@@ -2506,6 +2582,9 @@ async function main() {
         case 'claimYFI_PNG':
           claimYFI_PNG();
           break;
+        case 'claimETH_PNG':
+          claimETH_PNG();
+          break;
         case 'claimPNG_SNOB':
           claimPNG_SNOB();
           break;
@@ -2575,6 +2654,9 @@ async function main() {
         case 'approveYFI_PNG':
           approveYFI_PNG();
           break;
+        case 'approveETH_PNG':
+          approveETH_PNG();
+          break;
         case 'approvePNG_SNOB':
           approvePNG_SNOB();
           break;
@@ -2643,6 +2725,9 @@ async function main() {
           break;
         case 'stakeYFI_PNG':
           stakeYFI_PNG();
+          break;
+        case 'stakeETH_PNG':
+          stakeETH_PNG();
           break;
         case 'stakePNG_SNOB':
           stakePNG_SNOB();
