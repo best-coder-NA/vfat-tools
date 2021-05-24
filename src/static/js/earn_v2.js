@@ -195,7 +195,7 @@ async function main() {
     return gaugeContractStake(LINK_PNG_GAUGE, GAUGE_ABI, SPGL_LINK_PNG, SNOWGLOBE_ABI, App);
   }
   const stakeUSDT_PNG = async function() {
-    return gaugeContractStake(WBTC_PNG_GAUGE, GAUGE_ABI, SPGL_WBTC_PNG, SNOWGLOBE_ABI, App);
+    return gaugeContractStake(USDT_PNG_GAUGE, GAUGE_ABI, SPGL_USDT_PNG, SNOWGLOBE_ABI, App);
   }
   const stakeSUSHI_PNG = async function() {
     return gaugeContractStake(SUSHI_PNG_GAUGE, GAUGE_ABI, SPGL_SUSHI_PNG, SNOWGLOBE_ABI, App);
