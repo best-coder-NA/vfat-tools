@@ -262,67 +262,68 @@ async function main() {
 
   /* claim reward functions */
   const claimPool1 = async function () {
-    //return icequeenContract_claim(ICEQUEEN_ABI, ICEQUEEN_ADDR, 1, SNOB_AVAX_ADDR, App)
+    return gaugeClaim(SUSHI_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const claimPool2 = async function () {
-    
+    return gaugeClaim(SNOB_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const claimPool3 = async function () {
-    
+    return gaugeClaim(PNG_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const claimPool4 = async function () {
-    
+    return gaugeClaim(ETH_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const claimPool5 = async function () {
-    
+    return gaugeClaim(USDT_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const claimPool6 = async function () {
-    
+    return gaugeClaim(LINK_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const claimPool7 = async function () {
-    
+    return gaugeClaim(S3D_GAUGE, GAUGE_ABI, App);
   }
   const claimPool8 = async function () {
-    
+    return gaugeClaim(S3F_GAUGE, GAUGE_ABI, App);
   }
-  const claimWBTC_AVAX = async function () {
-    
+  const claimWBTC_AVAX = async function() {
+    return gaugeClaim(WBTC_AVAX_GAUGE, GAUGE_ABI, App);
   }
-  const claimDAI_AVAX = async function () {
-    
+  const claimDAI_AVAX = async function() {
+    return gaugeClaim(DAI_AVAX_GAUGE, GAUGE_ABI, App);
   }
-  const claimUNI_AVAX = async function () {
-    
+  const claimUNI_AVAX = async function() {
+    return gaugeClaim(UNI_AVAX_GAUGE, GAUGE_ABI, App);
   }
-  const claimWBTC_PNG = async function () {
-    
+
+  const claimWBTC_PNG = async function() {
+    return gaugeClaim(WBTC_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimLINK_PNG = async function () {
-    
+  const claimLINK_PNG = async function() {
+    return gaugeClaim(LINK_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimUSDT_PNG = async function () {
-    
+  const claimUSDT_PNG = async function() {
+    return gaugeClaim(USDT_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimSUSHI_PNG = async function () {
-    
+  const claimSUSHI_PNG = async function() {
+    return gaugeClaim(SUSHI_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimDAI_PNG = async function () {
-    
+  const claimDAI_PNG = async function() {
+    return gaugeClaim(DAI_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimAAVE_PNG = async function () {
-    
+  const claimAAVE_PNG = async function() {
+    return gaugeClaim(AAVE_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimUNI_PNG = async function () {
-    
+  const claimUNI_PNG = async function() {
+    return gaugeClaim(UNI_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimYFI_PNG = async function () {
-    
+  const claimYFI_PNG = async function() {
+    return gaugeClaim(YFI_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimETH_PNG = async function () {
-    
+  const claimETH_PNG = async function() {
+    return gaugeClaim(ETH_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimPNG_SNOB = async function () {
-    
+  const claimPNG_SNOB = async function() {
+    return gaugeClaim(PNG_SNOB_GAUGE, GAUGE_ABI, App);
   }
 
   const withdrawPool1 = async function () {
@@ -2822,41 +2823,33 @@ const gaugeContractWithdraw = async function (gaugeAddress, gaugeAbi, App) {
   }
 }
 
-
-const icequeenContract_claim = async function (chefAbi, chefAddress, poolIndex, stakeTokenAddr, App) {
-  const signer = App.provider.getSigner()
-  console.log(signer)
-  const STAKING_TOKEN = new ethers.Contract(stakeTokenAddr, ERC20_ABI, signer)
-  console.log(STAKING_TOKEN)
-  const CHEF_CONTRACT = new ethers.Contract(chefAddress, chefAbi, signer)
-  console.log(CHEF_CONTRACT)
-  const pendingRewards = await CHEF_CONTRACT.pendingSnowball(poolIndex, App.YOUR_ADDRESS)
-  let allow = Promise.resolve()
+const gaugeClaim = async function (gaugeAddress, gaugeAbi, App) {
+  const signer = App.provider.getSigner();
+  const GAUGE_CONTRACT = new ethers.Contract(gaugeAddress, gaugeAbi, signer);
+  const pendingRewards = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS);
+  let allow = Promise.resolve();
   if (pendingRewards / 1e18 == 0) {
     snobMessage(`Oops`, `You have no rewards to claim`, `information-circle-outline`, `primary`, false, `ok`, 4000);
   } else {
-    halfmoon.toggleModal('modal-loading')
-    allow
-      .then(async function () {
-        CHEF_CONTRACT.withdraw(poolIndex, 1)
-          .then(function (t) {
-            App.provider.waitForTransaction(t.hash).then(function () {
-              halfmoon.toggleModal('modal-loading')
-              snobMessage(`Withdrawn Tokens`, `Rewards claimed. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
-              setTimeout(function(){ window.location.reload(true); }, 6000);
-            })
-          })
-          .catch(function () {
-            halfmoon.toggleModal('modal-loading')
-            snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-          })
-      })
-      .catch(function () {
-        halfmoon.toggleModal('modal-loading')
+    halfmoon.toggleModal('modal-loading');
+    allow.then(async function() {
+      GAUGE_CONTRACT.getReward().then(function(t) {
+        App.provider.waitForTransaction(t.hash).then(function() {
+          halfmoon.toggleModal('modal-loading');
+          snobMessage(`Withdrawn Tokens`, `Rewards claimed. We will refresh the browser in 5 seconds to see balance.`, `checkmark-circle-outline`, `success`, false, `ok`);
+          setTimeout(function(){ window.location.reload(true); }, 6000);
+        });
+      }).catch(function() {
+        halfmoon.toggleModal('modal-loading');
         snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
-      })
+      });
+    }).catch(function() {
+      halfmoon.toggleModal('modal-loading');
+      snobMessage(`Oops! Failed`, `Something went wrong`, `close-circle-outline`, `danger`, false, `ok`, false);
+    })
   }
 }
+
 const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
   $('#snob-title-modal').html('').html(title);
   $('#snob-message-modal').html('').html(message);
