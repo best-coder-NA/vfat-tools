@@ -123,7 +123,11 @@ async function main() {
     "0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc": "SUSHI",
     "0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15": "ETH",
     "0xde3A24028580884448a5397872046a019649b084": "USDT",
-    "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK"
+    "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK",
+    "0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB": "WBTC",
+    "0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18": "DAI",
+    "0x846D50248BAf8b7ceAA9d9B53BFd12d7D7FBB25a": "VSO",
+    "0xf39f9671906d8630812f9d9863bBEf5D523c84Ab": "UNI"
   }
   //LP URLs
   const SNOB_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xC38f41A296A4493Ff429F1238e030924A1542e50";
@@ -831,7 +835,7 @@ async function main() {
   const poolShareDisplay_7 = `${(stakedPool7 / 1e18).toFixed(6)} S3D`;
   const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
 
-  const pool8weight = 0.16
+  const pool8weight = 0.33
   const pool7weight = 0.20
   const pool6weight = 0.08
   const pool5weight = 0.05
@@ -842,7 +846,7 @@ async function main() {
 
   const pool8tvl = totalStakedS3F / 1e18;
   const pool8tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool8tvl)}`;
-  const pool8APR = 2666 * snobPrice / pool8tvl * 100;
+  const pool8APR = snowballsPerBlock * pool8weight / 1e18 * 15000 * snobPrice / pool8tvl * 100;
   
   const pool7tvl = totalStakedS3D / 1e18;
   const pool7tvlDisplay = `$${new Intl.NumberFormat('en-US').format(pool7tvl)}`;
@@ -956,12 +960,16 @@ async function main() {
       const token0ValueUSDT = reserve0Owned * t0Price;
       const token1ValueUSDT = reserve1Owned * t1Price;
       const value = token0ValueUSDT + (token1ValueUSDT);
+      console.log("token0Address:", token0Address);
+      console.log("token0Name:", TOKEN_NAMES[token0Address]);
+      console.log("token1Address:", token1Address);
+      console.log("token1Name:", TOKEN_NAMES[token1Address]);
       return [
         `${userSPGL > 1 ? userSPGL.toFixed(3) : userSPGL.toFixed(8)} sPGL`,
         `${ownedPGL > 1 ? ownedPGL.toFixed(3) : ownedPGL.toFixed(8)} PGL - ${pool_percent.toFixed(6)}%`,
         `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
           <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
-          <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned.toFixed(3)} ${TOKEN_NAMES[token0Address]} / ${reserve1Owned.toFixed(3)} ${TOKEN_NAMES[token1Address]}  </p>
+          <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned.toFixed(8)} ${TOKEN_NAMES[token0Address]} / ${reserve1Owned.toFixed(8)} ${TOKEN_NAMES[token1Address]}  </p>
           <p class="m-0 font-size-12">($${value.toFixed(2)})</p>
         </div>`,
         totalPoolPGL];
@@ -1247,11 +1255,11 @@ async function main() {
     }
     availableStake = '';
     if ( options.display_amount > 0 ) {
-      availableStake = stakeUnstake(options.display_amount.toFixed(6), true);
+      availableStake = stakeUnstake(options.display_amount.toFixed(8), true);
     }
     availableUnstake = '';
     if ( options.staked_pool / 1e18 > 0 ) {      
-      availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(6), false);
+      availableUnstake = stakeUnstake((options.staked_pool / 1e18).toFixed(8), false);
     }
 
     let has_options = false
