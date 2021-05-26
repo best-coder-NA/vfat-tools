@@ -86,7 +86,16 @@ const thispagespools = [
     token1: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
     pair: '0x53b37b9a6631c462d74d65d61e1c056ea9daa637',
     stake: '0x7ac007afB5d61F48D1E3C8Cc130d4cf6b765000e'
-  }  
+  },
+  {
+    pool_id: 'png-vso',
+    snowglobe: '0x8309C64390F376fD778BDd701d54d1F8DFfe1F39',
+    nickname: 'PNG-VSO Pangolin LP',
+    token0: '0x60781C2586D68229fde47564546784ab3fACA982',
+    token1: '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a',
+    pair: '0x9d472e21f6589380b21c42674b3585c47b74c891',
+    stake: '0x759ee0072901f409e4959E00b00a16FD729397eC'
+  }
 ]
 
 async function main() {  

@@ -10,7 +10,8 @@ const avaxTokens = [
     { "id": "uniswap","symbol": "UNI", "contract": "0xf39f9671906d8630812f9d9863bbef5d523c84ab" },
     { "id": "aave","symbol": "AAVE", "contract": "0x8ce2dee54bb9921a2ae0a63dbb2df8ed88b91dd9" },
     { "id": "dai","symbol": "DAI", "contract": "0xba7deebbfc5fa1100fb055a87773e1e99cd3507a" },
-    { "id": "yearn-finance", "symbol": "YFI", "contract": "0x99519acb025a0e0d44c3875a4bbf03af65933627"}
+    { "id": "yearn-finance", "symbol": "YFI", "contract": "0x99519acb025a0e0d44c3875a4bbf03af65933627"},
+    { "id": "verso", "symbol": "VSO", "contract": "0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a"}
 
 ]
 

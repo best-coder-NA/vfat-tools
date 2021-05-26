@@ -6,15 +6,6 @@
         document.body.classList.add('dark-mode');
     }
 
-    fetch('https://x-api.snowball.network/dex/0xc38f41a296a4493ff429f1238e030924a1542e50/tvl.json').then(function (response) {
-      return response.json();
-    }).then(function (info) {
-      let tvl = info.pairs[0].locked;
-      document.getElementById('combined_supply').innerHTML = '$' + new Intl.NumberFormat('en-US').format(tvl);
-    }).catch(function (err) {
-      console.log('could not get tvl');
-    });
-
 </script>
 <body>
     <div class="page-wrapper with-navbar with-transitions">

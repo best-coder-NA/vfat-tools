@@ -78,6 +78,16 @@ $(function () {
       pair: '0x92dc558cb9f8d0473391283ead77b79b416877ca',
       stake: '0x1f6acc5f5fe6af91c1bb3bebd27f4807a243d935'
     }
+    ,
+    {
+      pool_id: 'avax-vso',
+      snowglobe: '0x888Ab4CB2279bDB1A81c49451581d7c243AffbEf',
+      nickname: 'AVAX-VSO Pangolin LP',
+      token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+      token1: '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a',
+      pair: '0x2b532bc0afae65da57eccfb14ff46d16a12de5e6',
+      stake: '0xf2b788085592380bfCAc40Ac5E0d10D9d0b54eEe'
+    }
   ]
   
   async function main() {  

@@ -64,7 +64,9 @@ async function main() {
   const UNI_PNG_GAUGE = "0xbcbce1fb679b9eba3c2e266232c86e06ab2e1e45";
   const YFI_PNG_GAUGE = "0xbf23aafa5ba0bc81f798f190b1b632ecf3fd4709";
   const PNG_SNOB_GAUGE = "0xf2b70c7d26b841566ef14027f91c8771d615d54a";
-
+  const VSO_AVAX_GAUGE = "0x4d16ecff6dfa8f344ba182f09422b86b4d796ab4";
+  const VSO_PNG_GAUGE = "0xea4a0a6b5cc61b8edb228a5582308d0ad82b85cc";
+  
   //PGL address
   const SUSHI_AVAX_ADDR = "0xd8B262C0676E13100B33590F10564b46eeF652AD";
   const PNG_AVAX_ADDR = "0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367";
@@ -85,7 +87,8 @@ async function main() {
   const PGL_UNI_PNG = "0x874685bc6794c8b4befbd037147c2eef990761a9";
   const PGL_YFI_PNG = "0xa465e953f9f2a00b2c1c5805560207b66a570093";
   const PGL_PNG_SNOB = "0x97b4957df08e185502a0ac624f332c7f8967ee8d";
-
+  const PGL_VSO_AVAX = "0x2b532bc0afae65da57eccfb14ff46d16a12de5e6";
+  const PGL_VSO_PNG = "0x9d472e21f6589380b21c42674b3585c47b74c891";
   
   //tokens
   const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
@@ -110,7 +113,9 @@ async function main() {
   const SPGL_UNI_PNG = "0x14F98349Af847AB472Eb7f7c705Dc4Bee530713B";
   const SPGL_YFI_PNG = "0x234ed7c95Be12b2A0A43fF602e737225C83c2aa1";
   const SPGL_PNG_SNOB = "0xB4db531076494432eaAA4C6fCD59fcc876af2734";
-
+  const SPGL_VSO_AVAX = "0x888Ab4CB2279bDB1A81c49451581d7c243AffbEf";
+  const SPGL_VSO_PNG = "0x8309C64390F376fD778BDd701d54d1F8DFfe1F39";
+  
   const TOKEN_NAMES = {
     "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7": "AVAX",
     "0x60781C2586D68229fde47564546784ab3fACA982": "PNG",
@@ -218,6 +223,12 @@ async function main() {
   const stakeETH_PNG = async function() {
     return gaugeContractStake(ETH_PNG_GAUGE, GAUGE_ABI, SPGL_ETH_PNG, SNOWGLOBE_ABI, App);
   }
+  const stakePNG_VSO = async function() {
+    return gaugeContractStake(VSO_PNG_GAUGE, GAUGE_ABI, SPGL_VSO_PNG, SNOWGLOBE_ABI, App);
+  }
+  const stakeAVAX_VSO = async function() {
+    return gaugeContractStake(VSO_AVAX_GAUGE, GAUGE_ABI, SPGL_VSO_AVAX, SNOWGLOBE_ABI, App);
+  }
 
   /* approve */
   const approveWBTC_AVAX = async function() {
@@ -258,6 +269,12 @@ async function main() {
   }
   const approvePNG_SNOB = async function() {
     return approveGauge(SPGL_PNG_SNOB, PNG_SNOB_GAUGE, App);
+  }
+  const approvePNG_VSO = async function() {
+    return approveGauge(SPGL_VSO_PNG, VSO_PNG_GAUGE, App);
+  }
+  const approveAVAX_VSO= async function() {
+    return approveGauge(SPGL_VSO_AVAX, VSO_AVAX_GAUGE, App);
   }
 
   /* claim reward functions */
@@ -325,6 +342,13 @@ async function main() {
   const claimPNG_SNOB = async function() {
     return gaugeClaim(PNG_SNOB_GAUGE, GAUGE_ABI, App);
   }
+  const claimPNG_VSO = async function() {
+    return gaugeClaim(VSO_PNG_GAUGE, GAUGE_ABI, App);
+  }
+  const claimAVAX_VSO= async function() {
+    return gaugeClaim(VSO_AVAX_GAUGE, GAUGE_ABI, App);
+  }
+
 
   const withdrawPool1 = async function () {
     return gaugeContractWithdraw(SUSHI_AVAX_GAUGE, GAUGE_ABI, App);
@@ -390,7 +414,12 @@ async function main() {
   const withdrawPNG_SNOB = async function() {
     return gaugeContractWithdraw(PNG_SNOB_GAUGE, GAUGE_ABI, App);
   }
-
+  const withdrawPNG_VSO = async function() {
+    return gaugeContractWithdraw(VSO_PNG_GAUGE, GAUGE_ABI, App);
+  }
+  const withdrawAVAX_VSO= async function() {
+    return gaugeContractWithdraw(VSO_AVAX_GAUGE, GAUGE_ABI, App);
+  }
 
 
   const signer = App.provider.getSigner();
@@ -418,7 +447,8 @@ async function main() {
   const SPGL_YFI_PNG_TOKEN = new ethers.Contract(SPGL_YFI_PNG, ERC20_ABI, signer);
   const SPGL_ETH_PNG_TOKEN = new ethers.Contract(SPGL_ETH_PNG, ERC20_ABI, signer);
   const SPGL_PNG_SNOB_TOKEN = new ethers.Contract(SPGL_PNG_SNOB, ERC20_ABI, signer);
-
+  const SPGL_VSO_PNG_TOKEN = new ethers.Contract(SPGL_VSO_PNG, ERC20_ABI, signer);
+  const SPGL_VSO_AVAX_TOKEN = new ethers.Contract(SPGL_VSO_AVAX, ERC20_ABI, signer);
 
   //Contracts
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
@@ -446,7 +476,8 @@ async function main() {
   const YFI_PNG_GAUGE_CONTRACT = new ethers.Contract(YFI_PNG_GAUGE, GAUGE_ABI, signer);
   const ETH_PNG_GAUGE_CONTRACT = new ethers.Contract(ETH_PNG_GAUGE, GAUGE_ABI, signer);
   const PNG_SNOB_GAUGE_CONTRACT = new ethers.Contract(PNG_SNOB_GAUGE, GAUGE_ABI, signer);
-
+  const VSO_AVAX_GAUGE_CONTRACT = new ethers.Contract(VSO_AVAX_GAUGE, GAUGE_ABI, signer);
+  const VSO_PNG_GAUGE_CONTRACT = new ethers.Contract(VSO_PNG_GAUGE, GAUGE_ABI, signer);
 
   let snobTotalSupply, pendingSNOBTokensPool1, pendingSNOBTokensPool2, pendingSNOBTokensPool3, pendingSNOBTokensPool4, pendingSNOBTokensPool5, pendingSNOBTokensPool6, pendingSNOBTokensPool7, pendingSNOBTokensPool8;
   let currentSNOBTokens, snowballMultiplier, blockRate, blockNumber, currentBlock, yesterdayBlock;
@@ -478,6 +509,8 @@ async function main() {
     YFI_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     PNG_SNOB_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     ETH_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    VSO_AVAX_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    VSO_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
   ]).then(res => {
     snobTotalSupply = res[0]
     pendingSNOBTokensPool1 = res[1]
@@ -505,6 +538,8 @@ async function main() {
     pendingSNOBTokensPool_YFI_PNG = res[23];
     pendingSNOBTokensPool_PNG_SNOB = res[24];
     pendingSNOBTokensPool_ETH_PNG = res[25];
+    pendingSNOBTokensPool_VSO_AVAX = res[26];
+    pendingSNOBTokensPool_VSO_PNG = res[27];
   });
 
   await Promise.all([
@@ -590,6 +625,14 @@ async function main() {
   let stakedPool_ETH_PNG;
   let totalStaked_ETH_PNG;
 
+  let currentSPGL_PNG_VSO;
+  let stakedPool_PNG_VSO;
+  let totalStaked_PNG_VSO;
+
+  let currentSPGL_AVAX_VSO;
+  let stakedPool_AVAX_VSO;
+  let totalStaked_AVAX_VSO;
+
   await Promise.all([
     SPGL_SUSHI_TOKEN.balanceOf(App.YOUR_ADDRESS),
     SPGL_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS),
@@ -655,7 +698,13 @@ async function main() {
     PNG_SNOB_GAUGE_CONTRACT.totalSupply(),
     SPGL_ETH_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS),
     ETH_PNG_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
-    ETH_PNG_GAUGE_CONTRACT.totalSupply()
+    ETH_PNG_GAUGE_CONTRACT.totalSupply(),
+    SPGL_VSO_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS),
+    VSO_PNG_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    VSO_PNG_GAUGE_CONTRACT.totalSupply(),
+    SPGL_VSO_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
+    VSO_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    VSO_AVAX_GAUGE_CONTRACT.totalSupply()
   ]).then(res => {
     currentSPGLSUSHITokens = res[0]
     currentSPGLPNGTokens = res[1]
@@ -721,6 +770,12 @@ async function main() {
     currentSPGL_ETH_PNG = res[60];
     stakedPool_ETH_PNG = res[61];
     totalStaked_ETH_PNG = res[62];
+    currentSPGL_PNG_VSO= res[63];
+    stakedPool_PNG_VSO = res[64];
+    totalStaked_PNG_VSO = res[65];
+    currentSPGL_AVAX_VSO= res[66];
+    stakedPool_AVAX_VSO = res[67];
+    totalStaked_AVAX_VSO = res[68];
   });
 
   //Balances
@@ -745,7 +800,8 @@ async function main() {
   const YFI_PNG_DisplayAmount = currentSPGL_YFI_PNG > 1000 ? currentSPGL_YFI_PNG / 1e18 : 0;
   const PNG_SNOB_DisplayAmount = currentSPGL_PNG_SNOB > 1000 ? currentSPGL_PNG_SNOB / 1e18 : 0;
   const ETH_PNG_DisplayAmount = currentSPGL_ETH_PNG > 1000 ? currentSPGL_ETH_PNG / 1e18 : 0;
-
+  const PNG_VSO_DisplayAmount = currentSPGL_PNG_VSO > 1000 ? currentSPGL_PNG_VSO / 1e18 : 0;
+  const AVAX_VSO_DisplayAmount = currentSPGL_AVAX_VSO > 1000 ? currentSPGL_AVAX_VSO / 1e18 : 0;
 
   const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100
   const userPool7Percent = (stakedPool7 / 1e18) / (totalStakedS3D / 1e18) * 100
@@ -769,7 +825,9 @@ async function main() {
   const userPool_YFI_PNG = (stakedPool_YFI_PNG / 1e18) / (totalStaked_YFI_PNG / 1e18) * 100;
   const userPool_PNG_SNOB = (stakedPool_PNG_SNOB / 1e18) / (totalStaked_PNG_SNOB / 1e18) * 100;
   const userPool_ETH_PNG = (stakedPool_ETH_PNG / 1e18) / (totalStaked_ETH_PNG / 1e18) * 100;
-  
+  const userPool_PNG_VSO = (stakedPool_PNG_VSO / 1e18) / (totalStaked_PNG_VSO / 1e18) * 100;
+  const userPool_AVAX_VSO = (stakedPool_AVAX_VSO / 1e18) / (totalStaked_AVAX_VSO / 1e18) * 100;
+
   const poolShareDisplay_7 = `${(stakedPool7 / 1e18).toFixed(6)} S3D`;
   const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
 
@@ -1104,6 +1162,25 @@ async function main() {
     totalPoolPGL_21 = ret_21[3]
   }
 
+  const snowglobeContract_22 = new ethers.Contract(SPGL_VSO_PNG, SNOWGLOBE_ABI, signer);
+  let poolShareDisplay_22, poolShareDisplay_22_pgl, stakeDisplay_22, totalPoolPGL_22;
+  if (stakedPool_PNG_VSO / 1e18 > 0) {
+    let ret_22 = await calculateShare(snowglobeContract_22, PGL_VSO_PNG, stakedPool_PNG_VSO / 1e18, 1e18, userPool_PNG_VSO)
+    poolShareDisplay_22 = ret_22[0]
+    poolShareDisplay_22_pgl = ret_22[1]
+    stakeDisplay_22 = ret_22[2]
+    totalPoolPGL_22 = ret_22[3]
+  }
+
+  const snowglobeContract_23 = new ethers.Contract(SPGL_VSO_AVAX, SNOWGLOBE_ABI, signer);
+  let poolShareDisplay_23, poolShareDisplay_23_pgl, stakeDisplay_23, totalPoolPGL_23;
+  if (stakedPool_AVAX_VSO / 1e18 > 0) {
+    let ret_23 = await calculateShare(snowglobeContract_23, PGL_VSO_AVAX, stakedPool_AVAX_VSO / 1e18, 1e18, userPool_AVAX_VSO)
+    poolShareDisplay_23 = ret_23[0]
+    poolShareDisplay_23_pgl = ret_23[1]
+    stakeDisplay_23 = ret_23[2]
+    totalPoolPGL_23 = ret_23[3]
+  }
 
   function pool(options) {
     if (options.icequeen_apr) {
@@ -2444,6 +2521,62 @@ async function main() {
     apy: null
   });
 
+  pool({
+    logo_token1 : 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png',
+    pool_nickname: 'pool-22',
+    pool_name: 'PNG-VSO sPGL',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStaked_PNG_VSO,
+    user_pool_percent: userPool_PNG_VSO,
+    staked_pool: stakedPool_PNG_VSO,
+    pending_tokens: pendingSNOBTokensPool_VSO_PNG,
+    display_amount: PNG_VSO_DisplayAmount,
+    approve: 'approvePNG_VSO',
+    stake: 'stakePNG_VSO',
+    unstake: 'withdrawPNG_VSO',
+    claim: 'claimPNG_VSO',
+    icequeen_apr: null,
+    snowglobe_apr: null,
+    tvl_display: null,
+    tvl_class: tvl_class,
+    total_pgl: totalPoolPGL_22,
+    pool_share_display: poolShareDisplay_22,
+    pool_share_display_pgl: poolShareDisplay_22_pgl,
+    stake_display: stakeDisplay_22,
+    apy: null
+  });
+
+  pool({
+    logo_token1 : 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    pool_nickname: 'pool-23',
+    pool_name: 'AVAX-VSO sPGL',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStaked_AVAX_VSO,
+    user_pool_percent: userPool_AVAX_VSO,
+    staked_pool: stakedPool_AVAX_VSO,
+    pending_tokens: pendingSNOBTokensPool_VSO_AVAX,
+    display_amount: AVAX_VSO_DisplayAmount,
+    approve: 'approveAVAX_VSO',
+    stake: 'stakeAVAX_VSO',
+    unstake: 'withdrawAVAX_VSO',
+    claim: 'claimAVAX_VSO',
+    icequeen_apr: null,
+    snowglobe_apr: null,
+    tvl_display: null,
+    tvl_class: tvl_class,
+    total_pgl: totalPoolPGL_23,
+    pool_share_display: poolShareDisplay_23,
+    pool_share_display_pgl: poolShareDisplay_23_pgl,
+    stake_display: stakeDisplay_23,
+    apy: null
+  });
+
   
 
   function updateButtonHandlers() {
@@ -2513,6 +2646,12 @@ async function main() {
           break;
         case 'withdrawPNG_SNOB':
           withdrawPNG_SNOB();
+          break;
+        case 'withdrawPNG_VSO':
+          withdrawPNG_VSO();
+          break;
+        case 'withdrawAVAX_VSO':
+          withdrawAVAX_VSO();
           break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
@@ -2586,6 +2725,12 @@ async function main() {
         case 'claimPNG_SNOB':
           claimPNG_SNOB();
           break;
+        case 'claimPNG_VSO':
+          claimPNG_VSO();
+          break;
+        case 'claimAVAX_VSO':
+          claimAVAX_VSO();
+          break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
       }
@@ -2658,6 +2803,12 @@ async function main() {
         case 'approvePNG_SNOB':
           approvePNG_SNOB();
           break;
+        case 'approvePNG_VSO':
+          approvePNG_VSO();
+          break;
+        case 'approveAVAX_VSO':
+          approveAVAX_VSO();
+          break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
       }
@@ -2729,6 +2880,12 @@ async function main() {
           break;
         case 'stakePNG_SNOB':
           stakePNG_SNOB();
+          break;
+        case 'stakePNG_VSO':
+          stakePNG_VSO();
+          break;
+        case 'stakeAVAX_VSO':
+          stakeAVAX_VSO();
           break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');

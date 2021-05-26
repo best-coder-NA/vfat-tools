@@ -27,7 +27,8 @@ const TOKEN_NAMES = {
     "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651": "LINK",
     "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab": "WBTC",
     "0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18": "DAI",
-    "0xf39f9671906d8630812f9d9863bbef5d523c84ab": "UNI"
+    "0xf39f9671906d8630812f9d9863bbef5d523c84ab": "UNI",
+    "0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a": "VSO"
   }
 
 const walletcopy = () => {
@@ -493,7 +494,7 @@ const genpool = async (pool) => {
   }   
   layoutpool({
     logo_token1: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token0}/logo.png`,
-    logo_token2: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
+    logo_token2: pool.token1 == '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a' ? 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG' : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
     url: `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`,
     pool_name: pool.nickname,
     apr: null,
