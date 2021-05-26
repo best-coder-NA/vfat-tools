@@ -561,7 +561,7 @@ async function main() {
   var claimableSnowballs = pendingGovReward / 1e18 + pendingSNOBTokensPool1 / 1e18 + pendingSNOBTokensPool2 / 1e18 + pendingSNOBTokensPool3 / 1e18 + pendingSNOBTokensPool4 / 1e18 + pendingSNOBTokensPool5 / 1e18 + pendingSNOBTokensPool6 / 1e18 + pendingSNOBTokensPool7 / 1e18 + pendingSNOBTokensPool8 / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_WBTC_AVAX / 1e18 + pendingSNOBTokensPool_DAI_AVAX / 1e18 + pendingSNOBTokensPool_UNI_AVAX / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_LINK_PNG / 1e18 + pendingSNOBTokensPool_USDT_PNG / 1e18 + pendingSNOBTokensPool_SUSHI_PNG / 1e18 + pendingSNOBTokensPool_WBTC_PNG / 1e18 + pendingSNOBTokensPool_ETH_PNG / 1e18;
-  claimableSnowballs += pendingSNOBTokensPool_DAI_PNG / 1e18 + pendingSNOBTokensPool_AAVE_PNG / 1e18 + pendingSNOBTokensPool_UNI_PNG / 1e18 + pendingSNOBTokensPool_YFI_PNG / 1e18 + pendingSNOBTokensPool_PNG_SNOB / 1e18;
+  claimableSnowballs += pendingSNOBTokensPool_DAI_PNG / 1e18 + pendingSNOBTokensPool_AAVE_PNG / 1e18 + pendingSNOBTokensPool_UNI_PNG / 1e18 + pendingSNOBTokensPool_YFI_PNG / 1e18 + pendingSNOBTokensPool_PNG_SNOB / 1e18+ pendingSNOBTokensPool_VSO_AVAX / 1e18 + pendingSNOBTokensPool_VSO_PNG / 1e18;
   const snowballsPerBlock = blockRate
   const secondsInDay = 86400;
   
@@ -960,6 +960,9 @@ async function main() {
         `${userSPGL > 1 ? userSPGL.toFixed(3) : userSPGL.toFixed(8)} sPGL`,
         `${ownedPGL > 1 ? ownedPGL.toFixed(3) : ownedPGL.toFixed(8)} PGL - ${pool_percent.toFixed(6)}%`,
         `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+          <p class="m-0 font-size-12"><ion-icon name="flame-outline"></ion-icon> Your LP value is</p>
+          <p class="m-0 font-size-16 font-weight-regular">${reserve0Owned.toFixed(3)} ${TOKEN_NAMES[token0Address]} / ${reserve1Owned.toFixed(3)} ${TOKEN_NAMES[token1Address]}  </p>
+          <p class="m-0 font-size-12">($${value.toFixed(2)})</p>
         </div>`,
         totalPoolPGL];
     }).catch( err => {
@@ -1085,7 +1088,7 @@ async function main() {
   const snowglobeContract_14 = new ethers.Contract(SPGL_USDT_PNG, SNOWGLOBE_ABI, signer);
   let poolShareDisplay_14, poolShareDisplay_14_pgl, stakeDisplay_14, totalPoolPGL_14;
   if (stakedPool_USDT_PNG / 1e18 > 0) {
-    let ret_14 = await calculateShare(snowglobeContract_14, PGL_USDT_PNG, stakedPool_USDT_PNG / 1e18, 1e18, userPool_USDT_PNG)
+    let ret_14 = await calculateShare(snowglobeContract_14, PGL_USDT_PNG, stakedPool_USDT_PNG / 1e18, 1e6, userPool_USDT_PNG)
     poolShareDisplay_14 = ret_14[0]
     poolShareDisplay_14_pgl = ret_14[1]
     stakeDisplay_14 = ret_14[2]
