@@ -335,7 +335,10 @@ ion-icon {
     }
 
     body {
-        background-image: url(../background_vector.svg), linear-gradient(#171b2b, #363a56) !important;
+        background-image: url(../background_vector.svg) !important;
+        &.dark-mode{
+            background-image: url(../background_vector.svg), linear-gradient(#171b2b, #363a56) !important;
+        }
         background-repeat: no-repeat !important;
         background-attachment: fixed !important;
         background-position: center !important;
