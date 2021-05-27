@@ -114,6 +114,7 @@ body {
     color: #eeeeee;
     .card {
         background-image: linear-gradient(to bottom right, #626d98 , #1d202f) !important;
+        filter: drop-shadow(5px 5px 4px #171a24);
     }
     a {
         color: #33a9ff;
@@ -139,7 +140,17 @@ body {
         background-color: #3d4664 !important;
     }
 }
-
+a {
+    &.bg-primary{
+        background-image: linear-gradient(to bottom right, #50b3fa, #1f4862) !important;
+    }
+}
+.btn-success{
+    background-image: linear-gradient(to bottom right, #39e590, #065f35) !important;
+}
+.btn-primary{
+    background-image: linear-gradient(to bottom right, #50b3fa, #1f4862) !important;
+}
 #snob-icon-modal {
     font-size: 8rem;
 }
@@ -338,6 +349,9 @@ ion-icon {
         background-image: url(../background_vector.svg) !important;
         &.dark-mode{
             background-image: url(../background_vector.svg), linear-gradient(#171b2b, #363a56) !important;
+            nav{
+                background-image: linear-gradient(to bottom, #363d5a , #151721) !important;
+            }
         }
         background-repeat: no-repeat !important;
         background-attachment: fixed !important;
