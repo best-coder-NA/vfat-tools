@@ -951,7 +951,8 @@ async function main() {
       let token0Address = res[4]
       let token1Address = res[5]
       let ownedPGL = userSPGL * (totalPoolPGL / 1e18) / (totalSPGL / 1e18);
-      const r0 = reserves._reserve0 / 1e18
+      // wBTC is 8 decimals
+      const r0 = token0Address == '0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB' ? reserves._reserve0 / 1e8 : reserves._reserve0 / 1e18;
       const r1 = reserves._reserve1 / decimals
       let reserve0Owned = ownedPGL * (r0) / (totalSupplyPGL);
       let reserve1Owned = ownedPGL * (r1) / (totalSupplyPGL);
@@ -960,10 +961,15 @@ async function main() {
       const token0ValueUSDT = reserve0Owned * t0Price;
       const token1ValueUSDT = reserve1Owned * t1Price;
       const value = token0ValueUSDT + (token1ValueUSDT);
-      console.log("token0Address:", token0Address);
-      console.log("token0Name:", TOKEN_NAMES[token0Address]);
-      console.log("token1Address:", token1Address);
-      console.log("token1Name:", TOKEN_NAMES[token1Address]);
+      // console.log("token0Address:", token0Address);
+      // console.log("token0Name:", TOKEN_NAMES[token0Address]);
+      // console.log("token1Address:", token1Address);
+      // console.log("token1Name:", TOKEN_NAMES[token1Address]);
+      // console.log("reserves:", reserves);
+      // console.log("reserve0Owned:", reserve0Owned);
+      // console.log("reserve1Owned:", reserve1Owned);
+      // console.log("t0Price:", t0Price);
+      // console.log("t1Price:", t1Price);
       return [
         `${userSPGL > 1 ? userSPGL.toFixed(3) : userSPGL.toFixed(8)} sPGL`,
         `${ownedPGL > 1 ? ownedPGL.toFixed(3) : ownedPGL.toFixed(8)} PGL - ${pool_percent.toFixed(6)}%`,

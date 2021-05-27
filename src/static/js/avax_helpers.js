@@ -7,12 +7,12 @@ const avaxTokens = [
     { "id": "chainlink","symbol": "LINK", "contract": "0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651" },
     { "id": "tether","symbol": "USDT", "contract": "0xde3A24028580884448a5397872046a019649b084" },
     { "id": "bitcoin","symbol": "BTC", "contract": "0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab" },
-    { "id": "uniswap","symbol": "UNI", "contract": "0xf39f9671906d8630812f9d9863bbef5d523c84ab" },
+    { "id": "uniswap","symbol": "UNI", "contract": "0xf39f9671906d8630812f9d9863bBEf5D523c84Ab" },
     { "id": "aave","symbol": "AAVE", "contract": "0x8ce2dee54bb9921a2ae0a63dbb2df8ed88b91dd9" },
     { "id": "dai","symbol": "DAI", "contract": "0xba7deebbfc5fa1100fb055a87773e1e99cd3507a" },
     { "id": "yearn-finance", "symbol": "YFI", "contract": "0x99519acb025a0e0d44c3875a4bbf03af65933627"},
-    { "id": "verso", "symbol": "VSO", "contract": "0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a"}
-
+    { "id": "verso", "symbol": "VSO", "contract": "0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a"},
+    { "id": "wrapped-bitcoin", "symbol": "WBTC", "contract": "0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB"}
 ]
 
 async function getAvaxPrices() {
