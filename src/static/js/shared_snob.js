@@ -344,6 +344,24 @@ const layoutpool = (options, replace) => {
                     <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
                 </div>
             </div>
+            ${tvl}
+            ${apy}
+            <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
+                <div class="form-inline w-50 mx-auto">
+                    <div class="form-group m-md-0">
+                        <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                        <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                        <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                    </div>
+                </div>
+                <div class="form-inline w-50 mx-auto">
+                    <div class="form-group m-md-0">
+                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-daily"></p>
+                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-weekly"></p>
+                    <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-yearly"></p>
+                    </div>
+                </div>
+            </div>
             ${poolSize}
             <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-0 mx-auto">
                 <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
@@ -364,6 +382,24 @@ const layoutpool = (options, replace) => {
                       <img class="rounded-circle" width="48" src="${options.logo_token1}" alt="${options.pool_name}">
                       <img class="rounded-circle" width="48" src="${options.logo_token2}" alt="${options.pool_name}">
                       <a href="${options.url}" target="_blank"><h6 class="pl-10 m-0">${options.pool_name}</h6></a>
+                  </div>
+              </div>
+              ${tvl}
+              ${apy}
+              <div class="col-sm-12 col-md-12 d-flex align-items-center mx-auto">
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Weekly:</p>
+                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
+                      </div>
+                  </div>
+                  <div class="form-inline w-50 mx-auto">
+                      <div class="form-group m-md-0">
+                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-daily"></p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-weekly"></p>
+                      <p class="m-0 font-size-12 font-weight-semi-bold" id="${options.pool_id}-apr-yearly"></p>
+                      </div>
                   </div>
               </div>
               ${poolSize}
