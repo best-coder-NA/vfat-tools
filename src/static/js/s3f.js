@@ -688,8 +688,9 @@ const loadDepositModal = async function(TUNDRA_CONTRACT, App, S3F_ratio, STABLE_
 
   // recieving
   const minToMint = await TUNDRA_CONTRACT.calculateTokenAmount(App.YOUR_ADDRESS, [s1_amount, s2_amount, s3_amount], true)
-
   $("#receiving_amt").html((minToMint / 1e18).toFixed(6));
+  $("#receiving_ratio").html(((S3F_ratio || 1)).toFixed(6));
+  $("#receiving_usd").html(`$${((S3F_ratio || 1) * minToMint / 1e18).toLocaleString()}`);
 
   // premium & fee
   const totalAmount = Number(s1_input) + Number(s2_input) + Number(s3_input)
