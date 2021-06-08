@@ -24,7 +24,7 @@
     <div class="content-wrapper d-lg-flex">
         <div class="container-lg">
             <div class="col-md-12 pt-20">
-                <h1 id="title" style="font-size: 40px; margin-left: 40px;">Governance <ion-icon name="stats-chart-outline"></ion-icon></h1>
+                <h1 id="title" style="font-size: 40px; margin-left: 40px;">Governance V1 (deprecated) <ion-icon name="stats-chart-outline"></ion-icon></h1>
             </div>
             <div class="row">
                 <div class="card col-xs-12 col-sm-4 col-md-4">
@@ -41,55 +41,55 @@
                         </div>
                     </div>
                     <hr class="my-15"/>
-                    <div class="row">
-                        <div class="font-size-16 font-weight-bold mb-5">Add Voting Power <ion-icon name="add-circle-outline"></ion-icon></div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div>
-                                Available SNOB: <span id="available_snob"></span>
-                            </div>
-                            <div>
-                                <a style="display: none;" href="#" id="snob_revoke">Revoke </a>
-                            </div>
-                            <div class="input-group">
-                                <input id="snob_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">
-                                <div class="input-group-append">
-                                    <button id="snob_max" class="btn" type="button">MAX</button>
-                                </div>
-                            </div>
-                            <div>
-                                Available AVAX-SNOB PGL: <span id="available_pgl"></span>
-                            </div>
-                            <div>
-                                <a style="display: none;" href="#" id="pgl_revoke">Revoke </a>
-                            </div>
-                            <div class="input-group">
-                                <input id="pgl_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">
-                                <div class="input-group-append">
-                                    <button id="pgl_max" class="btn" type="button">MAX</button>
-                                </div>
-                            </div>
-                            <div>
-                                <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="snob_approve">Approve SNOB</button>
-                                <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="pgl_approve">Approve PGL</button>
-                                <button id="deposit_crystal" class="mb-10 font-size-16 btn-block btn btn-primary" type="button">Deposit</button>
-                            </div>
+<!--                    <div class="row">-->
+<!--                        <div class="font-size-16 font-weight-bold mb-5">Add Voting Power <ion-icon name="add-circle-outline"></ion-icon></div>-->
+<!--                        <div class="col-xs-12 col-sm-12 col-md-12">-->
+<!--                            <div>-->
+<!--                                Available SNOB: <span id="available_snob"></span>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <a style="display: none;" href="#" id="snob_revoke">Revoke </a>-->
+<!--                            </div>-->
+<!--                            <div class="input-group">-->
+<!--                                <input id="snob_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">-->
+<!--                                <div class="input-group-append">-->
+<!--                                    <button id="snob_max" class="btn" type="button">MAX</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                Available AVAX-SNOB PGL: <span id="available_pgl"></span>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <a style="display: none;" href="#" id="pgl_revoke">Revoke </a>-->
+<!--                            </div>-->
+<!--                            <div class="input-group">-->
+<!--                                <input id="pgl_input" type="number" value="0" min="0" class="mb-10 form-control" placeholder="Enter amount">-->
+<!--                                <div class="input-group-append">-->
+<!--                                    <button id="pgl_max" class="btn" type="button">MAX</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="snob_approve">Approve SNOB</button>-->
+<!--                                <button class="mb-10 font-size-16 btn-block btn btn-success" style="display: none;" href="#" id="pgl_approve">Approve PGL</button>-->
+<!--                                <button id="deposit_crystal" class="mb-10 font-size-16 btn-block btn btn-primary" type="button">Deposit</button>-->
+<!--                            </div>-->
 
-                        </div>
-                    </div>
-                    <div class="row mt-10">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="font-size-16 font-weight-bold mb-5">Staked Funds</div>
-                            <div>
-                                Staked PGL in the AVAX-SNOB Pool: <span id="staked_pgl"></span>
-                            </div>
-                            <div>
-                                <button id="unstake_pgl" class="my-10 font-size-16 btn-block btn btn-primary" type="button">Unstake</button>
-                            </div>
-                            <div class="font-italic">
-                                Unstake from the AVAX-SNOB Pool and deposit into Governance to add voting power and continue to earn SNOB rewards.
-                            </div>
-                        </div>
-                    </div>
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row mt-10">-->
+<!--                        <div class="col-xs-12 col-sm-12 col-md-12">-->
+<!--                            <div class="font-size-16 font-weight-bold mb-5">Staked Funds</div>-->
+<!--                            <div>-->
+<!--                                Staked PGL in the AVAX-SNOB Pool: <span id="staked_pgl"></span>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <button id="unstake_pgl" class="my-10 font-size-16 btn-block btn btn-primary" type="button">Unstake</button>-->
+<!--                            </div>-->
+<!--                            <div class="font-italic">-->
+<!--                                Unstake from the AVAX-SNOB Pool and deposit into Governance to add voting power and continue to earn SNOB rewards.-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="card col-xs-10 col-sm-6 col-md-6">
                     <h2 class="content-title">

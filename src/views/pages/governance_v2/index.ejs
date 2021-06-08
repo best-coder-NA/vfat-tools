@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+  if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+    document.body.classList.add('dark-mode');
+  }
+
+</script>
+<body>
+    <div class="page-wrapper with-navbar with-transitions">
+<%- include(`${partials}/header_main`); -%>
+
+<%- include(`${partials}/wallet_error`); -%>
+
+
+
+    <div class="loader--1">
+        <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                <div></div><div></div>
+            </div></div>
+    </div>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <div class="col-md-12 pt-20">
+                <h1 id="title" style="font-size: 40px; margin-left: 40px;">Governance V2 xSNOB <ion-icon name="stats-chart-outline"></ion-icon></h1>
+            </div>
+            <div class="row">
+                <div class="card col-xs-12 col-sm-4 col-md-4">
+                    <div class="row">
+                        <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
+                            <div class="font-size-20 font-weight-bold mb-5">Voting Power <ion-icon name="paper-plane-outline"></ion-icon></div>
+                            <div class="font-size-18 mb-10"><span id="my_votes"></span> xSNOB</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card col-xs-10 col-sm-6 col-md-6">
+                    <h2 class="content-title">
+                        Proposals <ion-icon name="archive-outline"></ion-icon>
+                    </h2>
+                    <div class="mb-20">Read about proposal details in the <a href="https://discord.com/invite/BGpEHvehMz" target="_blank">Snowball Discord</a></div>
+                    <div class="row" id="proposal_list">
+                    </div>
+                </div>
+            </div>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+
+    <div>
+        <h1 class="error"></h1>
+
+
+
+        <%- include(`${partials}/scripts`, {scriptname: 'governance_v2'}); -%>
+
+    </div>
+    </div>
+</div>
+</body>
+</html>
