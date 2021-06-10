@@ -15,7 +15,7 @@ async function main() {
   // const XSNOB_ADDRESS = "0x9a37dc4f28c38813a6d31391721376066fbb401d";
 
   // MAINNET
-  const GOVERNANCE_ADDRESS = "0xC155b1A2e0E06F37A4f52E1B4770CDC682bc45E8";
+  const GOVERNANCE_ADDRESS = "0xFdd994AD468cd39a4a3a3C3A0c460BB2213159B6";
   const XSNOB_ADDRESS = "0x83952E7ab4aca74ca96217D6F8f7591BEaD6D64E";
 
   // balances
@@ -32,6 +32,8 @@ async function main() {
   //       Executed,
   //       Vetoed
   //   }
+
+  
   const GOVERNANCE_CONTRACT = new ethers.Contract(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, signer);
   const proposal_count = await GOVERNANCE_CONTRACT.proposalCount();
   const quorumVotes = await GOVERNANCE_CONTRACT.quorumVotes();
