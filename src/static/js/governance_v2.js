@@ -83,7 +83,6 @@ async function main() {
     proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
     if (state == 0 && userVoted == false) {
       proposal_html += `<div class="ml-20 mb-10 font-weight-bold">Voting power: ${(currentXSNOB / 1e18).toFixed(2).toLocaleString()}</span></div>`;
-      proposal_html += `<div class="ml-20 mb-10"><ion-icon name="lock-closed-outline"></ion-icon> Voting will lock your deposit for ${duration} hours</span></div>`;
       proposal_html += `<button id="proposal_${i}_for" class="ml-20 btn btn-success" type="button">Vote for <ion-icon name="thumbs-up-outline"></ion-icon></button>`;
       proposal_html += `<button id="proposal_${i}_against" class="btn btn-secondary float-right" type="button">Vote against <ion-icon name="thumbs-down-outline"></ion-icon></button>`;
     } else {
