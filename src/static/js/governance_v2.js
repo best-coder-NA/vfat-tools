@@ -36,9 +36,14 @@ async function main() {
   const quorumVotes = await GOVERNANCE_CONTRACT.quorumVotes();
   const XSNOB = new ethers.Contract(XSNOB_ADDRESS, XSNOB_ABI, signer);
   for (let i = proposal_count * 1; i > 0; i--) {
-    // balances
     const proposal = await GOVERNANCE_CONTRACT.proposals(i)
-    const currentXSNOB = await XSNOB['balanceOf(address,uint256)'](App.YOUR_ADDRESS, proposal.startTime, { gasLimit: 1000000 });
+    let currentXSNOB = 0;
+    try {
+      // sometimes this fails if the user recently extended their lock
+      currentXSNOB = await XSNOB['balanceOf(address,uint256)'](App.YOUR_ADDRESS, proposal.startTime, { gasLimit: 1000000 });
+    } catch (e) {
+      console.log('error getting xSNOB', e);
+    }
     const duration = (proposal.votingPeriod / 60 / 60).toFixed(2);
     const startDate = new Date(proposal.startTime * 1000).toLocaleString();
     const endDate = new Date((proposal.startTime * 1 + proposal.votingPeriod * 1) * 1000).toLocaleString()
@@ -81,18 +86,19 @@ async function main() {
     proposal_html += `<div class="font-size-16"><span class="text-success">For: ${(proposal.forVotes / 1e18).toFixed(2)}</span><span class="float-right text-secondary">Against: ${(proposal.againstVotes / 1e18).toFixed(2)}</span></div>`
     proposal_html += `</summary>`;
     proposal_html += `<div id="proposal_${i}_content" class="collapse-content">`;
-    if (state == 0 && userVoted == false) {
+    if (state == 0) {
       proposal_html += `<div class="ml-20 mb-10 font-weight-bold">Voting power: ${(currentXSNOB / 1e18).toFixed(2).toLocaleString()}</span></div>`;
       proposal_html += `<button id="proposal_${i}_for" class="ml-20 btn btn-success" type="button">Vote for <ion-icon name="thumbs-up-outline"></ion-icon></button>`;
       proposal_html += `<button id="proposal_${i}_against" class="btn btn-secondary float-right" type="button">Vote against <ion-icon name="thumbs-down-outline"></ion-icon></button>`;
-    } else {
+    }
+    if (userVoted == true) {
       proposal_html += `<div class="ml-20"><span>Your vote history: ${userVoted == 0 ? 'Did not vote' : userVoteDisplay} </span></div>`;
     }
     proposal_html += `<div class="ml-20 mt-10"><span>Duration: ${duration} hours </span></div>`
     proposal_html += `<div class="ml-20"><span>Start: ${startDate} </span></div>`
     proposal_html += `<div class="ml-20"><span>End: ${endDate}</span></div>`
     if (state == 0) {
-      proposal_html += `<div class="ml-20"><span>Votes needed for Quorum: ${quorumVotes / 1e18}</span></div>`
+      proposal_html += `<div class="ml-20"><span>Votes needed for Quorum: ${(quorumVotes / 1e18).toLocaleString()}</span></div>`
     }
     proposal_html += `<div class="ml-20">Proposer: ${proposal.proposer}</div>`
     proposal_html += `</div>`;
