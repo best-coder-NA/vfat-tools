@@ -108,7 +108,7 @@ const thispagespools = [
   {
     pool_id: 'png-spore',
     snowglobe: '0xa39785a4E4CdDa7509751ed152a00f3D37FbFa9F',
-    nickname: 'PNG-SNOB Pangolin LP',
+    nickname: 'PNG-SPORE Pangolin LP',
     token0: '0x60781C2586D68229fde47564546784ab3fACA982',
     token1: '0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985',
     pair: '0xad24a72ffe0466399e6f69b9332022a71408f10b',
