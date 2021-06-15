@@ -95,6 +95,15 @@ $(function () {
       token1: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
       pair: '0xa1c2c3b6b120cbd4cec7d2371ffd4a931a134a32',
       stake: '0x640D754113A3CBDd80BcCc1b5c0387148EEbf2fE'
+    },
+    {
+      pool_id: 'avax-spore',
+      snowglobe: '0x27f8FE86a513bAAF18B59D3dD15218Cc629640Fc',
+      nickname: 'AVAX-SPORE Pangolin LP',
+      token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+      token1: '0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985',
+      pair: '0x0a63179a8838b5729e79d239940d7e29e40a0116',
+      stake: '0xd3e5538A049FcFcb8dF559B85B352302fEfB8d7C'
     }
   ]
   

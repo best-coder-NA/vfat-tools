@@ -104,6 +104,15 @@ const thispagespools = [
     token1: '0xC38f41A296A4493Ff429F1238e030924A1542e50',
     pair: '0x97b4957df08e185502a0ac624f332c7f8967ee8d',
     stake: '0x08B9A023e34Bad6Db868B699fa642Bf5f12Ebe76'
+  },
+  {
+    pool_id: 'png-spore',
+    snowglobe: '0xa39785a4E4CdDa7509751ed152a00f3D37FbFa9F',
+    nickname: 'PNG-SNOB Pangolin LP',
+    token0: '0x60781C2586D68229fde47564546784ab3fACA982',
+    token1: '0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985',
+    pair: '0xad24a72ffe0466399e6f69b9332022a71408f10b',
+    stake: '0x12A33F6B0dd0D35279D402aB61587fE7eB23f7b0'
   }
 ]
 

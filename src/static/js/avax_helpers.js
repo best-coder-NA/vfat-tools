@@ -12,7 +12,8 @@ const avaxTokens = [
     { "id": "dai","symbol": "DAI", "contract": "0xba7deebbfc5fa1100fb055a87773e1e99cd3507a" },
     { "id": "yearn-finance", "symbol": "YFI", "contract": "0x99519acb025a0e0d44c3875a4bbf03af65933627"},
     { "id": "verso", "symbol": "VSO", "contract": "0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a"},
-    { "id": "wrapped-bitcoin", "symbol": "WBTC", "contract": "0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB"}
+    { "id": "wrapped-bitcoin", "symbol": "WBTC", "contract": "0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB"},
+    { "id": "spore", "symbol": "SPORE", "contract": "0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985"}
 ]
 
 async function getAvaxPrices() {
