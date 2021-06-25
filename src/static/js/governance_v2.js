@@ -16,10 +16,15 @@ async function main() {
 
   // MAINNET
   const GOVERNANCE_ADDRESS = "0xFdd994AD468cd39a4a3a3C3A0c460BB2213159B6";
+  const GOVERNANCE_V2_ADDRESS = "0xfdCcf6D49A29f435E509DFFAAFDecB0ADD93f8C0";
   const XSNOB_ADDRESS = "0x83952E7ab4aca74ca96217D6F8f7591BEaD6D64E";
 
   $("#wallet_address").html(App.YOUR_ADDRESS);
 
+
+  const XSNOB = new ethers.Contract(XSNOB_ADDRESS, XSNOB_ABI, signer);
+  const currentXSNOB = await XSNOB['balanceOf(address)'](App.YOUR_ADDRESS, { gasLimit: 1000000 });
+  $("#voting_power").html((currentXSNOB / 1e18).toLocaleString());
   /// @notice Possible states that a proposal may be in
   // enum ProposalState {
   //     Active,
@@ -30,20 +35,18 @@ async function main() {
   //       Vetoed
   //   }
 
-  
+  print_proposals(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 0);
+  print_proposals(GOVERNANCE_V2_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 2);
+
+  hideLoading();
+}
+
+const print_proposals = async function (GOVERNANCE_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, offset) {
   const GOVERNANCE_CONTRACT = new ethers.Contract(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, signer);
   const proposal_count = await GOVERNANCE_CONTRACT.proposalCount();
   const quorumVotes = await GOVERNANCE_CONTRACT.quorumVotes();
-  const XSNOB = new ethers.Contract(XSNOB_ADDRESS, XSNOB_ABI, signer);
   for (let i = proposal_count * 1; i > 0; i--) {
     const proposal = await GOVERNANCE_CONTRACT.proposals(i)
-    let currentXSNOB = 0;
-    try {
-      // sometimes this fails if the user recently extended their lock
-      currentXSNOB = await XSNOB['balanceOf(address,uint256)'](App.YOUR_ADDRESS, proposal.startTime, { gasLimit: 1000000 });
-    } catch (e) {
-      console.log('error getting xSNOB', e);
-    }
     const duration = (proposal.votingPeriod / 60 / 60).toFixed(2);
     const startDate = new Date(proposal.startTime * 1000).toLocaleString();
     const endDate = new Date((proposal.startTime * 1 + proposal.votingPeriod * 1) * 1000).toLocaleString()
@@ -81,7 +84,7 @@ async function main() {
     console.log(proposal)
     let proposal_html = `<details class="mb-20 collapse-panel w-500 mw-full">`;
     proposal_html += `<summary class="collapse-header">`;
-    proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${i}:</span> ${safeTitle}</div>`
+    proposal_html += `<div class="font-size-16"><span class="font-weight-bold">Proposal # ${i + offset}:</span> ${safeTitle}</div>`
     proposal_html += `<div><span>Status: ${stateDisplay}</span></div>`
     proposal_html += `<div class="font-size-16"><span class="text-success">For: ${(proposal.forVotes / 1e18).toFixed(2)}</span><span class="float-right text-secondary">Against: ${(proposal.againstVotes / 1e18).toFixed(2)}</span></div>`
     proposal_html += `</summary>`;
@@ -114,8 +117,6 @@ async function main() {
       governanceContract_voteAgainst(GOVERNANCE_ABI, GOVERNANCE_ADDRESS, i, App, currentXSNOB)
     });
   }
-
-  hideLoading();
 }
 
 const governanceContract_voteFor = async function (chefAbi, chefAddress, proposal_id, App, xSNOB) {
