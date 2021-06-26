@@ -1304,7 +1304,7 @@ async function main() {
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <a href="/compound" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get sPGL from Snowglobes</a>
-                    <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+                    <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1340,7 +1340,7 @@ async function main() {
                 ${stakeBtn}
                 ${unstakeBtn}
                 ${claimBtn}
-                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1490,7 +1490,7 @@ async function main() {
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <a href="/stablevault" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get S3D from StableVault</a>
-                    <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+                    <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1547,7 +1547,7 @@ async function main() {
               ${stakeBtn}
               ${unstakeBtn}
               ${claimBtn}
-              <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+              <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
               </div>
 
               <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1747,7 +1747,7 @@ async function main() {
                 ${stakeBtn}
                 ${unstakeBtn}
                 ${claimBtn}
-                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
                 </div>
   
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1888,7 +1888,7 @@ async function main() {
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                     <a target="_blank" href="${options.url}" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get PGL from Pangolin</a>
-                    <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+                    <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
@@ -1925,7 +1925,7 @@ async function main() {
                 ${stakeBtn}
                 ${unstakeBtn}
                 ${claimBtn}
-                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
                 </div>
 
                 <div onclick="toggleDetails('${options.pool_nickname}');" class="col-sm-12 col-md-1 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
