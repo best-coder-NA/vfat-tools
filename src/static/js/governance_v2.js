@@ -35,8 +35,8 @@ async function main() {
   //       Vetoed
   //   }
 
-  print_proposals(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 0);
-  print_proposals(GOVERNANCE_V2_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 2);
+  print_proposals(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 5);
+  print_proposals(GOVERNANCE_V2_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 7);
 
   hideLoading();
 }
