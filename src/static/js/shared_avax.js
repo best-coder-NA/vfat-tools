@@ -364,7 +364,7 @@ const layoutpool = (options, replace) => {
             </div>
             ${poolSize}
             <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-10 mb-0 mx-auto">
-                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="calculator"></ion-icon> Check APRs and TVL on Markr.io</a>
+                <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
             </div>
             <div class="col-sm-12 col-md-12 align-items-center text-center snob-tvl mt-5 mb-10 mx-auto">
                 <a href="${options.url}" target="_blank" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get LP tokens</a>
