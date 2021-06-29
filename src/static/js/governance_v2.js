@@ -35,9 +35,10 @@ async function main() {
   //       Vetoed
   //   }
   print_proposals(GOVERNANCE_V2_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 7)
-  .then(
-    print_proposals(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 5)
-  );
+  .then( () => {
+    console.log("original proposals");
+    print_proposals(GOVERNANCE_ADDRESS, GOVERNANCE_ABI, currentXSNOB, App, signer, 5);
+  });
 
   hideLoading();
 }
