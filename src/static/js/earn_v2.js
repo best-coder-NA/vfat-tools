@@ -2217,7 +2217,7 @@ async function main() {
     approve: 'approveDAI_AVAX',
     stake: 'stakeDAI_AVAX',
     unstake: 'withdrawDAI_AVAX',
-    claim: 'claimDaiAvax',
+    claim: 'claimDAI_AVAX',
     icequeen_apr: null,
     snowglobe_apr: null,
     tvl_display: null,
