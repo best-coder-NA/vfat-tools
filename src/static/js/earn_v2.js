@@ -66,6 +66,8 @@ async function main() {
   const PNG_SNOB_GAUGE = "0xf2b70c7d26b841566ef14027f91c8771d615d54a";
   const VSO_AVAX_GAUGE = "0x4d16ecff6dfa8f344ba182f09422b86b4d796ab4";
   const VSO_PNG_GAUGE = "0xea4a0a6b5cc61b8edb228a5582308d0ad82b85cc";
+  const SPORE_AVAX_GAUGE = "0x85852980d24f69714701C50371811d31410144c3";
+  const SPORE_PNG_GAUGE = "0xfe570d95BAddFAb258c09B2F008B7786a2Da3b3f";
   
   //PGL address
   const SUSHI_AVAX_ADDR = "0xd8B262C0676E13100B33590F10564b46eeF652AD";
@@ -89,6 +91,8 @@ async function main() {
   const PGL_PNG_SNOB = "0x97b4957df08e185502a0ac624f332c7f8967ee8d";
   const PGL_VSO_AVAX = "0x2b532bc0afae65da57eccfb14ff46d16a12de5e6";
   const PGL_VSO_PNG = "0x9d472e21f6589380b21c42674b3585c47b74c891";
+  const PGL_SPORE_AVAX = "0x0a63179a8838b5729E79D239940d7e29e40A0116";
+  const PGL_SPORE_PNG = "0xad24a72ffE0466399e6F69b9332022a71408f10b";
   
   //tokens
   const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
@@ -115,6 +119,8 @@ async function main() {
   const SPGL_PNG_SNOB = "0xB4db531076494432eaAA4C6fCD59fcc876af2734";
   const SPGL_VSO_AVAX = "0x888Ab4CB2279bDB1A81c49451581d7c243AffbEf";
   const SPGL_VSO_PNG = "0x8309C64390F376fD778BDd701d54d1F8DFfe1F39";
+  const SPGL_SPORE_AVAX = "0x27f8FE86a513bAAF18B59D3dD15218Cc629640Fc";
+  const SPGL_SPORE_PNG = "0xa39785a4E4CdDa7509751ed152a00f3D37FbFa9F";
   
   const TOKEN_NAMES = {
     "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7": "AVAX",
@@ -127,7 +133,8 @@ async function main() {
     "0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB": "WBTC",
     "0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18": "DAI",
     "0x846D50248BAf8b7ceAA9d9B53BFd12d7D7FBB25a": "VSO",
-    "0xf39f9671906d8630812f9d9863bBEf5D523c84Ab": "UNI"
+    "0xf39f9671906d8630812f9d9863bBEf5D523c84Ab": "UNI",
+    "0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985": "SPORE"
   }
   //LP URLs
   const SNOB_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xC38f41A296A4493Ff429F1238e030924A1542e50";
@@ -233,6 +240,12 @@ async function main() {
   const stakeAVAX_VSO = async function() {
     return gaugeContractStake(VSO_AVAX_GAUGE, GAUGE_ABI, SPGL_VSO_AVAX, SNOWGLOBE_ABI, App);
   }
+  const stakePNG_SPORE = async function() {
+    return gaugeContractStake(SPORE_PNG_GAUGE, GAUGE_ABI, SPGL_SPORE_PNG, SNOWGLOBE_ABI, App);
+  }
+  const stakeAVAX_SPORE = async function() {
+    return gaugeContractStake(SPORE_AVAX_GAUGE, GAUGE_ABI, SPGL_SPORE_AVAX, SNOWGLOBE_ABI, App);
+  }
 
   /* approve */
   const approveWBTC_AVAX = async function() {
@@ -279,6 +292,12 @@ async function main() {
   }
   const approveAVAX_VSO= async function() {
     return approveGauge(SPGL_VSO_AVAX, VSO_AVAX_GAUGE, App);
+  }
+  const approvePNG_SPORE = async function() {
+    return approveGauge(SPGL_SPORE_PNG, SPORE_PNG_GAUGE, App);
+  }
+  const approveAVAX_SPORE = async function() {
+    return approveGauge(SPGL_SPORE_AVAX, SPORE_AVAX_GAUGE, App);
   }
 
   /* claim reward functions */
@@ -352,6 +371,12 @@ async function main() {
   const claimAVAX_VSO= async function() {
     return gaugeClaim(VSO_AVAX_GAUGE, GAUGE_ABI, App);
   }
+  const claimPNG_SPORE = async function() {
+    return gaugeClaim(SPORE_PNG_GAUGE, GAUGE_ABI, App);
+  }
+  const claimAVAX_SPORE= async function() {
+    return gaugeClaim(SPORE_AVAX_GAUGE, GAUGE_ABI, App);
+  }
 
 
   const withdrawPool1 = async function () {
@@ -424,6 +449,12 @@ async function main() {
   const withdrawAVAX_VSO= async function() {
     return gaugeContractWithdraw(VSO_AVAX_GAUGE, GAUGE_ABI, App);
   }
+  const withdrawPNG_SPORE = async function() {
+    return gaugeContractWithdraw(SPORE_PNG_GAUGE, GAUGE_ABI, App);
+  }
+  const withdrawAVAX_SPORE= async function() {
+    return gaugeContractWithdraw(SPORE_AVAX_GAUGE, GAUGE_ABI, App);
+  }
 
 
   const signer = App.provider.getSigner();
@@ -453,6 +484,9 @@ async function main() {
   const SPGL_PNG_SNOB_TOKEN = new ethers.Contract(SPGL_PNG_SNOB, ERC20_ABI, signer);
   const SPGL_VSO_PNG_TOKEN = new ethers.Contract(SPGL_VSO_PNG, ERC20_ABI, signer);
   const SPGL_VSO_AVAX_TOKEN = new ethers.Contract(SPGL_VSO_AVAX, ERC20_ABI, signer);
+  const SPGL_SPORE_PNG_TOKEN = new ethers.Contract(SPGL_SPORE_PNG, ERC20_ABI, signer);
+  const SPGL_SPORE_AVAX_TOKEN = new ethers.Contract(SPGL_SPORE_AVAX, ERC20_ABI, signer);
+  
 
   //Contracts
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
@@ -482,6 +516,8 @@ async function main() {
   const PNG_SNOB_GAUGE_CONTRACT = new ethers.Contract(PNG_SNOB_GAUGE, GAUGE_ABI, signer);
   const VSO_AVAX_GAUGE_CONTRACT = new ethers.Contract(VSO_AVAX_GAUGE, GAUGE_ABI, signer);
   const VSO_PNG_GAUGE_CONTRACT = new ethers.Contract(VSO_PNG_GAUGE, GAUGE_ABI, signer);
+  const SPORE_AVAX_GAUGE_CONTRACT = new ethers.Contract(SPORE_AVAX_GAUGE, GAUGE_ABI, signer);
+  const SPORE_PNG_GAUGE_CONTRACT = new ethers.Contract(SPORE_PNG_GAUGE, GAUGE_ABI, signer);
 
   let snobTotalSupply, pendingSNOBTokensPool1, pendingSNOBTokensPool2, pendingSNOBTokensPool3, pendingSNOBTokensPool4, pendingSNOBTokensPool5, pendingSNOBTokensPool6, pendingSNOBTokensPool7, pendingSNOBTokensPool8;
   let currentSNOBTokens, snowballMultiplier, blockRate, blockNumber, currentBlock, yesterdayBlock;
@@ -515,6 +551,8 @@ async function main() {
     ETH_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     VSO_AVAX_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     VSO_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    SPORE_AVAX_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    SPORE_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
   ]).then(res => {
     snobTotalSupply = res[0]
     pendingSNOBTokensPool1 = res[1]
@@ -544,6 +582,8 @@ async function main() {
     pendingSNOBTokensPool_ETH_PNG = res[25];
     pendingSNOBTokensPool_VSO_AVAX = res[26];
     pendingSNOBTokensPool_VSO_PNG = res[27];
+    pendingSNOBTokensPool_SPORE_AVAX = res[28];
+    pendingSNOBTokensPool_SPORE_PNG = res[29];
   });
 
   await Promise.all([
@@ -566,6 +606,7 @@ async function main() {
   claimableSnowballs += pendingSNOBTokensPool_WBTC_AVAX / 1e18 + pendingSNOBTokensPool_DAI_AVAX / 1e18 + pendingSNOBTokensPool_UNI_AVAX / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_LINK_PNG / 1e18 + pendingSNOBTokensPool_USDT_PNG / 1e18 + pendingSNOBTokensPool_SUSHI_PNG / 1e18 + pendingSNOBTokensPool_WBTC_PNG / 1e18 + pendingSNOBTokensPool_ETH_PNG / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_DAI_PNG / 1e18 + pendingSNOBTokensPool_AAVE_PNG / 1e18 + pendingSNOBTokensPool_UNI_PNG / 1e18 + pendingSNOBTokensPool_YFI_PNG / 1e18 + pendingSNOBTokensPool_PNG_SNOB / 1e18+ pendingSNOBTokensPool_VSO_AVAX / 1e18 + pendingSNOBTokensPool_VSO_PNG / 1e18;
+  claimableSnowballs += pendingSNOBTokensPool_SPORE_AVAX / 1e18 + pendingSNOBTokensPool_SPORE_PNG / 1e18;
   const snowballsPerBlock = blockRate
   const secondsInDay = 86400;
   
@@ -636,6 +677,14 @@ async function main() {
   let currentSPGL_AVAX_VSO;
   let stakedPool_AVAX_VSO;
   let totalStaked_AVAX_VSO;
+
+  let currentSPGL_PNG_SPORE;
+  let stakedPool_PNG_SPORE;
+  let totalStaked_PNG_SPORE;
+
+  let currentSPGL_AVAX_SPORE;
+  let stakedPool_AVAX_SPORE;
+  let totalStaked_AVAX_SPORE;
 
   await Promise.all([
     SPGL_SUSHI_TOKEN.balanceOf(App.YOUR_ADDRESS),
@@ -708,7 +757,13 @@ async function main() {
     VSO_PNG_GAUGE_CONTRACT.totalSupply(),
     SPGL_VSO_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
     VSO_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
-    VSO_AVAX_GAUGE_CONTRACT.totalSupply()
+    VSO_AVAX_GAUGE_CONTRACT.totalSupply(),
+    SPGL_SPORE_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS),
+    SPORE_PNG_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    SPORE_PNG_GAUGE_CONTRACT.totalSupply(),
+    SPGL_SPORE_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
+    SPORE_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    SPORE_AVAX_GAUGE_CONTRACT.totalSupply()
   ]).then(res => {
     currentSPGLSUSHITokens = res[0]
     currentSPGLPNGTokens = res[1]
@@ -780,6 +835,12 @@ async function main() {
     currentSPGL_AVAX_VSO= res[66];
     stakedPool_AVAX_VSO = res[67];
     totalStaked_AVAX_VSO = res[68];
+    currentSPGL_PNG_SPORE= res[69];
+    stakedPool_PNG_SPORE = res[70];
+    totalStaked_PNG_SPORE = res[71];
+    currentSPGL_AVAX_SPORE= res[72];
+    stakedPool_AVAX_SPORE = res[73];
+    totalStaked_AVAX_SPORE = res[74];
   });
 
   //Balances
@@ -806,6 +867,9 @@ async function main() {
   const ETH_PNG_DisplayAmount = currentSPGL_ETH_PNG > 1000 ? currentSPGL_ETH_PNG / 1e18 : 0;
   const PNG_VSO_DisplayAmount = currentSPGL_PNG_VSO > 1000 ? currentSPGL_PNG_VSO / 1e18 : 0;
   const AVAX_VSO_DisplayAmount = currentSPGL_AVAX_VSO > 1000 ? currentSPGL_AVAX_VSO / 1e18 : 0;
+  const PNG_SPORE_DisplayAmount = currentSPGL_PNG_SPORE > 1000 ? currentSPGL_PNG_SPORE / 1e18 : 0;
+  const AVAX_SPORE_DisplayAmount = currentSPGL_AVAX_SPORE > 1000 ? currentSPGL_AVAX_SPORE / 1e18 : 0;
+
 
   const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100
   const userPool7Percent = (stakedPool7 / 1e18) / (totalStakedS3D / 1e18) * 100
@@ -831,6 +895,8 @@ async function main() {
   const userPool_ETH_PNG = (stakedPool_ETH_PNG / 1e18) / (totalStaked_ETH_PNG / 1e18) * 100;
   const userPool_PNG_VSO = (stakedPool_PNG_VSO / 1e18) / (totalStaked_PNG_VSO / 1e18) * 100;
   const userPool_AVAX_VSO = (stakedPool_AVAX_VSO / 1e18) / (totalStaked_AVAX_VSO / 1e18) * 100;
+  const userPool_PNG_SPORE = (stakedPool_PNG_SPORE / 1e18) / (totalStaked_PNG_SPORE / 1e18) * 100;
+  const userPool_AVAX_SPORE = (stakedPool_AVAX_SPORE / 1e18) / (totalStaked_AVAX_SPORE / 1e18) * 100;
 
   const poolShareDisplay_7 = `${(stakedPool7 / 1e18).toFixed(6)} S3D`;
   const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
@@ -1197,6 +1263,26 @@ async function main() {
     poolShareDisplay_23_pgl = ret_23[1]
     stakeDisplay_23 = ret_23[2]
     totalPoolPGL_23 = ret_23[3]
+  }
+
+  const snowglobeContract_24 = new ethers.Contract(SPGL_SPORE_PNG, SNOWGLOBE_ABI, signer);
+  let poolShareDisplay_24, poolShareDisplay_24_pgl, stakeDisplay_24, totalPoolPGL_24;
+  if (stakedPool_PNG_SPORE / 1e18 > 0) {
+    let ret_24 = await calculateShare(snowglobeContract_24, PGL_SPORE_PNG, stakedPool_PNG_SPORE / 1e18, 1e18, userPool_PNG_SPORE)
+    poolShareDisplay_24 = ret_24[0]
+    poolShareDisplay_24_pgl = ret_24[1]
+    stakeDisplay_24 = ret_24[2]
+    totalPoolPGL_24 = ret_24[3]
+  }
+
+  const snowglobeContract_25 = new ethers.Contract(SPGL_SPORE_AVAX, SNOWGLOBE_ABI, signer);
+  let poolShareDisplay_25, poolShareDisplay_25_pgl, stakeDisplay_25, totalPoolPGL_25;
+  if (stakedPool_AVAX_SPORE / 1e18 > 0) {
+    let ret_25 = await calculateShare(snowglobeContract_25, PGL_SPORE_AVAX, stakedPool_AVAX_SPORE / 1e18, 1e18, userPool_AVAX_SPORE)
+    poolShareDisplay_25 = ret_25[0]
+    poolShareDisplay_25_pgl = ret_25[1]
+    stakeDisplay_25 = ret_25[2]
+    totalPoolPGL_25 = ret_25[3]
   }
 
   function pool(options) {
@@ -2593,6 +2679,62 @@ async function main() {
     stake_display: stakeDisplay_23,
     apy: null
   });
+ // 
+  pool({
+    logo_token1 : 'https://assets.coingecko.com/coins/images/14470/small/SPORE.png',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png',
+    pool_nickname: 'pool-24',
+    pool_name: 'PNG-SPORE sPGL',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStaked_PNG_SPORE,
+    user_pool_percent: userPool_PNG_SPORE,
+    staked_pool: stakedPool_PNG_SPORE,
+    pending_tokens: pendingSNOBTokensPool_SPORE_PNG,
+    display_amount: PNG_SPORE_DisplayAmount,
+    approve: 'approvePNG_SPORE',
+    stake: 'stakePNG_SPORE',
+    unstake: 'withdrawPNG_SPORE',
+    claim: 'claimPNG_SPORE',
+    icequeen_apr: null,
+    snowglobe_apr: null,
+    tvl_display: null,
+    tvl_class: tvl_class,
+    total_pgl: totalPoolPGL_24,
+    pool_share_display: poolShareDisplay_24,
+    pool_share_display_pgl: poolShareDisplay_24_pgl,
+    stake_display: stakeDisplay_24,
+    apy: null
+  });
+
+  pool({
+    logo_token1 : 'https://assets.coingecko.com/coins/images/14470/small/SPORE.png',
+    logo_token2 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    pool_nickname: 'pool-25',
+    pool_name: 'AVAX-SPORE sPGL',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStaked_AVAX_SPORE,
+    user_pool_percent: userPool_AVAX_SPORE,
+    staked_pool: stakedPool_AVAX_SPORE,
+    pending_tokens: pendingSNOBTokensPool_SPORE_AVAX,
+    display_amount: AVAX_SPORE_DisplayAmount,
+    approve: 'approveAVAX_SPORE',
+    stake: 'stakeAVAX_SPORE',
+    unstake: 'withdrawAVAX_SPORE',
+    claim: 'claimAVAX_SPORE',
+    icequeen_apr: null,
+    snowglobe_apr: null,
+    tvl_display: null,
+    tvl_class: tvl_class,
+    total_pgl: totalPoolPGL_25,
+    pool_share_display: poolShareDisplay_25,
+    pool_share_display_pgl: poolShareDisplay_25_pgl,
+    stake_display: stakeDisplay_25,
+    apy: null
+  });
 
   
 
@@ -2669,6 +2811,12 @@ async function main() {
           break;
         case 'withdrawAVAX_VSO':
           withdrawAVAX_VSO();
+          break;
+        case 'withdrawPNG_SPORE':
+          withdrawPNG_SPORE();
+          break;
+        case 'withdrawAVAX_SPORE':
+          withdrawAVAX_SPORE();
           break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
@@ -2748,6 +2896,12 @@ async function main() {
         case 'claimAVAX_VSO':
           claimAVAX_VSO();
           break;
+        case 'claimPNG_SPORE':
+          claimPNG_SPORE();
+          break;
+        case 'claimAVAX_SPORE':
+          claimAVAX_SPORE();
+          break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
       }
@@ -2826,6 +2980,12 @@ async function main() {
         case 'approveAVAX_VSO':
           approveAVAX_VSO();
           break;
+        case 'approvePNG_SPORE':
+          approvePNG_SPORE();
+          break;
+        case 'approveAVAX_SPORE':
+          approveAVAX_SPORE();
+          break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
       }
@@ -2903,6 +3063,12 @@ async function main() {
           break;
         case 'stakeAVAX_VSO':
           stakeAVAX_VSO();
+          break;
+        case 'stakePNG_SPORE':
+          stakePNG_SPORE();
+          break;
+        case 'stakeAVAX_SPORE':
+          stakeAVAX_SPORE();
           break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
