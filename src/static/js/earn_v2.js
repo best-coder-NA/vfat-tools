@@ -870,9 +870,9 @@ async function main() {
     currentSPGL_AVAX_SPORE= res[72];
     stakedPool_AVAX_SPORE = res[73];
     totalStaked_AVAX_SPORE = res[74];
-    currentSJLP_AVAX_ETH= res[72];
-    stakedPool_JOE_AVAX_ETH = res[73];
-    totalStaked_JOE_AVAX_ETH = res[74];
+    currentSJLP_AVAX_ETH = res[75];
+    stakedPool_JOE_AVAX_ETH = res[76];
+    totalStaked_JOE_AVAX_ETH = res[77];
   });
   console.log("currentSJLP_AVAX_ETH: ",currentSJLP_AVAX_ETH);
 
