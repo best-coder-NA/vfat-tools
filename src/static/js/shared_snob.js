@@ -496,7 +496,7 @@ const genpool = async (pool) => {
   layoutpool({
     logo_token1: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token0}/logo.png`,
     logo_token2: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
-    url: `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`,
+    url: pool.url,
     pool_name: pool.nickname,
     apr: null,
     apy: null,
