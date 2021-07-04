@@ -72,6 +72,7 @@ async function main() {
   const USDT_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0xde3a24028580884448a5397872046a019649b084";
   const WBTC_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0x408d4cd0adb7cebd1f1a1c33a0ba2098e1295bab";
   const DAI_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/avax/0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18";
+  const JOE_AVAX_ETH_POOL_URL = "https://www.traderjoe.xyz/#/pool/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/0xf20d962a6c8f70c731bd838a3a388d7d48fa6e15";
 
   // TVL URLS
   const SUSHI_AVAX_TVL = "https://info.pangolin.exchange/#/account/0x14ec55f8B4642111A5aF4f5ddc56B7bE867eB6cC"
