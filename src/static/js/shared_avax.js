@@ -497,7 +497,7 @@ const genpool = async (pool) => {
     logo_token1: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token0}/logo.png`,
     logo_token2: pool.token1 == '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a' ? 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG' : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
     url: pool.network == 'Pangolin' ? `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}` 
-       : pool.network == 'TraderJoe' ? `https://www.traderjoe.xyz/#/pool/${token0.toLowerCase()}/${token1.toLowerCase()}`
+       : pool.network == 'TraderJoe' ? `https://www.traderjoe.xyz/#/pool/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`
        : '',
     pool_name: pool.nickname,
     apr: null,
