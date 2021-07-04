@@ -874,6 +874,7 @@ async function main() {
     stakedPool_JOE_AVAX_ETH = res[73];
     totalStaked_JOE_AVAX_ETH = res[74];
   });
+  console.log("currentSJLP_AVAX_ETH: ",currentSJLP_AVAX_ETH);
 
   //Balances
   const spglSushiDisplayAmt = currentSPGLSUSHITokens > 1000 ? currentSPGLSUSHITokens / 1e18 : 0;
@@ -902,6 +903,7 @@ async function main() {
   const PNG_SPORE_DisplayAmount = currentSPGL_PNG_SPORE > 1000 ? currentSPGL_PNG_SPORE / 1e18 : 0;
   const AVAX_SPORE_DisplayAmount = currentSPGL_AVAX_SPORE > 1000 ? currentSPGL_AVAX_SPORE / 1e18 : 0;
   const JOE_AVAX_ETH_DisplayAmount = currentSJLP_AVAX_ETH > 1000 ? currentSJLP_AVAX_ETH / 1e18 : 0;
+  console.log("JOE_AVAX_ETH_DisplayAmount: ",JOE_AVAX_ETH_DisplayAmount);
 
 
   const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100
