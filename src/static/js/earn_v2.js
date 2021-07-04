@@ -791,8 +791,8 @@ async function main() {
     SPORE_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
     SPORE_AVAX_GAUGE_CONTRACT.totalSupply(),
     SJLP_ETH_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
-    JOE_ETH_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
-    JOE_ETH_AVAX_GAUGE_CONTRACT.totalSupply()
+    JOE_AVAX_ETH_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    JOE_AVAX_ETH_GAUGE_CONTRACT.totalSupply()
   ]).then(res => {
     currentSPGLSUSHITokens = res[0]
     currentSPGLPNGTokens = res[1]
