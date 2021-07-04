@@ -168,7 +168,7 @@ async function main() {
   const LINK_AVAX_TOKEN = new ethers.Contract(LINK_AVAX_ADDR, ERC20_ABI, signer)
   const USDT_AVAX_TOKEN = new ethers.Contract(USDT_AVAX_ADDR, ERC20_ABI, signer)
   const WBTC_AVAX_TOKEN = new ethers.Contract(WBTC_AVAX_ADDR, ERC20_ABI, signer)
-  const DAI_AVAX_TOKEN = new ethers.Contract(DAI_AVAX_ADDR ERC20_ABI, signer)
+  const DAI_AVAX_TOKEN = new ethers.Contract(DAI_AVAX_ADDR, ERC20_ABI, signer)
   const AVAX_ETH_JLP_TOKEN = new ethers.Contract(AVAX_ETH_JLP, ERC20_ABI, signer);
 
   const SPGL_SUSHI_TOKEN = new ethers.Contract(SPGL_SUSHI_ADDRESS, ERC20_ABI, signer)
