@@ -78,7 +78,7 @@ async function main() {
   const WBTC_AVAX_TVL = "https://info.pangolin.exchange/#/account/0xA362A10Ba6b59eE113FAa00e41E01C0087dd9BA1"
 
   // Compounds Per Day
-  const DAILY_COMPOUNDS = 6
+  const DAILY_COMPOUNDS = 2
 
   const approveSUSHI = async function () {
     return snowglobeContract_approve(PGL_ABI, SNOWGLOBE_SUSHI_ADDR, SUSHI_AVAX_ADDR, App)

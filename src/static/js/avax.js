@@ -104,6 +104,16 @@ $(function () {
       token1: '0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985',
       pair: '0x0a63179a8838b5729e79d239940d7e29e40a0116',
       stake: '0xd3e5538A049FcFcb8dF559B85B352302fEfB8d7C'
+    },
+    {
+      pool_id: 'joe-avax-eth',
+      snowglobe: '0xAbD637a6881a2D4bbf279aE484c2447c070f7C73',
+      nickname: 'AVAX-ETH Joe LP',
+      token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+      token1: '0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
+      pair: '0xc992Ab46428a5a2eDeB8F44D946CE5642F97EF71',
+      stake: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
+      pool_no: 1
     }
   ]
   
