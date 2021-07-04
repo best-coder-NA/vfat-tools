@@ -68,6 +68,7 @@ async function main() {
   const VSO_PNG_GAUGE = "0xea4a0a6b5cc61b8edb228a5582308d0ad82b85cc";
   const SPORE_AVAX_GAUGE = "0x85852980d24f69714701C50371811d31410144c3";
   const SPORE_PNG_GAUGE = "0xfe570d95BAddFAb258c09B2F008B7786a2Da3b3f";
+  const JOE_ETH_AVAX_GAUGE = "0xA634ec1BaDa2faC4eaa71439b0b18Dd3486823e6";
   
   //PGL address
   const SUSHI_AVAX_ADDR = "0xd8B262C0676E13100B33590F10564b46eeF652AD";
@@ -93,6 +94,7 @@ async function main() {
   const PGL_VSO_PNG = "0x9d472e21f6589380b21c42674b3585c47b74c891";
   const PGL_SPORE_AVAX = "0x0a63179a8838b5729E79D239940d7e29e40A0116";
   const PGL_SPORE_PNG = "0xad24a72ffE0466399e6F69b9332022a71408f10b";
+  const JLP_ETH_AVAX = "0xc992Ab46428a5a2eDeB8F44D946CE5642F97EF71";
   
   //tokens
   const SPGL_SUSHI_ADDRESS = "0x751089f1bf31b13fa0f0537ae78108088a2253bf";
@@ -121,6 +123,7 @@ async function main() {
   const SPGL_VSO_PNG = "0x8309C64390F376fD778BDd701d54d1F8DFfe1F39";
   const SPGL_SPORE_AVAX = "0x27f8FE86a513bAAF18B59D3dD15218Cc629640Fc";
   const SPGL_SPORE_PNG = "0xa39785a4E4CdDa7509751ed152a00f3D37FbFa9F";
+  const SJLP_AVAX_ETH = "0xAbD637a6881a2D4bbf279aE484c2447c070f7C73";
   
   const TOKEN_NAMES = {
     "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7": "AVAX",
@@ -134,7 +137,8 @@ async function main() {
     "0x095370AE41FF23798d96c1ADF7D58Ae6a2b05b18": "DAI",
     "0x846D50248BAf8b7ceAA9d9B53BFd12d7D7FBB25a": "VSO",
     "0xf39f9671906d8630812f9d9863bBEf5D523c84Ab": "UNI",
-    "0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985": "SPORE"
+    "0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985": "SPORE",
+    "0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd": "JOE"
   }
   //LP URLs
   const SNOB_AVAX_POOL_URL = "https://app.pangolin.exchange/#/add/AVAX/0xC38f41A296A4493Ff429F1238e030924A1542e50";
@@ -246,6 +250,9 @@ async function main() {
   const stakeAVAX_SPORE = async function() {
     return gaugeContractStake(SPORE_AVAX_GAUGE, GAUGE_ABI, SPGL_SPORE_AVAX, SNOWGLOBE_ABI, App);
   }
+  const stakeJOE_AVAX_ETH = async function() {
+    return gaugeContractStake(JOE_ETH_AVAX_GAUGE, GAUGE_ABI, SJLP_AVAX_ETH, SNOWGLOBE_ABI, App);
+  }
 
   /* approve */
   const approveWBTC_AVAX = async function() {
@@ -298,6 +305,9 @@ async function main() {
   }
   const approveAVAX_SPORE = async function() {
     return approveGauge(SPGL_SPORE_AVAX, SPORE_AVAX_GAUGE, App);
+  }
+  const approveJOE_AVAX_ETH = async function() {
+    return approveGauge(SJLP_AVAX_ETH, JOE_ETH_AVAX_GAUGE, App);
   }
 
   /* claim reward functions */
@@ -374,8 +384,11 @@ async function main() {
   const claimPNG_SPORE = async function() {
     return gaugeClaim(SPORE_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const claimAVAX_SPORE= async function() {
+  const claimAVAX_SPORE = async function() {
     return gaugeClaim(SPORE_AVAX_GAUGE, GAUGE_ABI, App);
+  }
+  const claimJOE_AVAX_ETH = async function() {
+    return gaugeClaim(JOE_ETH_AVAX_GAUGE, GAUGE_ABI, App);
   }
 
 
@@ -446,14 +459,17 @@ async function main() {
   const withdrawPNG_VSO = async function() {
     return gaugeContractWithdraw(VSO_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const withdrawAVAX_VSO= async function() {
+  const withdrawAVAX_VSO = async function() {
     return gaugeContractWithdraw(VSO_AVAX_GAUGE, GAUGE_ABI, App);
   }
   const withdrawPNG_SPORE = async function() {
     return gaugeContractWithdraw(SPORE_PNG_GAUGE, GAUGE_ABI, App);
   }
-  const withdrawAVAX_SPORE= async function() {
+  const withdrawAVAX_SPORE = async function() {
     return gaugeContractWithdraw(SPORE_AVAX_GAUGE, GAUGE_ABI, App);
+  }
+  const withdrawJOE_AVAX_ETH = async function() {
+    return gaugeContractWithdraw(JOE_ETH_AVAX_GAUGE, GAUGE_ABI, App);
   }
 
 
@@ -486,6 +502,7 @@ async function main() {
   const SPGL_VSO_AVAX_TOKEN = new ethers.Contract(SPGL_VSO_AVAX, ERC20_ABI, signer);
   const SPGL_SPORE_PNG_TOKEN = new ethers.Contract(SPGL_SPORE_PNG, ERC20_ABI, signer);
   const SPGL_SPORE_AVAX_TOKEN = new ethers.Contract(SPGL_SPORE_AVAX, ERC20_ABI, signer);
+  const SJLP_ETH_AVAX_TOKEN = new ethers.Contract(SJLP_AVAX_ETH, ERC20_ABI, signer);
   
 
   //Contracts
@@ -518,6 +535,8 @@ async function main() {
   const VSO_PNG_GAUGE_CONTRACT = new ethers.Contract(VSO_PNG_GAUGE, GAUGE_ABI, signer);
   const SPORE_AVAX_GAUGE_CONTRACT = new ethers.Contract(SPORE_AVAX_GAUGE, GAUGE_ABI, signer);
   const SPORE_PNG_GAUGE_CONTRACT = new ethers.Contract(SPORE_PNG_GAUGE, GAUGE_ABI, signer);
+  const JOE_AVAX_ETH_GAUGE_CONTRACT = new ethers.Contract(JOE_ETH_AVAX_GAUGE, GAUGE_ABI, signer);
+  
 
   let snobTotalSupply, pendingSNOBTokensPool1, pendingSNOBTokensPool2, pendingSNOBTokensPool3, pendingSNOBTokensPool4, pendingSNOBTokensPool5, pendingSNOBTokensPool6, pendingSNOBTokensPool7, pendingSNOBTokensPool8;
   let currentSNOBTokens, snowballMultiplier, blockRate, blockNumber, currentBlock, yesterdayBlock;
@@ -553,6 +572,7 @@ async function main() {
     VSO_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     SPORE_AVAX_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
     SPORE_PNG_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS),
+    JOE_AVAX_ETH_GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
   ]).then(res => {
     snobTotalSupply = res[0]
     pendingSNOBTokensPool1 = res[1]
@@ -584,6 +604,7 @@ async function main() {
     pendingSNOBTokensPool_VSO_PNG = res[27];
     pendingSNOBTokensPool_SPORE_AVAX = res[28];
     pendingSNOBTokensPool_SPORE_PNG = res[29];
+    pendingSNOBTokensPool_JOE_ETH_AVAX = res[30];
   });
 
   await Promise.all([
@@ -607,6 +628,7 @@ async function main() {
   claimableSnowballs += pendingSNOBTokensPool_LINK_PNG / 1e18 + pendingSNOBTokensPool_USDT_PNG / 1e18 + pendingSNOBTokensPool_SUSHI_PNG / 1e18 + pendingSNOBTokensPool_WBTC_PNG / 1e18 + pendingSNOBTokensPool_ETH_PNG / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_DAI_PNG / 1e18 + pendingSNOBTokensPool_AAVE_PNG / 1e18 + pendingSNOBTokensPool_UNI_PNG / 1e18 + pendingSNOBTokensPool_YFI_PNG / 1e18 + pendingSNOBTokensPool_PNG_SNOB / 1e18+ pendingSNOBTokensPool_VSO_AVAX / 1e18 + pendingSNOBTokensPool_VSO_PNG / 1e18;
   claimableSnowballs += pendingSNOBTokensPool_SPORE_AVAX / 1e18 + pendingSNOBTokensPool_SPORE_PNG / 1e18;
+  claimableSnowballs += pendingSNOBTokensPool_JOE_ETH_AVAX / 1e18 + pendingSNOBTokensPool_JOE_ETH_AVAX / 1e18;
   const snowballsPerBlock = blockRate
   const secondsInDay = 86400;
   
@@ -686,6 +708,10 @@ async function main() {
   let stakedPool_AVAX_SPORE;
   let totalStaked_AVAX_SPORE;
 
+  let currentSJLP_AVAX_ETH;
+  let stakedPool_JOE_AVAX_ETH;
+  let totalStaked_JOE_AVAX_ETH;
+
   await Promise.all([
     SPGL_SUSHI_TOKEN.balanceOf(App.YOUR_ADDRESS),
     SPGL_PNG_TOKEN.balanceOf(App.YOUR_ADDRESS),
@@ -763,7 +789,10 @@ async function main() {
     SPORE_PNG_GAUGE_CONTRACT.totalSupply(),
     SPGL_SPORE_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
     SPORE_AVAX_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
-    SPORE_AVAX_GAUGE_CONTRACT.totalSupply()
+    SPORE_AVAX_GAUGE_CONTRACT.totalSupply(),
+    SJLP_ETH_AVAX_TOKEN.balanceOf(App.YOUR_ADDRESS),
+    JOE_AVAX_ETH_GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS),
+    JOE_AVAX_ETH_GAUGE_CONTRACT.totalSupply()
   ]).then(res => {
     currentSPGLSUSHITokens = res[0]
     currentSPGLPNGTokens = res[1]
@@ -841,6 +870,9 @@ async function main() {
     currentSPGL_AVAX_SPORE= res[72];
     stakedPool_AVAX_SPORE = res[73];
     totalStaked_AVAX_SPORE = res[74];
+    currentSJLP_AVAX_ETH = res[75];
+    stakedPool_JOE_AVAX_ETH = res[76];
+    totalStaked_JOE_AVAX_ETH = res[77];
   });
 
   //Balances
@@ -869,6 +901,7 @@ async function main() {
   const AVAX_VSO_DisplayAmount = currentSPGL_AVAX_VSO > 1000 ? currentSPGL_AVAX_VSO / 1e18 : 0;
   const PNG_SPORE_DisplayAmount = currentSPGL_PNG_SPORE > 1000 ? currentSPGL_PNG_SPORE / 1e18 : 0;
   const AVAX_SPORE_DisplayAmount = currentSPGL_AVAX_SPORE > 1000 ? currentSPGL_AVAX_SPORE / 1e18 : 0;
+  const JOE_AVAX_ETH_DisplayAmount = currentSJLP_AVAX_ETH > 1000 ? currentSJLP_AVAX_ETH / 1e18 : 0;
 
 
   const userPool8Percent = (stakedPool8 / 1e18) / (totalStakedS3F / 1e18) * 100
@@ -897,6 +930,7 @@ async function main() {
   const userPool_AVAX_VSO = (stakedPool_AVAX_VSO / 1e18) / (totalStaked_AVAX_VSO / 1e18) * 100;
   const userPool_PNG_SPORE = (stakedPool_PNG_SPORE / 1e18) / (totalStaked_PNG_SPORE / 1e18) * 100;
   const userPool_AVAX_SPORE = (stakedPool_AVAX_SPORE / 1e18) / (totalStaked_AVAX_SPORE / 1e18) * 100;
+  const userPool_JOE_AVAX_ETH = (stakedPool_JOE_AVAX_ETH / 1e18) / (totalStaked_JOE_AVAX_ETH / 1e18) * 100;
 
   const poolShareDisplay_7 = `${(stakedPool7 / 1e18).toFixed(6)} S3D`;
   const poolShareDisplay_8 = `${(stakedPool8 / 1e18).toFixed(6)} S3F`;
@@ -1027,15 +1061,6 @@ async function main() {
       const token0ValueUSDT = reserve0Owned * t0Price;
       const token1ValueUSDT = reserve1Owned * t1Price;
       const value = token0ValueUSDT + (token1ValueUSDT);
-      // console.log("token0Address:", token0Address);
-      // console.log("token0Name:", TOKEN_NAMES[token0Address]);
-      // console.log("token1Address:", token1Address);
-      // console.log("token1Name:", TOKEN_NAMES[token1Address]);
-      // console.log("reserves:", reserves);
-      // console.log("reserve0Owned:", reserve0Owned);
-      // console.log("reserve1Owned:", reserve1Owned);
-      // console.log("t0Price:", t0Price);
-      // console.log("t1Price:", t1Price);
       return [
         `${userSPGL > 1 ? userSPGL.toFixed(3) : userSPGL.toFixed(8)} sPGL`,
         `${ownedPGL > 1 ? ownedPGL.toFixed(3) : ownedPGL.toFixed(8)} PGL - ${pool_percent.toFixed(6)}%`,
@@ -1283,6 +1308,16 @@ async function main() {
     poolShareDisplay_25_pgl = ret_25[1]
     stakeDisplay_25 = ret_25[2]
     totalPoolPGL_25 = ret_25[3]
+  }
+
+  const snowglobeContract_26 = new ethers.Contract(SJLP_AVAX_ETH, SNOWGLOBE_ABI, signer);
+  let poolShareDisplay_26, poolShareDisplay_26_pgl, stakeDisplay_26, totalPoolPGL_26;
+  if (stakedPool_JOE_AVAX_ETH / 1e18 > 0) {
+    let ret_26 = await calculateShare(snowglobeContract_26, JLP_ETH_AVAX, stakedPool_JOE_AVAX_ETH / 1e18, 1e18, userPool_JOE_AVAX_ETH)
+    poolShareDisplay_26 = ret_26[0]
+    poolShareDisplay_26_pgl = ret_26[1]
+    stakeDisplay_26 = ret_26[2]
+    totalPoolPGL_26 = ret_26[3]
   }
 
   function pool(options) {
@@ -2736,6 +2771,34 @@ async function main() {
     apy: null
   });
 
+  pool({
+    logo_token1 : 'https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png',
+    logo_token2 : 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+    pool_nickname: 'pool-26',
+    pool_name: 'AVAX-ETH sJLP',
+    url: null,
+    tvl: null,
+    pool_weight: null,
+    total_staked: totalStaked_JOE_AVAX_ETH,
+    user_pool_percent: userPool_JOE_AVAX_ETH,
+    staked_pool: stakedPool_JOE_AVAX_ETH,
+    pending_tokens: pendingSNOBTokensPool_JOE_ETH_AVAX,
+    display_amount: JOE_AVAX_ETH_DisplayAmount,
+    approve: 'approveJOE_AVAX_ETH',
+    stake: 'stakeJOE_AVAX_ETH',
+    unstake: 'withdrawJOE_AVAX_ETH',
+    claim: 'claimJOE_AVAX_ETH',
+    icequeen_apr: null,
+    snowglobe_apr: null,
+    tvl_display: null,
+    tvl_class: tvl_class,
+    total_pgl: totalPoolPGL_26,
+    pool_share_display: poolShareDisplay_26,
+    pool_share_display_pgl: poolShareDisplay_26_pgl,
+    stake_display: stakeDisplay_26,
+    apy: null
+  });
+
   
 
   function updateButtonHandlers() {
@@ -2817,6 +2880,9 @@ async function main() {
           break;
         case 'withdrawAVAX_SPORE':
           withdrawAVAX_SPORE();
+          break;
+        case 'withdrawJOE_AVAX_ETH':
+          withdrawJOE_AVAX_ETH();
           break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
@@ -2902,6 +2968,9 @@ async function main() {
         case 'claimAVAX_SPORE':
           claimAVAX_SPORE();
           break;
+        case 'claimJOE_AVAX_ETH':
+          claimJOE_AVAX_ETH();
+          break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
       }
@@ -2986,6 +3055,9 @@ async function main() {
         case 'approveAVAX_SPORE':
           approveAVAX_SPORE();
           break;
+          case 'approveJOE_AVAX_ETH':
+            approveJOE_AVAX_ETH();
+            break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
       }
@@ -3069,6 +3141,9 @@ async function main() {
           break;
         case 'stakeAVAX_SPORE':
           stakeAVAX_SPORE();
+          break;
+        case 'stakeJOE_AVAX_ETH':
+          stakeJOE_AVAX_ETH();
           break;
         default:
           alert('Oops something went wrong. Try refreshing the page.');
