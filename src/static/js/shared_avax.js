@@ -433,17 +433,17 @@ const genpool = async (pool) => {
   let pairToken = new ethers.Contract(pool.pair, ERC20_ABI, signer)
   let pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
 
-  let results = await Promise.all([
-    pairToken.balanceOf(app.YOUR_ADDRESS),
-    snowglobeContract.balanceOf(app.YOUR_ADDRESS),
-    snowglobeContract.balance()
-  ])
+  let currentPGLTokens = await pairToken.balanceOf(app.YOUR_ADDRESS);
+  let currentSPGLTokens = await snowglobeContract.balanceOf(app.YOUR_ADDRESS);
+  let totalPoolPGL = await snowglobeContract.balance();
 
-  let currentPGLTokens = results[0]
-  let currentSPGLTokens = results[1]
-  let totalPoolPGL = results[2];
+  console.log("currentPGLTokens :",currentPGLTokens);
+  console.log("currentSPGLTokens: ",currentSPGLTokens);
+  console.log("totalPoolPGL: ",totalPoolPGL);
 
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
+
+  console.log("spglDisplayAmt: ",spglDisplayAmt);
   
   let pair_tvl = 0;
   let pair_tvl_display = 0;
@@ -492,10 +492,12 @@ const genpool = async (pool) => {
     withdrawDisplay = `<b>${userSPGL.toFixed(4)}</b> sPGL (<b>${ownedPGL.toFixed(4)}</b> PGL)`;
     poolShareDisplay = withdrawDisplay;
     stakeDisplay = `Your LP value is <b>${reserve0Owned.toFixed(3)}</b> ${TOKEN_NAMES[token0Address]} / <b>${reserve1Owned.toFixed(3)}</b> ${TOKEN_NAMES[token1Address]} ($<b>${value.toFixed(2)}</b>)**</b>`
-  }   
+  }
   layoutpool({
     logo_token1: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token0}/logo.png`,
-    logo_token2: pool.token1 == '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a' ? 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG' : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
+    logo_token2: pool.token1 == '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a' ? 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG' 
+               : pool.token1 == '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd' ? 'https://www.traderjoe.xyz/static/media/logo.bc60f78d.png'
+               : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
     url: pool.network == 'Pangolin' ? `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}` 
        : pool.network == 'TraderJoe' ? `https://www.traderjoe.xyz/#/pool/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`
        : '',
