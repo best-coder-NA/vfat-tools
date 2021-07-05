@@ -433,22 +433,17 @@ const genpool = async (pool) => {
   let pairToken = new ethers.Contract(pool.pair, ERC20_ABI, signer)
   let pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
 
-  console.log('app.YOUR_ADDRESS: ',app.YOUR_ADDRESS);
-  console.log('pairToken.balanceOf(app.YOUR_ADDRESS): ', await pairToken.balanceOf(app.YOUR_ADDRESS));
-  console.log('snowglobeContract.balanceOf(app.YOUR_ADDRESS): ', await snowglobeContract.balanceOf(app.YOUR_ADDRESS));
-  console.log('snowglobeContract.balance(): ',await snowglobeContract.balance());
+  let currentPGLTokens = await pairToken.balanceOf(app.YOUR_ADDRESS);
+  let currentSPGLTokens = await snowglobeContract.balanceOf(app.YOUR_ADDRESS);
+  let totalPoolPGL = await snowglobeContract.balance();
 
-  let results = await Promise.all([
-    pairToken.balanceOf(app.YOUR_ADDRESS),
-    snowglobeContract.balanceOf(app.YOUR_ADDRESS),
-    snowglobeContract.balance()
-  ])
-
-  let currentPGLTokens = results[0]
-  let currentSPGLTokens = results[1]
-  let totalPoolPGL = results[2];
+  console.log("currentPGLTokens :",currentPGLTokens);
+  console.log("currentSPGLTokens: ",currentSPGLTokens);
+  console.log("totalPoolPGL: ",totalPoolPGL);
 
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
+
+  console.log("spglDisplayAmt: ",spglDisplayAmt);
   
   let pair_tvl = 0;
   let pair_tvl_display = 0;
