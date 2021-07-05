@@ -126,6 +126,17 @@ $(function () {
       pair: '0xc992Ab46428a5a2eDeB8F44D946CE5642F97EF71',
       stake: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
       pool_no: 1
+    },
+    {
+      pool_id: 'joe-avax-png',
+      network: 'TraderJoe',
+      snowglobe: '0x962ECf51A169090002CC88B4Bf16e447d2E13100',
+      nickname: 'AVAX-PNG Joe LP',
+      token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+      token1: '0x60781C2586D68229fde47564546784ab3fACA982',
+      pair: '0x3dAF1C6268362214eBB064647555438c6f365F96',
+      stake: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
+      pool_no: 6
     }
   ]
   
