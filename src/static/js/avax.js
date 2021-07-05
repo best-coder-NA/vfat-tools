@@ -126,28 +126,6 @@ $(function () {
       pair: '0xc992Ab46428a5a2eDeB8F44D946CE5642F97EF71',
       stake: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
       pool_no: 1
-    },
-    {
-      pool_id: 'joe-avax-png',
-      network: 'TraderJoe',
-      snowglobe: '0x962ECf51A169090002CC88B4Bf16e447d2E13100',
-      nickname: 'AVAX-PNG Joe LP',
-      token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-      token1: '0x60781C2586D68229fde47564546784ab3fACA982',
-      pair: '0x3dAF1C6268362214eBB064647555438c6f365F96',
-      stake: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
-      pool_no: 6
-    },
-    {
-      pool_id: 'joe-avax-joe',
-      network: 'TraderJoe',
-      snowglobe: '0xcC757081C972D0326de42875E0DA2c54af523622',
-      nickname: 'AVAX-JOE Joe LP',
-      token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
-      token1: '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
-      pair: '0x454E67025631C065d3cFAD6d71E6892f74487a15',
-      stake: '0xd6a4F121CA35509aF06A0Be99093d08462f53052',
-      pool_no: 0
     }
   ]
   
