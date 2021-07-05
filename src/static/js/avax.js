@@ -8,6 +8,7 @@ $(function () {
   const thispagespools = [
     {
       pool_id: 'avax-wbtc',
+      network: 'Pangolin',
       snowglobe: '0x39BE35904f52E83137881C0AC71501Edf0180181',
       nickname: 'AVAX-WBTC Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -17,6 +18,7 @@ $(function () {
     },
     {
       pool_id: 'avax-usdt',
+      network: 'Pangolin',
       snowglobe: '0x3fcFBCB4b368222fCB4d9c314eCA597489FE8605',
       nickname: 'AVAX-USDT Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -26,6 +28,7 @@ $(function () {
     },
     { 
       pool_id: 'avax-link',
+      network: 'Pangolin',
       snowglobe: '0x00933c16e06b1d15958317C2793BC54394Ae356C',
       nickname: 'AVAX-LINK Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -35,6 +38,7 @@ $(function () {
     },
     {
       pool_id: 'avax-eth',
+      network: 'Pangolin',
       snowglobe: '0x586554828eE99811A8ef75029351179949762c26',
       nickname: 'AVAX-ETH Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -44,6 +48,7 @@ $(function () {
     },
     {
       pool_id: 'avax-png',
+      network: 'Pangolin',
       snowglobe: '0x621207093D2e65Bf3aC55dD8Bf0351B980A63815',
       nickname: 'AVAX-PNG Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -53,6 +58,7 @@ $(function () {
     },
     {
       pool_id: 'avax-sushi',
+      network: 'Pangolin',
       snowglobe: '0x751089F1bf31B13Fa0F0537ae78108088a2253BF',
       nickname: 'AVAX-SUSHI Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -62,6 +68,7 @@ $(function () {
     },
     {
       pool_id: 'avax-dai',
+      network: 'Pangolin',
       snowglobe: '0xb21b21E4fA802EE4c158d7cf4bD5416B8035c5e0',
       nickname: 'AVAX-DAI Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -71,6 +78,7 @@ $(function () {
     },
     {
       pool_id: 'avax-uni',
+      network: 'Pangolin',
       snowglobe: '0xdf7F15d05d641dF701D961a38d03028e0a26a42D',
       nickname: 'AVAX-UNI Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -80,6 +88,7 @@ $(function () {
     },
     {
       pool_id: 'avax-vso',
+      network: 'Pangolin',
       snowglobe: '0x888Ab4CB2279bDB1A81c49451581d7c243AffbEf',
       nickname: 'AVAX-VSO Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -89,6 +98,7 @@ $(function () {
     },
     {
       pool_id: 'avax-snob',
+      network: 'Pangolin',
       snowglobe: '0xF4072358C1E3d7841BD7AfDE31F61E17E8d99BE7',
       nickname: 'AVAX-SNOB Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -98,6 +108,7 @@ $(function () {
     },
     {
       pool_id: 'avax-spore',
+      network: 'Pangolin',
       snowglobe: '0x27f8FE86a513bAAF18B59D3dD15218Cc629640Fc',
       nickname: 'AVAX-SPORE Pangolin LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
@@ -107,6 +118,7 @@ $(function () {
     },
     {
       pool_id: 'joe-avax-eth',
+      network: 'TraderJoe',
       snowglobe: '0xAbD637a6881a2D4bbf279aE484c2447c070f7C73',
       nickname: 'AVAX-ETH Joe LP',
       token0: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
