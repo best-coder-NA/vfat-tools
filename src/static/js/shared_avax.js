@@ -429,9 +429,13 @@ const genpool = async (pool) => {
   let prices = window.prices;  
   let signer = app.provider.getSigner()  
 
+  console.log("test 1");
+
   let snowglobeContract = new ethers.Contract(pool.snowglobe, SNOWGLOBE_ABI, signer)
   let pairToken = new ethers.Contract(pool.pair, ERC20_ABI, signer)
   let pglContract = new ethers.Contract(pool.pair, PGL_ABI, signer);
+
+  console.log("test 2");
 
   let results = await Promise.all([
     pairToken.balanceOf(app.YOUR_ADDRESS),
@@ -439,9 +443,13 @@ const genpool = async (pool) => {
     snowglobeContract.balance()
   ])
 
+  console.log("test 3");
+
   let currentPGLTokens = results[0]
   let currentSPGLTokens = results[1]
   let totalPoolPGL = results[2];
+
+  console.log("test 4");
 
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
   
@@ -459,6 +467,8 @@ const genpool = async (pool) => {
   let stakeDisplay = null;
   let withdrawDisplay = null;
 
+  console.log("test 5");
+
   let userSPGL = currentSPGLTokens / 1e18;
   let ownedPGL = 0
 
@@ -471,6 +481,8 @@ const genpool = async (pool) => {
       pglContract.token0(),
       pglContract.token1()
     ]);
+
+    console.log("test 6");
 
     let totalSPGL = results2[0];
     ownedPGL = userSPGL * (totalPoolPGL / 1e18) / (totalSPGL / 1e18);
@@ -492,7 +504,8 @@ const genpool = async (pool) => {
     withdrawDisplay = `<b>${userSPGL.toFixed(4)}</b> sPGL (<b>${ownedPGL.toFixed(4)}</b> PGL)`;
     poolShareDisplay = withdrawDisplay;
     stakeDisplay = `Your LP value is <b>${reserve0Owned.toFixed(3)}</b> ${TOKEN_NAMES[token0Address]} / <b>${reserve1Owned.toFixed(3)}</b> ${TOKEN_NAMES[token1Address]} ($<b>${value.toFixed(2)}</b>)**</b>`
-  }   
+    console.log("test 7");
+  }
   layoutpool({
     logo_token1: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token0}/logo.png`,
     logo_token2: pool.token1 == '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a' ? 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG' 
