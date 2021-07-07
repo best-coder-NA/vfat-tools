@@ -1681,11 +1681,9 @@ async function main() {
     let eYearAPR = options.icequeen_apr * 365;
   
     let poolSize = '';
-    console.log("options:", options);
     if (options.total_staked) {
       poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3F </span>`;
     }
-    console.log("pool size:", poolSize);
     let estimatedRate = '';
     let poolShare = '';
     let earning = '';
