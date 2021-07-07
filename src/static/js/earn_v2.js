@@ -1591,20 +1591,6 @@ async function main() {
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
                 </div>
-                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                    <div class="form-inline w-50 mx-auto">
-                        <div class="form-group m-md-0">
-                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                        </div>
-                    </div>
-                    <div class="form-inline w-50 mx-auto mx-md-0">
-                        <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}% </p>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
                     <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
@@ -1647,21 +1633,6 @@ async function main() {
               <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
                   <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                   <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
-              </div>
-              <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                  <div class="form-inline w-50 mx-auto">
-                      <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                          <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                      </div>
-                  </div>
-                  <div class="form-inline w-50 mx-auto mx-md-0">
-                      <div class="form-group m-md-0">
-                      <p class="m-0 font-size-12 font-weight-regular">${eDayAPR}% </p>
-                      <p class="m-0 font-size-12 font-weight-regular">${eYearAPR}%</p>
-                      </div>
-                  </div>
-
               </div>
               <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
               ${approveBtn}
@@ -1709,10 +1680,12 @@ async function main() {
     let eDayAPR = options.icequeen_apr;
     let eYearAPR = options.icequeen_apr * 365;
   
-    poolSize = '';
+    let poolSize = '';
+    console.log("options:", options);
     if (options.total_staked) {
-      let poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3F </span>`;
+      poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} S3F </span>`;
     }
+    console.log("pool size:", poolSize);
     let estimatedRate = '';
     let poolShare = '';
     let earning = '';
@@ -1786,20 +1759,6 @@ async function main() {
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
                 </div>
-                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                    <div class="form-inline w-50 mx-auto">
-                        <div class="form-group m-md-0">
-                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                        </div>
-                    </div>
-                    <div class="form-inline w-50 mx-auto mx-md-0">
-                        <div class="form-group m-md-0">
-                        <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                        <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-sm-12 col-md-3 align-items-center text-center d-flex flex-column snob-tvl pb-10 pb-md-0 mx-auto">
                     <p class="m-0 font-size-12"> Pool Size</p>
                         ${poolSize}
@@ -1847,21 +1806,6 @@ async function main() {
                 <div class="col-sm-12 col-md-1 align-items-center text-center snob-tvl pb-10 pb-md-0 ${options.tvl_class}">
                     <p class="m-0 font-size-12"><ion-icon name="lock-closed-outline"></ion-icon> Total Value Locked</p>
                     <span class="badge font-size-12 px-5 px-sm-10 mx-5">${options.tvl_display}</span>
-                </div>
-                <div class="col-sm-12 col-md-2 d-flex align-items-center pb-10 pb-md-0 mx-auto">
-                    <div class="form-inline w-50 mx-auto">
-                        <div class="form-group m-md-0">
-                            <p class="m-0 font-size-12 font-weight-light">Daily:</p>
-                            <p class="m-0 font-size-12 font-weight-light">Yearly:</p>
-                        </div>
-                    </div>
-                    <div class="form-inline w-50 mx-auto mx-md-0">
-                        <div class="form-group m-md-0">
-                          <p class="m-0 font-size-12 font-weight-regular">${eDayAPR.toFixed(2)}% </p>
-                          <p class="m-0 font-size-12 font-weight-regular">${eYearAPR.toFixed(2)}% </p>
-                        </div>
-                    </div>
-  
                 </div>
                 <div class="col-sm-12 col-md-3 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
                 ${approveBtn}
