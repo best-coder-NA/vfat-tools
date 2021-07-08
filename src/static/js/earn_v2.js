@@ -742,79 +742,8 @@ async function main() {
     }),
   )
 
-  await Promise.all(
-    globes.map((globe) => {
-      return displayGlobe(globe)
-    }),
-  )
-
-  const display3Pool = async pool => {
-    const TOKEN_ADDRESSES = {
-      "DAI": "",
-      "TUSD": "",
-      "FRAX": "",
-      "USDT": "",
-      "BUSD": ""
-    }
-
-    const POOL_CONTRACT = new ethers.Contract(pool, ERC20_ABI, signer)
-    const gauge = GAUGE_PROXY_CONTRACT.getGauge(pool)
-
-    const GAUGE_CONTRACT = new ethers.Contract(gauge, GAUGE_ABI, signer);
-    
-    // let currentPoolTokens = await POOL_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-    let stakedPoolTokens = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-    let totalStakedPool = await GAUGE_CONTRACT.totalSupply()
-    let pool_snob_per_block = await GAUGE_CONTRACT.rewardRate()
-
-    let symbol = await POOL_CONTRACT.symbol()
-    let name = await POOL_CONTRACT.name()
-
-    let tokens = name.split(" ")[1].split("+")
-
-    let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
-
-    let poolShareDisplay, poolShareDisplay_lp, stakeDisplay, totalPoolLP
-    if (staked_lp / 1e18 > 0) {
-      let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, staked_lp / 1e18, 1e18, userPool_JOE_AVAX_ETH)
-      poolShareDisplay = ret[0]
-      poolShareDisplay_lp = ret[1]
-      stakeDisplay = ret[2]
-      totalPoolLP = ret[3]
-    }
-
-    vault({
-      logo_token0 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${TOKEN_ADDRESSES[tokens[0]]}/logo.png`,
-      logo_token1 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${TOKEN_ADDRESSES[tokens[1]]}/logo.png`,
-      logo_token2 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${TOKEN_ADDRESSES[tokens[2]]}/logo.png`,
-      pool_nickname: `StableVault ${symbol}`,
-      pool_name: `StableVault ${symbol}`,
-      symbol: symbol,
-      url: null,
-      tvl: null,
-      pool_weight: null,
-      total_staked: totalStakedPool,
-      user_pool_percent: (stakedPoolTokens / 1e18) / (totalStakedPool / 1e18) * 100,
-      staked_pool: stakedPoolTokens,
-      pending_tokens: pending_snob,
-      display_amount: snowglobe_balance > 1000 ? snowglobe_balance / 1e18 : 0,
-      approve: 'approveS3F',
-      stake: 'stakeS3F',
-      unstake: 'withdrawPool8',
-      claim: 'claimPool8',
-      icequeen_apr: (pool_snob_per_block / 1e18) * 15000 * snobPrice / (totalStakedPool / 1e18) * 100,
-      snowglobe_apr: null,
-      tvl_display: `${new Intl.NumberFormat('en-US').format(totalStakedPool / 1e18)}`,
-      total_pgl: null,
-      pool_share_display: `${(stakedPoolTokens / 1e18).toFixed(6)} S3F`,
-      pool_share_display_pgl: '',
-      stake_display: '',
-      snobPrice
-    });
-  }
-
-  // iterate through each globe:
-  const displayGlobe = async globe => {
+   // iterate through each globe:
+   const displayGlobe = async globe => {
     // if actually a 3Pool, run display3Pool instead
     if (globe == '0xA42BE3dB9aff3aee48167b240bFEE5e1697e1281' || globe == '0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4') {
       return display3Pool(globe)
@@ -889,7 +818,77 @@ async function main() {
       apy: null
     })
   }
+  const display3Pool = async pool => {
+    const TOKEN_ADDRESSES = {
+      "DAI": "",
+      "TUSD": "",
+      "FRAX": "",
+      "USDT": "",
+      "BUSD": ""
+    }
 
+    const POOL_CONTRACT = new ethers.Contract(pool, ERC20_ABI, signer)
+    const gauge = GAUGE_PROXY_CONTRACT.getGauge(pool)
+
+    const GAUGE_CONTRACT = new ethers.Contract(gauge, GAUGE_ABI, signer);
+    
+    // let currentPoolTokens = await POOL_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+    let stakedPoolTokens = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+    let totalStakedPool = await GAUGE_CONTRACT.totalSupply()
+    let pool_snob_per_block = await GAUGE_CONTRACT.rewardRate()
+
+    let symbol = await POOL_CONTRACT.symbol()
+    let name = await POOL_CONTRACT.name()
+
+    let tokens = name.split(" ")[1].split("+")
+
+    let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
+
+    let poolShareDisplay, poolShareDisplay_lp, stakeDisplay, totalPoolLP
+    if (staked_lp / 1e18 > 0) {
+      let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, staked_lp / 1e18, 1e18, userPool_JOE_AVAX_ETH)
+      poolShareDisplay = ret[0]
+      poolShareDisplay_lp = ret[1]
+      stakeDisplay = ret[2]
+      totalPoolLP = ret[3]
+    }
+
+    vault({
+      logo_token0 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${TOKEN_ADDRESSES[tokens[0]]}/logo.png`,
+      logo_token1 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${TOKEN_ADDRESSES[tokens[1]]}/logo.png`,
+      logo_token2 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${TOKEN_ADDRESSES[tokens[2]]}/logo.png`,
+      pool_nickname: `StableVault ${symbol}`,
+      pool_name: `StableVault ${symbol}`,
+      symbol: symbol,
+      url: null,
+      tvl: null,
+      pool_weight: null,
+      total_staked: totalStakedPool,
+      user_pool_percent: (stakedPoolTokens / 1e18) / (totalStakedPool / 1e18) * 100,
+      staked_pool: stakedPoolTokens,
+      pending_tokens: pending_snob,
+      display_amount: snowglobe_balance > 1000 ? snowglobe_balance / 1e18 : 0,
+      approve: 'approveS3F',
+      stake: 'stakeS3F',
+      unstake: 'withdrawPool8',
+      claim: 'claimPool8',
+      icequeen_apr: (pool_snob_per_block / 1e18) * 15000 * snobPrice / (totalStakedPool / 1e18) * 100,
+      snowglobe_apr: null,
+      tvl_display: `${new Intl.NumberFormat('en-US').format(totalStakedPool / 1e18)}`,
+      total_pgl: null,
+      pool_share_display: `${(stakedPoolTokens / 1e18).toFixed(6)} S3F`,
+      pool_share_display_pgl: '',
+      stake_display: '',
+      snobPrice
+    });
+  }
+
+
+  await Promise.all(
+    globes.map((globe) => {
+      return displayGlobe(globe)
+    }),
+  )
 
   //Contracts
   const ICEQUEEN_CONTRACT = new ethers.Contract(ICEQUEEN_ADDR, ICEQUEEN_ABI, signer)
