@@ -751,7 +751,7 @@ async function main() {
   
     const SNOWGLOBE_CONTRACT = new ethers.Contract(globe, SNOWGLOBE_ABI, signer);
     
-    const lp_token = SNOWGLOBE_CONTRACT.token()
+    const lp_token = await SNOWGLOBE_CONTRACT.token()
 
     // if depricated pool, skip
     if (lp_token == '0x53B37b9A6631C462d74D65d61e1c056ea9dAa637'){ 
@@ -828,7 +828,7 @@ async function main() {
     }
 
     const POOL_CONTRACT = new ethers.Contract(pool, ERC20_ABI, signer)
-    const gauge = GAUGE_PROXY_CONTRACT.getGauge(pool)
+    const gauge = await GAUGE_PROXY_CONTRACT.getGauge(pool)
 
     const GAUGE_CONTRACT = new ethers.Contract(gauge, GAUGE_ABI, signer);
     
