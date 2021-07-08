@@ -734,11 +734,11 @@ async function main() {
   const signer = App.provider.getSigner();
   const GAUGE_PROXY_CONTRACT = new ethers.Contract(GAUGE_PROXY_ADDRESS, GAUGE_PROXY_ABI, signer);
 
-  const globes = await gaugeProxyContract.tokens()
+  const globes = await GAUGE_PROXY_CONTRACT.tokens()
 
   const gaugeAddresses = await Promise.all(
     globes.map((globe) => {
-      return gaugeProxyContract.getGauge(globe)
+      return GAUGE_PROXY_CONTRACT.getGauge(globe)
     }),
   )
 
