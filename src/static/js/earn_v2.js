@@ -748,6 +748,9 @@ async function main() {
     if (globe == '0xA42BE3dB9aff3aee48167b240bFEE5e1697e1281' || globe == '0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4') {
       return display3Pool(globe)
     }
+
+    console.log('globe: ', globe)
+    console.log('index: ', index)
   
     const SNOWGLOBE_CONTRACT = new ethers.Contract(globe, SNOWGLOBE_ABI, signer);
     
