@@ -743,7 +743,7 @@ async function main() {
   )
 
    // iterate through each globe:
-   const displayGlobe = async globe => {
+   const displayGlobe = async (globe, index) => {
     // if actually a 3Pool, run display3Pool instead
     if (globe == '0xA42BE3dB9aff3aee48167b240bFEE5e1697e1281' || globe == '0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4') {
       return display3Pool(globe)
@@ -876,7 +876,7 @@ async function main() {
       snowglobe_apr: null,
       tvl_display: `${new Intl.NumberFormat('en-US').format(totalStakedPool / 1e18)}`,
       total_pgl: null,
-      pool_share_display: `${(stakedPoolTokens / 1e18).toFixed(6)} S3F`,
+      pool_share_display: `${(stakedPoolTokens / 1e18).toFixed(6)} ${symbol}`,
       pool_share_display_pgl: '',
       stake_display: '',
       snobPrice
@@ -885,8 +885,8 @@ async function main() {
 
 
   await Promise.all(
-    globes.map((globe) => {
-      return displayGlobe(globe)
+    globes.map((globe, index) => {
+      return displayGlobe(globe, index)
     }),
   )
 
