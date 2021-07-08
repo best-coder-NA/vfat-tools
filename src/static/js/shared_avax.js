@@ -496,10 +496,10 @@ const genpool = async (pool) => {
   layoutpool({
     logo_token1: `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token0}/logo.png`,
     logo_token2: pool.token1 == '0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a' ? 'https://assets.coingecko.com/coins/images/15169/small/versa.PNG' 
-               : pool.token1 == '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd' ? 'https://www.traderjoe.xyz/static/media/logo.bc60f78d.png'
+               : pool.token1 == '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd' ? 'https://www.traderjoexyz.com/static/media/logo.bc60f78d.png'
                : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${pool.token1}/logo.png`,
     url: pool.network == 'Pangolin' ? `https://app.pangolin.exchange/#/add/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}` 
-       : pool.network == 'TraderJoe' ? `https://www.traderjoe.xyz/#/pool/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`
+       : pool.network == 'TraderJoe' ? `https://www.traderjoexyz.com/#/pool/${pool.token0.toLowerCase()}/${pool.token1.toLowerCase()}`
        : '',
     pool_name: pool.nickname,
     apr: null,
