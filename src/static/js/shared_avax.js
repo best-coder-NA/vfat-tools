@@ -529,24 +529,27 @@ const genpool = async (pool) => {
 }
 
 const genAPR = async (pool) => {
-  console.log('genAPR nickname:', pool.nickname)
+  console.log('genAPR nickname:', pool.nickname);
 
-  let results = await Promise.all([
-    loadSingleSnowglobePool(window.app, {}, window.prices, {
-      address: pool.stake,
-      abi: PNG_STAKING_ABI,
-      stakeTokenFunction: "stakingToken",
-      rewardTokenFunction: "rewardsToken"
+  let results, apr;
+  var settings = {
+    "url": "https://snob-backend-api.herokuapp.com/graphql",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      query: `{PoolsInfoByAddress(address:\"${pool.snowglobe}\"){\r\n  yearlyAPY\r\n  dailyAPY\r\n dailyAPR\r\n  weeklyAPY\r\n}\r\n}`,
+      variables: {}
     })
-  ])
+  };
+  results = await $.ajax(settings);
+  if(results.data.PoolsInfoByAddress){
+    apr = results.data.PoolsInfoByAddress;
 
-  let apr = results[0]
-
-  let token_apr = apr.yearlyAPR / 100;
-  let token_annual_apy = 100 * (1 + token_apr / compounds_per_year) ** compounds_per_year - 100;
-  $(`#${pool.pool_id}-apy`).html(`${token_annual_apy.toFixed(2)}%`)
-  $(`#${pool.pool_id}-apr-daily`).html(`${apr.dailyAPR.toFixed(2)}%`);
-  $(`#${pool.pool_id}-apr-weekly`).html(`${apr.weeklyAPR.toFixed(2)}%`);
-  $(`#${pool.pool_id}-apr-yearly`).html(`${apr.yearlyAPR.toFixed(2)}%`);
-
+    $(`#${pool.pool_id}-apy`).html(`${apr.yearlyAPY.toFixed(2)}%`)
+    $(`#${pool.pool_id}-apr-daily`).html(`${apr.dailyAPR.toFixed(2)}%`);
+    $(`#${pool.pool_id}-apr-weekly`).html(`${(apr.dailyAPR * 7).toFixed(2)}%`);
+    $(`#${pool.pool_id}-apr-yearly`).html(`${(apr.dailyAPR * 365).toFixed(2)}%`);
+  }
 }
