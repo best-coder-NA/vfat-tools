@@ -32,6 +32,7 @@ async function main() {
   //governance
   const CRYSTAL_VAULT_ADDRESS = "0xe5614C304D73d990B8BcA8F055Ec0f2685Ebf60c";
   const GAUGE_PROXY_ADDRESS = "0xFc371bA1E7874Ad893408D7B581F3c8471F03D2C";
+  const ICEQUEEN_ADDR = "0xB12531a2d758c7a8BF09f44FC88E646E1BF9D375";
 
   
   const TOKEN_NAMES = {
@@ -49,6 +50,14 @@ async function main() {
     "0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985": "SPORE",
     "0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd": "JOE"
   }
+
+  const stakeUnstake = (amount, stake, st) => {
+    return `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
+    <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
+    <p class="m-0 font-size-16 font-weight-regular">${amount} ${(st?st:'sPGL')} </p>
+    <p class="m-0 font-size-12">(Available to ${(stake? 'Stake': 'Unstake')}) </p>
+    </div>`
+  }
   
   const signer = App.provider.getSigner();
   const GAUGE_PROXY_CONTRACT = new ethers.Contract(GAUGE_PROXY_ADDRESS, GAUGE_PROXY_ABI, signer);
@@ -61,84 +70,99 @@ async function main() {
     }),
   )
 
+  let prices = await getAvaxPrices();  
+  
+
+  const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
+  
+
    // iterate through each globe:
   const displayGlobe = async (globe, index) => {
     // if actually a 3Pool, run display3Pool instead
     if (globe == '0xA42BE3dB9aff3aee48167b240bFEE5e1697e1281' || globe == '0xdE1A11C331a0E45B9BA8FeE04D4B51A745f1e4A4') {
-      return display3Pool(globe)
+      display3Pool(globe)
     }
-
-    console.log('globe: ', globe)
-    console.log('index: ', index)
-  
-    const SNOWGLOBE_CONTRACT = new ethers.Contract(globe, SNOWGLOBE_ABI, signer);
-    
-    const lp_token = await SNOWGLOBE_CONTRACT.token()
-
     // if depricated pool, skip
-    if (lp_token == '0x53B37b9A6631C462d74D65d61e1c056ea9dAa637'){ 
-      return; 
+    else if (globe == '0x53B37b9A6631C462d74D65d61e1c056ea9dAa637'){
+      return
+    }
+    else {
+      console.log('globe: ', globe)
+      console.log('index: ', index)
+    
+      const SNOWGLOBE_CONTRACT = new ethers.Contract(globe, SNOWGLOBE_ABI, signer);
+      
+      let lp_token 
+      
+      try{
+        lp_token = await SNOWGLOBE_CONTRACT.token()
+      } catch {
+        console.log('failed lp token fetch with globe: ',globe)
+      }
+
+      const LP_TOKEN_CONTRACT = new ethers.Contract(lp_token, LP_API, signer)
+      const GAUGE_CONTRACT = new ethers.Contract(gaugeAddresses[index], GAUGE_ABI, signer);
+      
+      const token_0 = await LP_TOKEN_CONTRACT.token0()
+      const token_1 = await LP_TOKEN_CONTRACT.token1()
+      const lp_symbol = await LP_TOKEN_CONTRACT.symbol()
+
+      const TOKEN_0_CONTRACT = new ethers.Contract(token_0, ERC20_ABI, signer)
+      const TOKEN_1_CONTRACT = new ethers.Contract(token_1, ERC20_ABI, signer)
+      
+
+      let token_0_symbol = await TOKEN_0_CONTRACT.symbol()
+      let token_1_symbol = await TOKEN_1_CONTRACT.symbol()
+      let globe_symbol = await SNOWGLOBE_CONTRACT.symbol()
+      let snowglobe_balance = await SNOWGLOBE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+      let total_staked_lp = await SNOWGLOBE_CONTRACT.balance()
+      let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
+      let gauge_staked = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+      // let globe_snob_per_block = await GAUGE_CONTRACT.rewardRate()
+
+      let poolShareDisplay, poolShareDisplay_lp, stakeDisplay, totalPoolLP
+      if (snowglobe_balance / 1e18 > 0) {
+        let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, snowglobe_balance / 1e18, 1e18, userPool_JOE_AVAX_ETH)
+        poolShareDisplay = ret[0]
+        poolShareDisplay_lp = ret[1]
+        stakeDisplay = ret[2]
+        totalPoolLP = ret[3]
+      }
+
+      let tvl_class = 'tvl-hide';
+
+      pool({
+        logo_token1 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_0}/logo.png`,
+        logo_token2 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_1}/logo.png`,
+        pool_nickname: `${token_0_symbol}-${token_1_symbol} ${globe_symbol}`,
+        pool_name: `${token_0_symbol}-${token_1_symbol} ${globe_symbol}`,
+        globe_symbol: globe_symbol,
+        lp_symbol: lp_symbol,
+        url: null,
+        tvl: null,
+        pool_weight: null,
+        total_staked: total_staked_lp,
+        user_pool_percent: (snowglobe_balance / 1e18) / (total_staked_lp / 1e18) * 100,
+        staked_pool: gauge_staked,
+        pending_tokens: pending_snob,
+        display_amount: snowglobe_balance > 1000 ? snowglobe_balance / 1e18 : 0,
+        approve: `approve${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
+        stake: `stake${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
+        unstake: `withdraw${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
+        claim: `claim${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
+        icequeen_apr: null,
+        snowglobe_apr: null,
+        tvl_display: null,
+        tvl_class: tvl_class,
+        total_pgl: total_staked_lp,
+        pool_share_display: poolShareDisplay,
+        pool_share_display_pgl: poolShareDisplay_lp,
+        stake_display: stakeDisplay,
+        apy: null
+      })
     }
 
-    const LP_TOKEN_CONTRACT = new ethers.Contract(lp_token, LP_API, signer)
-    const GAUGE_CONTRACT = new ethers.Contract(gaugeAddresses[index], GAUGE_ABI, signer);
     
-    const token_0 = await LP_TOKEN_CONTRACT.token0()
-    const token_1 = await LP_TOKEN_CONTRACT.token1()
-    const lp_symbol = await LP_TOKEN_CONTRACT.symbol()
-
-    const TOKEN_0_CONTRACT = new ethers.Contract(token_0, ERC20_ABI, signer)
-    const TOKEN_1_CONTRACT = new ethers.Contract(token_1, ERC20_ABI, signer)
-    
-
-    let token_0_symbol = await TOKEN_0_CONTRACT.symbol()
-    let token_1_symbol = await TOKEN_1_CONTRACT.symbol()
-    let globe_symbol = await SNOWGLOBE_CONTRACT.symbol()
-    let snowglobe_balance = await SNOWGLOBE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-    let total_staked_lp = await SNOWGLOBE_CONTRACT.balance()
-    let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
-    // let globe_snob_per_block = await GAUGE_CONTRACT.rewardRate()
-
-    let poolShareDisplay, poolShareDisplay_lp, stakeDisplay, totalPoolLP
-    if (staked_lp / 1e18 > 0) {
-      let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, staked_lp / 1e18, 1e18, userPool_JOE_AVAX_ETH)
-      poolShareDisplay = ret[0]
-      poolShareDisplay_lp = ret[1]
-      stakeDisplay = ret[2]
-      totalPoolLP = ret[3]
-    }
-
-    let tvl_class = 'tvl-hide';
-
-    pool({
-      logo_token1 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_0}/logo.png`,
-      logo_token2 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_1}/logo.png`,
-      pool_nickname: `${token_0_symbol}-${token_1_symbol} ${globe_symbol}`,
-      pool_name: `${token_0_symbol}-${token_1_symbol} ${globe_symbol}`,
-      globe_symbol: globe_symbol,
-      lp_symbol: lp_symbol,
-      url: null,
-      tvl: null,
-      pool_weight: null,
-      total_staked: total_staked_lp,
-      user_pool_percent: (staked_lp / 1e18) / (total_staked_lp / 1e18) * 100,
-      staked_pool: stakedPool6,
-      pending_tokens: pending_snob,
-      display_amount: snowglobe_balance > 1000 ? snowglobe_balance / 1e18 : 0,
-      approve: `approve${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
-      stake: `stake${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
-      unstake: `withdraw${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
-      claim: `claim${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
-      icequeen_apr: null,
-      snowglobe_apr: null,
-      tvl_display: null,
-      tvl_class: tvl_class,
-      total_pgl: total_staked_lp,
-      pool_share_display: poolShareDisplay,
-      pool_share_display_pgl: poolShareDisplay_lp,
-      stake_display: stakeDisplay,
-      apy: null
-    })
   }
   const display3Pool = async pool => {
     const TOKEN_ADDRESSES = {
@@ -169,8 +193,8 @@ async function main() {
     let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
 
     let poolShareDisplay, poolShareDisplay_lp, stakeDisplay, totalPoolLP
-    if (staked_lp / 1e18 > 0) {
-      let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, staked_lp / 1e18, 1e18, userPool_JOE_AVAX_ETH)
+    if (stakedPoolTokens / 1e18 > 0) {
+      let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, stakedPoolTokens / 1e18, 1e18, userPool_JOE_AVAX_ETH)
       poolShareDisplay = ret[0]
       poolShareDisplay_lp = ret[1]
       stakeDisplay = ret[2]
@@ -191,7 +215,7 @@ async function main() {
       user_pool_percent: (stakedPoolTokens / 1e18) / (totalStakedPool / 1e18) * 100,
       staked_pool: stakedPoolTokens,
       pending_tokens: pending_snob,
-      display_amount: snowglobe_balance > 1000 ? snowglobe_balance / 1e18 : 0,
+      display_amount: stakedPoolTokens > 1000 ? stakedPoolTokens / 1e18 : 0,
       approve: 'approveS3F',
       stake: 'stakeS3F',
       unstake: 'withdrawPool8',
@@ -240,8 +264,6 @@ async function main() {
   const secondsInDay = 86400;
   
   const blocks24hrs = (secondsInDay / (currentBlock.timestamp - yesterdayBlock.timestamp)) * 20000;
-  const prices = await getAvaxPrices();  
-  const snobPrice = prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'] ? prices['0xC38f41A296A4493Ff429F1238e030924A1542e50'].usd : 0;
   const marketCapDisplay = `$${new Intl.NumberFormat('en-US').format(snobTotalSupply / 1e18 * snobPrice)}`
   
   $('#value-market').append(`$${snobPrice.toFixed(3)}`)
@@ -279,13 +301,7 @@ async function main() {
     }
   } catch {console.log('could not load wallet info')}
 
-  const stakeUnstake = (amount, stake, st) => {
-    return `<div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
-    <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
-    <p class="m-0 font-size-16 font-weight-regular">${amount} ${(st?st:'sPGL')} </p>
-    <p class="m-0 font-size-12">(Available to ${(stake? 'Stake': 'Unstake')}) </p>
-    </div>`
-  }
+  
 
   const aprDisplay = (cDayAPR, cWeekAPR, cYearAPR) => {
     return `<div class="col-sm-12 col-md-3 align-items-center pb-10">
@@ -371,13 +387,13 @@ async function main() {
     if (options.total_staked && options.total_pgl) {
       
 
-      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${options.total_staked / 1e18 > 1 ? (options.total_staked / 1e18).toLocaleString() : (options.total_staked / 1e18).toFixed(6)} ${globe_symbol} </span>
-        <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${options.total_pgl / 1e18 > 1 ? (options.total_pgl / 1e18).toLocaleString() :(options.total_pgl / 1e18).toFixed(6) } ${lp_symbol}</span>`;
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${options.total_staked / 1e18 > 1 ? (options.total_staked / 1e18).toLocaleString() : (options.total_staked / 1e18).toFixed(6)} ${options.globe_symbol} </span>
+        <span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${options.total_pgl / 1e18 > 1 ? (options.total_pgl / 1e18).toLocaleString() :(options.total_pgl / 1e18).toFixed(6) } ${options.lp_symbol}</span>`;
 
     } else if (options.total_staked) {
-      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} ${globe_symbol} </span>`;
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${(options.total_staked / 1e18).toLocaleString()} ${options.globe_symbol} </span>`;
     } else {
-      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.total_pgl / 1e18).toLocaleString()} ${lp_symbol}</span>`;
+      var poolSize = `<span class="badge badge-pill font-size-12 px-5 px-sm-10 mx-5 font-weight-regular">${ (options.total_pgl / 1e18).toLocaleString()} ${options.lp_symbol}</span>`;
     }
     var poolShare = '';
     var estimatedRate = '';
@@ -427,11 +443,11 @@ async function main() {
     if ( options.display_amount > 0 ) {
       has_options = true
       approveBtn = `<button data-btn="${options.approve}" class="btn btn-sm mx-10 approveBtn" ><ion-icon name="bag-check-outline" role="img" class="md hydrated" aria-label="bag check outline"></ion-icon> Approve</button>`;
-      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake ${globe_symbol}</button>`;
+      stakeBtn = `<button data-btn="${options.stake}" class="btn btn-sm mx-10 btn-success stakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Stake ${options.globe_symbol}</button>`;
     }
     if ( options.staked_pool / 1e18 > 0 ) {
       has_options = true
-      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake ${globe_symbol}</button>`;
+      unstakeBtn = `<button data-btn="${options.unstake}" class="btn btn-sm mx-10 unstakeBtn"><ion-icon name="lock-open-outline"></ion-icon> Unstake ${options.globe_symbol}</button>`;
     }
     if ( options.pending_tokens / 1e18 > 0 ) {
       has_options = true
@@ -454,7 +470,7 @@ async function main() {
                         ${poolSize}
                 </div>
                 <div class="col-sm-12 col-md-2 align-items-center text-center text-md-right snob-tvl pb-10 pb-md-0 mx-auto">
-                    <a href="/compound" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get ${globe_symbol} from Snowglobes</a>
+                    <a href="/compound" class="btn btn-primary btn-sm"><ion-icon name="link-outline"></ion-icon> Get ${options.globe_symbol} from Snowglobes</a>
                     <a href="https://markr.io/#/applications/Snowball" target="_blank" class="btn btn-primary btn-sm mt-5"><ion-icon name="calculator"></ion-icon> Check APYs and TVL on Markr.io</a>
                 </div>
 
@@ -466,8 +482,8 @@ async function main() {
                 <div class="row">
                     <div class="col-sm-12 col-md-3 align-items-center text-center snob-tvl pb-10 pb-md-0">
                         <p class="m-0 font-size-12"><ion-icon name="pie-chart-outline"></ion-icon> You have</p>
-                        <p class="m-0 font-size-16 font-weight-regular">O ${globe_symbol} </p>
-                        <p class="m-0 font-size-12">(No ${globe_symbol} to Stake/Withdraw) </p>
+                        <p class="m-0 font-size-16 font-weight-regular">O ${options.globe_symbol} </p>
+                        <p class="m-0 font-size-12">(No ${options.globe_symbol} to Stake/Withdraw) </p>
                     </div>
                 </div>
             </div>
