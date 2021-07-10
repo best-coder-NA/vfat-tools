@@ -248,14 +248,6 @@ async function main() {
 
     const pool_percent = (stakedGauge / 1e18) / (totalStakedGauge / 1e18) * 100
 
-    // let gaugeShareDisplay, gaugeShareDisplay_lp, stakeDisplay
-    // if (stakedGauge / 1e18 > 0) {
-    //   let ret = await calculateShare(POOL_CONTRACT, lp_token, stakedGauge / 1e18, 1e18, pool_percent)
-    //   gaugeShareDisplay = ret[0]
-    //   gaugeShareDisplay_lp = ret[1]
-    //   stakeDisplay = ret[2]
-    // }
-
     let pendingSNOBTokensPool = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
 
     claimableSnowballs += pendingSNOBTokensPool / 1e18
