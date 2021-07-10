@@ -98,7 +98,6 @@ const snobMessage = (title, message, icon, state, btn1, btn2, time) =>{
 }
 
 const snowglobe = async (func, pairId, snowglobeId) => {
-  console.log('snowglobe:', func, 'pairid:', pairId, 'snowglobeId:', snowglobeId)
   
   let app = window.app;  
   let signer = app.provider.getSigner()
@@ -109,8 +108,6 @@ const snowglobe = async (func, pairId, snowglobeId) => {
   const currentTokens = await STAKING_TOKEN.balanceOf(app.YOUR_ADDRESS)
   const allowedTokens = await STAKING_TOKEN.allowance(app.YOUR_ADDRESS, snowglobeId)
   const stakedTokens  = await SNOWGLOBE.balanceOf(app.YOUR_ADDRESS)
-
-  console.log('current tokens:', currentTokens, 'allowed tokens:', allowedTokens, 'staked tokens:', stakedTokens)
 
   let allow = Promise.resolve()
 
@@ -423,7 +420,6 @@ function pairmatch(p, t0, t1) {
 }
 
 const genpool = async (pool) => {
-  console.log('genpool nickname:', pool.nickname)
 
   let app = window.app;
   let prices = window.prices;  
@@ -437,13 +433,7 @@ const genpool = async (pool) => {
   let currentSPGLTokens = await snowglobeContract.balanceOf(app.YOUR_ADDRESS);
   let totalPoolPGL = await snowglobeContract.balance();
 
-  console.log("currentPGLTokens :",currentPGLTokens);
-  console.log("currentSPGLTokens: ",currentSPGLTokens);
-  console.log("totalPoolPGL: ",totalPoolPGL);
-
   const spglDisplayAmt = currentSPGLTokens > 1000 ? (currentSPGLTokens / 1e18).toFixed(8) : 0;
-
-  console.log("spglDisplayAmt: ",spglDisplayAmt);
   
   let pair_tvl = 0;
   let pair_tvl_display = 0;
@@ -529,7 +519,6 @@ const genpool = async (pool) => {
 }
 
 const genAPR = async (pool) => {
-  console.log('genAPR nickname:', pool.nickname);
 
   let results, apr;
   var settings = {
