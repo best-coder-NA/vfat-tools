@@ -64,6 +64,7 @@ async function main() {
       const token0ValueUSDT = reserve0Owned * t0Price;
       const token1ValueUSDT = reserve1Owned * t1Price;
       const value = token0ValueUSDT + (token1ValueUSDT);
+      
       return [
         `${userSPGL > 1 ? userSPGL.toFixed(3) : userSPGL.toFixed(8)} sPGL`, // TODO:  convert to general symbol
         `${ownedPGL > 1 ? ownedPGL.toFixed(3) : ownedPGL.toFixed(8)} PGL - ${pool_percent.toFixed(6)}%`, // TODO:  convert to general symbol
@@ -162,18 +163,20 @@ async function main() {
       let total_staked_lp = await SNOWGLOBE_CONTRACT.balance()
       let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
       let gauge_staked = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+      let gauge_total = await GAUGE_CONTRACT.totalSupply()
       // let globe_snob_per_block = await GAUGE_CONTRACT.rewardRate()
 
-      const pool_percent = (snowglobe_balance / 1e18) / (total_staked_lp / 1e18) * 100
+      const pool_percent = (gauge_staked / 1e18) / (gauge_total / 1e18) * 100
+      
 
-      let poolShareDisplay, poolShareDisplay_lp, stakeDisplay, totalPoolLP
-      if (snowglobe_balance / 1e18 > 0) {
+      let gaugeShareDisplay, gaugeShareDisplay_lp, stakeDisplay
+      
+      if (gauge_staked / 1e18 > 0) {
         //                              snowglobeContract, PAIR_ADDR, userSPGL,             decimals, pool_percent
-        let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, snowglobe_balance / 1e18, 1e18, pool_percent)
-        poolShareDisplay = ret[0]
-        poolShareDisplay_lp = ret[1]
+        let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, gauge_staked / 1e18, 1e18, pool_percent)
+        gaugeShareDisplay = ret[0]
+        gaugeShareDisplay_lp = ret[1]
         stakeDisplay = ret[2]
-        totalPoolLP = ret[3]
       }
 
       let tvl_class = 'tvl-hide';
@@ -197,10 +200,6 @@ async function main() {
         staked_pool: gauge_staked,
         pending_tokens: pending_snob,
         display_amount: snowglobe_balance > 1000 ? snowglobe_balance / 1e18 : 0,
-        // approve: `approveGauge('${globe}', '${GAUGE_ADDRESS}')`,
-        // stake: `gaugeContractStake('${GAUGE_ADDRESS}', '${globe}')`,
-        // unstake: `gaugeContractWithdraw('${GAUGE_ADDRESS}')`,
-        // claim: `gaugeClaim(${GAUGE_ADDRESS})`,
         gauge: GAUGE_ADDRESS,
         pool: globe,
         icequeen_apr: null,
@@ -208,8 +207,8 @@ async function main() {
         tvl_display: null,
         tvl_class: tvl_class,
         total_pgl: total_staked_lp,
-        pool_share_display: poolShareDisplay,
-        pool_share_display_pgl: poolShareDisplay_lp,
+        pool_share_display: gaugeShareDisplay,
+        pool_share_display_pgl: gaugeShareDisplay_lp,
         stake_display: stakeDisplay,
         apy: null,
         snowballsPerBlock: snowballsPerBlock
@@ -233,9 +232,12 @@ async function main() {
     const GAUGE_CONTRACT = new ethers.Contract(gauge, GAUGE_ABI, signer);
     
     // let currentPoolTokens = await POOL_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-    let stakedPoolTokens = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
-    let totalStakedPool = await GAUGE_CONTRACT.totalSupply()
+    let stakedPoolTokens = await POOL_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+    let totalStakedPool = await POOL_CONTRACT.totalSupply()
     let pool_snob_per_block = await GAUGE_CONTRACT.rewardRate()
+
+    let stakedGauge = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
+    let totalStakedGauge = await GAUGE_CONTRACT.totalSupply()
 
     let symbol = await POOL_CONTRACT.symbol()
     let name = await POOL_CONTRACT.name()
@@ -244,15 +246,14 @@ async function main() {
 
     let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
 
-    const pool_percent = (stakedPoolTokens / 1e18) / (totalStakedPool / 1e18) * 100
+    const pool_percent = (stakedGauge / 1e18) / (totalStakedGauge / 1e18) * 100
 
-    let poolShareDisplay, poolShareDisplay_lp, stakeDisplay, totalPoolLP
-    if (stakedPoolTokens / 1e18 > 0) {
-      let ret = await calculateShare(SNOWGLOBE_CONTRACT, lp_token, stakedPoolTokens / 1e18, 1e18, pool_percent)
-      poolShareDisplay = ret[0]
-      poolShareDisplay_lp = ret[1]
+    let gaugeShareDisplay, gaugeShareDisplay_lp, stakeDisplay
+    if (stakedGauge / 1e18 > 0) {
+      let ret = await calculateShare(POOL_CONTRACT, lp_token, stakedGauge / 1e18, 1e18, pool_percent)
+      gaugeShareDisplay = ret[0]
+      gaugeShareDisplay_lp = ret[1]
       stakeDisplay = ret[2]
-      totalPoolLP = ret[3]
     }
 
     let pendingSNOBTokensPool = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
@@ -274,10 +275,6 @@ async function main() {
       staked_pool: stakedPoolTokens,
       pending_tokens: pending_snob,
       display_amount: stakedPoolTokens > 1000 ? stakedPoolTokens / 1e18 : 0,
-      // approve: `approveGauge('${pool}', '${gauge}'`,
-      // stake: `gaugeContractStake('${gauge}', '${pool}')`,
-      // unstake: `gaugeContractWithdraw('${gauge}')`,
-      // claim: `gaugeClaim(${gauge})`,
       pool: pool,
       gauge: gauge,
       icequeen_apr: (pool_snob_per_block / 1e18) * 15000 * snobPrice / (totalStakedPool / 1e18) * 100,
@@ -334,22 +331,7 @@ async function main() {
   });
   let walletAddres = `${App.YOUR_ADDRESS}`;
   $('#wallet-address').html(`${walletAddres}`);
-  try {
-    if (currentSNOBTokens / 1e18 > 0 || claimableSnowballs > 0 || assetsDeposited.snowball / 1e18 > 0) {
-      $('#account-info').show();
-      $('#snob-info').show();
-      $('#value-snob').append(`${((currentSNOBTokens / 1e18) + claimableSnowballs).toFixed(4)}`);
-      $('#value-usd').append(`${(((currentSNOBTokens / 1e18) + claimableSnowballs) * snobPrice).toFixed(2)}`);
-      $('#wallet').append(`${(currentSNOBTokens / 1e18).toFixed(4)}`);
-      $('#governance-snob').append(`In Governance: ${(assetsDeposited.snowball / 1e18).toFixed(4)}`);
-      $('#track-portfolio').html(`<ion-icon name="arrow-redo-outline"></ion-icon> <a href='https://markr.io/#/wallet?address=${walletAddres}' target='_blank'>Track Your Portfolio</a>`);
-      if (claimableSnowballs > 0) {
-        $('#pending').append(`<ion-icon name="time-outline"></ion-icon> Pending: ${(claimableSnowballs).toFixed(4)}`);
-      }else{
-        $('#pending').append(`<ion-icon name="checkmark-circle" class="text-success"></ion-icon> No pending rewards`);
-      }
-    }
-  } catch {console.log('could not load wallet info')}
+  
 
   
 
@@ -380,6 +362,23 @@ async function main() {
       return displayGlobe(globe, index)
     }),
   )
+
+  try {
+    if (currentSNOBTokens / 1e18 > 0 || claimableSnowballs > 0 || assetsDeposited.snowball / 1e18 > 0) {
+      $('#account-info').show();
+      $('#snob-info').show();
+      $('#value-snob').append(`${((currentSNOBTokens / 1e18) + claimableSnowballs).toFixed(4)}`);
+      $('#value-usd').append(`${(((currentSNOBTokens / 1e18) + claimableSnowballs) * snobPrice).toFixed(2)}`);
+      $('#wallet').append(`${(currentSNOBTokens / 1e18).toFixed(4)}`);
+      $('#governance-snob').append(`In Governance: ${(assetsDeposited.snowball / 1e18).toFixed(4)}`);
+      $('#track-portfolio').html(`<ion-icon name="arrow-redo-outline"></ion-icon> <a href='https://markr.io/#/wallet?address=${walletAddres}' target='_blank'>Track Your Portfolio</a>`);
+      if (claimableSnowballs > 0) {
+        $('#pending').append(`<ion-icon name="time-outline"></ion-icon> Pending: ${(claimableSnowballs).toFixed(4)}`);
+      }else{
+        $('#pending').append(`<ion-icon name="checkmark-circle" class="text-success"></ion-icon> No pending rewards`);
+      }
+    }
+  } catch {console.log('could not load wallet info')}
 
   function pool(options) {
     if (options.icequeen_apr) {
