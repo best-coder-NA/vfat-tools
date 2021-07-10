@@ -248,13 +248,13 @@ async function main() {
 
     const pool_percent = (stakedGauge / 1e18) / (totalStakedGauge / 1e18) * 100
 
-    let gaugeShareDisplay, gaugeShareDisplay_lp, stakeDisplay
-    if (stakedGauge / 1e18 > 0) {
-      let ret = await calculateShare(POOL_CONTRACT, lp_token, stakedGauge / 1e18, 1e18, pool_percent)
-      gaugeShareDisplay = ret[0]
-      gaugeShareDisplay_lp = ret[1]
-      stakeDisplay = ret[2]
-    }
+    // let gaugeShareDisplay, gaugeShareDisplay_lp, stakeDisplay
+    // if (stakedGauge / 1e18 > 0) {
+    //   let ret = await calculateShare(POOL_CONTRACT, lp_token, stakedGauge / 1e18, 1e18, pool_percent)
+    //   gaugeShareDisplay = ret[0]
+    //   gaugeShareDisplay_lp = ret[1]
+    //   stakeDisplay = ret[2]
+    // }
 
     let pendingSNOBTokensPool = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
 
@@ -272,7 +272,7 @@ async function main() {
       pool_weight: null,
       total_staked: totalStakedPool,
       user_pool_percent: pool_percent,
-      staked_pool: stakedPoolTokens,
+      staked_pool: stakedGauge,
       pending_tokens: pending_snob,
       display_amount: stakedPoolTokens > 1000 ? stakedPoolTokens / 1e18 : 0,
       pool: pool,
@@ -281,7 +281,7 @@ async function main() {
       snowglobe_apr: null,
       tvl_display: `${new Intl.NumberFormat('en-US').format(totalStakedPool / 1e18)}`,
       total_pgl: null,
-      pool_share_display: `${(stakedPoolTokens / 1e18).toFixed(6)} ${symbol}`,
+      pool_share_display: `${(stakedGauge / 1e18).toFixed(6)} ${symbol}`,
       pool_share_display_pgl: '',
       stake_display: '',
       snobPrice,
