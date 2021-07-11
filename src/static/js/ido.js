@@ -36,7 +36,7 @@ async function main() {
   const nft_minted = await SHERPA_NFT_CONTRACT.totalSupply();
   const nft_balance = await SHERPA_NFT_CONTRACT.balanceOf(App.YOUR_ADDRESS);
   const nft_max_per_address = await SHERPA_NFT_CONTRACT.MAX_TOKENS_PER_ADDRESS();
-  const total_purchasable = Math.floor((currentXSNOB / 1e18 * 2) / (xsnob_required / 1e18));
+  const total_purchasable = Math.floor((currentXSNOB / 1e18) / (xsnob_required / 1e18));
   let purchasable = total_purchasable > nft_max_per_address ? nft_max_per_address : total_purchasable;
 
   $("#sale_price").html(sale_price / 1e18);
