@@ -183,11 +183,23 @@ async function main() {
 
       let pendingSNOBTokensPool = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
 
-      claimableSnowballs += pendingSNOBTokensPool / 1e18
+      claimableSnowballs += pendingSNOBTokensPool / 1e18;
+
+      let logo_token0 = `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_0}/logo.png`;
+      let logo_token1 = `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_1}/logo.png`;
+      const JOE_ADDRESS = '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd';
+      const JOE_logo = 'https://www.traderjoexyz.com/static/media/logo.bc60f78d.png';
+      //check if this is JOE token (because their logo isnt in the bridge repo)
+      if(token_0.toLowerCase() ===  JOE_ADDRESS.toLowerCase()){
+        logo_token0 = JOE_logo;
+      }
+      if(token_1.toLowerCase() ===  JOE_ADDRESS.toLowerCase()){
+        logo_token1 = JOE_logo;
+      }
 
       pool({
-        logo_token0 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_0}/logo.png`,
-        logo_token1 : `https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/${token_1}/logo.png`,
+        logo_token0 : logo_token0,
+        logo_token1 : logo_token1,
         pool_nickname: `${token_0_symbol}-${token_1_symbol}-${globe_symbol}`,
         pool_name: `${token_0_symbol}-${token_1_symbol} ${globe_symbol}`,
         globe_symbol: globe_symbol,
