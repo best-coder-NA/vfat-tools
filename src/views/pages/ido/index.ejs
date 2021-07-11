@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include(`${partials}/head`); -%>
+<script>
+  if (window.localStorage.getItem('snowballDarkmode') == 'true') {
+    document.body.classList.add('dark-mode');
+  }
+
+</script>
+<body>
+    <div class="page-wrapper with-navbar with-transitions">
+<%- include(`${partials}/header_main`); -%>
+
+<%- include(`${partials}/wallet_error`); -%>
+
+
+
+    <div class="loader--1">
+        <div class="loadingio-spinner-ripple-0rfeupqpquh"><div class="ldio-4ixcy4bihgi">
+                <div></div><div></div>
+            </div></div>
+    </div>
+    <!-- Content wrapper start -->
+    <div class="content-wrapper d-lg-flex">
+        <div class="container-lg">
+            <div class="col-md-12 pt-20">
+                <h1 id="title" style="font-size: 40px; margin-left: 40px;">Sherpa IDO</h1>
+            </div>
+            <div class="row">
+                <div class="card col-xs-12 col-sm-4 col-md-4" style="background-image: linear-gradient(to bottom right, #4c4f5a, #1d202f) !important;">
+                    <div class="row">
+                        <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
+                            <div class="font-size-20 font-weight-bold mb-5">xSNOB Balance</div>
+                            <div class="font-size-18 mb-10" style="overflow-wrap: break-word;"><span id="balance"></span> xSNOB</div>
+                        </div>
+                        <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
+                            <div class="font-size-20 font-weight-bold mb-5">NFTs purchasable</div>
+                            <div class="font-size-18 mb-10" style="overflow-wrap: break-word;"><span id="purchasable"></span></div>
+                        </div>
+                        <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
+                            <div class="font-size-20 font-weight-bold mb-5">NFTs owned</div>
+                            <div class="font-size-18 mb-10" style="overflow-wrap: break-word;"><span id="nfts_owned"></span></div>
+                        </div>
+                        <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
+                            <div class="font-size-20 font-weight-bold mb-5">Wallet Address</div>
+                            <div class="font-size-18 mb-10" style="overflow-wrap: break-word;"><span id="wallet_address"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card col-xs-10 col-sm-6 col-md-6"  style="background-image: linear-gradient(to bottom right, #4c4f5a, #1d202f) !important;">
+                    <div class="text-center">
+                        <div class="font-size-20"><b>Sherpa IDO</b></div>
+                        <div class="text-center"><div>
+                            <div class="my-5">
+                                <img class="nft-image" style="width: 180px; border: 5px solid Gray; border-style: outset; background-color: #bad4d4;" src="https://gateway.pinata.cloud/ipfs/QmNS8u2bvuvxd97brn8uVvm9kHMK2LVP8uSEntkBXRZeM4">
+                            </div>
+                        </div>
+                        <div><b>Max NFTs per day: </b><span id="max_per_address"></span></div>
+                        <div><b>xSNOB required per NFT: </b><span id="xsnob_required"></span> xSNOB</div>
+                        <div><b>Sherpa per NFT: </b>100 SHERPA</div>
+                        <div><b>Total Minted: </b><span id="minted"></span></div>
+                        <div><b>Price: </b><span id="sale_price"></span> AVAX per NFT</div>
+                        <hr class="my-10"/>
+                        <div class="font-size-20"><b>Buy</b></div>
+                        <div id="limit_reached" style="display: none;">Daily limit reached or not enough xSNOB</div>
+                        <div class="col-md-12 d-md-flex justify-content-center">
+                            <button id="buy-1" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">1</button>
+                            <button id="buy-2" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">2</button>
+                            <button id="buy-3" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">3</button>
+                            <button id="buy-4" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">4</button>
+                            <button id="buy-5" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">5</button>
+                        </div>
+                        <div class="col-md-12 d-md-flex justify-content-center">
+                            <button id="buy-6" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">6</button>
+                            <button id="buy-7" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">7</button>
+                            <button id="buy-8" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">8</button>
+                            <button id="buy-9" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">9</button>
+                            <button id="buy-10" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">10</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%- include(`${partials}/footer`); -%>
+        </div>
+
+    <div>
+        <h1 class="error"></h1>
+
+
+
+        <%- include(`${partials}/scripts`, {scriptname: 'ido'}); -%>
+
+    </div>
+    </div>
+</div>
+</body>
+</html>
