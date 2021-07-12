@@ -42,13 +42,16 @@ async function main() {
   $("#sale_price").html(sale_price / 1e18);
   $("#xsnob_required").html(xsnob_required / 1e18);
   $("#nfts_owned").html(nft_balance * 1);
-  $("#purchasable").html(`You can purchase ${purchasable - nft_balance} today`);
+  $("#purchasable").html(`You can purchase ${purchasable - nft_balance} more NFTs today`);
   $("#max_per_address").html(nft_max_per_address * 1);
   $("#max_supply").html(nft_max);
   $("#minted").html(`${nft_minted} / ${nft_max}`);
 
   if ((purchasable - nft_balance) < 1) {
     $("#limit_reached").show();
+    $(".buy-button").hide();
+  } else {
+    $(".buy-button").show();
   }
   // click functions for buy buttons
   for (let i = 1; i <= 10; i++){
@@ -56,7 +59,7 @@ async function main() {
     let limit = purchasable - nft_balance;
     $('#buy-' + i).click(function() {
       if (i > limit) {
-        alert("Cannot purchase, over daily limit or not enough xSNOB");
+        alert("Cannot purchase, over daily limit / not enough xSNOB");
       } else {
         buy_nft(
           SHERPA_NFT_ABI,

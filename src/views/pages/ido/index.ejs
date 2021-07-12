@@ -39,7 +39,7 @@
                         </div>
                         <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
                             <div class="font-size-20 font-weight-bold mb-5">NFTs owned</div>
-                            <div class="font-size-18 mb-10" style="overflow-wrap: break-word;"><span id="nfts_owned"></span></div>
+                            <div class="font-size-18 mb-10" style="overflow-wrap: break-word;"><span id="nfts_owned"></span> NFTs</div>
                         </div>
                         <div class="mb-10 col-xs-12 col-sm-12 col-md-12">
                             <div class="font-size-20 font-weight-bold mb-5">Wallet Address</div>
@@ -52,30 +52,30 @@
                         <div class="font-size-20"><b>Sherpa IDO</b></div>
                         <div class="text-center"><div>
                             <div class="my-5">
-                                <img class="nft-image" style="width: 180px; border: 5px solid Gray; border-style: outset; background-color: #bad4d4;" src="https://gateway.pinata.cloud/ipfs/QmNS8u2bvuvxd97brn8uVvm9kHMK2LVP8uSEntkBXRZeM4">
+                                <img class="nft-image" style="width: 220px; border: 5px solid Gray; border-style: outset; background-color: #bad4d4;" src="https://gateway.pinata.cloud/ipfs/QmNS8u2bvuvxd97brn8uVvm9kHMK2LVP8uSEntkBXRZeM4">
                             </div>
                         </div>
+                        <div><b>Price: </b><span id="sale_price"></span> AVAX per NFT</div>
                         <div><b>Max NFTs per day: </b><span id="max_per_address"></span></div>
                         <div><b>xSNOB required per NFT: </b><span id="xsnob_required"></span> xSNOB</div>
                         <div><b>Sherpa per NFT: </b>100 SHERPA</div>
                         <div><b>Total Minted: </b><span id="minted"></span></div>
-                        <div><b>Price: </b><span id="sale_price"></span> AVAX per NFT</div>
                         <hr class="my-10"/>
-                        <div class="font-size-20"><b>Buy</b></div>
-                        <div id="limit_reached" style="display: none;">Daily limit reached or not enough xSNOB</div>
+                        <div class="font-size-20"><b>Select number of NFTs to purchase:</b></div>
+                        <div id="limit_reached" style="display: none;">Daily limit reached / not enough xSNOB</div>
                         <div class="col-md-12 d-md-flex justify-content-center">
-                            <button id="buy-1" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">1</button>
-                            <button id="buy-2" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">2</button>
-                            <button id="buy-3" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">3</button>
-                            <button id="buy-4" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">4</button>
-                            <button id="buy-5" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">5</button>
+                            <button id="buy-1" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">1</button>
+                            <button id="buy-2" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">2</button>
+                            <button id="buy-3" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">3</button>
+                            <button id="buy-4" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">4</button>
+                            <button id="buy-5" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">5</button>
                         </div>
                         <div class="col-md-12 d-md-flex justify-content-center">
-                            <button id="buy-6" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">6</button>
-                            <button id="buy-7" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">7</button>
-                            <button id="buy-8" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">8</button>
-                            <button id="buy-9" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">9</button>
-                            <button id="buy-10" class="m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">10</button>
+                            <button id="buy-6" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">6</button>
+                            <button id="buy-7" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">7</button>
+                            <button id="buy-8" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">8</button>
+                            <button id="buy-9" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">9</button>
+                            <button id="buy-10" style="display: none;" class="buy-button m-10 col-xs-2 font-size-16 btn-block btn btn-primary" type="button">10</button>
                         </div>
                     </div>
                 </div>
