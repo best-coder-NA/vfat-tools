@@ -161,6 +161,7 @@ async function main() {
       let globe_symbol = await SNOWGLOBE_CONTRACT.symbol()
       let snowglobe_balance = await SNOWGLOBE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
       let total_staked_lp = await SNOWGLOBE_CONTRACT.balance()
+      let totalSupplySnowglobe = await SNOWGLOBE_CONTRACT.totalSupply()
       let pending_snob = await GAUGE_CONTRACT.earned(App.YOUR_ADDRESS)
       let gauge_staked = await GAUGE_CONTRACT.balanceOf(App.YOUR_ADDRESS)
       let gauge_total = await GAUGE_CONTRACT.totalSupply()
@@ -207,7 +208,7 @@ async function main() {
         url: null,
         tvl: null,
         pool_weight: null,
-        total_staked: gauge_total,
+        total_staked: totalSupplySnowglobe,
         user_pool_percent: pool_percent,
         staked_pool: gauge_staked,
         pending_tokens: pending_snob,
