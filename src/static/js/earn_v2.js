@@ -207,7 +207,7 @@ async function main() {
         url: null,
         tvl: null,
         pool_weight: null,
-        total_staked: total_staked_lp,
+        total_staked: gauge_total,
         user_pool_percent: pool_percent,
         staked_pool: gauge_staked,
         pending_tokens: pending_snob,
