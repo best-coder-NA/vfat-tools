@@ -48,7 +48,6 @@ async function main() {
   } else {
     $("#purchasable").html(`You can purchase ${purchasable - nft_balance} more NFTs today`);
   }
-  $("#max_per_address").html(nft_max_per_address * 1);
   $("#max_supply").html(nft_max);
   $("#minted").html(`${nft_minted} / ${nft_max}`);
   if (sale_ended) {
